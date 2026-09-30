@@ -13,7 +13,7 @@ A fast, modern, and clean catalog for patched Android applications, desktop buil
 
 ### 📦 Multi-Repository Aggregation
 - **Unified Catalog**: Automatically aggregates, merges, and presents builds across multiple automated repositories into a single responsive frontend:
-  - [`revanced-morphe-xposed-builder`](https://github.com/sharath-5br2r-apps/revanced-morphe-xposed-builder): Core ReVanced & Morphe patched applications.
+  - [`rvb`](https://github.com/sharath-5br2r-apps/rvb): Core ReVanced & Morphe patched applications.
   - [`Eden-Workflow`](https://github.com/sharath-5br2r-apps/Eden-Workflow): Eden Android and PC/Desktop builds.
   - [`Dolphin-Extra`](https://github.com/sharath-5br2r-apps/Dolphin-Extra): Custom Dolphin emulator forks and enhancements.
   - [`LeviLaunchroid-Extra`](https://github.com/sharath-5br2r-apps/LeviLaunchroid-Extra): Specialized launcher builds.
