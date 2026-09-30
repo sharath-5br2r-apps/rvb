@@ -33,19 +33,46 @@ jobs:
         with:
           python-version: "3.12"
 
-      - name: Rebuild data.json from all 5 source repos
+      - name: Checkout rvb update branch (manifest source)
+        # Public repo, anonymous shallow clone — the branch replaces the old
+        # per-release build.json asset downloads for rvb.
+        run: git clone --depth 1 --branch update "https://github.com/$RVB_REPO.git" rvb-update || mkdir -p rvb-update
         env:
+          RVB_REPO: sharath-5br2r-apps/rvb
+
+      - name: Checkout rvb naming rules (filename parsing source of truth)
+        # rebuild_catalog.py imports normalize_key/normalize_arch/extract_arch/
+        # file_prefix from rvb's .github/scripts/naming.py instead of mirroring them,
+        # so the builder and the catalogue cannot parse a filename differently.
+        # Blob-filtered + sparse: this fetches the script directory, not the repo.
+        run: |
+          git clone --depth 1 --filter=blob:none --no-checkout \
+            "https://github.com/$RVB_REPO.git" rvb-code || true
+          if [ -d rvb-code ]; then
+            git -C rvb-code sparse-checkout init --cone || true
+            git -C rvb-code sparse-checkout set .github/scripts || true
+            git -C rvb-code checkout main || true
+          fi
+        env:
+          RVB_REPO: sharath-5br2r-apps/rvb
+
+      - name: Rebuild data.json from manifests and releases
+        env:
+          RVB_REPO: sharath-5br2r-apps/rvb
+          RVB_NAMING_DIR: ${{ github.workspace }}/rvb-code/.github/scripts
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
+          cp data.json temp_old_data.json || true
           python3 .github/scripts/rebuild_catalog.py \
             --repos \
-              "sharath-5br2r-apps/revanced-morphe-xposed-builder" \
+              "sharath-5br2r-apps/rvb" \
               "sharath-5br2r-apps/Eden-Workflow" \
               "sharath-5br2r-apps/Dolphin-Extra" \
               "sharath-5br2r-apps/LeviLaunchroid-Extra" \
               "sharath-5br2r-apps/ZalithLauncher2-Extra" \
+            --manifest-dir rvb-update \
             --out "data.json.new" \
-            --existing "data.json" \
+            --existing "temp_old_data.json" \
             --ignore-existing \
             --no-gzip
           echo "REBUILT_OK=1" >> "$GITHUB_ENV"
@@ -77,7 +104,7 @@ jobs:
           git config user.name 'github-actions[bot]'
           git config user.email 'github-actions[bot]@users.noreply.github.com'
           git add data.json data.json.gz
-          git commit -m "chore: rebuild catalog from release manifests [skip ci]"
+          git commit -m "chore: rebuild catalog from update branch and release manifests [skip ci]"
           # Note: the push itself won't redeploy Pages (deploy-pages.yml ignores data.json
           # pushes); an explicit dispatch below refreshes the deployed copy instead.
           pushed=0

@@ -1,16 +1,17 @@
 #!/usr/bin/env python3
-"""Rebuild data.json from immutable per-release build.json manifests across multiple repos.
+"""Rebuild data.json from release manifests and rvb branch manifests.
 
 The catalog is derived from scratch on every run:
   data.json = fold(numbered release manifests)      -> numbered build entries
             + fold(archive manifests + live assets) -> rolling archive entries
             + live releases API                     -> existence, size, download counts
 
-Supports an array of repos as input, caching of API responses and manifests,
-and arbitrary downloadable artifact extensions.
+Supports an array of repos as input, manifest checkout directory for rvb,
+caching of API responses and manifests, and arbitrary downloadable artifact extensions.
 """
 import argparse
 import gzip
+import importlib.util
 import json
 import os
 import re
@@ -21,7 +22,7 @@ from datetime import datetime, timezone
 from pathlib import Path
 
 DEFAULT_REPOS = [
-    "sharath-5br2r-apps/revanced-morphe-xposed-builder",
+    "sharath-5br2r-apps/rvb",
     "sharath-5br2r-apps/Eden-Workflow",
     "sharath-5br2r-apps/Dolphin-Extra",
     "sharath-5br2r-apps/LeviLaunchroid-Extra",
@@ -37,6 +38,79 @@ DOWNLOADABLE_EXTENSIONS = (
     ".appimage", ".dmg", ".pkg", ".deb", ".rpm", ".flatpak", ".snap",
     ".zip", ".7z", ".rar", ".tgz", ".tar", ".tar.gz", ".tar.xz", ".tar.bz2", ".tar.zst",
 )
+
+
+def _load_rvb_naming():
+    candidates = []
+    env = os.environ.get("RVB_NAMING_DIR")
+    if env:
+        candidates.append(Path(env) / "naming.py")
+    candidates.append(Path(__file__).resolve().parents[3] /
+                      "rvb" / ".github" / "scripts" / "naming.py")
+    for path in candidates:
+        if path.is_file():
+            try:
+                spec = importlib.util.spec_from_file_location("rvb_naming", str(path))
+                mod = importlib.util.module_from_spec(spec)
+                spec.loader.exec_module(mod)
+                return mod
+            except Exception as e:
+                print(f"Warning: could not load rvb naming rules from {path}: {e}", file=sys.stderr)
+    return None
+
+
+_naming = _load_rvb_naming()
+
+
+def _builtin_normalize_key(s):
+    return re.sub(r"[^a-z0-9]", "", (s or "").lower())
+
+
+def _builtin_normalize_arch(arch_raw):
+    a = (arch_raw or "").lower().strip()
+    if "arm64" in a or "aarch64" in a:
+        return "arm64"
+    if "arm" in a or "armeabi" in a:
+        return "arm"
+    if a in ["all", "universal"] or a.endswith("-all") or a.endswith("-universal"):
+        return "all"
+    if "x86_64" in a or "x64" in a or "amd64" in a:
+        return "x86_64"
+    if "x86" in a:
+        return "x86"
+    return a or "all"
+
+
+def _builtin_extract_arch(fname, version=""):
+    match = re.search(
+        r"-(arm64-v8a|armeabi-v7a|arm-v7a|aarch64|arm64|arm32|arm|x86_64|amd64|x64|x86|universal|all)(?:-(?:apk|module))?\.[a-zA-Z0-9.]+$",
+        fname,
+        re.IGNORECASE,
+    )
+    if match:
+        return match.group(1)
+    if version:
+        clean_ver = re.escape(version.lstrip("v"))
+        m = re.search(
+            rf"-v?{clean_ver}-([a-zA-Z0-9_-]+?)(?:-(?:apk|module))?\.[a-zA-Z0-9.]+对手", fname, re.IGNORECASE) if False else re.search(
+            rf"-v?{clean_ver}-([a-zA-Z0-9_-]+?)(?:-(?:apk|module))?\.[a-zA-Z0-9.]+$", fname, re.IGNORECASE)
+        if m:
+            return m.group(1)
+    name_no_ext = fname.rsplit(".", 1)[0]
+    name_no_mode = re.sub(r"-(?:apk|module)$", "", name_no_ext, flags=re.IGNORECASE)
+    parts = name_no_mode.split("-")
+    return parts[-1] if len(parts) > 1 else "all"
+
+
+def _builtin_file_prefix(fname):
+    m = FILE_PREFIX_RE.match(fname)
+    return m.group(1) if m else fname.rsplit(".", 1)[0]
+
+
+normalize_key = getattr(_naming, "normalize_key", _builtin_normalize_key) if _naming else _builtin_normalize_key
+normalize_arch = getattr(_naming, "normalize_arch", _builtin_normalize_arch) if _naming else _builtin_normalize_arch
+extract_arch = getattr(_naming, "extract_arch", _builtin_extract_arch) if _naming else _builtin_extract_arch
+file_prefix = getattr(_naming, "file_prefix", _builtin_file_prefix) if _naming else _builtin_file_prefix
 
 
 def extract_version(fname):
@@ -60,54 +134,6 @@ def run_gh(args, check=True):
         print(f"Error running gh {' '.join(args)}: {result.stderr.strip()}", file=sys.stderr)
         sys.exit(1)
     return result.stdout
-
-
-def normalize_key(s):
-    return re.sub(r"[^a-z0-9]", "", (s or "").lower())
-
-
-def normalize_arch(arch_raw):
-    a = (arch_raw or "").lower().strip()
-    if "arm64" in a or "aarch64" in a:
-        return "arm64"
-    if "arm" in a or "armeabi" in a:
-        return "arm"
-    if a in ["all", "universal"] or a.endswith("-all") or a.endswith("-universal"):
-        return "all"
-    if "x86_64" in a or "x64" in a or "amd64" in a:
-        return "x86_64"
-    if "x86" in a:
-        return "x86"
-    return a or "all"
-
-
-def extract_arch(fname, version=""):
-    match = re.search(
-        r"-(arm64-v8a|armeabi-v7a|arm-v7a|aarch64|arm64|arm32|arm|x86_64|amd64|x64|x86|universal|all)(?:-[a-zA-Z0-9_]+)?\.[a-zA-Z0-9.]+$",
-        fname,
-        re.IGNORECASE,
-    )
-    if match:
-        return match.group(1)
-    if version and len(version) < 50 and " " not in version:
-        clean_ver = re.escape(version.lstrip("v"))
-        m = re.search(
-            rf"-v?{clean_ver}-([a-zA-Z0-9_-]+?)(?:-[a-zA-Z0-9]+)?\.[a-zA-Z0-9.]+$", fname, re.IGNORECASE
-        )
-        if m:
-            return m.group(1)
-    ev = extract_version(fname)
-    if ev:
-        clean_ev = re.escape(ev.lstrip("v"))
-        m = re.search(
-            rf"-v?{clean_ev}-([a-zA-Z0-9_-]+?)(?:-[a-zA-Z0-9]+)?\.[a-zA-Z0-9.]+$", fname, re.IGNORECASE
-        )
-        if m:
-            return m.group(1)
-    name_no_ext = fname.rsplit(".", 1)[0]
-    name_no_mode = re.sub(r"-(?:apk|module)$", "", name_no_ext, flags=re.IGNORECASE)
-    parts = name_no_mode.split("-")
-    return parts[-1] if len(parts) > 1 else "all"
 
 
 def get_cache_path(cache_dir, repo, key):
@@ -143,8 +169,7 @@ def derive_metadata(fname, e, repo=None):
             app_key = "zalithlauncher2-extra"
             app_name = app_name or "ZalithLauncher2 Extra"
         else:
-            m = FILE_PREFIX_RE.match(fname)
-            base = m.group(1) if m else fname.rsplit(".", 1)[0]
+            base = file_prefix(fname)
             app_key = normalize_key(base)
             app_name = app_name or base
 
@@ -169,8 +194,7 @@ def derive_metadata(fname, e, repo=None):
 
 
 def fallback_entry(fname, origin_build, published_at, repo=None):
-    m = FILE_PREFIX_RE.match(fname)
-    name = m.group(1) if m else fname.rsplit(".", 1)[0]
+    name = file_prefix(fname)
     nl = fname.lower()
     file_type = "APK" if nl.endswith((".apk", ".apks", ".xapk", ".apkm")) else (
         "AppImage" if nl.endswith(".appimage") else (
@@ -195,6 +219,9 @@ def fallback_entry(fname, origin_build, published_at, repo=None):
         "patchSources": [],
         "changelogs": [],
         "appliedPatches": [],
+        "skippedPatches": [],
+        "failedPatches": [],
+        "removedPatches": [],
         "originBuild": origin_build,
         "publishedAt": published_at,
     }
@@ -203,6 +230,8 @@ def fallback_entry(fname, origin_build, published_at, repo=None):
     entry["appName"] = app_name
     entry["brandKey"] = brand_key
     entry["brandName"] = brand_name
+    entry["variant"] = variant
+    entry["subVariant"] = sub_variant
     return entry
 
 
@@ -218,44 +247,25 @@ def fetch_releases(repo, cache_dir=None):
 
     raw = run_gh(["api", "--paginate", f"repos/{repo}/releases?per_page=100"], check=False)
     if not raw.strip():
-        if cp and cp.exists():
-            with open(cp, "r", encoding="utf-8") as f:
-                data = json.load(f)
-            return {r["tag_name"]: r for r in data if not r.get("draft") and r.get("tag_name")}
-        print(f"Error: could not fetch releases for {repo}.", file=sys.stderr)
         return {}
     try:
         data = json.loads(raw)
+        if not isinstance(data, list):
+            return {}
+        if cp:
+            try:
+                with open(cp, "w", encoding="utf-8") as f:
+                    json.dump(data, f)
+            except Exception:
+                pass
+        return {r["tag_name"]: r for r in data if not r.get("draft") and r.get("tag_name")}
     except Exception as e:
         print(f"Error parsing releases for {repo}: {e}", file=sys.stderr)
         return {}
-    if not isinstance(data, list):
-        return {}
-    if cp:
-        try:
-            with open(cp, "w", encoding="utf-8") as f:
-                json.dump(data, f)
-        except Exception:
-            pass
-
-    releases = {r["tag_name"]: r for r in data if not r.get("draft") and r.get("tag_name")}
-    # Targeted fallback for rolling archive tags
-    for tag in ("stable", "beta"):
-        if tag not in releases:
-            fb = run_gh(["api", f"repos/{repo}/releases/tags/{tag}"], check=False)
-            try:
-                rd = json.loads(fb)
-                if rd.get("tag_name") and not rd.get("draft"):
-                    releases[tag] = rd
-            except Exception:
-                pass
-    return releases
 
 
 def fetch_manifest(repo, tag, rel, cache_dir=None):
-    """Download and normalize build.json asset for a release."""
-    safe_tag = re.sub(r"[^a-zA-Z0-9_.-]", "_", tag)
-    cp = get_cache_path(cache_dir, repo, f"manifests/{safe_tag}.json") if cache_dir else None
+    cp = get_cache_path(cache_dir, repo, f"manifest_{tag}.json") if cache_dir else None
     if cp and cp.exists():
         try:
             with open(cp, "r", encoding="utf-8") as f:
@@ -266,7 +276,7 @@ def fetch_manifest(repo, tag, rel, cache_dir=None):
             pass
 
     asset = next((a for a in rel.get("assets", []) if a["name"] == "build.json"), None)
-    if not asset:
+    if asset is None:
         return None, None
     api_url = asset["url"].replace("https://api.github.com/", "")
     raw = ""
@@ -297,7 +307,49 @@ def fetch_manifest(repo, tag, rel, cache_dir=None):
         return None, f"build.json for {tag} in {repo} is invalid: {e}"
 
 
-def fetch_all_manifests(repo, releases, tags, max_workers=6, cache_dir=None):
+def manifest_from_dir(manifest_dir, tag):
+    """Load one manifest from branch checkout (same return contract as fetch_manifest)."""
+    sub = "archive" if tag in ("stable", "beta") else "manifests"
+    p = Path(manifest_dir) / sub / f"{tag}.json"
+    if not p.exists():
+        alt = Path(manifest_dir) / f"{tag}.json"
+        if alt.exists():
+            p = alt
+        else:
+            return None, None
+    try:
+        m = json.loads(p.read_text(encoding="utf-8"))
+        if not isinstance(m, dict) or not isinstance(m.get("files"), dict):
+            raise ValueError("missing files map")
+        return m, None
+    except Exception as e:
+        return None, f"{p} is not a valid manifest: {e}"
+
+
+def fetch_all_manifests(repo, releases, tags, max_workers=6, cache_dir=None, manifest_dir=None):
+    """Pre-fetch build.json manifests for tags concurrently or from manifest_dir."""
+    if manifest_dir:
+        res = {}
+        missing = []
+        for tag in tags:
+            m, err = manifest_from_dir(manifest_dir, tag)
+            if m is not None:
+                res[tag] = (m, None)
+            else:
+                missing.append(tag)
+        if not missing:
+            return res
+        with ThreadPoolExecutor(max_workers=max_workers) as pool:
+            fallback = {
+                tag: fut.result()
+                for tag, fut in (
+                    (tag, pool.submit(fetch_manifest, repo, tag, releases[tag], cache_dir))
+                    for tag in missing
+                )
+            }
+        res.update(fallback)
+        return res
+
     with ThreadPoolExecutor(max_workers=max_workers) as pool:
         return {
             tag: fut.result()
@@ -687,6 +739,11 @@ def main():
         dest="repos",
         help="One or more GitHub repositories (owner/repo). Defaults to all 5 repos."
     )
+    ap.add_argument("--rvb-repo", default=os.environ.get("RVB_REPO", "sharath-5br2r-apps/rvb"),
+                    help="rvb repository name that uses manifest-dir")
+    ap.add_argument("--manifest-dir", default=None,
+                    help="checkout of rvb's update branch; when set, manifests for rvb "
+                         "are read from disk instead of release assets")
     ap.add_argument("--out", default="data.json", help="Output path for data.json")
     ap.add_argument("--existing", default=None, help="Existing data.json for shrink checks")
     ap.add_argument("--ignore-existing", action="store_true", help="Ignore existing data.json (skip circuit breaker)")
@@ -698,7 +755,7 @@ def main():
     repos = args.repos
     if not repos:
         env_repo = os.environ.get("RVB_REPO")
-        if env_repo:
+        if env_repo and "," in env_repo:
             repos = [r.strip() for r in env_repo.split(",") if r.strip()]
         else:
             repos = DEFAULT_REPOS
@@ -719,7 +776,9 @@ def main():
             key=lambda t: (len(t), t),
         )
         all_tags = numbered_tags + [t for t in ("stable", "beta") if t in releases]
-        fetched = fetch_all_manifests(repo, releases, all_tags, cache_dir=cache_dir)
+
+        repo_manifest_dir = args.manifest_dir if (args.manifest_dir and (repo == args.rvb_repo or "rvb" in repo.lower())) else None
+        fetched = fetch_all_manifests(repo, releases, all_tags, max_workers=6, cache_dir=cache_dir, manifest_dir=repo_manifest_dir)
 
         missing_manifests = []
         for tag in numbered_tags:
