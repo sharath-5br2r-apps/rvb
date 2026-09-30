@@ -46,10 +46,10 @@ function getFaSvg(name, extraClass) {
 
 const CONFIG = {
   "owner": "sharath-5br2r-apps",
-  "repo": "revanced-morphe-xposed-builder",
+  "repo": "rvb",
   // Support for multiple GitHub APK release repositories
   repos: [
-    { owner: "sharath-5br2r-apps", repo: "revanced-morphe-xposed-builder" },
+    { owner: "sharath-5br2r-apps", repo: "rvb" },
     { owner: "sharath-5br2r-apps", repo: "Eden-Workflow" },
     { owner: "sharath-5br2r-apps", repo: "Dolphin-Extra" },
     { owner: "sharath-5br2r-apps", repo: "LeviLaunchroid-Extra" },
@@ -894,7 +894,7 @@ function getConfigRepos() {
   if (CONFIG.owner && CONFIG.repo) {
     return [{ owner: CONFIG.owner, repo: CONFIG.repo }];
   }
-  return [{ owner: "sharath-5br2r-apps", repo: "revanced-morphe-xposed-builder" }];
+  return [{ owner: "sharath-5br2r-apps", repo: "rvb" }];
 }
 
 // Explicit Extension Matching (Includes .tar.{ext} like .tar.gz, .tar.xz, .tar.bz2, .tar.zst)
