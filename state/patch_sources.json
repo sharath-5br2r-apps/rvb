@@ -81,8 +81,8 @@
     "stable_date": "2026-09-03T09:17:16Z"
   },
   "byehi98/okish-morphe-patches": {
-    "beta": "v1.37.0-dev.1",
-    "beta_date": "2026-10-03T14:01:11Z",
+    "beta": "v1.37.0-dev.2",
+    "beta_date": "2026-10-03T16:44:06Z",
     "blocked": false,
     "host": "github",
     "repo": "byehi98/okish-morphe-patches",
@@ -117,8 +117,8 @@
     "stable_date": "2026-10-01T06:24:48Z"
   },
   "hoo-dles/morphe-patches": {
-    "beta": "v1.46.0-dev.7",
-    "beta_date": "2026-09-30T09:31:05Z",
+    "beta": "v1.47.0-dev.1",
+    "beta_date": "2026-10-03T20:58:29Z",
     "blocked": false,
     "host": "github",
     "repo": "hoo-dles/morphe-patches",
@@ -185,8 +185,8 @@
     "blocked": false,
     "host": "github",
     "repo": "kveld9/kveld-morphe-patches",
-    "stable": "v2.3.0",
-    "stable_date": "2026-10-01T03:29:52Z"
+    "stable": "v2.4.0",
+    "stable_date": "2026-10-03T20:17:11Z"
   },
   "revenge-mod/revenge-xposed": {
     "beta": "",

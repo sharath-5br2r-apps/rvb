@@ -106,26 +106,26 @@
   },
   "hoo-dles/morphe-patches": {
     "beta": {
-      "bitpit.launcher": "7614c2c49bd328dd8f7e0b04a9ba6a0f",
-      "cn.wps.moffice_eng": "7614c2c49bd328dd8f7e0b04a9ba6a0f",
-      "com.adobe.lrmobile": "7614c2c49bd328dd8f7e0b04a9ba6a0f",
-      "com.amazon.avod.thirdpartyclient": "7614c2c49bd328dd8f7e0b04a9ba6a0f",
-      "com.bambuna.podcastaddict": "44e6352ab7db9cb6c95b498724c9e40c",
-      "com.duolingo": "c518cb5d42f33806e6c1c22e9a651d46",
-      "com.goodreads": "e1760b56a1321562a6dd34606328ce6a",
-      "com.hellochinese": "b51f1f1033e2efbf71dae6084dd2975a",
-      "com.intsig.camscanner": "b675a981325693379f49ebf134ec9464",
-      "com.merriamwebster": "7614c2c49bd328dd8f7e0b04a9ba6a0f",
-      "com.myfitnesspal.android": "7300336949e204cee476303f7de134ea",
-      "com.pandora.android": "80d5655e4169d77a88e1cc2026ece379",
-      "com.teslacoilsw.launcher": "7614c2c49bd328dd8f7e0b04a9ba6a0f",
-      "com.wallpaperscraft.wallpaper": "554bcd7a888df9292842e5b8be3baa8c",
-      "com.xodo.pdf.reader": "86268a214ff0baecbeccc337139fba6c",
-      "cz.ackee.ventusky": "09deaf476cf4950d0127e6211d86803c",
-      "ginlemon.flowerfree": "7614c2c49bd328dd8f7e0b04a9ba6a0f",
-      "pl.solidexplorer2": "7614c2c49bd328dd8f7e0b04a9ba6a0f",
+      "bitpit.launcher": "d7e3c623450948f8fa66715e36ddf4ff",
+      "cn.wps.moffice_eng": "d7e3c623450948f8fa66715e36ddf4ff",
+      "com.adobe.lrmobile": "d7e3c623450948f8fa66715e36ddf4ff",
+      "com.amazon.avod.thirdpartyclient": "d7e3c623450948f8fa66715e36ddf4ff",
+      "com.bambuna.podcastaddict": "4a1fde0fa0cf76af3f3058303013103d",
+      "com.duolingo": "9cfb08c16d472bdbc01af245143e211b",
+      "com.goodreads": "1c6e9d355db46677142cd37eeb97731a",
+      "com.hellochinese": "b3ebeaa5233ec35c68f091eb02d5e6df",
+      "com.intsig.camscanner": "9cede9b52796f5f4dd208f2e78044c27",
+      "com.merriamwebster": "d7e3c623450948f8fa66715e36ddf4ff",
+      "com.myfitnesspal.android": "16ab901de4425b9024d5376bcc585616",
+      "com.pandora.android": "19433cfec097b9080fec75e4118c38ab",
+      "com.teslacoilsw.launcher": "d7e3c623450948f8fa66715e36ddf4ff",
+      "com.wallpaperscraft.wallpaper": "1cb9a4762496d7e75084a30697ea67f0",
+      "com.xodo.pdf.reader": "d6ac4b05b8f9974d63a6c9bf64095a5b",
+      "cz.ackee.ventusky": "bdb9ee17bbf45f27190e43f44e468a67",
+      "ginlemon.flowerfree": "d7e3c623450948f8fa66715e36ddf4ff",
+      "pl.solidexplorer2": "d7e3c623450948f8fa66715e36ddf4ff",
       "shared": "b8e9c2ea552b3ab6be1d146fea1be5e9",
-      "videoeditor.videorecorder.screenrecorder": "0bc775c3ea976d8c1e93fcc1ba82c67c"
+      "videoeditor.videorecorder.screenrecorder": "d921c28c4cce34bb7390365618bf5569"
     },
     "stable": {
       "bitpit.launcher": "7614c2c49bd328dd8f7e0b04a9ba6a0f",
@@ -198,10 +198,10 @@
   "kveld9/kveld-morphe-patches": {
     "beta": {},
     "stable": {
-      "com.brave.browser": "359559f967b53982000ad2f60b8caeea",
-      "com.ss.android.ugc.trill": "3fd42bbe17fe581eac65e04bdb54d16d",
-      "com.zhiliaoapp.musically": "6f77ed1fae3844b6d08653bc2d0703ec",
-      "shared": "d2fd3ba66afd0a34843b40654def2376"
+      "com.brave.browser": "90dcc6e9c635e251ccc00f479e28e5ff",
+      "com.ss.android.ugc.trill": "dc46ac5a483e5c0c1e495bcbbe489ccf",
+      "com.zhiliaoapp.musically": "8f638913e06ae43b1bf918b8e621d8de",
+      "shared": "88362a78639b4cf9eeb42c6d2e528bbb"
     }
   },
   "morpheapp/morphe-patches": {
