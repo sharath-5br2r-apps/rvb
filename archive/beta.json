@@ -4,7 +4,7 @@
   "meta": {
     "build": "beta",
     "channel": "beta",
-    "publishedAt": "2026-10-03T12:22:46Z"
+    "publishedAt": "2026-10-03T16:49:54Z"
   },
   "files": {
     "youtube-morphe-amoled-v21.39.522-arm64-v8a.apk": {
@@ -7526,6 +7526,755 @@
       "failedPatches": [],
       "originBuild": "2026.10.03-2",
       "publishedAt": "2026-10-03T12:15:10Z"
+    },
+    "vector-byehi98-v2.10.2-arm64-v8a.apk": {
+      "name": "vector-byehi98",
+      "version": "2.10.2",
+      "appKey": "vector",
+      "appName": "Vector",
+      "arch": "arm64-v8a",
+      "fileType": "APK",
+      "brandKey": "byehi98",
+      "brandName": "Byehi98",
+      "variant": null,
+      "subVariant": null,
+      "packageName": "com.nekki.vector",
+      "cli": "MorpheApp/morphe-desktop",
+      "patches": "byehi98/patches-1.36.2.mpp",
+      "patchesSource": "byehi98/okish-morphe-patches",
+      "engineBrand": null,
+      "patchBrand": "Byehi98",
+      "densities": [
+        "120",
+        "160",
+        "240",
+        "320",
+        "480",
+        "640",
+        "65534",
+        "65535"
+      ],
+      "nativeLibraries": [
+        "arm64-v8a",
+        "armeabi-v7a",
+        "x86_64"
+      ],
+      "minSdk": "24",
+      "versionCode": "5000269",
+      "patchSources": [
+        "byehi98/patches-1.36.2.mpp"
+      ],
+      "changelogUrls": [
+        "https://github.com/byehi98/okish-morphe-patches/releases/tag/v1.37.0-dev.1"
+      ],
+      "changelogs": [],
+      "appliedPatches": [
+        "Vector Ad Spoof",
+        "Vector Money Mod"
+      ],
+      "skippedPatches": [],
+      "failedPatches": [],
+      "originBuild": "2026.10.03-3",
+      "publishedAt": "2026-10-03T16:49:10Z"
+    },
+    "vector-byehi98-v2.10.2-x86_64.apk": {
+      "name": "vector-byehi98",
+      "version": "2.10.2",
+      "appKey": "vector",
+      "appName": "Vector",
+      "arch": "x86_64",
+      "fileType": "APK",
+      "brandKey": "byehi98",
+      "brandName": "Byehi98",
+      "variant": null,
+      "subVariant": null,
+      "packageName": "com.nekki.vector",
+      "cli": "MorpheApp/morphe-desktop",
+      "patches": "byehi98/patches-1.36.2.mpp",
+      "patchesSource": "byehi98/okish-morphe-patches",
+      "engineBrand": null,
+      "patchBrand": "Byehi98",
+      "densities": [
+        "120",
+        "160",
+        "240",
+        "320",
+        "480",
+        "640",
+        "65534",
+        "65535"
+      ],
+      "nativeLibraries": [
+        "arm64-v8a",
+        "armeabi-v7a",
+        "x86_64"
+      ],
+      "minSdk": "24",
+      "versionCode": "5000269",
+      "patchSources": [
+        "byehi98/patches-1.36.2.mpp"
+      ],
+      "changelogUrls": [
+        "https://github.com/byehi98/okish-morphe-patches/releases/tag/v1.37.0-dev.1"
+      ],
+      "changelogs": [],
+      "appliedPatches": [
+        "Vector Ad Spoof",
+        "Vector Money Mod"
+      ],
+      "skippedPatches": [],
+      "failedPatches": [],
+      "originBuild": "2026.10.03-3",
+      "publishedAt": "2026-10-03T16:49:10Z"
+    },
+    "vector-byehi98-v2.10.2-armeabi-v7a.apk": {
+      "name": "vector-byehi98",
+      "version": "2.10.2",
+      "appKey": "vector",
+      "appName": "Vector",
+      "arch": "armeabi-v7a",
+      "fileType": "APK",
+      "brandKey": "byehi98",
+      "brandName": "Byehi98",
+      "variant": null,
+      "subVariant": null,
+      "packageName": "com.nekki.vector",
+      "cli": "MorpheApp/morphe-desktop",
+      "patches": "byehi98/patches-1.36.2.mpp",
+      "patchesSource": "byehi98/okish-morphe-patches",
+      "engineBrand": null,
+      "patchBrand": "Byehi98",
+      "densities": [
+        "120",
+        "160",
+        "240",
+        "320",
+        "480",
+        "640",
+        "65534",
+        "65535"
+      ],
+      "nativeLibraries": [
+        "arm64-v8a",
+        "armeabi-v7a",
+        "x86_64"
+      ],
+      "minSdk": "24",
+      "versionCode": "5000269",
+      "patchSources": [
+        "byehi98/patches-1.36.2.mpp"
+      ],
+      "changelogUrls": [
+        "https://github.com/byehi98/okish-morphe-patches/releases/tag/v1.37.0-dev.1"
+      ],
+      "changelogs": [],
+      "appliedPatches": [
+        "Vector Ad Spoof",
+        "Vector Money Mod"
+      ],
+      "skippedPatches": [],
+      "failedPatches": [],
+      "originBuild": "2026.10.03-3",
+      "publishedAt": "2026-10-03T16:49:10Z"
+    },
+    "vector-byehi98-v2.10.2-all.apk": {
+      "name": "vector-byehi98",
+      "version": "2.10.2",
+      "appKey": "vector",
+      "appName": "Vector",
+      "arch": "all",
+      "fileType": "APK",
+      "brandKey": "byehi98",
+      "brandName": "Byehi98",
+      "variant": null,
+      "subVariant": null,
+      "packageName": "com.nekki.vector",
+      "cli": "MorpheApp/morphe-desktop",
+      "patches": "byehi98/patches-1.36.2.mpp",
+      "patchesSource": "byehi98/okish-morphe-patches",
+      "engineBrand": null,
+      "patchBrand": "Byehi98",
+      "densities": [
+        "120",
+        "160",
+        "240",
+        "320",
+        "480",
+        "640",
+        "65534",
+        "65535"
+      ],
+      "nativeLibraries": [
+        "arm64-v8a",
+        "armeabi-v7a",
+        "x86_64"
+      ],
+      "minSdk": "24",
+      "versionCode": "5000269",
+      "patchSources": [
+        "byehi98/patches-1.36.2.mpp"
+      ],
+      "changelogUrls": [
+        "https://github.com/byehi98/okish-morphe-patches/releases/tag/v1.37.0-dev.1"
+      ],
+      "changelogs": [],
+      "appliedPatches": [
+        "Vector Ad Spoof",
+        "Vector Money Mod"
+      ],
+      "skippedPatches": [],
+      "failedPatches": [],
+      "originBuild": "2026.10.03-3",
+      "publishedAt": "2026-10-03T16:49:10Z"
+    },
+    "smash-hit-byehi98-v1.5.14-arm64-v8a.apk": {
+      "name": "smash-hit-byehi98",
+      "version": "1.5.14",
+      "appKey": "smashhit",
+      "appName": "Smash Hit",
+      "arch": "arm64-v8a",
+      "fileType": "APK",
+      "brandKey": "byehi98",
+      "brandName": "Byehi98",
+      "variant": null,
+      "subVariant": null,
+      "packageName": "com.mediocre.smashhit",
+      "cli": "MorpheApp/morphe-desktop",
+      "patches": "byehi98/patches-1.36.2.mpp",
+      "patchesSource": "byehi98/okish-morphe-patches",
+      "engineBrand": null,
+      "patchBrand": "Byehi98",
+      "densities": [
+        "120",
+        "160",
+        "240",
+        "320",
+        "480",
+        "640",
+        "65534"
+      ],
+      "nativeLibraries": [
+        "arm64-v8a",
+        "armeabi-v7a",
+        "x86",
+        "x86_64"
+      ],
+      "minSdk": "26",
+      "versionCode": "1051400",
+      "patchSources": [
+        "byehi98/patches-1.36.2.mpp"
+      ],
+      "changelogUrls": [
+        "https://github.com/byehi98/okish-morphe-patches/releases/tag/v1.37.0-dev.1"
+      ],
+      "changelogs": [],
+      "appliedPatches": [
+        "Smash Hit Premium Unlock"
+      ],
+      "skippedPatches": [],
+      "failedPatches": [],
+      "originBuild": "2026.10.03-3",
+      "publishedAt": "2026-10-03T16:48:06Z"
+    },
+    "smash-hit-byehi98-v1.5.14-all.apk": {
+      "name": "smash-hit-byehi98",
+      "version": "1.5.14",
+      "appKey": "smashhit",
+      "appName": "Smash Hit",
+      "arch": "all",
+      "fileType": "APK",
+      "brandKey": "byehi98",
+      "brandName": "Byehi98",
+      "variant": null,
+      "subVariant": null,
+      "packageName": "com.mediocre.smashhit",
+      "cli": "MorpheApp/morphe-desktop",
+      "patches": "byehi98/patches-1.36.2.mpp",
+      "patchesSource": "byehi98/okish-morphe-patches",
+      "engineBrand": null,
+      "patchBrand": "Byehi98",
+      "densities": [
+        "120",
+        "160",
+        "240",
+        "320",
+        "480",
+        "640",
+        "65534"
+      ],
+      "nativeLibraries": [
+        "arm64-v8a",
+        "armeabi-v7a",
+        "x86",
+        "x86_64"
+      ],
+      "minSdk": "26",
+      "versionCode": "1051400",
+      "patchSources": [
+        "byehi98/patches-1.36.2.mpp"
+      ],
+      "changelogUrls": [
+        "https://github.com/byehi98/okish-morphe-patches/releases/tag/v1.37.0-dev.1"
+      ],
+      "changelogs": [],
+      "appliedPatches": [
+        "Smash Hit Premium Unlock"
+      ],
+      "skippedPatches": [],
+      "failedPatches": [],
+      "originBuild": "2026.10.03-3",
+      "publishedAt": "2026-10-03T16:48:06Z"
+    },
+    "smash-hit-byehi98-v1.5.14-x86_64.apk": {
+      "name": "smash-hit-byehi98",
+      "version": "1.5.14",
+      "appKey": "smashhit",
+      "appName": "Smash Hit",
+      "arch": "x86_64",
+      "fileType": "APK",
+      "brandKey": "byehi98",
+      "brandName": "Byehi98",
+      "variant": null,
+      "subVariant": null,
+      "packageName": "com.mediocre.smashhit",
+      "cli": "MorpheApp/morphe-desktop",
+      "patches": "byehi98/patches-1.36.2.mpp",
+      "patchesSource": "byehi98/okish-morphe-patches",
+      "engineBrand": null,
+      "patchBrand": "Byehi98",
+      "densities": [
+        "120",
+        "160",
+        "240",
+        "320",
+        "480",
+        "640",
+        "65534"
+      ],
+      "nativeLibraries": [
+        "arm64-v8a",
+        "armeabi-v7a",
+        "x86",
+        "x86_64"
+      ],
+      "minSdk": "26",
+      "versionCode": "1051400",
+      "patchSources": [
+        "byehi98/patches-1.36.2.mpp"
+      ],
+      "changelogUrls": [
+        "https://github.com/byehi98/okish-morphe-patches/releases/tag/v1.37.0-dev.1"
+      ],
+      "changelogs": [],
+      "appliedPatches": [
+        "Smash Hit Premium Unlock"
+      ],
+      "skippedPatches": [],
+      "failedPatches": [],
+      "originBuild": "2026.10.03-3",
+      "publishedAt": "2026-10-03T16:48:06Z"
+    },
+    "smash-hit-byehi98-v1.5.14-armeabi-v7a.apk": {
+      "name": "smash-hit-byehi98",
+      "version": "1.5.14",
+      "appKey": "smashhit",
+      "appName": "Smash Hit",
+      "arch": "armeabi-v7a",
+      "fileType": "APK",
+      "brandKey": "byehi98",
+      "brandName": "Byehi98",
+      "variant": null,
+      "subVariant": null,
+      "packageName": "com.mediocre.smashhit",
+      "cli": "MorpheApp/morphe-desktop",
+      "patches": "byehi98/patches-1.36.2.mpp",
+      "patchesSource": "byehi98/okish-morphe-patches",
+      "engineBrand": null,
+      "patchBrand": "Byehi98",
+      "densities": [
+        "120",
+        "160",
+        "240",
+        "320",
+        "480",
+        "640",
+        "65534"
+      ],
+      "nativeLibraries": [
+        "arm64-v8a",
+        "armeabi-v7a",
+        "x86",
+        "x86_64"
+      ],
+      "minSdk": "26",
+      "versionCode": "1051400",
+      "patchSources": [
+        "byehi98/patches-1.36.2.mpp"
+      ],
+      "changelogUrls": [
+        "https://github.com/byehi98/okish-morphe-patches/releases/tag/v1.37.0-dev.1"
+      ],
+      "changelogs": [],
+      "appliedPatches": [
+        "Smash Hit Premium Unlock"
+      ],
+      "skippedPatches": [],
+      "failedPatches": [],
+      "originBuild": "2026.10.03-3",
+      "publishedAt": "2026-10-03T16:48:06Z"
+    },
+    "smash-hit-byehi98-v1.5.14-x86.apk": {
+      "name": "smash-hit-byehi98",
+      "version": "1.5.14",
+      "appKey": "smashhit",
+      "appName": "Smash Hit",
+      "arch": "x86",
+      "fileType": "APK",
+      "brandKey": "byehi98",
+      "brandName": "Byehi98",
+      "variant": null,
+      "subVariant": null,
+      "packageName": "com.mediocre.smashhit",
+      "cli": "MorpheApp/morphe-desktop",
+      "patches": "byehi98/patches-1.36.2.mpp",
+      "patchesSource": "byehi98/okish-morphe-patches",
+      "engineBrand": null,
+      "patchBrand": "Byehi98",
+      "densities": [
+        "120",
+        "160",
+        "240",
+        "320",
+        "480",
+        "640",
+        "65534"
+      ],
+      "nativeLibraries": [
+        "arm64-v8a",
+        "armeabi-v7a",
+        "x86",
+        "x86_64"
+      ],
+      "minSdk": "26",
+      "versionCode": "1051400",
+      "patchSources": [
+        "byehi98/patches-1.36.2.mpp"
+      ],
+      "changelogUrls": [
+        "https://github.com/byehi98/okish-morphe-patches/releases/tag/v1.37.0-dev.1"
+      ],
+      "changelogs": [],
+      "appliedPatches": [
+        "Smash Hit Premium Unlock"
+      ],
+      "skippedPatches": [],
+      "failedPatches": [],
+      "originBuild": "2026.10.03-3",
+      "publishedAt": "2026-10-03T16:48:06Z"
+    },
+    "jetpack-joyride-byehi98-v1.104.1-x86_64.apk": {
+      "name": "jetpack-joyride-byehi98",
+      "version": "1.104.1",
+      "appKey": "jetpackjoyride",
+      "appName": "Jetpack Joyride",
+      "arch": "x86_64",
+      "fileType": "APK",
+      "brandKey": "byehi98",
+      "brandName": "Byehi98",
+      "variant": null,
+      "subVariant": null,
+      "packageName": "com.halfbrick.jetpackjoyride",
+      "cli": "MorpheApp/morphe-desktop",
+      "patches": "byehi98/patches-1.36.2.mpp",
+      "patchesSource": "byehi98/okish-morphe-patches",
+      "engineBrand": null,
+      "patchBrand": "Byehi98",
+      "densities": [
+        "120",
+        "160",
+        "213",
+        "240",
+        "320",
+        "480",
+        "640",
+        "65534",
+        "65535"
+      ],
+      "nativeLibraries": [
+        "arm64-v8a",
+        "armeabi-v7a",
+        "x86",
+        "x86_64"
+      ],
+      "minSdk": "24",
+      "versionCode": "853070000",
+      "patchSources": [
+        "byehi98/patches-1.36.2.mpp"
+      ],
+      "changelogUrls": [
+        "https://github.com/byehi98/okish-morphe-patches/releases/tag/v1.37.0-dev.1"
+      ],
+      "changelogs": [],
+      "appliedPatches": [
+        "Jetpack Joyride Billing Bypass"
+      ],
+      "skippedPatches": [],
+      "failedPatches": [],
+      "originBuild": "2026.10.03-3",
+      "publishedAt": "2026-10-03T16:48:35Z"
+    },
+    "jetpack-joyride-byehi98-v1.104.1-arm64-v8a.apk": {
+      "name": "jetpack-joyride-byehi98",
+      "version": "1.104.1",
+      "appKey": "jetpackjoyride",
+      "appName": "Jetpack Joyride",
+      "arch": "arm64-v8a",
+      "fileType": "APK",
+      "brandKey": "byehi98",
+      "brandName": "Byehi98",
+      "variant": null,
+      "subVariant": null,
+      "packageName": "com.halfbrick.jetpackjoyride",
+      "cli": "MorpheApp/morphe-desktop",
+      "patches": "byehi98/patches-1.36.2.mpp",
+      "patchesSource": "byehi98/okish-morphe-patches",
+      "engineBrand": null,
+      "patchBrand": "Byehi98",
+      "densities": [
+        "120",
+        "160",
+        "213",
+        "240",
+        "320",
+        "480",
+        "640",
+        "65534",
+        "65535"
+      ],
+      "nativeLibraries": [
+        "arm64-v8a",
+        "armeabi-v7a",
+        "x86",
+        "x86_64"
+      ],
+      "minSdk": "24",
+      "versionCode": "853070000",
+      "patchSources": [
+        "byehi98/patches-1.36.2.mpp"
+      ],
+      "changelogUrls": [
+        "https://github.com/byehi98/okish-morphe-patches/releases/tag/v1.37.0-dev.1"
+      ],
+      "changelogs": [],
+      "appliedPatches": [
+        "Jetpack Joyride Billing Bypass"
+      ],
+      "skippedPatches": [],
+      "failedPatches": [],
+      "originBuild": "2026.10.03-3",
+      "publishedAt": "2026-10-03T16:48:35Z"
+    },
+    "jetpack-joyride-byehi98-v1.104.1-x86.apk": {
+      "name": "jetpack-joyride-byehi98",
+      "version": "1.104.1",
+      "appKey": "jetpackjoyride",
+      "appName": "Jetpack Joyride",
+      "arch": "x86",
+      "fileType": "APK",
+      "brandKey": "byehi98",
+      "brandName": "Byehi98",
+      "variant": null,
+      "subVariant": null,
+      "packageName": "com.halfbrick.jetpackjoyride",
+      "cli": "MorpheApp/morphe-desktop",
+      "patches": "byehi98/patches-1.36.2.mpp",
+      "patchesSource": "byehi98/okish-morphe-patches",
+      "engineBrand": null,
+      "patchBrand": "Byehi98",
+      "densities": [
+        "120",
+        "160",
+        "213",
+        "240",
+        "320",
+        "480",
+        "640",
+        "65534",
+        "65535"
+      ],
+      "nativeLibraries": [
+        "arm64-v8a",
+        "armeabi-v7a",
+        "x86",
+        "x86_64"
+      ],
+      "minSdk": "24",
+      "versionCode": "853070000",
+      "patchSources": [
+        "byehi98/patches-1.36.2.mpp"
+      ],
+      "changelogUrls": [
+        "https://github.com/byehi98/okish-morphe-patches/releases/tag/v1.37.0-dev.1"
+      ],
+      "changelogs": [],
+      "appliedPatches": [
+        "Jetpack Joyride Billing Bypass"
+      ],
+      "skippedPatches": [],
+      "failedPatches": [],
+      "originBuild": "2026.10.03-3",
+      "publishedAt": "2026-10-03T16:48:35Z"
+    },
+    "jetpack-joyride-byehi98-v1.104.1-all.apk": {
+      "name": "jetpack-joyride-byehi98",
+      "version": "1.104.1",
+      "appKey": "jetpackjoyride",
+      "appName": "Jetpack Joyride",
+      "arch": "all",
+      "fileType": "APK",
+      "brandKey": "byehi98",
+      "brandName": "Byehi98",
+      "variant": null,
+      "subVariant": null,
+      "packageName": "com.halfbrick.jetpackjoyride",
+      "cli": "MorpheApp/morphe-desktop",
+      "patches": "byehi98/patches-1.36.2.mpp",
+      "patchesSource": "byehi98/okish-morphe-patches",
+      "engineBrand": null,
+      "patchBrand": "Byehi98",
+      "densities": [
+        "120",
+        "160",
+        "213",
+        "240",
+        "320",
+        "480",
+        "640",
+        "65534",
+        "65535"
+      ],
+      "nativeLibraries": [
+        "arm64-v8a",
+        "armeabi-v7a",
+        "x86",
+        "x86_64"
+      ],
+      "minSdk": "24",
+      "versionCode": "853070000",
+      "patchSources": [
+        "byehi98/patches-1.36.2.mpp"
+      ],
+      "changelogUrls": [
+        "https://github.com/byehi98/okish-morphe-patches/releases/tag/v1.37.0-dev.1"
+      ],
+      "changelogs": [],
+      "appliedPatches": [
+        "Jetpack Joyride Billing Bypass"
+      ],
+      "skippedPatches": [],
+      "failedPatches": [],
+      "originBuild": "2026.10.03-3",
+      "publishedAt": "2026-10-03T16:48:35Z"
+    },
+    "jetpack-joyride-byehi98-v1.104.1-armeabi-v7a.apk": {
+      "name": "jetpack-joyride-byehi98",
+      "version": "1.104.1",
+      "appKey": "jetpackjoyride",
+      "appName": "Jetpack Joyride",
+      "arch": "armeabi-v7a",
+      "fileType": "APK",
+      "brandKey": "byehi98",
+      "brandName": "Byehi98",
+      "variant": null,
+      "subVariant": null,
+      "packageName": "com.halfbrick.jetpackjoyride",
+      "cli": "MorpheApp/morphe-desktop",
+      "patches": "byehi98/patches-1.36.2.mpp",
+      "patchesSource": "byehi98/okish-morphe-patches",
+      "engineBrand": null,
+      "patchBrand": "Byehi98",
+      "densities": [
+        "120",
+        "160",
+        "213",
+        "240",
+        "320",
+        "480",
+        "640",
+        "65534",
+        "65535"
+      ],
+      "nativeLibraries": [
+        "arm64-v8a",
+        "armeabi-v7a",
+        "x86",
+        "x86_64"
+      ],
+      "minSdk": "24",
+      "versionCode": "853070000",
+      "patchSources": [
+        "byehi98/patches-1.36.2.mpp"
+      ],
+      "changelogUrls": [
+        "https://github.com/byehi98/okish-morphe-patches/releases/tag/v1.37.0-dev.1"
+      ],
+      "changelogs": [],
+      "appliedPatches": [
+        "Jetpack Joyride Billing Bypass"
+      ],
+      "skippedPatches": [],
+      "failedPatches": [],
+      "originBuild": "2026.10.03-3",
+      "publishedAt": "2026-10-03T16:48:35Z"
+    },
+    "hill-climb-racing-byehi98-v1.72.2-armeabi-v7a.apk": {
+      "name": "hill-climb-racing-byehi98",
+      "version": "1.72.2",
+      "appKey": "hillclimbracing",
+      "appName": "Hill Climb Racing",
+      "arch": "armeabi-v7a",
+      "fileType": "APK",
+      "brandKey": "byehi98",
+      "brandName": "Byehi98",
+      "variant": null,
+      "subVariant": null,
+      "packageName": "com.fingersoft.hillclimb",
+      "cli": "MorpheApp/morphe-desktop",
+      "patches": "byehi98/patches-1.36.2.mpp",
+      "patchesSource": "byehi98/okish-morphe-patches",
+      "engineBrand": null,
+      "patchBrand": "Byehi98",
+      "densities": [
+        "160",
+        "240",
+        "320",
+        "480",
+        "640",
+        "65534",
+        "65535"
+      ],
+      "nativeLibraries": [
+        "arm64-v8a",
+        "armeabi-v7a"
+      ],
+      "minSdk": "24",
+      "versionCode": "936",
+      "patchSources": [
+        "byehi98/patches-1.36.2.mpp"
+      ],
+      "changelogUrls": [
+        "https://github.com/byehi98/okish-morphe-patches/releases/tag/v1.37.0-dev.1"
+      ],
+      "changelogs": [],
+      "appliedPatches": [
+        "Hill Climb Racing Ad Removal",
+        "Hill Climb Racing Free Store",
+        "Hill Climb Racing Instant Rewarded Video Rewards"
+      ],
+      "skippedPatches": [],
+      "failedPatches": [],
+      "originBuild": "2026.10.03-3",
+      "publishedAt": "2026-10-03T16:48:04Z"
     }
   }
 }
