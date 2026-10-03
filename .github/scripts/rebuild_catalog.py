@@ -47,6 +47,8 @@ def _load_rvb_naming():
         candidates.append(Path(env) / "naming.py")
     candidates.append(Path(__file__).resolve().parents[3] /
                       "rvb" / ".github" / "scripts" / "naming.py")
+    candidates.append(Path(__file__).resolve().parents[3] /
+                      "patched-apks-builder-2nd" / ".github" / "scripts" / "naming.py")
     for path in candidates:
         if path.is_file():
             try:
@@ -742,7 +744,7 @@ def main():
     ap.add_argument("--rvb-repo", default=os.environ.get("RVB_REPO", "sharath-5br2r-apps/rvb"),
                     help="rvb repository name that uses manifest-dir")
     ap.add_argument("--manifest-dir", default=None,
-                    help="checkout of rvb's update branch; when set, manifests for rvb "
+                    help="checkout of rvb's website branch; when set, manifests for rvb "
                          "are read from disk instead of release assets")
     ap.add_argument("--out", default="data.json", help="Output path for data.json")
     ap.add_argument("--existing", default=None, help="Existing data.json for shrink checks")
