@@ -64,20 +64,20 @@
       "com.halfbrick.jetpackjoyride": "84f98d8933229ee632c07b93e244129c",
       "com.mediocre.smashhit": "6cbd6dd6a9951ce0b422e1c4c0d07d1e",
       "com.nekki.vector": "d2e9ecf8b3d0994235a67570402df245",
-      "shared": "0d86df841af8a21b7e2caadf0838a6b3"
+      "shared": "03811e0515648d4ae962bb21054d03c4"
     },
     "stable": {
       "com.fingersoft.hillclimb": "acb0e3f4c60d31b1cf68181a62e2c0d3",
       "com.halfbrick.jetpackjoyride": "84f98d8933229ee632c07b93e244129c",
       "com.mediocre.smashhit": "6cbd6dd6a9951ce0b422e1c4c0d07d1e",
       "com.nekki.vector": "d2e9ecf8b3d0994235a67570402df245",
-      "shared": "ce284a19191d895573331fa9d60e7459"
+      "shared": "03811e0515648d4ae962bb21054d03c4"
     }
   },
   "ch3thanhs/stylus": {
     "beta": {
       "com.x8bit.bitwarden": "cc6b03c83af9ea448f5b2e197afb2831",
-      "shared": "818c43aebd0337b0812ade32e9eeaf07"
+      "shared": "20e99b0749a804e3683ca72fad92d51f"
     },
     "stable": {
       "com.x8bit.bitwarden": "cc6b03c83af9ea448f5b2e197afb2831",
@@ -106,26 +106,26 @@
   },
   "hoo-dles/morphe-patches": {
     "beta": {
-      "bitpit.launcher": "fddbee01a3c61bb6a72e1cce707dc5bc",
-      "cn.wps.moffice_eng": "fddbee01a3c61bb6a72e1cce707dc5bc",
-      "com.adobe.lrmobile": "fddbee01a3c61bb6a72e1cce707dc5bc",
-      "com.amazon.avod.thirdpartyclient": "fddbee01a3c61bb6a72e1cce707dc5bc",
-      "com.bambuna.podcastaddict": "3af22487b4e29bd5bc8463cff17abfc9",
-      "com.duolingo": "cbd436e3bbefe00d8b8ec0bd0f2db409",
-      "com.goodreads": "fff23c3dbc34d95f7c6811a23f704e71",
-      "com.hellochinese": "d61ba471593432a3531817306d2bcb3c",
-      "com.intsig.camscanner": "80ccc81c7566f3624a97b81862bd8758",
-      "com.merriamwebster": "fddbee01a3c61bb6a72e1cce707dc5bc",
-      "com.myfitnesspal.android": "a42d0c7b71d418085c63e1e32c2832d6",
-      "com.pandora.android": "7162987022db9820fdc00eaae409b665",
-      "com.teslacoilsw.launcher": "fddbee01a3c61bb6a72e1cce707dc5bc",
-      "com.wallpaperscraft.wallpaper": "d0c712522736d0eee07c5afefedfcad7",
-      "com.xodo.pdf.reader": "20f22d7876cd4fdbef730717f6cc1695",
-      "cz.ackee.ventusky": "1c375f60c40db59f43808e9411bfa751",
-      "ginlemon.flowerfree": "fddbee01a3c61bb6a72e1cce707dc5bc",
-      "pl.solidexplorer2": "fddbee01a3c61bb6a72e1cce707dc5bc",
-      "shared": "b8e9c2ea552b3ab6be1d146fea1be5e9",
-      "videoeditor.videorecorder.screenrecorder": "2f29672019680bfca2d144733eaf8e44"
+      "bitpit.launcher": "43bd6d883c973d420207178826caf064",
+      "cn.wps.moffice_eng": "43bd6d883c973d420207178826caf064",
+      "com.adobe.lrmobile": "43bd6d883c973d420207178826caf064",
+      "com.amazon.avod.thirdpartyclient": "43bd6d883c973d420207178826caf064",
+      "com.bambuna.podcastaddict": "cc52133e257d95c932a55f021789a94d",
+      "com.duolingo": "6fced5ad23b463ea609ec4ce1b9281ee",
+      "com.goodreads": "923a435769644dbb09a2cab484f577b5",
+      "com.hellochinese": "153acba5093a14433199c3c18d7b7ac8",
+      "com.intsig.camscanner": "ba7b66fe03333f15d7c1417f44366fda",
+      "com.merriamwebster": "43bd6d883c973d420207178826caf064",
+      "com.myfitnesspal.android": "24bedd69578647102ab5eff5ffd13e4e",
+      "com.pandora.android": "518e555a4cec2c39e3dabb1402c60f24",
+      "com.teslacoilsw.launcher": "43bd6d883c973d420207178826caf064",
+      "com.wallpaperscraft.wallpaper": "39f3f77c1118182079fb0b8f71b402d3",
+      "com.xodo.pdf.reader": "7da9c0a933cb7a61342a51e6889e693c",
+      "cz.ackee.ventusky": "7b6ca6a552a869866935eb732ccfdf9b",
+      "ginlemon.flowerfree": "43bd6d883c973d420207178826caf064",
+      "pl.solidexplorer2": "43bd6d883c973d420207178826caf064",
+      "shared": "92c359e70af0048f6dbe18b8dac66509",
+      "videoeditor.videorecorder.screenrecorder": "fb4b0f58c0b315eed01b3dd77d9a7144"
     },
     "stable": {
       "bitpit.launcher": "7614c2c49bd328dd8f7e0b04a9ba6a0f",
@@ -206,9 +206,9 @@
   },
   "morpheapp/morphe-patches": {
     "beta": {
-      "com.google.android.apps.youtube.music": "203f70c3d0e73804875c951c88ac4fbe",
-      "com.google.android.youtube": "6967b495d10a56cfe64770e0fa56adf8",
-      "shared": "b3107d2812accb0de4a9ece755172e69"
+      "com.google.android.apps.youtube.music": "491dfa4e93bb7c2a131865d4a6469944",
+      "com.google.android.youtube": "ec94a2903cca21646f1388517a6a5e62",
+      "shared": "432af54919dffbc7ad13cdcfc4510224"
     },
     "stable": {
       "com.google.android.apps.youtube.music": "d913b50d8f4a9ce0734ef1d1b3764a9f",
