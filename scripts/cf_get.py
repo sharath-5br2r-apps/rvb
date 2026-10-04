@@ -1,62 +1,53 @@
 #!/usr/bin/env python3
-"""Cloudflare fetch helper with curl_cffi impersonation and solver fallback."""
-import os
-import time
+"""Cloudflare fetch helper with multiple bypass methods.
+
+Priority order for HTML fetches:
+  1. cf-bypasser (CFB)
+  2. Trawl / 8191 solver
+  3. FlareSolverr
+  4. curl_cffi browser impersonation
+
+Each method checks the response for Cloudflare challenge HTML before
+accepting it; if detected, it is logged and the next method is tried.
+"""
 import json
 import os
 import sys
 import time
-import urllib.request
 import urllib.error
 import urllib.parse
+import urllib.request
 
 # ---------------------------------------------------------------------------
 # Optional dependency: curl_cffi
 # ---------------------------------------------------------------------------
 try:
-    from curl_cffi import requests
-    from curl_cffi.requests import Response
-    cffi_requests = requests
+    from curl_cffi import requests as cffi_requests
     _HAS_CFFI = True
 except ImportError:
-    # Exit 2: curl_cffi not installed, caller should fall back to curl/solver
-    sys.exit(2)
+    cffi_requests = None
+    _HAS_CFFI = False
 
 MAX_RETRIES = 5
-_TRAWL_READY = set()
-DEFAULT_UA = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 Chrome/133.0.0.0 Safari/537.36"
+_TRAWL_READY: set = set()
+DEFAULT_UA = (
+    "Mozilla/5.0 (Windows NT 10.0; Win64; x64) "
+    "AppleWebKit/537.36 Chrome/133.0.0.0 Safari/537.36"
+)
 
 
-def get_impersonate_targets() -> list[str]:
-    """Return supported curl_cffi browser profiles, newest/highest priority first."""
-    targets = []
-    try:
-        from curl_cffi.requests import BrowserType
-        members = [m.value for m in BrowserType if hasattr(m, "value")]
-        import re
-
-        def key(name):
-            match = re.search(r"\d+", str(name))
-            version = int(match.group()) if match else 0
-            lowered = str(name).lower()
-            family = 3 if "chrome" in lowered and "android" not in lowered else 2 if "safari" in lowered else 1 if "edge" in lowered else 0
-            return family, version
-
-        for target in sorted(members, key=key, reverse=True):
-            if target not in targets:
-                targets.append(target)
-    except Exception:
-        pass
-    for target in ("chrome", "safari"):
-        if target not in targets:
-            targets.append(target)
-    return targets[:8]
+# ---------------------------------------------------------------------------
+# Cloudflare challenge / interstitial detection
+# ---------------------------------------------------------------------------
 
 def is_challenge(status_code: int, text: str, headers: dict = None) -> bool:
+    """Return True when the response looks like a Cloudflare challenge page."""
     if status_code in (403, 503):
         return True
-    if headers and "cf-mitigated" in headers:
-        return True
+    if headers:
+        h = {k.lower(): v for k, v in headers.items()} if isinstance(headers, dict) else headers
+        if "cf-mitigated" in h:
+            return True
     lower = (text or "").lower()
     return any(phrase in lower for phrase in (
         "just a moment...",
@@ -68,8 +59,32 @@ def is_challenge(status_code: int, text: str, headers: dict = None) -> bool:
         "challenges.cloudflare.com",
         "__cf_chl_",
         "/cdn-cgi/challenge-platform/",
-        "challenges.cloudflare.com",
+        "cdn-cgi/challenge-platform",
+        "ray id:",
+        "checking your browser",
+        "cf-browser-verification",
     ))
+
+
+def is_cf_html(text: str) -> bool:
+    """Return True when *text* is an HTML page (CF interstitial or otherwise).
+
+    Used to reject any method's response that delivers an HTML page instead
+    of the real content, even when the server answers 200 OK.
+    """
+    if not text:
+        return False
+    lower = text.lstrip("\ufeff \t\r\n").lower()
+    if is_challenge(200, text):
+        return True
+    return (
+        lower.startswith("<!doctype html")
+        or lower.startswith("<html")
+        or lower.startswith("<head")
+        or lower.startswith("<body")
+        or "<meta http-equiv=" in lower[:4096]
+        or "<title>" in lower[:4096]
+    )
 
 
 def is_valid_download(path: str, content_type: str = "") -> bool:
@@ -98,6 +113,37 @@ def is_valid_download(path: str, content_type: str = "") -> bool:
         return False
 
 
+def html_interstitial(head: bytes, headers) -> bool:
+    """True when a HTTP-200 body is an HTML page rather than the file requested."""
+    ct = ""
+    try:
+        ct = (headers.get("content-type") or "").lower()
+    except Exception:
+        pass
+    if "text/html" in ct or "application/xml" in ct:
+        return True
+    probe = (head or b"")[:64].lstrip()
+    return probe[:1] == b"<"
+
+
+# ---------------------------------------------------------------------------
+# Success / exit helper
+# ---------------------------------------------------------------------------
+
+def ok(html: str, cf_cookies: str = "", user_agent: str = "") -> None:
+    """Write the success JSON envelope and exit 0."""
+    sys.stdout.write(json.dumps({
+        "html": html,
+        "cf_cookies": cf_cookies,
+        "user_agent": user_agent or DEFAULT_UA,
+    }))
+    sys.exit(0)
+
+
+# ---------------------------------------------------------------------------
+# File-lock helper (serialise concurrent cf_get invocations)
+# ---------------------------------------------------------------------------
+
 def acquire_lock(lock_file: str):
     """Acquire an exclusive file lock to serialise concurrent cf_get calls."""
     try:
@@ -112,13 +158,16 @@ def acquire_lock(lock_file: str):
                 msvcrt.locking(fd.fileno(), msvcrt.LK_LOCK, 1)
             except Exception:
                 pass
-        # Keep fd alive for the process lifetime — OS releases on exit.
         return fd
     except OSError:
         return None
 
 
-def load_cookies(cookie_file: str, session) -> None:
+# ---------------------------------------------------------------------------
+# Cookie helpers (used by curl_cffi path)
+# ---------------------------------------------------------------------------
+
+def load_cookies(session, cookie_file: str) -> None:
     """Load a Netscape cookie file into a curl_cffi Session."""
     if not cookie_file or not os.path.isfile(cookie_file):
         return
@@ -127,76 +176,153 @@ def load_cookies(cookie_file: str, session) -> None:
             for line in f:
                 parts = line.strip().split("\t")
                 if len(parts) >= 7 and not line.startswith("#"):
-                    session.cookies.set(parts[5], parts[6], domain=parts[0])
+                    session.cookies.set(
+                        parts[5], parts[6], domain=parts[0], path=parts[2]
+                    )
     except Exception:
         pass
+
+    # Also load a companion user-agent file if present.
+    temp_dir = os.path.dirname(os.path.abspath(cookie_file))
+    ua_path = os.path.join(temp_dir, "cf_ua.txt")
+    if os.path.isfile(ua_path):
+        try:
+            with open(ua_path, "r", encoding="utf-8", errors="ignore") as f:
+                ua = f.read().strip()
+            if ua:
+                session.headers["User-Agent"] = ua
+        except Exception:
+            pass
 
 
 def cookies_to_header_str(session) -> str:
     """Return a 'name=value; ...' string from all cookies in the session jar."""
     try:
-        return "; ".join(
-            f"{c.name}={c.value}"
-            for c in session.cookies.jar
-            if c.name and c.value
-        )
+        jar = getattr(session.cookies, "jar", None)
+        if jar is not None:
+            return "; ".join(
+                f"{c.name}={c.value}" for c in jar if c.name and c.value
+            )
+        if hasattr(session.cookies, "items"):
+            return "; ".join(f"{k}={v}" for k, v in session.cookies.items())
     except Exception:
-        return ""
+        pass
+    return ""
 
 
-def dump_cookies_to_file(session, cookie_file: str) -> None:
-    """Write all session cookies back to the Netscape cookie file.
-
-    Format per line (tab-separated):
-        domain  include_subdomains  path  secure  expires  name  value
-    """
+def save_cookies(session, cookie_file: str, user_agent: str = "") -> None:
+    """Write session cookies back to a Netscape cookie file."""
     if not cookie_file:
         return
     try:
-        lines = ["# Netscape HTTP Cookie File\n"]
-        for c in session.cookies.jar:
-            domain  = c.domain or ""
-            flag    = "TRUE" if domain.startswith(".") else "FALSE"
-            path    = c.path or "/"
-            secure  = "TRUE" if c.secure else "FALSE"
-            # expires may be None for session cookies — use 0 in that case
-            expires = str(int(c.expires)) if c.expires else "0"
-            name    = c.name  or ""
-            value   = c.value or ""
-            lines.append(
-                f"{domain}\t{flag}\t{path}\t{secure}\t{expires}\t{name}\t{value}\n"
-            )
+        temp_dir = os.path.dirname(os.path.abspath(cookie_file))
+        os.makedirs(temp_dir, exist_ok=True)
+        jar = getattr(session.cookies, "jar", None)
         with open(cookie_file, "w", encoding="utf-8") as f:
-            f.writelines(lines)
+            f.write("# Netscape HTTP Cookie File\n")
+            if jar is not None:
+                for c in jar:
+                    domain = getattr(c, "domain", "") or ""
+                    flag = "TRUE" if domain.startswith(".") else "FALSE"
+                    path = getattr(c, "path", "/") or "/"
+                    secure = "TRUE" if getattr(c, "secure", False) else "FALSE"
+                    expires = str(int(getattr(c, "expires", 0) or 0))
+                    name = getattr(c, "name", "") or ""
+                    val = getattr(c, "value", "") or ""
+                    f.write(
+                        f"{domain}\t{flag}\t{path}\t{secure}\t{expires}\t{name}\t{val}\n"
+                    )
+            elif hasattr(session.cookies, "items"):
+                for name, val in session.cookies.items():
+                    f.write(f"\tTRUE\t/\tFALSE\t0\t{name}\t{val}\n")
+
+        if user_agent:
+            with open(os.path.join(temp_dir, "cf_ua.txt"), "w", encoding="utf-8") as f:
+                f.write(user_agent)
+
+        cookie_header = cookies_to_header_str(session)
+        if cookie_header:
+            with open(os.path.join(temp_dir, "cf_cookies.txt"), "w", encoding="utf-8") as f:
+                f.write(cookie_header)
     except Exception:
         pass
 
 
-def ok(html: str, cf_cookies: str = "", user_agent: str = "") -> None:
-    """Write the success JSON envelope and exit 0."""
-    sys.stdout.write(json.dumps({
-        "html": html,
-        "cf_cookies": cf_cookies,
-        "user_agent": user_agent or DEFAULT_UA,
-    }))
-    sys.exit(0)
-
-
-
 # ---------------------------------------------------------------------------
-# Method 1: plain urllib fallback (no impersonation)
+# curl_cffi impersonation targets
 # ---------------------------------------------------------------------------
 
-def fallback_get(url: str, cookie_file: str) -> None:
-    """Plain HTTP GET using stdlib urllib, mirroring _fallback_get in utils.sh."""
+def get_impersonate_targets() -> list:
+    """Return supported curl_cffi browser profiles, newest/highest priority first."""
+    targets = []
     try:
-        req = urllib.request.Request(url, headers={"User-Agent": DEFAULT_UA})
-        with urllib.request.urlopen(req, timeout=10) as resp:
-            text = resp.read().decode("utf-8", errors="replace")
-        if text and not is_challenge(resp.status, text):
-            ok(text, cf_cookies="", user_agent=DEFAULT_UA)
+        from curl_cffi.requests import BrowserType
+        import re
+
+        def key(name):
+            match = re.search(r"\d+", str(name))
+            version = int(match.group()) if match else 0
+            lowered = str(name).lower()
+            family = (
+                3 if "chrome" in lowered and "android" not in lowered
+                else 2 if "safari" in lowered
+                else 1 if "edge" in lowered
+                else 0
+            )
+            return family, version
+
+        members = [m.value for m in BrowserType if hasattr(m, "value")]
+        for target in sorted(members, key=key, reverse=True):
+            if target not in targets:
+                targets.append(target)
     except Exception:
         pass
+
+    for target in ("chrome", "safari"):
+        if target not in targets:
+            targets.append(target)
+    return targets[:8]
+
+
+# ---------------------------------------------------------------------------
+# Method 1: cf-bypasser (CFB) sidecar  [highest priority]
+# ---------------------------------------------------------------------------
+
+def cfb_get(url: str, referer: str = "") -> None:
+    """GET via cf-bypasser sidecar.
+
+    On success with real content (no CF HTML detected) calls ok() and exits.
+    If the response contains Cloudflare challenge/interstitial HTML, logs a
+    warning and returns so the next method can be tried.
+    """
+    cfb_base = (os.environ.get("CFB_URL") or "").rstrip("/")
+    if not cfb_base:
+        return
+
+    solver_url = cfb_base + "/html"
+    params = urllib.parse.urlencode({"url": url})
+    full_url = f"{solver_url}?{params}"
+
+    for attempt in range(1, MAX_RETRIES + 1):
+        try:
+            req = urllib.request.Request(full_url, headers={"User-Agent": DEFAULT_UA})
+            with urllib.request.urlopen(req, timeout=30) as resp:
+                html = resp.read().decode("utf-8", errors="replace")
+                headers = {k.lower(): v for k, v in resp.headers.items()}
+            if resp.status == 200 and html:
+                if is_challenge(resp.status, html, headers) or is_cf_html(html):
+                    sys.stderr.write(
+                        f"[cf_get] cfb attempt {attempt}: CF HTML detected "
+                        f"(status={resp.status}); retrying.\n"
+                    )
+                else:
+                    cf_cookies = headers.get("x-cf-bypasser-cookies", "").strip()
+                    ua = headers.get("x-cf-bypasser-user-agent", "").strip() or DEFAULT_UA
+                    ok(html, cf_cookies=cf_cookies, user_agent=ua)
+        except Exception as exc:
+            sys.stderr.write(f"[cf_get] cfb attempt {attempt} error: {exc}\n")
+        if attempt < MAX_RETRIES:
+            time.sleep(2)
 
 
 # ---------------------------------------------------------------------------
@@ -204,16 +330,17 @@ def fallback_get(url: str, cookie_file: str) -> None:
 # ---------------------------------------------------------------------------
 
 def trawl_get(url: str, referer: str = "") -> None:
-    """POST to a Trawl/8191 solver, mirroring _trawl_get in utils.sh."""
-    trawl_base = (
-        os.environ.get("TRAWL_URL") or
-        ""
-    ).rstrip("/")
+    """POST to a Trawl/8191 solver.
+
+    On success with real content (no CF HTML detected) calls ok() and exits.
+    If the response contains Cloudflare challenge/interstitial HTML, logs a
+    warning and returns so the next method can be tried.
+    """
+    trawl_base = (os.environ.get("TRAWL_URL") or "").rstrip("/")
     if not trawl_base:
         return
 
-    # Keep readiness polling inside the Python solver so every caller shares
-    # the same health/retry behavior and utils.sh has no duplicate trawl code.
+    # Health-check once per base URL.
     if trawl_base not in _TRAWL_READY:
         health_url = trawl_base + "/health"
         ready = False
@@ -227,6 +354,7 @@ def trawl_get(url: str, referer: str = "") -> None:
                 pass
             time.sleep(3)
         if not ready:
+            sys.stderr.write("[cf_get] trawl: health check failed; skipping.\n")
             return
         _TRAWL_READY.add(trawl_base)
 
@@ -243,13 +371,20 @@ def trawl_get(url: str, referer: str = "") -> None:
                 headers={"Content-Type": "application/json"},
                 method="POST",
             )
-            with urllib.request.urlopen(req, timeout=15) as resp:
+            with urllib.request.urlopen(req, timeout=70) as resp:
                 body = resp.read().decode("utf-8", errors="replace")
             result = json.loads(body)
             status = result.get("statusCode", 0)
             if isinstance(status, int) and 100 <= status < 400:
                 html = result.get("html") or ""
-                if html and not is_challenge(status, html):
+                if not html:
+                    pass
+                elif is_challenge(status, html) or is_cf_html(html):
+                    sys.stderr.write(
+                        f"[cf_get] trawl attempt {attempt}: CF HTML detected "
+                        f"(statusCode={status}); retrying.\n"
+                    )
+                else:
                     ua = result.get("userAgent") or DEFAULT_UA
                     cookies = "; ".join(
                         f"{c['name']}={c['value']}"
@@ -257,99 +392,34 @@ def trawl_get(url: str, referer: str = "") -> None:
                         if "name" in c and "value" in c
                     )
                     ok(html, cf_cookies=cookies, user_agent=ua)
-        except Exception:
-            pass
+        except Exception as exc:
+            sys.stderr.write(f"[cf_get] trawl attempt {attempt} error: {exc}\n")
         if attempt < MAX_RETRIES:
             time.sleep(2)
 
 
 # ---------------------------------------------------------------------------
-# Method 3: curl_cffi browser impersonation
-# ---------------------------------------------------------------------------
-
-def curl_cffi_get(url: str, cookie_file: str) -> None:
-    """Unified Python GET using curl_cffi browser impersonation when available."""
-    if not _HAS_CFFI:
-        return
-
-    impersonate_targets = [
-        "safari180",
-        "chrome131_android",
-        "firefox133",
-        "safari170",
-        "chrome131",
-        "chrome124",
-        "chrome120",
-        "chrome110",
-    ][:MAX_RETRIES]
-
-    for imp in impersonate_targets:
-        try:
-            s = cffi_requests.Session(impersonate=imp)
-            load_cookies(s, cookie_file)
-            resp = s.get(url, timeout=15, allow_redirects=True)
-            if is_challenge(resp.status_code, resp.text):
-                sys.stderr.write(f"[cf_get] Cloudflare page detected via curl_cffi ({resp.status_code}); trying the next method.\n")
-                continue
-            if resp.status_code == 200 and resp.text:
-                cf_cookies = cookies_to_header_str(s)
-                dump_cookies_to_file(s, cookie_file)
-                ok(resp.text, cf_cookies=cf_cookies, user_agent=DEFAULT_UA)
-        except Exception:
-            continue
-
-
-
-# ---------------------------------------------------------------------------
-# Method 4: cf-bypasser (CFB) sidecar
-# ---------------------------------------------------------------------------
-
-def cfb_get(url: str, referer: str = "") -> None:
-    """GET via cf-bypasser sidecar, mirroring _cfb_get in utils.sh."""
-    cfb_base = (
-        os.environ.get("CFB_URL") or
-        ""
-    ).rstrip("/")
-    if not cfb_base:
-        return
-
-    solver_url = cfb_base + "/html"
-    params = urllib.parse.urlencode({"url": url})
-    full_url = f"{solver_url}?{params}"
-
-    for attempt in range(1, MAX_RETRIES + 1):
-        try:
-            req = urllib.request.Request(full_url, headers={"User-Agent": DEFAULT_UA})
-            with urllib.request.urlopen(req, timeout=15) as resp:
-                html = resp.read().decode("utf-8", errors="replace")
-                headers = {k.lower(): v for k, v in resp.headers.items()}
-            if resp.status == 200 and html and not is_challenge(resp.status, html):
-                cf_cookies = headers.get("x-cf-bypasser-cookies", "").strip()
-                ua = headers.get("x-cf-bypasser-user-agent", "").strip() or DEFAULT_UA
-                ok(html, cf_cookies=cf_cookies, user_agent=ua)
-        except Exception:
-            pass
-        if attempt < MAX_RETRIES:
-            time.sleep(2)
-
-
-# ---------------------------------------------------------------------------
-# Method 5: FlareSolverr
+# Method 3: FlareSolverr
 # ---------------------------------------------------------------------------
 
 def fs_get(url: str, referer: str = "") -> None:
-    """POST to FlareSolverr, mirroring _fs_get in utils.sh."""
+    """POST to FlareSolverr.
+
+    On success with real content (no CF HTML detected) calls ok() and exits.
+    If the response contains Cloudflare challenge/interstitial HTML, logs a
+    warning and returns so the next method can be tried.
+    """
     fs_base = (
-        os.environ.get("FS_URL") or
-        os.environ.get("FLARESOLVERR_URL") or
-        os.environ.get("CF_BYPASS_SOLVER_FS_URL") or
-        ""
+        os.environ.get("FS_URL")
+        or os.environ.get("FLARESOLVERR_URL")
+        or os.environ.get("CF_BYPASS_SOLVER_FS_URL")
+        or ""
     ).rstrip("/")
     if not fs_base:
         return
 
     solver_url = fs_base + "/v1"
-    payload: dict = {"cmd": "request.get", "url": url, "maxTimeout": 15000}
+    payload: dict = {"cmd": "request.get", "url": url, "maxTimeout": 60000}
     if referer:
         payload["headers"] = {"Referer": referer}
 
@@ -361,113 +431,83 @@ def fs_get(url: str, referer: str = "") -> None:
                 headers={"Content-Type": "application/json"},
                 method="POST",
             )
-            with urllib.request.urlopen(req, timeout=20) as resp:
+            with urllib.request.urlopen(req, timeout=70) as resp:
                 body = resp.read().decode("utf-8", errors="replace")
             result = json.loads(body)
             if result.get("status") == "ok":
-                html = result.get("solution", {}).get("response") or ""
-                if html and not is_challenge(200, html):
+                solution = result.get("solution", {})
+                html = solution.get("response") or ""
+                if not html:
+                    pass
+                elif is_challenge(200, html) or is_cf_html(html):
+                    sys.stderr.write(
+                        f"[cf_get] flaresolverr attempt {attempt}: CF HTML detected; retrying.\n"
+                    )
+                else:
                     cookies = "; ".join(
                         f"{c['name']}={c['value']}"
-                        for c in result.get("solution", {}).get("cookies", [])
+                        for c in solution.get("cookies", [])
                         if "name" in c and "value" in c
                     )
-                    ua = result.get("solution", {}).get("userAgent") or DEFAULT_UA
+                    ua = solution.get("userAgent") or DEFAULT_UA
                     ok(html, cf_cookies=cookies, user_agent=ua)
-        except Exception:
-            pass
+        except Exception as exc:
+            sys.stderr.write(f"[cf_get] flaresolverr attempt {attempt} error: {exc}\n")
         if attempt < MAX_RETRIES:
             time.sleep(2)
 
 
 # ---------------------------------------------------------------------------
-# Entry point
+# Method 4: curl_cffi browser impersonation  [lowest priority]
 # ---------------------------------------------------------------------------
-    # Ensure standard aliases are prioritized
-    if "chrome" not in targets:
-        targets.insert(0, "chrome")
-    if "safari" not in targets:
-        targets.append("safari")
 
-    return targets[:8]
+def curl_cffi_get(url: str, cookie_file: str) -> None:
+    """GET using curl_cffi browser impersonation.
 
-
-def load_cookies(session, cookie_file: str):
-    if not cookie_file or not os.path.isfile(cookie_file):
+    On success with real content (no CF HTML detected) calls ok() and exits.
+    If the response contains Cloudflare challenge/interstitial HTML, logs a
+    warning and tries the next impersonation profile.  Returns (without
+    calling ok()) when all profiles are exhausted.
+    """
+    if not _HAS_CFFI:
+        sys.stderr.write("[cf_get] curl_cffi not available; skipping.\n")
         return
-    try:
-        with open(cookie_file, "r", encoding="utf-8", errors="ignore") as f:
-            for line in f:
-                parts = line.strip().split("\t")
-                if len(parts) >= 7 and not line.startswith("#"):
-                    session.cookies.set(
-                        parts[5], parts[6], domain=parts[0], path=parts[2])
-    except Exception:
-        pass
 
-    # Check companion user agent file if available
-    temp_dir = os.path.dirname(os.path.abspath(cookie_file))
-    ua_path = os.path.join(temp_dir, "cf_ua.txt")
-    if os.path.isfile(ua_path):
+    impersonate_targets = get_impersonate_targets()[:MAX_RETRIES]
+
+    for imp in impersonate_targets:
         try:
-            with open(ua_path, "r", encoding="utf-8", errors="ignore") as f:
-                ua = f.read().strip()
-                if ua:
-                    session.headers["User-Agent"] = ua
-        except Exception:
-            pass
+            s = cffi_requests.Session(impersonate=imp)
+            load_cookies(s, cookie_file)
+            resp = s.get(url, timeout=15, allow_redirects=True)
+            if is_challenge(resp.status_code, resp.text,
+                            dict(getattr(resp, "headers", {}))):
+                sys.stderr.write(
+                    f"[cf_get] curl_cffi ({imp}): CF challenge page "
+                    f"(status={resp.status_code}); trying next profile.\n"
+                )
+                continue
+            if is_cf_html(resp.text):
+                sys.stderr.write(
+                    f"[cf_get] curl_cffi ({imp}): CF HTML interstitial detected "
+                    f"(status={resp.status_code}); trying next profile.\n"
+                )
+                continue
+            if resp.status_code == 200 and resp.text:
+                cf_cookies = cookies_to_header_str(s)
+                save_cookies(s, cookie_file)
+                ok(resp.text, cf_cookies=cf_cookies, user_agent=DEFAULT_UA)
+        except Exception as exc:
+            sys.stderr.write(f"[cf_get] curl_cffi ({imp}) error: {exc}\n")
+            continue
 
 
-def save_cookies(session, cookie_file: str, user_agent: str = ""):
-    if not cookie_file:
-        return
-    try:
-        temp_dir = os.path.dirname(os.path.abspath(cookie_file))
-        os.makedirs(temp_dir, exist_ok=True)
-        jar = getattr(session.cookies, "jar", None)
-        with open(cookie_file, "w", encoding="utf-8") as f:
-            f.write("# Netscape HTTP Cookie File\n")
-            if jar is not None:
-                for c in jar:
-                    domain = getattr(c, "domain", "") or ""
-                    path = getattr(c, "path", "/") or "/"
-                    secure = "TRUE" if getattr(c, "secure", False) else "FALSE"
-                    expires = str(int(getattr(c, "expires", 0) or 0))
-                    name = getattr(c, "name", "")
-                    val = getattr(c, "value", "")
-                    f.write(
-                        f"{domain}\tTRUE\t{path}\t{secure}\t{expires}\t{name}\t{val}\n")
-            elif hasattr(session.cookies, "items"):
-                for name, val in session.cookies.items():
-                    f.write(f"\tTRUE\t/\tFALSE\t0\t{name}\t{val}\n")
-
-        if user_agent:
-            with open(os.path.join(temp_dir, "cf_ua.txt"), "w", encoding="utf-8") as f:
-                f.write(user_agent)
-
-        if hasattr(session.cookies, "items"):
-            cookie_header = "; ".join(
-                f"{k}={v}" for k, v in session.cookies.items())
-        elif jar is not None:
-            cookie_header = "; ".join(
-                f"{c.name}={c.value}" for c in jar if hasattr(c, "name"))
-        else:
-            cookie_header = ""
-        if cookie_header:
-            with open(os.path.join(temp_dir, "cf_cookies.txt"), "w", encoding="utf-8") as f:
-                f.write(cookie_header)
-    except Exception:
-        pass
+# ---------------------------------------------------------------------------
+# Download helper (used by the "download" subcommand)
+# ---------------------------------------------------------------------------
 
 def effective_url(resp, fallback: str) -> str:
-    """The URL a response actually came from, after following redirects.
-
-    A Cloudflare clearance belongs to the host that issued the challenge, and
-    solve_challenge() can only solve for the one URL it is given. Downloads that hop
-    across hosts (apkcombo.com -> download.pureapk.com -> apkpure.com/url) get their
-    challenge from the LAST host, so solving for the URL we first requested returns a
-    cookie that can never unlock it. resp.url is where we ended up.
-    """
+    """The URL a response actually landed on after redirects."""
     try:
         u = str(getattr(resp, "url", "") or "")
     except Exception:
@@ -475,40 +515,22 @@ def effective_url(resp, fallback: str) -> str:
     return u or fallback
 
 
-def html_interstitial(head: bytes, headers) -> bool:
-    """True when a HTTP-200 body is an HTML page rather than the file being fetched.
-
-    download_file() used to trust status == 200 alone, and passed an empty string as
-    the body to is_challenge(), so an interstitial answering 200 was written to the
-    destination as the .apk and reported as a successful download. APKPure's
-    "Redirecting" page does exactly that to one of the browser fingerprints tried, so
-    the caller only caught it later via the archive check, after the junk was saved.
-    """
-    ct = ""
+def solve_challenge(url: str, session) -> tuple:
+    """Ask the configured CF solver sidecar for clearance cookies."""
+    solver_url = os.getenv("CF_SOLVER_URL", "http://localhost:8000").rstrip("/")
     try:
-        ct = (headers.get("content-type") or "").lower()
-    except Exception:
-        pass
-    if "text/html" in ct or "application/xml" in ct:
-        return True
-    probe = (head or b"")[:64].lstrip()
-    return probe[:1] == b"<"
-
-
-def solve_challenge(url: str, session) -> tuple[bool, str]:
-    solver_url = os.getenv(
-        "CF_SOLVER_URL", "http://localhost:8000").rstrip("/")
-    try:
-        import urllib.parse
-        resp = requests.get(f"{solver_url}/cookies",
-                            params={"url": url}, timeout=60)
+        resp = cffi_requests.get(
+            f"{solver_url}/cookies", params={"url": url}, timeout=60
+        )
         if resp.status_code == 200:
             data = resp.json()
             cookies = data.get("cookies", {})
             user_agent = data.get("user_agent", "")
             parsed_host = urllib.parse.urlparse(url).hostname or ""
             parts = parsed_host.split(".")
-            default_domain = f".{'.'.join(parts[-2:])}" if len(parts) >= 2 else parsed_host
+            default_domain = (
+                f".{'.'.join(parts[-2:])}" if len(parts) >= 2 else parsed_host
+            )
             if isinstance(cookies, dict):
                 for k, v in cookies.items():
                     session.cookies.set(k, v, domain=default_domain)
@@ -517,61 +539,62 @@ def solve_challenge(url: str, session) -> tuple[bool, str]:
                     if isinstance(c, dict) and "name" in c and "value" in c:
                         c_domain = c.get("domain") or default_domain
                         c_path = c.get("path", "/")
-                        session.cookies.set(c["name"], c["value"], domain=c_domain, path=c_path)
-
+                        session.cookies.set(
+                            c["name"], c["value"], domain=c_domain, path=c_path
+                        )
             if user_agent:
                 session.headers["User-Agent"] = user_agent
             return True, user_agent
     except Exception as e:
-        sys.stderr.write(
-            f"[cf_get] Solver error connecting to {solver_url}: {e}\n")
+        sys.stderr.write(f"[cf_get] solver error at {solver_url}: {e}\n")
     return False, ""
 
 
-def fetch_from_solver_html(url: str) -> str | None:
-    solver_url = os.getenv("CFB_URL", os.getenv("CF_SOLVER_URL", "http://localhost:8000")).rstrip("/")
-    try:
-        resp = requests.get(f"{solver_url}/html",
-                            params={"url": url}, timeout=60)
-        if resp.status_code == 200 and resp.text:
-            if not is_challenge(resp.status_code, resp.text, getattr(resp, "headers", None)):
-                return resp.text
-    except Exception:
-        pass
-    return None
-
-
 def download_file(url: str, dest_path: str, referer: str = "", cookie_file: str = "") -> bool:
+    """Download *url* to *dest_path*, handling Cloudflare interstitials."""
+    if not _HAS_CFFI:
+        sys.stderr.write("[cf_get] curl_cffi not available; cannot download.\n")
+        return False
+
     os.makedirs(os.path.dirname(os.path.abspath(dest_path)), exist_ok=True)
     temp_dest = f"{dest_path}.part"
     impersonate_targets = get_impersonate_targets()[:MAX_RETRIES]
 
     for imp in impersonate_targets:
         try:
-            s = requests.Session(impersonate=imp)
+            s = cffi_requests.Session(impersonate=imp)
             load_cookies(s, cookie_file)
             headers = {}
             if referer:
                 headers["Referer"] = referer
 
-            resp = s.get(url, headers=headers, timeout=(
-                10, 300), stream=True, allow_redirects=True)
-            if is_challenge(resp.status_code, "", getattr(resp, "headers", None)):
-                # If referer triggered a block/challenge (e.g. cross-origin anti-hotlink on redirects),
-                # try without Referer header.
-                if referer:
-                    resp_no_ref = s.get(url, timeout=(10, 300), stream=True, allow_redirects=True)
-                    if not is_challenge(resp_no_ref.status_code, "", getattr(resp_no_ref, "headers", None)):
-                        resp = resp_no_ref
+            resp = s.get(url, headers=headers, timeout=(10, 300),
+                         stream=True, allow_redirects=True)
+            resp_headers = dict(getattr(resp, "headers", {}))
 
-                if is_challenge(resp.status_code, "", getattr(resp, "headers", None)):
-                    sys.stderr.write(f"[cf_get] Cloudflare page detected during download ({resp.status_code}); requesting solver cookies.\n")
+            if is_challenge(resp.status_code, "", resp_headers):
+                # Try without Referer first.
+                if referer:
+                    resp_no_ref = s.get(url, timeout=(10, 300),
+                                        stream=True, allow_redirects=True)
+                    if not is_challenge(resp_no_ref.status_code, "",
+                                        dict(getattr(resp_no_ref, "headers", {}))):
+                        resp = resp_no_ref
+                        resp_headers = dict(getattr(resp, "headers", {}))
+
+                if is_challenge(resp.status_code, "", resp_headers):
+                    sys.stderr.write(
+                        f"[cf_get] download ({imp}): CF challenge "
+                        f"(status={resp.status_code}); requesting solver cookies.\n"
+                    )
                     solved, ua = solve_challenge(effective_url(resp, url), s)
                     if not solved and referer:
                         solved, ua = solve_challenge(referer, s)
                     if solved:
                         save_cookies(s, cookie_file, ua)
-                        resp = s.get(url, timeout=(10, 300), stream=True, allow_redirects=True)
+                        resp = s.get(url, timeout=(10, 300),
+                                     stream=True, allow_redirects=True)
+                        resp_headers = dict(getattr(resp, "headers", {}))
 
             if resp.status_code == 200:
                 rejected = False
@@ -582,7 +605,11 @@ def download_file(url: str, dest_path: str, referer: str = "", cookie_file: str 
                             continue
                         if probing:
                             probing = False
-                            if html_interstitial(chunk, getattr(resp, "headers", None)):
+                            if html_interstitial(chunk, resp_headers):
+                                sys.stderr.write(
+                                    f"[cf_get] download ({imp}): HTML interstitial "
+                                    "detected in body; trying next profile.\n"
+                                )
                                 rejected = True
                                 break
                         f.write(chunk)
@@ -590,9 +617,8 @@ def download_file(url: str, dest_path: str, referer: str = "", cookie_file: str 
                     resp.close()
                 except Exception:
                     pass
-                content_type = ""
-                if getattr(resp, "headers", None):
-                    content_type = resp.headers.get("content-type", "")
+
+                content_type = resp_headers.get("content-type", "")
                 if rejected or not os.path.isfile(temp_dest) or os.path.getsize(temp_dest) == 0:
                     if os.path.isfile(temp_dest):
                         try:
@@ -600,17 +626,18 @@ def download_file(url: str, dest_path: str, referer: str = "", cookie_file: str 
                         except Exception:
                             pass
                     continue
+
                 if is_valid_download(temp_dest, content_type):
                     if os.path.isfile(dest_path):
                         os.remove(dest_path)
                     os.rename(temp_dest, dest_path)
                     save_cookies(s, cookie_file)
                     return True
+
                 if os.path.isfile(temp_dest):
                     os.remove(temp_dest)
-        except Exception as e:
-            sys.stderr.write(
-                f"[cf_get] Download error with target {imp}: {e}\n")
+        except Exception as exc:
+            sys.stderr.write(f"[cf_get] download error ({imp}): {exc}\n")
             if os.path.isfile(temp_dest):
                 try:
                     os.remove(temp_dest)
@@ -621,12 +648,15 @@ def download_file(url: str, dest_path: str, referer: str = "", cookie_file: str 
     return False
 
 
-def main():
+# ---------------------------------------------------------------------------
+# Entry point
+# ---------------------------------------------------------------------------
+
+def main() -> None:
     if len(sys.argv) < 2:
         sys.exit(2)
 
-    url         = sys.argv[1]
-    # Handle download subcommand: cf_get.py download <url> <dest> [referer] [cookie_file]
+    # Subcommand: cf_get.py download <url> <dest> [referer] [cookie_file]
     if sys.argv[1] == "download":
         if len(sys.argv) < 4:
             sys.exit(2)
@@ -639,21 +669,29 @@ def main():
 
     url = sys.argv[1]
     cookie_file = sys.argv[2] if len(sys.argv) > 2 else ""
-    lock_file   = sys.argv[3] if len(sys.argv) > 3 else ""
-    referer     = sys.argv[4] if len(sys.argv) > 4 else ""
+    lock_file = sys.argv[3] if len(sys.argv) > 3 else ""
+    referer = sys.argv[4] if len(sys.argv) > 4 else ""
 
-    # Serialise concurrent requests via an exclusive file lock
-    _lock_fd = acquire_lock(lock_file) if lock_file else None
+    # Serialise concurrent requests via an exclusive file lock.
+    _lock_fd = acquire_lock(lock_file) if lock_file else None  # noqa: F841
 
-    # Try the configured methods in priority order. There is deliberately no
-    # plain HTTP/FlareSolverr fallback: CFFI, CFB, and Trawl are the supported
-    # Cloudflare paths and each method reports success through ok().
-    curl_cffi_get(url, cookie_file)
-    sys.stderr.write("[cf_get] curl_cffi failed; switching to cf-bypasser.\n")
+    # Try methods in priority order.  Each method calls ok() on success
+    # (which exits 0) or returns so the next method can be tried.
+    # CF HTML / challenge detection happens inside every method.
+
+    sys.stderr.write("[cf_get] trying cf-bypasser (CFB)...\n")
     cfb_get(url, referer)
-    sys.stderr.write("[cf_get] cf-bypasser failed; switching to Trawl.\n")
+
+    sys.stderr.write("[cf_get] CFB failed; trying Trawl.\n")
     trawl_get(url, referer)
 
+    sys.stderr.write("[cf_get] Trawl failed; trying FlareSolverr.\n")
+    fs_get(url, referer)
+
+    sys.stderr.write("[cf_get] FlareSolverr failed; trying curl_cffi.\n")
+    curl_cffi_get(url, cookie_file)
+
+    sys.stderr.write("[cf_get] All methods exhausted; giving up.\n")
     sys.exit(1)
 
 
