@@ -5459,8 +5459,6 @@ build_rv() {
 					zip -d "$stock_apk_to_patch" "lib/arm64-v8a/*" "lib/x86_64/*" "lib/armeabi-v7a/*" "lib/armeabi/*" >/dev/null 2>&1 || :
 				elif [ "$arch" = "x86_64" ]; then
 					zip -d "$stock_apk_to_patch" "lib/arm64-v8a/*" "lib/armeabi-v7a/*" "lib/armeabi/*" "lib/x86/*" >/dev/null 2>&1 || :
-				else
-					zip -d "$stock_apk_to_patch" "lib/x86_64/*" "lib/x86/*" >/dev/null 2>&1 || :
 				fi
 			fi
 		fi
@@ -5580,7 +5578,7 @@ build_rv() {
 				elif [ "$arch" = "x86_64" ]; then
 					unzip -j "$_split_src" '*.apk' -x '*x86.apk' -x '*arm64_v8a.apk' -x '*armeabi_v7a.apk' -d "${base_template}/stock/" >/dev/null 2>&1
 				else
-					unzip -j "$_split_src" '*.apk' -x '*x86_64.apk' -x '*x86.apk' -d "${base_template}/stock/" >/dev/null 2>&1
+					unzip -j "$_split_src" '*.apk' -d "${base_template}/stock/" >/dev/null 2>&1
 				fi
 			fi
 		fi
