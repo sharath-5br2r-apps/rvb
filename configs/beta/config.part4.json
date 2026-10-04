@@ -1,96 +1,92 @@
 {
   "patches-version": "beta",
   "enable-module-update": true,
-  "JetpackJoyride-Morphe-Byehi98": {
-    "enable-module-update": true,
-    "patches-source": "byehi98/okish-morphe-patches",
-    "patch-brand": "Byehi98",
-    "cli-type": "morphe",
-    "enabled": true,
-    "app-name": "Jetpack Joyride",
-    "pkg-name": "com.halfbrick.jetpackjoyride",
-    "uptodown-dlurl": "https://jetpack-joyride.en.uptodown.com/android",
-    "apkmirror-dlurl": "https://www.apkmirror.com/apk/halfbrick-studios/jetpack-joyride/",
-    "apkmirror-example-url": "https://www.apkmirror.com/apk/halfbrick-studios/jetpack-joyride/jetpack-joyride-1-104-1-release/"
-  },
-  "PrimeVideo-Morphe-Hoodles-Shared-Experimental": {
+  "PrimeVideo-Morphe-Hoodles-Experimental": {
     "enable-module-update": true,
     "patches-source": "hoo-dles/morphe-patches",
     "patch-brand": "Hoodles",
     "cli-type": "morphe",
     "enabled": true,
     "app-name": "Prime Video",
-    "variant": "Shared",
     "sub-variant": "Experimental",
     "pkg-name": "com.amazon.avod.thirdpartyclient",
     "version": "latest",
     "skip-patch-app-check": true,
     "arch": "arm64-v8a armeabi-v7a",
     "apkmirror-dlurl": "https://www.apkmirror.com/apk/amazon-mobile-llc/amazon-prime-video",
-    "uptodown-dlurl": "https://amazon-video.en.uptodown.com/android",
-    "excluded-patches": "'Rename Shared Permissions'"
+    "uptodown-dlurl": "https://amazon-video.en.uptodown.com/android"
   },
-  "SmartLauncher6-Morphe-Hoodles": {
+  "SmartLauncher-Morphe-Hoodles-Experimental": {
     "enable-module-update": true,
     "patches-source": "hoo-dles/morphe-patches",
     "patch-brand": "Hoodles",
     "cli-type": "morphe",
     "enabled": true,
-    "app-name": "Smart Launcher 6",
+    "app-name": "Smart Launcher",
+    "sub-variant": "Experimental",
+    "version": "latest",
+    "skip-patch-app-check": true,
     "pkg-name": "ginlemon.flowerfree",
     "uptodown-dlurl": "https://smart-launcher.en.uptodown.com/android",
     "apkmirror-dlurl": "https://www.apkmirror.com/apk/smart-launcher-team/smart-launcher"
   },
-  "Xodo-Morphe-Hoodles-Experimental": {
+  "Xodo-Morphe-Hoodles": {
     "enable-module-update": true,
     "patches-source": "hoo-dles/morphe-patches",
     "patch-brand": "Hoodles",
     "cli-type": "morphe",
     "enabled": true,
     "app-name": "Xodo PDF",
-    "sub-variant": "Experimental",
-    "version": "latest",
-    "skip-patch-app-check": true,
     "arch": "arm64-v8a x86_64 armeabi-v7a x86",
     "pkg-name": "com.xodo.pdf.reader",
     "uptodown-dlurl": "https://xodo-pdf-reader-editor.en.uptodown.com/android",
     "apkmirror-dlurl": "https://www.apkmirror.com/apk/xodo-technologies-inc/xodo-pdf-reader-editor"
   },
-  "WPSOffice-Morphe-Hoodles": {
+  "Wallcraft-Morphe-Hoodles-Experimental": {
     "enable-module-update": true,
     "patches-source": "hoo-dles/morphe-patches",
     "patch-brand": "Hoodles",
     "cli-type": "morphe",
     "enabled": true,
-    "app-name": "WPS Office",
-    "arch": "arm64-v8a armeabi-v7a",
-    "pkg-name": "cn.wps.moffice_eng",
-    "uptodown-dlurl": "https://wps-office.en.uptodown.com/android",
-    "apkmirror-dlurl": "https://www.apkmirror.com/apk/wps-software-pte-ltd/wps-office-pdf/"
+    "app-name": "Wallcraft",
+    "sub-variant": "Experimental",
+    "version": "latest",
+    "skip-patch-app-check": true,
+    "pkg-name": "com.wallpaperscraft.wallpaper",
+    "uptodown-dlurl": "https://wallpaperscraft.en.uptodown.com/android",
+    "apkmirror-dlurl": "https://www.apkmirror.com/apk/nebuchadnezzar-doo/wallpapers-hd-4k-backgrounds"
   },
-  "Ventusky-Morphe-Hoodles": {
+  "Pandora-Morphe-Hoodles": {
     "enable-module-update": true,
     "patches-source": "hoo-dles/morphe-patches",
     "patch-brand": "Hoodles",
     "cli-type": "morphe",
     "enabled": true,
-    "app-name": "Ventusky",
-    "pkg-name": "cz.ackee.ventusky",
-    "uptodown-dlurl": "https://ventusky-weather-maps-and-radar.en.uptodown.com/android",
-    "apkmirror-dlurl": "https://www.apkmirror.com/apk/ventusky/ventusky-weather-maps-radar"
+    "app-name": "Pandora",
+    "pkg-name": "com.pandora.android",
+    "uptodown-dlurl": "https://pandora.en.uptodown.com/android",
+    "apkmirror-dlurl": "https://www.apkmirror.com/apk/pandora/pandora-music-podcasts"
   },
-  "MyFitnessPal-Morphe-Hoodles-Experimental": {
+  "MyFitnessPal-Morphe-Hoodles": {
     "enable-module-update": true,
     "patches-source": "hoo-dles/morphe-patches",
     "patch-brand": "Hoodles",
     "cli-type": "morphe",
     "enabled": true,
     "app-name": "MyFitnessPal",
-    "sub-variant": "Experimental",
-    "version": "latest",
-    "skip-patch-app-check": true,
     "pkg-name": "com.myfitnesspal.android",
     "uptodown-dlurl": "https://calorie-counter-myfitnesspal.en.uptodown.com/android",
     "apkmirror-dlurl": "https://www.apkmirror.com/apk/myfitnesspal-inc/calorie-counter-myfitnesspal"
+  },
+  "Duolingo-Morphe-Hoodles": {
+    "enable-module-update": true,
+    "patches-source": "hoo-dles/morphe-patches",
+    "patch-brand": "Hoodles",
+    "cli-type": "morphe",
+    "enabled": true,
+    "app-name": "Duolingo",
+    "pkg-name": "com.duolingo",
+    "uptodown-dlurl": "https://duolingo.en.uptodown.com/android",
+    "apkmirror-dlurl": "https://www.apkmirror.com/apk/duolingo/duolingo-duolingo"
   }
 }

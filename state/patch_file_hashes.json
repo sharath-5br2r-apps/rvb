@@ -106,26 +106,26 @@
   },
   "hoo-dles/morphe-patches": {
     "beta": {
-      "bitpit.launcher": "d7e3c623450948f8fa66715e36ddf4ff",
-      "cn.wps.moffice_eng": "d7e3c623450948f8fa66715e36ddf4ff",
-      "com.adobe.lrmobile": "d7e3c623450948f8fa66715e36ddf4ff",
-      "com.amazon.avod.thirdpartyclient": "d7e3c623450948f8fa66715e36ddf4ff",
-      "com.bambuna.podcastaddict": "4a1fde0fa0cf76af3f3058303013103d",
-      "com.duolingo": "9cfb08c16d472bdbc01af245143e211b",
-      "com.goodreads": "1c6e9d355db46677142cd37eeb97731a",
-      "com.hellochinese": "b3ebeaa5233ec35c68f091eb02d5e6df",
-      "com.intsig.camscanner": "9cede9b52796f5f4dd208f2e78044c27",
-      "com.merriamwebster": "d7e3c623450948f8fa66715e36ddf4ff",
-      "com.myfitnesspal.android": "16ab901de4425b9024d5376bcc585616",
-      "com.pandora.android": "19433cfec097b9080fec75e4118c38ab",
-      "com.teslacoilsw.launcher": "d7e3c623450948f8fa66715e36ddf4ff",
-      "com.wallpaperscraft.wallpaper": "1cb9a4762496d7e75084a30697ea67f0",
-      "com.xodo.pdf.reader": "d6ac4b05b8f9974d63a6c9bf64095a5b",
-      "cz.ackee.ventusky": "bdb9ee17bbf45f27190e43f44e468a67",
-      "ginlemon.flowerfree": "d7e3c623450948f8fa66715e36ddf4ff",
-      "pl.solidexplorer2": "d7e3c623450948f8fa66715e36ddf4ff",
+      "bitpit.launcher": "fddbee01a3c61bb6a72e1cce707dc5bc",
+      "cn.wps.moffice_eng": "fddbee01a3c61bb6a72e1cce707dc5bc",
+      "com.adobe.lrmobile": "fddbee01a3c61bb6a72e1cce707dc5bc",
+      "com.amazon.avod.thirdpartyclient": "fddbee01a3c61bb6a72e1cce707dc5bc",
+      "com.bambuna.podcastaddict": "3af22487b4e29bd5bc8463cff17abfc9",
+      "com.duolingo": "cbd436e3bbefe00d8b8ec0bd0f2db409",
+      "com.goodreads": "fff23c3dbc34d95f7c6811a23f704e71",
+      "com.hellochinese": "d61ba471593432a3531817306d2bcb3c",
+      "com.intsig.camscanner": "80ccc81c7566f3624a97b81862bd8758",
+      "com.merriamwebster": "fddbee01a3c61bb6a72e1cce707dc5bc",
+      "com.myfitnesspal.android": "a42d0c7b71d418085c63e1e32c2832d6",
+      "com.pandora.android": "7162987022db9820fdc00eaae409b665",
+      "com.teslacoilsw.launcher": "fddbee01a3c61bb6a72e1cce707dc5bc",
+      "com.wallpaperscraft.wallpaper": "d0c712522736d0eee07c5afefedfcad7",
+      "com.xodo.pdf.reader": "20f22d7876cd4fdbef730717f6cc1695",
+      "cz.ackee.ventusky": "1c375f60c40db59f43808e9411bfa751",
+      "ginlemon.flowerfree": "fddbee01a3c61bb6a72e1cce707dc5bc",
+      "pl.solidexplorer2": "fddbee01a3c61bb6a72e1cce707dc5bc",
       "shared": "b8e9c2ea552b3ab6be1d146fea1be5e9",
-      "videoeditor.videorecorder.screenrecorder": "d921c28c4cce34bb7390365618bf5569"
+      "videoeditor.videorecorder.screenrecorder": "2f29672019680bfca2d144733eaf8e44"
     },
     "stable": {
       "bitpit.launcher": "7614c2c49bd328dd8f7e0b04a9ba6a0f",
@@ -268,7 +268,7 @@
   "sysadmindoc/hushfeed": {
     "beta": {},
     "stable": {
-      "com.zhiliaoapp.musically": "e604b1338ee102163427ba6984fd91fa",
+      "com.zhiliaoapp.musically": "308397d197ad945d38553c99f578aa37",
       "shared": "46d8882e3e2552c9319178d27875fbae"
     }
   }
