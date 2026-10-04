@@ -5444,25 +5444,25 @@ build_rv() {
 				fi
 			fi
 		else
-		stock_apk_to_patch="${TEMP_DIR}/${file_prefix}-${version_f}-${arch_f}.stripped.apk"
-		if [ ! -f "$stock_apk_to_patch" ]; then
-			cp -f "$stock_apk" "$stock_apk_to_patch"
-			# Universal APKs intentionally retain every ABI, including x86 and
-			# x86_64. Only trim native libraries from architecture-specific APKs.
-			if check_is_universal "$stock_apk"; then
-				:
-			elif [ "$arch" = "arm64-v8a" ]; then
-				zip -d "$stock_apk_to_patch" "lib/armeabi-v7a/*" "lib/armeabi/*" "lib/x86_64/*" "lib/x86/*" >/dev/null 2>&1 || :
-			elif [ "$arch" = "armeabi-v7a" ] || [ "$arch" = "arm-v7a" ]; then
-				zip -d "$stock_apk_to_patch" "lib/arm64-v8a/*" "lib/x86_64/*" "lib/x86/*" >/dev/null 2>&1 || :
-			elif [ "$arch" = "x86" ]; then
-				zip -d "$stock_apk_to_patch" "lib/arm64-v8a/*" "lib/x86_64/*" "lib/armeabi-v7a/*" "lib/armeabi/*" >/dev/null 2>&1 || :
-			elif [ "$arch" = "x86_64" ]; then
-				zip -d "$stock_apk_to_patch" "lib/arm64-v8a/*" "lib/armeabi-v7a/*" "lib/armeabi/*" "lib/x86/*" >/dev/null 2>&1 || :
-			else
-				zip -d "$stock_apk_to_patch" "lib/x86_64/*" "lib/x86/*" >/dev/null 2>&1 || :
+			stock_apk_to_patch="${TEMP_DIR}/${file_prefix}-${version_f}-${arch_f}.stripped.apk"
+			if [ ! -f "$stock_apk_to_patch" ]; then
+				cp -f "$stock_apk" "$stock_apk_to_patch"
+				# Universal APKs intentionally retain every ABI, including x86 and
+				# x86_64. Only trim native libraries from architecture-specific APKs.
+				if check_is_universal "$stock_apk"; then
+					:
+				elif [ "$arch" = "arm64-v8a" ]; then
+					zip -d "$stock_apk_to_patch" "lib/armeabi-v7a/*" "lib/armeabi/*" "lib/x86_64/*" "lib/x86/*" >/dev/null 2>&1 || :
+				elif [ "$arch" = "armeabi-v7a" ] || [ "$arch" = "arm-v7a" ]; then
+					zip -d "$stock_apk_to_patch" "lib/arm64-v8a/*" "lib/x86_64/*" "lib/x86/*" >/dev/null 2>&1 || :
+				elif [ "$arch" = "x86" ]; then
+					zip -d "$stock_apk_to_patch" "lib/arm64-v8a/*" "lib/x86_64/*" "lib/armeabi-v7a/*" "lib/armeabi/*" >/dev/null 2>&1 || :
+				elif [ "$arch" = "x86_64" ]; then
+					zip -d "$stock_apk_to_patch" "lib/arm64-v8a/*" "lib/armeabi-v7a/*" "lib/armeabi/*" "lib/x86/*" >/dev/null 2>&1 || :
+				else
+					zip -d "$stock_apk_to_patch" "lib/x86_64/*" "lib/x86/*" >/dev/null 2>&1 || :
+				fi
 			fi
-		fi
 		fi
 
 		local per_bundle_ed_joined=""
