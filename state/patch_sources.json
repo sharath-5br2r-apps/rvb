@@ -9,8 +9,8 @@
     "stable_date": "2026-06-22T17:44:41Z"
   },
   "MorpheApp/morphe-patches": {
-    "beta": "v1.46.0-dev.3",
-    "beta_date": "2026-10-04T20:00:42Z",
+    "beta": "v1.46.0-dev.7",
+    "beta_date": "2026-10-05T14:49:58Z",
     "blocked": false,
     "host": "github",
     "repo": "MorpheApp/morphe-patches",
@@ -81,13 +81,13 @@
     "stable_date": "2026-09-03T09:17:16Z"
   },
   "byehi98/okish-morphe-patches": {
-    "beta": "v1.38.0-dev.4",
-    "beta_date": "2026-10-05T05:33:21Z",
+    "beta": "v1.39.0-dev.1",
+    "beta_date": "2026-10-05T09:02:00Z",
     "blocked": false,
     "host": "github",
     "repo": "byehi98/okish-morphe-patches",
-    "stable": "v1.38.0",
-    "stable_date": "2026-10-05T05:35:25Z"
+    "stable": "v1.39.0",
+    "stable_date": "2026-10-05T09:09:22Z"
   },
   "ch3thanhs/stylus": {
     "beta": "v1.6.0-dev.2",
