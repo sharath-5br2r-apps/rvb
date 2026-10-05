@@ -20,12 +20,9 @@ REPO="${GITHUB_REPOSITORY:-nullcpy/rvb}"
 
 echo "--- Fetching active releases ---"
 ACTIVE_TAGS=$(gh release list -L 200 --json tagName -q '.[].tagName' 2>/dev/null || true)
-if [ -z "$ACTIVE_TAGS" ]; then
-  echo "No active releases found or gh CLI call failed. Skipping update branch cleanup."
-  exit 0
-fi
 
 # Current asset names on the two rolling archive releases (zipUrls point here).
+# Empty when no releases exist — all archive-pointing pointers will be pruned.
 LIVE_ASSETS=$(
   {
     gh api --paginate "repos/$REPO/releases/tags/stable" -q '.assets[].name' 2>/dev/null || true
@@ -49,58 +46,78 @@ fi
 git checkout -B update origin/update
 
 DELETED_JSON=0
-echo "--- Checking update.json pointers for dead downloads ---"
+echo "--- Checking update.json pointers ---"
 shopt -s nullglob
-for f in *.json stable/*.json beta/*.json; do
-  [ -f "$f" ] || continue
-  url=$(jq -r '.zipUrl // empty' "$f" 2>/dev/null || echo '')
-  if [ -z "$url" ]; then
-    # These folders hold updater pointers only, and the writer always emits a
-    # zipUrl — anything without one is garbage the phone would choke on.
-    echo "Pruning invalid pointer: $f (no parseable zipUrl)"
+if [ -z "$ACTIVE_TAGS" ]; then
+  echo "No active releases — wiping all update pointers."
+  for f in *.json stable/*.json beta/*.json; do
+    [ -f "$f" ] || continue
+    echo "Deleting: $f"
     rm -f "$f"
     DELETED_JSON=$((DELETED_JSON + 1))
-    continue
-  fi
-  # .../releases/download/<tag>/<asset>
-  tag=$(basename "$(dirname "$url")")
-  asset=$(basename "$url")
-  if [ "$tag" = "stable" ] || [ "$tag" = "beta" ]; then
-    if ! echo "$LIVE_ASSETS" | grep -Fxq "$asset"; then
-      echo "Pruning dead pointer: $f (asset '$asset' no longer on $tag)"
+  done
+else
+  for f in *.json stable/*.json beta/*.json; do
+    [ -f "$f" ] || continue
+    url=$(jq -r '.zipUrl // empty' "$f" 2>/dev/null || echo '')
+    if [ -z "$url" ]; then
+      # These folders hold updater pointers only, and the writer always emits a
+      # zipUrl — anything without one is garbage the phone would choke on.
+      echo "Pruning invalid pointer: $f (no parseable zipUrl)"
       rm -f "$f"
       DELETED_JSON=$((DELETED_JSON + 1))
+      continue
     fi
-  else
-    # Pointer to a numbered release: dead once that release is deleted.
-    if ! echo "$ACTIVE_TAGS" | grep -Fxq "$tag"; then
-      echo "Pruning dead pointer: $f (release '$tag' no longer exists)"
-      rm -f "$f"
-      DELETED_JSON=$((DELETED_JSON + 1))
+    # .../releases/download/<tag>/<asset>
+    tag=$(basename "$(dirname "$url")")
+    asset=$(basename "$url")
+    if [ "$tag" = "stable" ] || [ "$tag" = "beta" ]; then
+      if ! echo "$LIVE_ASSETS" | grep -Fxq "$asset"; then
+        echo "Pruning dead pointer: $f (asset '$asset' no longer on $tag)"
+        rm -f "$f"
+        DELETED_JSON=$((DELETED_JSON + 1))
+      fi
+    else
+      # Pointer to a numbered release: dead once that release is deleted.
+      if ! echo "$ACTIVE_TAGS" | grep -Fxq "$tag"; then
+        echo "Pruning dead pointer: $f (release '$tag' no longer exists)"
+        rm -f "$f"
+        DELETED_JSON=$((DELETED_JSON + 1))
+      fi
     fi
-  fi
-done
+  done
+fi
 shopt -u nullglob
 echo "Pruned $DELETED_JSON dead update.json pointer(s)."
 
 DELETED_COUNT=0
 if [ -d changelogs ]; then
-  echo "--- Checking changelogs directory for orphaned files ---"
+  echo "--- Checking changelogs directory ---"
   shopt -s nullglob
-  for f in changelogs/*.md; do
-    [ -f "$f" ] || continue
-    fname=$(basename "$f")
-    tag="${fname%.md}"
-    if ! echo "$ACTIVE_TAGS" | grep -Fxq "$tag"; then
-      if find . -name '*.json' -exec grep -qs "changelogs/${tag}\.md" {} +; then
-        echo "Keeping changelog: $f (release '$tag' pruned, but still referenced by an active update.json)"
-        continue
-      fi
-      echo "Pruning orphaned changelog: $f (release tag '$tag' no longer exists)"
+  if [ -z "$ACTIVE_TAGS" ]; then
+    echo "No active releases — wiping all changelogs."
+    for f in changelogs/*.md; do
+      [ -f "$f" ] || continue
+      echo "Deleting: $f"
       rm -f "$f"
       DELETED_COUNT=$((DELETED_COUNT + 1))
-    fi
-  done
+    done
+  else
+    for f in changelogs/*.md; do
+      [ -f "$f" ] || continue
+      fname=$(basename "$f")
+      tag="${fname%.md}"
+      if ! echo "$ACTIVE_TAGS" | grep -Fxq "$tag"; then
+        if find . -name '*.json' -exec grep -qs "changelogs/${tag}\.md" {} +; then
+          echo "Keeping changelog: $f (release '$tag' pruned, but still referenced by an active update.json)"
+          continue
+        fi
+        echo "Pruning orphaned changelog: $f (release tag '$tag' no longer exists)"
+        rm -f "$f"
+        DELETED_COUNT=$((DELETED_COUNT + 1))
+      fi
+    done
+  fi
   shopt -u nullglob
 fi
 

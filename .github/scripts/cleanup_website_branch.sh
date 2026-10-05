@@ -12,10 +12,6 @@ set -euo pipefail
 
 echo "--- Fetching active releases ---"
 ACTIVE_TAGS=$(gh release list -L 200 --json tagName -q '.[].tagName' 2>/dev/null || true)
-if [ -z "$ACTIVE_TAGS" ]; then
-  echo "No active releases found or gh CLI call failed. Skipping website branch cleanup."
-  exit 0
-fi
 
 ORIG_REF=$(git rev-parse --abbrev-ref HEAD 2>/dev/null || git rev-parse HEAD 2>/dev/null || echo "main")
 cleanup() {
@@ -34,17 +30,27 @@ git checkout -B website origin/website
 
 DELETED_COUNT=0
 if [ -d manifests ]; then
-  echo "--- Checking manifests directory for orphaned entries ---"
+  echo "--- Checking manifests directory ---"
   shopt -s nullglob
-  for f in manifests/*.json; do
-    [ -f "$f" ] || continue
-    tag=$(basename "$f" .json)
-    if ! echo "$ACTIVE_TAGS" | grep -Fxq "$tag"; then
-      echo "Pruning orphaned manifest: $f (release tag '$tag' no longer exists)"
+  if [ -z "$ACTIVE_TAGS" ]; then
+    echo "No active releases — wiping all manifests."
+    for f in manifests/*.json; do
+      [ -f "$f" ] || continue
+      echo "Deleting: $f"
       rm -f "$f"
       DELETED_COUNT=$((DELETED_COUNT + 1))
-    fi
-  done
+    done
+  else
+    for f in manifests/*.json; do
+      [ -f "$f" ] || continue
+      tag=$(basename "$f" .json)
+      if ! echo "$ACTIVE_TAGS" | grep -Fxq "$tag"; then
+        echo "Pruning orphaned manifest: $f (release tag '$tag' no longer exists)"
+        rm -f "$f"
+        DELETED_COUNT=$((DELETED_COUNT + 1))
+      fi
+    done
+  fi
   shopt -u nullglob
 fi
 
