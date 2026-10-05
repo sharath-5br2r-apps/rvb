@@ -86,9 +86,9 @@
   },
   "crimera/piko": {
     "beta": {
-      "com.instagram.android": "d11a308bd5975b1e031bd75b79b677ab",
-      "com.twitter.android": "fdffc390c593cfc8f0ba76cc093b18b6",
-      "shared": "fd0f7f25f8b90543c362c99530812b52"
+      "com.instagram.android": "a10f58d5183f63408bcf74d90af7e56f",
+      "com.twitter.android": "2a9e1cdbc62518a30b3d4158b67528a7",
+      "shared": "af8e6b25a156bf0a8dd0cc8a238f9f09"
     },
     "stable": {}
   },
@@ -128,26 +128,26 @@
       "videoeditor.videorecorder.screenrecorder": "fb4b0f58c0b315eed01b3dd77d9a7144"
     },
     "stable": {
-      "bitpit.launcher": "7614c2c49bd328dd8f7e0b04a9ba6a0f",
-      "cn.wps.moffice_eng": "7614c2c49bd328dd8f7e0b04a9ba6a0f",
-      "com.adobe.lrmobile": "7614c2c49bd328dd8f7e0b04a9ba6a0f",
-      "com.amazon.avod.thirdpartyclient": "7614c2c49bd328dd8f7e0b04a9ba6a0f",
-      "com.bambuna.podcastaddict": "44e6352ab7db9cb6c95b498724c9e40c",
-      "com.duolingo": "c518cb5d42f33806e6c1c22e9a651d46",
-      "com.goodreads": "e1760b56a1321562a6dd34606328ce6a",
-      "com.hellochinese": "b51f1f1033e2efbf71dae6084dd2975a",
-      "com.intsig.camscanner": "b675a981325693379f49ebf134ec9464",
-      "com.merriamwebster": "7614c2c49bd328dd8f7e0b04a9ba6a0f",
-      "com.myfitnesspal.android": "7300336949e204cee476303f7de134ea",
-      "com.pandora.android": "80d5655e4169d77a88e1cc2026ece379",
-      "com.teslacoilsw.launcher": "7614c2c49bd328dd8f7e0b04a9ba6a0f",
-      "com.wallpaperscraft.wallpaper": "554bcd7a888df9292842e5b8be3baa8c",
-      "com.xodo.pdf.reader": "86268a214ff0baecbeccc337139fba6c",
-      "cz.ackee.ventusky": "09deaf476cf4950d0127e6211d86803c",
-      "ginlemon.flowerfree": "7614c2c49bd328dd8f7e0b04a9ba6a0f",
-      "pl.solidexplorer2": "7614c2c49bd328dd8f7e0b04a9ba6a0f",
-      "shared": "b8e9c2ea552b3ab6be1d146fea1be5e9",
-      "videoeditor.videorecorder.screenrecorder": "0bc775c3ea976d8c1e93fcc1ba82c67c"
+      "bitpit.launcher": "43bd6d883c973d420207178826caf064",
+      "cn.wps.moffice_eng": "43bd6d883c973d420207178826caf064",
+      "com.adobe.lrmobile": "43bd6d883c973d420207178826caf064",
+      "com.amazon.avod.thirdpartyclient": "43bd6d883c973d420207178826caf064",
+      "com.bambuna.podcastaddict": "cc52133e257d95c932a55f021789a94d",
+      "com.duolingo": "6fced5ad23b463ea609ec4ce1b9281ee",
+      "com.goodreads": "923a435769644dbb09a2cab484f577b5",
+      "com.hellochinese": "153acba5093a14433199c3c18d7b7ac8",
+      "com.intsig.camscanner": "ba7b66fe03333f15d7c1417f44366fda",
+      "com.merriamwebster": "43bd6d883c973d420207178826caf064",
+      "com.myfitnesspal.android": "24bedd69578647102ab5eff5ffd13e4e",
+      "com.pandora.android": "518e555a4cec2c39e3dabb1402c60f24",
+      "com.teslacoilsw.launcher": "43bd6d883c973d420207178826caf064",
+      "com.wallpaperscraft.wallpaper": "39f3f77c1118182079fb0b8f71b402d3",
+      "com.xodo.pdf.reader": "7da9c0a933cb7a61342a51e6889e693c",
+      "cz.ackee.ventusky": "7b6ca6a552a869866935eb732ccfdf9b",
+      "ginlemon.flowerfree": "43bd6d883c973d420207178826caf064",
+      "pl.solidexplorer2": "43bd6d883c973d420207178826caf064",
+      "shared": "92c359e70af0048f6dbe18b8dac66509",
+      "videoeditor.videorecorder.screenrecorder": "fb4b0f58c0b315eed01b3dd77d9a7144"
     }
   },
   "hxreborn/hxreborn-tiktok-patches": {
@@ -207,8 +207,8 @@
   "morpheapp/morphe-patches": {
     "beta": {
       "com.google.android.apps.youtube.music": "491dfa4e93bb7c2a131865d4a6469944",
-      "com.google.android.youtube": "ec94a2903cca21646f1388517a6a5e62",
-      "shared": "432af54919dffbc7ad13cdcfc4510224"
+      "com.google.android.youtube": "860e3b533d9658a7c4ba864a3164d661",
+      "shared": "1706e9419987502f3a9a0b8163f8a97a"
     },
     "stable": {
       "com.google.android.apps.youtube.music": "d913b50d8f4a9ce0734ef1d1b3764a9f",

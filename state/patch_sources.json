@@ -9,8 +9,8 @@
     "stable_date": "2026-06-22T17:44:41Z"
   },
   "MorpheApp/morphe-patches": {
-    "beta": "v1.46.0-dev.2",
-    "beta_date": "2026-10-04T08:18:57Z",
+    "beta": "v1.46.0-dev.3",
+    "beta_date": "2026-10-04T20:00:42Z",
     "blocked": false,
     "host": "github",
     "repo": "MorpheApp/morphe-patches",
@@ -81,8 +81,8 @@
     "stable_date": "2026-09-03T09:17:16Z"
   },
   "byehi98/okish-morphe-patches": {
-    "beta": "v1.38.0-dev.1",
-    "beta_date": "2026-10-04T15:26:57Z",
+    "beta": "v1.38.0-dev.2",
+    "beta_date": "2026-10-04T16:28:02Z",
     "blocked": false,
     "host": "github",
     "repo": "byehi98/okish-morphe-patches",
@@ -99,8 +99,8 @@
     "stable_date": "2026-10-04T12:01:57Z"
   },
   "crimera/piko": {
-    "beta": "v3.10.0-dev.9",
-    "beta_date": "2026-09-29T16:18:53Z",
+    "beta": "v3.10.0-dev.10",
+    "beta_date": "2026-10-04T17:29:18Z",
     "blocked": false,
     "host": "github",
     "repo": "crimera/piko",
@@ -122,8 +122,8 @@
     "blocked": false,
     "host": "github",
     "repo": "hoo-dles/morphe-patches",
-    "stable": "v1.46.0",
-    "stable_date": "2026-09-30T18:19:04Z"
+    "stable": "v1.47.0",
+    "stable_date": "2026-10-04T18:45:44Z"
   },
   "hxreborn/hxreborn-tiktok-patches": {
     "beta": "v0.10.0-dev.1",
@@ -149,8 +149,8 @@
     "blocked": false,
     "host": "github",
     "repo": "jasonwu1994/Gboard-patches",
-    "stable": "v3.11.0",
-    "stable_date": "2026-09-22T06:59:02Z"
+    "stable": "v3.12.0",
+    "stable_date": "2026-10-04T16:37:59Z"
   },
   "jkennethcarino/adobo": {
     "beta": "v1.6.0-dev.4",
