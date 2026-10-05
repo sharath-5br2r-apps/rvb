@@ -310,9 +310,9 @@ def cfb_get(url: str, referer: str = "") -> None:
                 html = resp.read().decode("utf-8", errors="replace")
                 headers = {k.lower(): v for k, v in resp.headers.items()}
             if resp.status == 200 and html:
-                if is_challenge(resp.status, html, headers) or is_cf_html(html):
+                if is_challenge(resp.status, html, headers):
                     sys.stderr.write(
-                        f"[cf_get] cfb attempt {attempt}: CF HTML detected "
+                        f"[cf_get] cfb attempt {attempt}: CF challenge detected "
                         f"(status={resp.status}); retrying.\n"
                     )
                 else:
@@ -379,9 +379,9 @@ def trawl_get(url: str, referer: str = "") -> None:
                 html = result.get("html") or ""
                 if not html:
                     pass
-                elif is_challenge(status, html) or is_cf_html(html):
+                elif is_challenge(status, html):
                     sys.stderr.write(
-                        f"[cf_get] trawl attempt {attempt}: CF HTML detected "
+                        f"[cf_get] trawl attempt {attempt}: CF challenge detected "
                         f"(statusCode={status}); retrying.\n"
                     )
                 else:
@@ -439,9 +439,9 @@ def fs_get(url: str, referer: str = "") -> None:
                 html = solution.get("response") or ""
                 if not html:
                     pass
-                elif is_challenge(200, html) or is_cf_html(html):
+                elif is_challenge(200, html):
                     sys.stderr.write(
-                        f"[cf_get] flaresolverr attempt {attempt}: CF HTML detected; retrying.\n"
+                        f"[cf_get] flaresolverr attempt {attempt}: CF challenge detected; retrying.\n"
                     )
                 else:
                     cookies = "; ".join(
@@ -484,12 +484,6 @@ def curl_cffi_get(url: str, cookie_file: str) -> None:
                             dict(getattr(resp, "headers", {}))):
                 sys.stderr.write(
                     f"[cf_get] curl_cffi ({imp}): CF challenge page "
-                    f"(status={resp.status_code}); trying next profile.\n"
-                )
-                continue
-            if is_cf_html(resp.text):
-                sys.stderr.write(
-                    f"[cf_get] curl_cffi ({imp}): CF HTML interstitial detected "
                     f"(status={resp.status_code}); trying next profile.\n"
                 )
                 continue
