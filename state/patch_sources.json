@@ -41,8 +41,8 @@
     "blocked": false,
     "host": "github",
     "repo": "SysAdminDoc/hushfeed",
-    "stable": "v0.67.1",
-    "stable_date": "2026-10-04T01:18:12Z"
+    "stable": "v0.68.0",
+    "stable_date": "2026-10-06T17:03:42Z"
   },
   "anddea/revanced-patches": {
     "beta": "v4.3.1-dev.1",
@@ -117,8 +117,8 @@
     "stable_date": "2026-10-01T06:24:48Z"
   },
   "hoo-dles/morphe-patches": {
-    "beta": "v1.47.0-dev.3",
-    "beta_date": "2026-10-04T02:11:21Z",
+    "beta": "v1.47.1-dev.1",
+    "beta_date": "2026-10-06T20:40:33Z",
     "blocked": false,
     "host": "github",
     "repo": "hoo-dles/morphe-patches",
