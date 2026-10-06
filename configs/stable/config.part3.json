@@ -1,21 +1,30 @@
 {
   "patches-version": "stable",
   "enable-module-update": true,
-  "PrimeVideo-Morphe-Hoodles-Shared-Experimental": {
+  "SmashHit-Morphe-Byehi98": {
     "enable-module-update": true,
-    "patches-source": "hoo-dles/morphe-patches",
-    "patch-brand": "Hoodles",
+    "patches-source": "byehi98/okish-morphe-patches",
+    "patch-brand": "Byehi98",
     "cli-type": "morphe",
     "enabled": true,
-    "app-name": "Prime Video",
-    "variant": "Shared",
+    "app-name": "Smash Hit",
+    "pkg-name": "com.mediocre.smashhit",
+    "uptodown-dlurl": "https://smash-hit.en.uptodown.com/android",
+    "apkmirror-dlurl": "https://www.apkmirror.com/apk/mediocre/smash-hit/"
+  },
+  "GitHub-Morphe-Hoodles-Stylus-Experimental": {
+    "enable-module-update": true,
+    "cli-type": "morphe",
+    "patch-brand": "Hoodles-Stylus",
+    "patches-source": "'hoo-dles/morphe-patches' 'ch3thanhs/stylus'",
+    "enabled": true,
+    "app-name": "GitHub",
+    "pkg-name": "com.github.android",
     "sub-variant": "Experimental",
-    "pkg-name": "com.amazon.avod.thirdpartyclient",
     "version": "latest",
     "skip-patch-app-check": true,
-    "arch": "arm64-v8a armeabi-v7a",
-    "apkmirror-dlurl": "https://www.apkmirror.com/apk/amazon-mobile-llc/amazon-prime-video",
-    "uptodown-dlurl": "https://amazon-video.en.uptodown.com/android",
-    "excluded-patches": "'Rename Shared Permissions'"
+    "included-patches": "'AMOLED dark theme' | 'Force system font (including monospace) (GitHub)'",
+    "apkmirror-dlurl": "https://www.apkmirror.com/apk/github/github-2",
+    "apkmirror-example-url": "https://www.apkmirror.com/apk/github/github-2/github-1-202-0-release/"
   }
 }

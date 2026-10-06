@@ -1,19 +1,19 @@
 {
   "patches-version": "both",
   "enable-module-update": true,
-  "PrimeVideo-Morphe-Hoodles-Experimental": {
+  "Cricbuzz-Morphe-Paresh-Experimental": {
     "enable-module-update": true,
-    "patches-source": "hoo-dles/morphe-patches",
-    "patch-brand": "Hoodles",
+    "patches-source": "Paresh-Maheshwari/paresh-patches",
+    "patches-source-host": "gitlab",
+    "patch-brand": "Paresh",
     "cli-type": "morphe",
     "enabled": true,
-    "app-name": "Prime Video",
+    "app-name": "Cricbuzz",
     "sub-variant": "Experimental",
-    "pkg-name": "com.amazon.avod.thirdpartyclient",
     "version": "latest",
     "skip-patch-app-check": true,
-    "arch": "arm64-v8a armeabi-v7a",
-    "apkmirror-dlurl": "https://www.apkmirror.com/apk/amazon-mobile-llc/amazon-prime-video",
-    "uptodown-dlurl": "https://amazon-video.en.uptodown.com/android"
+    "pkg-name": "com.cricbuzz.android",
+    "uptodown-dlurl": "https://cricbuzz-cricket-scores-and-news.en.uptodown.com/android",
+    "apkmirror-dlurl": "https://www.apkmirror.com/apk/cricbuzz-com/cricbuzz-live-cricket-scores-news"
   }
 }

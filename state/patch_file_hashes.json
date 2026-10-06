@@ -64,23 +64,23 @@
       "com.halfbrick.jetpackjoyride": "84f98d8933229ee632c07b93e244129c",
       "com.mediocre.smashhit": "6cbd6dd6a9951ce0b422e1c4c0d07d1e",
       "com.nekki.vector": "d2e9ecf8b3d0994235a67570402df245",
-      "shared": "ed65b1c0866445b3a5a29468e91b840e"
+      "shared": "5499afa5e8684a73e33c6088302e31c2"
     },
     "stable": {
       "com.fingersoft.hillclimb": "acb0e3f4c60d31b1cf68181a62e2c0d3",
       "com.halfbrick.jetpackjoyride": "84f98d8933229ee632c07b93e244129c",
       "com.mediocre.smashhit": "6cbd6dd6a9951ce0b422e1c4c0d07d1e",
       "com.nekki.vector": "d2e9ecf8b3d0994235a67570402df245",
-      "shared": "ed65b1c0866445b3a5a29468e91b840e"
+      "shared": "b172a0069d0742beb798796abfb94f53"
     }
   },
   "ch3thanhs/stylus": {
     "beta": {
-      "com.x8bit.bitwarden": "cc6b03c83af9ea448f5b2e197afb2831",
+      "com.x8bit.bitwarden": "d6f114513ddebf853e9b233c9d433b8a",
       "shared": "20e99b0749a804e3683ca72fad92d51f"
     },
     "stable": {
-      "com.x8bit.bitwarden": "cc6b03c83af9ea448f5b2e197afb2831",
+      "com.x8bit.bitwarden": "d6f114513ddebf853e9b233c9d433b8a",
       "shared": "20e99b0749a804e3683ca72fad92d51f"
     }
   },
@@ -198,10 +198,10 @@
   "kveld9/kveld-morphe-patches": {
     "beta": {},
     "stable": {
-      "com.brave.browser": "90dcc6e9c635e251ccc00f479e28e5ff",
-      "com.ss.android.ugc.trill": "dc46ac5a483e5c0c1e495bcbbe489ccf",
-      "com.zhiliaoapp.musically": "8f638913e06ae43b1bf918b8e621d8de",
-      "shared": "88362a78639b4cf9eeb42c6d2e528bbb"
+      "com.brave.browser": "853b07208ca5f3d1871e42f005e2da77",
+      "com.ss.android.ugc.trill": "6dc1e1b6e67524094e3942afbf84f92b",
+      "com.zhiliaoapp.musically": "709d137cb8b46230a6e787cf84745bab",
+      "shared": "e80e2531b2c1c55d20235c56888f77d5"
     }
   },
   "morpheapp/morphe-patches": {

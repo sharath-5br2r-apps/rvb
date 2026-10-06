@@ -1,21 +1,19 @@
 {
   "patches-version": "beta",
   "enable-module-update": true,
-  "YouTube-Morphe-Experimental": {
+  "Bitwarden-Morphe-Stylus-Experimental": {
     "enable-module-update": true,
-    "patches-source": "MorpheApp/morphe-patches",
-    "patch-brand": "morphe",
+    "patches-source": "ch3thanhs/stylus",
+    "patch-brand": "Stylus",
     "cli-type": "morphe",
     "enabled": true,
-    "app-name": "YouTube",
+    "app-name": "Bitwarden",
     "sub-variant": "Experimental",
-    "build-mode": "both",
-    "version": "exp",
-    "pkg-name": "com.google.android.youtube",
-    "included-patches": "'Theme'",
-    "uptodown-dlurl": "https://youtube.en.uptodown.com/android",
-    "apkmirror-dlurl": "https://apkmirror.com/apk/google-inc/youtube",
-    "apkpure-dlurl": "https://apkpure.com/youtube-app/com.google.android.youtube",
-    "apkcombo-dlurl": "https://apkcombo.com/youtube/com.google.android.youtube"
+    "pkg-name": "com.x8bit.bitwarden",
+    "github-dlurl": "https://github.com/bitwarden/android",
+    "github-dlurl-regex": "fdroid.apk$",
+    "github-release-regex": "bwpm",
+    "version": "latest",
+    "skip-patch-app-check": true
   }
 }
