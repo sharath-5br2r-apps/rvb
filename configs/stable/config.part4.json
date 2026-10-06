@@ -1,30 +1,21 @@
 {
   "patches-version": "stable",
   "enable-module-update": true,
-  "Vector-Morphe-Byehi98": {
+  "YouTube-Morphe-AMOLED": {
     "enable-module-update": true,
-    "patches-source": "byehi98/okish-morphe-patches",
-    "patch-brand": "Byehi98",
+    "patches-source": "MorpheApp/morphe-patches",
+    "patch-brand": "morphe",
     "cli-type": "morphe",
     "enabled": true,
-    "app-name": "Vector",
-    "pkg-name": "com.nekki.vector",
-    "uptodown-dlurl": "https://vector.en.uptodown.com/android",
-    "apkmirror-dlurl": "https://www.apkmirror.com/apk/nekki/vector/"
-  },
-  "Cricbuzz-Morphe-Paresh-Experimental": {
-    "enable-module-update": true,
-    "patches-source": "Paresh-Maheshwari/paresh-patches",
-    "patches-source-host": "gitlab",
-    "patch-brand": "Paresh",
-    "cli-type": "morphe",
-    "enabled": true,
-    "app-name": "Cricbuzz",
-    "sub-variant": "Experimental",
-    "version": "latest",
-    "skip-patch-app-check": true,
-    "pkg-name": "com.cricbuzz.android",
-    "uptodown-dlurl": "https://cricbuzz-cricket-scores-and-news.en.uptodown.com/android",
-    "apkmirror-dlurl": "https://www.apkmirror.com/apk/cricbuzz-com/cricbuzz-live-cricket-scores-news"
+    "app-name": "YouTube",
+    "variant": "AMOLED",
+    "build-mode": "both",
+    "pkg-name": "com.google.android.youtube",
+    "included-patches": "'Theme'",
+    "patcher-args": "-OdarkThemeBackgroundColor=#000000 -OlightThemeBackgroundColor=#FFFFFF",
+    "uptodown-dlurl": "https://youtube.en.uptodown.com/android",
+    "apkmirror-dlurl": "https://apkmirror.com/apk/google-inc/youtube",
+    "apkpure-dlurl": "https://apkpure.com/youtube-app/com.google.android.youtube",
+    "apkcombo-dlurl": "https://apkcombo.com/youtube/com.google.android.youtube"
   }
 }

@@ -206,14 +206,14 @@
   },
   "morpheapp/morphe-patches": {
     "beta": {
-      "com.google.android.apps.youtube.music": "6e15ac265748d60444843f410308f335",
-      "com.google.android.youtube": "8377e0cfb55849cabe5c0388e0e5b340",
-      "shared": "596b980f36b9f066038dcc445211d930"
+      "com.google.android.apps.youtube.music": "3327ea672455ad2775caead711a576d1",
+      "com.google.android.youtube": "2d3ff66b8bf7183cf63f0977899f8e1c",
+      "shared": "5397e96fe53e7d00e0531a9b25b6bd45"
     },
     "stable": {
-      "com.google.android.apps.youtube.music": "d913b50d8f4a9ce0734ef1d1b3764a9f",
-      "com.google.android.youtube": "bdccaaa0373d8cc4c96d853e52d42bc3",
-      "shared": "6b3283a4343d72c188e45942f3192a76"
+      "com.google.android.apps.youtube.music": "3327ea672455ad2775caead711a576d1",
+      "com.google.android.youtube": "2d3ff66b8bf7183cf63f0977899f8e1c",
+      "shared": "5397e96fe53e7d00e0531a9b25b6bd45"
     }
   },
   "paresh-maheshwari/paresh-patches": {
