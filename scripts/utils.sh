@@ -603,10 +603,21 @@ get_apkeditor() {
 # API. Printing to a global keeps both the cache write and the read in the main
 # shell so repeated apps sharing a source set are served from memory.
 get_prebuilts() {
-	local cache_key="${1}_${2}_${3}_${4}_${5}_${6}_${7:-}_${8:-}_${9:-}_${10:-}_${11:-}_${12:-}"
+	local cache_key="${1}_${2}_${3}_${4}_${5}_${6}_${7:-}_${8:-}_${9:-}_${10:-}_${11:-}_${12:-}_${13:-}"
 	if [ -n "${__PREBUILTS_CACHE__["$cache_key"]:-}" ]; then
-		__PREBUILTS_RESULT="${__PREBUILTS_CACHE__["$cache_key"]}"
-		return 0
+		local cached_files="${__PREBUILTS_CACHE__["$cache_key"]}"
+		local cf valid=true
+		for cf in $cached_files; do
+			if [ "$cf" != "none" ] && ! is_valid_zip_or_jar "$cf"; then
+				valid=false
+				break
+			fi
+		done
+		if [ "$valid" = true ]; then
+			__PREBUILTS_RESULT="$cached_files"
+			return 0
+		fi
+		unset '__PREBUILTS_CACHE__["$cache_key"]'
 	fi
 	local result
 	if ! result=$(_get_prebuilts "$@"); then return 1; fi
@@ -753,6 +764,11 @@ _get_prebuilts() {
 
 	local file
 	file=$(find "$dir" -name "*${fprefix}-${name_ver#v}.*" -type f 2>/dev/null | head -1)
+	if [ -n "$file" ] && ! is_valid_zip_or_jar "$file"; then
+		wpr "Found corrupted cached prebuilt CLI '$file'; removing and re-fetching"
+		rm -f "$file"
+		file=""
+	fi
 	if [ -z "$file" ]; then
 		matches=$(source_release_assets_json "$host" <<<"$release") || return 1
 		if [ "$(jq 'length' <<<"$matches")" -gt 1 ]; then
@@ -799,6 +815,11 @@ _get_prebuilts() {
 		else
 			pr "Getting '$file' from '$url'"
 			_req "$url" "$file" -H "Accept: application/octet-stream" >&2 || return 1
+		fi
+		if ! is_valid_zip_or_jar "$file"; then
+			epr "Downloaded CLI '$file' is corrupt or incomplete"
+			rm -f "$file"
+			return 1
 		fi
 		echo "$tag: $(cut -d/ -f1 <<<"$src")/${name}  " >>"${cl_dir}/changelog.md"
 	else
@@ -890,6 +911,11 @@ _get_prebuilts() {
 
 		local file
 		file=$(find "$dir" -name "*${fprefix}-${name_ver#v}.*" -type f 2>/dev/null | head -1)
+		if [ -n "$file" ] && ! is_valid_zip_or_jar "$file"; then
+			wpr "Found corrupted cached patch bundle '$file'; removing and re-fetching"
+			rm -f "$file"
+			file=""
+		fi
 		if [ -z "$file" ]; then
 			matches=$(source_release_assets_json "$host" <<<"$release") || return 1
 			if [ "$(jq 'length' <<<"$matches")" -gt 1 ]; then
@@ -936,6 +962,11 @@ _get_prebuilts() {
 			else
 				pr "Getting '$file' from '$url'"
 				_req "$url" "$file" -H "Accept: application/octet-stream" >&2 || return 1
+			fi
+			if ! is_valid_zip_or_jar "$file"; then
+				epr "Downloaded patch bundle '$file' is corrupt or incomplete"
+				rm -f "$file"
+				return 1
 			fi
 			echo "$tag: $(cut -d/ -f1 <<<"$src")/${name}  " >>"${cl_dir}/changelog.md"
 		else
@@ -1072,6 +1103,21 @@ source_release_req() {
 	esac
 }
 gh_dl() {
+	if [ -f "$1" ]; then
+		case "$1" in
+			*.jar|*.zip|*.apk|*.mpp)
+				if ! is_valid_zip_or_jar "$1"; then
+					wpr "Existing '$1' is corrupt or incomplete; re-downloading"
+					rm -f "$1"
+				fi
+				;;
+			*)
+				if [ ! -s "$1" ]; then
+					rm -f "$1"
+				fi
+				;;
+		esac
+	fi
 	if [ ! -f "$1" ]; then
 		pr "Getting '$1' from '$2'"
 		_req "$2" "$1" -H "$GH_HEADER" -H "Accept: application/octet-stream"
