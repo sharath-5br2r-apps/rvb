@@ -1339,6 +1339,10 @@ patches_list_versions() {
 
 _patches_list_versions() {
 	local cli_jar=$1 patches_jar=$2 pkg_name=$3 cli_source=$4 extra_args=${5:-} op
+	if [ -z "$cli_jar" ] || [ "$cli_jar" = "none" ]; then
+		echo ""
+		return 0
+	fi
 	resolve_patcher "$cli_source"
 	if [ "$PATCHER_HAS_PATCH_LIST" = false ]; then
 		echo ""
@@ -1444,6 +1448,10 @@ _instafel_shadow_core() {
 
 _patches_list() {
 	local cli_jar=$1 patches_jar=$2 pkg_name=$3 cli_source=$4 op
+	if [ -z "$cli_jar" ] || [ "$cli_jar" = "none" ]; then
+		echo ""
+		return 0
+	fi
 	resolve_patcher "$cli_source"
 	if [ "$PATCHER_FLOW" = xposed-module ]; then
 		echo "Name: xposed-module-dummy"
@@ -3525,7 +3533,7 @@ dl_local() {
 
 patch_apk() {
 	local stock_input=$1 patched_apk=$2 patcher_args=$3 cli_jar=$4 patches_jar=$5 cli_source=$6
-	local per_bundle_ed="${7:-}"
+	local per_bundle_ed="${7:-}" cli_type="${8:-}"
 	local tmp_dir="${CWD}/${patched_apk}-temporary-files"
 	local IFS=$'\n'
 	local p_jars=($(echo "$patches_jar" | tr ' ' '\n' | grep -v '^$'))
@@ -5148,7 +5156,7 @@ build_rv() {
 						cp -f "$stock_apk" "$cached_bundle"
 						stock_apk="$cached_bundle"
 						all_apk="$cached_bundle"
-					elif [ "$stock_apk" = "$all_apk" ]; then
+					elif [ "$stock_apk" = "$all_apk" ] && [ -n "$cached_all_apk" ]; then
 						cp -f "$all_apk" "$cached_all_apk"
 						stock_apk="$cached_all_apk"
 						all_apk="$cached_all_apk"
@@ -5477,7 +5485,7 @@ build_rv() {
 		fi
 		local apk_output="${BUILD_DIR}/${file_prefix}-v${version_f}-${arch_f}${output_ext}"
 		if [ "${NORB:-}" != true ] || { [ ! -f "$patched_apk" ] && [ ! -f "$apk_output" ]; }; then
-			if ! patch_apk "$stock_apk_to_patch" "$patched_apk" "${patcher_args[*]}" "${args[cli]}" "${args[ptjar]}" "${args[cli_source]}" "$per_bundle_ed_joined"; then
+			if ! patch_apk "$stock_apk_to_patch" "$patched_apk" "${patcher_args[*]}" "${args[cli]}" "${args[ptjar]}" "${args[cli_source]}" "$per_bundle_ed_joined" "${args[cli_type]:-}"; then
 				epr "Building '${table}' failed!"
 				return 0
 			fi
