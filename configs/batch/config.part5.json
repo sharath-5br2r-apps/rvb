@@ -71,6 +71,7 @@
     "app-name": "Proton VPN",
     "sub-variant": "Experimental",
     "version": "latest",
+    "patcher-args": "-f --continue-on-error",
     "skip-patch-app-check": true,
     "pkg-name": "ch.protonvpn.android",
     "uptodown-dlurl": "https://protonvpn.en.uptodown.com/android",
@@ -91,7 +92,7 @@
     "skip-patch-app-check": true,
     "pkg-name": "com.twitter.android",
     "included-patches": "'Dynamic Color'",
-    "patcher-args": "--continue-on-error",
+    "patcher-args": "-f --continue-on-error",
     "uptodown-dlurl": "https://twitter.en.uptodown.com/android",
     "apkmirror-dlurl": "https://www.apkmirror.com/apk/x-corp/twitter/"
   },

@@ -21,6 +21,7 @@
     "app-name": "XRecorder",
     "sub-variant": "Experimental",
     "version": "latest",
+    "patcher-args": "-f --continue-on-error",
     "skip-patch-app-check": true,
     "arch": "all arm64-v8a armeabi-v7a",
     "pkg-name": "videoeditor.videorecorder.screenrecorder",
@@ -47,6 +48,7 @@
     "app-name": "Battery Guru",
     "sub-variant": "Experimental",
     "version": "latest",
+    "patcher-args": "-f --continue-on-error",
     "pkg-name": "com.paget96.batteryguru",
     "uptodown-dlurl": "https://battery-guru.en.uptodown.com/android",
     "apkmirror-dlurl": "https://www.apkmirror.com/apk/paget96/battery-guru-health-saver/"
@@ -85,6 +87,7 @@
     "app-name": "PC Remote",
     "sub-variant": "Experimental",
     "version": "latest",
+    "patcher-args": "-f --continue-on-error",
     "skip-patch-app-check": true,
     "custom-microg-patches": "'None'",
     "pkg-name": "com.monect.portable",
