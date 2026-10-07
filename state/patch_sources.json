@@ -81,8 +81,8 @@
     "stable_date": "2026-09-03T09:17:16Z"
   },
   "byehi98/okish-morphe-patches": {
-    "beta": "v1.40.0-dev.2",
-    "beta_date": "2026-10-07T05:40:59Z",
+    "beta": "v1.40.0-dev.3",
+    "beta_date": "2026-10-07T15:31:30Z",
     "blocked": false,
     "host": "github",
     "repo": "byehi98/okish-morphe-patches",
@@ -99,8 +99,8 @@
     "stable_date": "2026-10-06T04:47:01Z"
   },
   "crimera/piko": {
-    "beta": "v3.10.0-dev.11",
-    "beta_date": "2026-10-05T01:59:24Z",
+    "beta": "v3.10.0-dev.12",
+    "beta_date": "2026-10-07T11:04:16Z",
     "blocked": false,
     "host": "github",
     "repo": "crimera/piko",
@@ -194,8 +194,8 @@
     "blocked": false,
     "host": "github",
     "repo": "revenge-mod/revenge-xposed",
-    "stable": "1603",
-    "stable_date": "2026-09-09T16:26:35Z"
+    "stable": "1700",
+    "stable_date": "2026-10-07T15:39:06Z"
   },
   "rushiranpise/morphe-patches": {
     "beta": "v1.23.0-dev.1",

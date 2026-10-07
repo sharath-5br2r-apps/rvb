@@ -12,5 +12,19 @@
     "pkg-name": "com.fingersoft.hillclimb",
     "uptodown-dlurl": "https://hill-climb-racing.en.uptodown.com/android",
     "apkmirror-dlurl": "https://www.apkmirror.com/apk/fingersoft/hill-climb-racing/"
+  },
+  "Twitter-Morphe-Piko-MaterialYou": {
+    "enable-module-update": true,
+    "patches-source": "crimera/piko",
+    "patch-brand": "Piko",
+    "cli-type": "morphe",
+    "enabled": true,
+    "app-name": "Twitter",
+    "variant": "MaterialYou",
+    "pkg-name": "com.twitter.android",
+    "included-patches": "'Dynamic Color'",
+    "patcher-args": "--continue-on-error",
+    "uptodown-dlurl": "https://twitter.en.uptodown.com/android",
+    "apkmirror-dlurl": "https://www.apkmirror.com/apk/x-corp/twitter/"
   }
 }

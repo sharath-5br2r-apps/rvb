@@ -64,7 +64,7 @@
       "com.halfbrick.jetpackjoyride": "84f98d8933229ee632c07b93e244129c",
       "com.mediocre.smashhit": "6cbd6dd6a9951ce0b422e1c4c0d07d1e",
       "com.nekki.vector": "d2e9ecf8b3d0994235a67570402df245",
-      "shared": "cc3469bc25e7bae76e55013ccbe2eeed"
+      "shared": "60b87ee3d7ce7eda4643700e8e3ab261"
     },
     "stable": {
       "com.fingersoft.hillclimb": "acb0e3f4c60d31b1cf68181a62e2c0d3",
@@ -86,8 +86,8 @@
   },
   "crimera/piko": {
     "beta": {
-      "com.instagram.android": "5490effee679aeddb0f5f58e8530d3bc",
-      "com.twitter.android": "2a9e1cdbc62518a30b3d4158b67528a7",
+      "com.instagram.android": "864481d6a43baa7ef44aca6798025f53",
+      "com.twitter.android": "610bb74eea6ec8846eea9fab39ee0f39",
       "shared": "af8e6b25a156bf0a8dd0cc8a238f9f09"
     },
     "stable": {}
