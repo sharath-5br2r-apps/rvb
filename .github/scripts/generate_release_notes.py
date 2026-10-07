@@ -7,6 +7,9 @@ import glob
 import urllib.request
 from pathlib import Path
 
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+from naming import extract_arch, extract_version, normalize_arch  # noqa: E402
+
 def load_json(path, default=None):
     if os.path.exists(path):
         try:
@@ -39,7 +42,6 @@ def resolve_display_name(target_key, info):
         return f"{base_name} ({' - '.join(extras)})"
     return base_name
 
-
 def normalize_arch(arch_raw):
     a = (arch_raw or "").lower().strip()
     if "arm64" in a or "aarch64" in a:
@@ -71,7 +73,11 @@ def extract_arch_from_filename(fname, version=""):
     parts = name_no_mode.split("-")
     return parts[-1] if len(parts) > 1 else "all"
 
-
+def _version_sort_key(v):
+    """Numeric-aware sort key so `6.12.18` outranks `6.12.9`; non-numeric
+    segments fall back to their string form."""
+    parts = re.split(r"[.\-]+", str(v))
+    return [(0, int(p)) if p.isdigit() else (1, p) for p in parts]
 
 def main():
     json_path = "build.json"
@@ -220,20 +226,25 @@ def main():
                 if github_repo and file_release_code else f"./build/{fname}"
             )
 
+            file_ver = extract_version(fname, version) or version
+
             lower = fname.lower()
             file_type = str(file_data.get("fileType", "")).upper()
             if (file_type == "APK" or lower.endswith(".apk")) and "-module-" not in lower:
                 if not any(u == dl_url for _, u, *_ in app_entry["apks"]):
-                    app_entry["apks"].append((norm_arch, dl_url))
+                    app_entry["apks"].append((norm_arch, dl_url, file_ver))
             elif file_type == "MODULE" or (lower.endswith(".zip") and "-module-" in lower):
-                display_label = f"{norm_arch} (Beta Channel)" if "-module-beta" in lower else norm_arch
+                is_beta = "-module-beta" in lower
+                display_label = f"{norm_arch} (Beta Channel)" if is_beta else norm_arch
                 if not any(u == dl_url for _, u, *_ in app_entry["modules"]):
-                    app_entry["modules"].append((display_label, dl_url, norm_arch, "-module-beta" in lower))
+                    app_entry["modules"].append((norm_arch, dl_url, file_ver, is_beta, display_label))
 
         for group in patch_groups.values():
             for app_entry in group["apps"].values():
                 app_entry["apks"].sort(key=lambda x: arch_priority.get(x[0], 99))
-                app_entry["modules"].sort(key=lambda x: (arch_priority.get(x[2], 99), 1 if x[3] else 0))
+                app_entry["modules"].sort(key=lambda x: (arch_priority.get(x[0], 99), 1 if len(x) > 3 and x[3] else 0))
+                _all_vers = [t[2] for t in app_entry["apks"] + app_entry["modules"] if len(t) > 2 and t[2]]
+                app_entry["versions"] = sorted(set(_all_vers), key=_version_sort_key, reverse=True)
 
     else:
         for target_key, info in build_info.items():
@@ -314,14 +325,17 @@ def main():
                     if github_repo and next_ver_code else f"./build/{fname}"
                 )
 
+                file_ver = extract_version(fname, version) or version
+
                 lower = fname.lower()
                 if lower.endswith(".apk") and "-module-" not in lower:
                     if not any(u == dl_url for _, u, *_ in app_entry["apks"]):
-                        app_entry["apks"].append((norm_arch, dl_url))
+                        app_entry["apks"].append((norm_arch, dl_url, file_ver))
                 elif lower.endswith(".zip") and "-module-" in lower:
-                    display_label = f"{norm_arch} (Beta Channel)" if "-module-beta" in lower else norm_arch
+                    is_beta = "-module-beta" in lower
+                    display_label = f"{norm_arch} (Beta Channel)" if is_beta else norm_arch
                     if not any(u == dl_url for _, u, *_ in app_entry["modules"]):
-                        app_entry["modules"].append((display_label, dl_url, norm_arch, "-module-beta" in lower))
+                        app_entry["modules"].append((norm_arch, dl_url, file_ver, is_beta, display_label))
 
             # Fallback: no assets[], reconstruct filenames from top-level exts[]+name+arch
             if not assets:
@@ -338,19 +352,23 @@ def main():
                             f"{github_server}/{github_repo}/releases/download/{next_ver_code}/{fname}"
                             if github_repo and next_ver_code else fname
                         )
+                        file_ver = extract_version(fname, version) or version
                         if not any(u == dl_url for _, u, *_ in app_entry["apks"]):
-                            app_entry["apks"].append((norm_arch, dl_url))
+                            app_entry["apks"].append((norm_arch, dl_url, file_ver))
                     elif ext == "zip":
                         fname = f"{name}-module-v{clean_ver}-{arch or 'all'}.zip"
                         dl_url = (
                             f"{github_server}/{github_repo}/releases/download/{next_ver_code}/{fname}"
                             if github_repo and next_ver_code else fname
                         )
+                        file_ver = extract_version(fname, version) or version
                         if not any(u == dl_url for _, u, *_ in app_entry["modules"]):
-                            app_entry["modules"].append((norm_arch, dl_url, norm_arch, False))
+                            app_entry["modules"].append((norm_arch, dl_url, file_ver, False, norm_arch))
 
             app_entry["apks"].sort(key=lambda x: arch_priority.get(x[0], 99))
-            app_entry["modules"].sort(key=lambda x: (arch_priority.get(x[2], 99), 1 if x[3] else 0))
+            app_entry["modules"].sort(key=lambda x: (arch_priority.get(x[0], 99), 1 if len(x) > 3 and x[3] else 0))
+            _all_vers = [t[2] for t in app_entry["apks"] + app_entry["modules"] if len(t) > 2 and t[2]]
+            app_entry["versions"] = sorted(set(_all_vers), key=_version_sort_key, reverse=True)
 
     # Build output markdown
     lines = []
@@ -376,23 +394,37 @@ def main():
         lines.append(f"### 🧩 {src}{tag_str}")
         lines.append("")
 
-        changelog_text = group.get("release_notes") or ""
-
-
+        # List apps in this patch group. A single build can publish one arch at a
+        # newer version and another at a fallback, so emit one bullet per distinct
+        # version, each listing only the arches actually built at that version
+        # (newest first) rather than cramming mixed versions into one line.
         for app_name in sorted(valid_apps.keys()):
             app = valid_apps[app_name]
-            ver_str = f" `v{app['version']}`" if app["version"] else ""
-            lines.append(f"* **{app['display_name']}**{ver_str}")
+            by_ver = {}
+            for item in app["apks"]:
+                arch, url = item[0], item[1]
+                fv = item[2] if len(item) > 2 else app["version"]
+                by_ver.setdefault(fv or app["version"], {"apks": [], "modules": []})["apks"].append((arch, url))
+            for item in app["modules"]:
+                arch, url = item[0], item[1]
+                fv = item[2] if len(item) > 2 else app["version"]
+                label = item[4] if len(item) > 4 else arch
+                by_ver.setdefault(fv or app["version"], {"apks": [], "modules": []})["modules"].append((label, url))
 
-            if app["apks"]:
-                apk_links = " • ".join(f"[{arch}]({url})" for arch, url in app["apks"])
-                lines.append(f"  * APK: {apk_links}")
+            for ver in sorted(by_ver.keys(), key=_version_sort_key, reverse=True):
+                grp = by_ver[ver]
+                ver_str = f" `v{ver}`" if ver else ""
+                lines.append(f"* **{app['display_name']}**{ver_str}")
 
-            if app["modules"]:
-                mod_links = " • ".join(f"[{label}]({url})" for label, url, _, _ in app["modules"])
-                lines.append(f"  * Module: {mod_links}")
+                if grp["apks"]:
+                    apk_links = " • ".join(f"[{arch}]({url})" for arch, url in grp["apks"])
+                    lines.append(f"  * APK: {apk_links}")
 
-            lines.append("")
+                if grp["modules"]:
+                    mod_links = " • ".join(f"[{lbl}]({url})" for lbl, url in grp["modules"])
+                    lines.append(f"  * Module: {mod_links}")
+
+                lines.append("")
 
     lines.append("---")
     lines.append("")

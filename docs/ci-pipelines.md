@@ -4,24 +4,24 @@ Workflows in [.github/workflows](../.github/workflows). One watcher decides
 *whether* to build; the reusable build job does the building; cleanup keeps
 GitHub's limits; notify reports failures.
 
-| File | Name | Triggered by | Concurrency group |
-| [ci.yml](../.github/workflows/ci.yml) | CI | `schedule` cron `37 */2 * * *`, `workflow_dispatch` | `ci` |
-| [build.yml](../.github/workflows/build.yml) | Build | `workflow_call` only — from `ci.yml` (per pool) | `build` |
+|---|---|---|---|
+| [ci.yml](../.github/workflows/ci.yml) | CI | `schedule` (6 UTC crons: ~4 h windows with randomized minutes), `workflow_dispatch`, `workflow_call` | `ci` |
+| [build.yml](../.github/workflows/build.yml) | Build | `workflow_call` (from `ci.yml`) | `build` |
 | [cleanup.yml](../.github/workflows/cleanup.yml) | Cleanup | `workflow_call`, `workflow_dispatch` | `clean` |
-| [notify.yml](../.github/workflows/notify.yml) | Notify | `workflow_call`, on `failure()` of the caller | — |
 
 Nothing here runs on `push` to `main`: a push changes
 behaviour for the *next* scheduled run, it does not start a build.
 
-The watcher's cron is `37 */2 * * *` — a 2 h cadence on an odd minute, both halves
-deliberate. GitHub's `schedule` trigger is best-effort: under load a due run is
-enqueued late, and a tick that was missed is dropped rather than back-filled
-(measured here at 3-4 runs a day against a 4 h cron, each 40 min to 3.5 h late).
-Halving the interval is the redundancy: a dropped tick then leaves a 2 h gap
-instead of a 4-6 h one, and because the watcher is idempotent an extra tick costs
-only the check steps unless something actually moved. Minute 0 is the most
-contended tick on the platform, and `37` also keeps CI off the website's `23 */6`
-rebuild. Cadence is still not a guarantee — when a check must happen now,
+The watcher's schedule is a set of 6 UTC crons, one per 4 h window (`0,4,8,12,16,20`),
+each with its own randomized minute. GitHub's `schedule` trigger is best-effort —
+under load a due run is enqueued late, and a tick that was missed is dropped rather
+than back-filled (measured here at 3-4 runs a day against a 4 h cron, each 40 min to
+3.5 h late) — so widening the window to 4 h trades redundancy away: a dropped tick
+can now leave a gap of up to ~4 h instead of the ~2 h the earlier grid tolerated. The
+watcher is idempotent, so an extra tick costs only the check steps unless something
+actually moved. Spreading the minutes across each window takes ticks off the
+contended :00 and keeps every run off the website's `23 */6` rebuild (no window
+shares minute 23). Cadence is still not a guarantee — when a check must happen now,
 `manual-ci.yml` is the path.
 
 ## The watcher (`ci.yml`)
@@ -40,7 +40,6 @@ step's output is the next step's input:
 | Check Patch App Updates | `ci_check_app_patches.py` | only when `SOURCES_CHANGED`: downloads the changed bundles and hashes them (`state/patch_file_hashes.json`) to find which apps the new patches actually cover |
 | Generate configs (JSON) | `ci_generate_configs.sh` | only when `ANYTHING_CHANGED`: writes the pool config each channel will build |
 | Resolve effective triggers | `ci_resolve_triggers.sh` | per-channel `TRIGGER_*` **after** generation, and downgrades a trigger to 0 when the resulting pool has no enabled apps |
-| Notify telegram | `ci_notify_telegram.sh` | raw vs effective triggers, so a suppressed trigger is visible |
 | Commit updated state | `commit_data_branch.sh` | pushes **only** `*.json` under `configs/` + `state/` to `data` |
 
 Two design rules worth preserving:
@@ -101,7 +100,7 @@ Step order, with the reason each is where it is:
    `fetch_data_branch.sh` (materialises `configs/` and `state/` directly) →
    download `split-configs` artifact into workspace.
 2. `build_resolve_context.sh` maps the config file (`configs/<channel>/config.part*.json` or manual TOML) to `ARCHIVE_TAG`,
-   `IS_PRERELEASE`, `TITLE_SUFFIX` and the Telegram thread — the single owner of
+   `IS_PRERELEASE` and `TITLE_SUFFIX` — the single owner of
    "which channel is this run".
 3. Install Bouncy Castle **only if** `patchers.py needs-bks` says a module in this
    config requires a BKS keystore.
@@ -138,7 +137,6 @@ Step order, with the reason each is where it is:
     branch. Must run **after** the archive upload so its live-asset filter sees the
     new files. Why manifests live on a branch at all:
     [decisions/0002](decisions/0002-manifests-live-on-a-branch.md).
-16. `build_notify_telegram.sh` posts the release to the channel's thread.
 
 ## Cleanup (`cleanup.yml`)
 
@@ -164,10 +162,9 @@ Step order, with the reason each is where it is:
 | secret | `KEYSTORE_B64`, `KEYSTORE_P12_B64`, `KEYSTORE_PASSWORD`, `KEY_ALIAS` | build | signing identity |
 | secret | `APKS_REPO_TOKEN` | build, cleanup | cross-repo write to `sharath-5br2r-apps/apks-dump`, doubles as dispatch token |
 | secret | `CODEBERG_TOKEN` | watcher | raises Codeberg/Forgejo rate limits |
-| secret | `TG_TOKEN`, `WEBSITE_DISPATCH_TOKEN` (optional) | notify steps | |
+| secret | `WEBSITE_DISPATCH_TOKEN` (optional) | cleanup | token for dispatching catalog updates |
 | var | `APKS_REPO`, `WEBSITE_REPO` | build, cleanup | alternate cache/site repos for forks |
-| var | `TG_CHAT_ID`, `TG_CHAT_ID_BROADCAST`, `TG_THREAD_CI`, `TG_THREAD_STABLE`, `TG_THREAD_BETA` | notifications | Telegram topic routing |
-| var | `RELEASE_NOTES_TG_LINK`, `RELEASE_NOTES_DONATE_LINK`, `RELEASE_NOTES_WEBSITE_LINK` | build | footer links in the generated release body |
+| var | `RELEASE_NOTES_DONATE_LINK`, `RELEASE_NOTES_WEBSITE_LINK` | build | footer links in the generated release body |
 | var | `RVB_MORPHE_PASSTHROUGH` | build | bundle handling escape hatch |
 
 ## Log conventions

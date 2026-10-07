@@ -19,7 +19,28 @@ bash scripts/build.sh clean                             # remove temp/, build/, 
 - Everything transient goes under `temp/` (gitignored); everything shippable goes
   to `build/`. `build.json` is the machine record, `build.md` the human one.
 - The engine never fails the whole run for one app: per-app failures log and
-  continue; only "no output at all" aborts (`All builds failed.`).
+  continue; only "no output at all" aborts (`All builds failed.`). It stays
+  notification-free — but every failure leaves a machine-readable record under
+  `temp/failures/` for the CI report step to pick up (see below).
+
+## Per-app failure records (`temp/failures/`)
+
+Once `build_rv` has a resolved version it writes `temp/failures/<slug>.json`
+(app, version, `vc`, arch, `patches_src`); the requested arch is already part of
+the display label, so `<slug>` (= label lowercased, non-alphanumerics collapsed
+to `-`) is identical in the pooled child, the serial parent and the CI step.
+- **Build failure** — if the app then aborts, the parent copies that child's log
+  to `temp/failures/<slug>.log` alongside the descriptor. A clean return deletes
+  both. Serial mode `tee`s the build output to the same path so a single job also
+  yields an uploadable log.
+- **Download exhaustion** — writing `temp/failures/<slug>_dl.json` and returning 0
+  (a skip, not a failure), so it never gets a `.log`; it only asks for a manual
+  cache-repo upload.
+
+`temp/failures/` is wiped at the START of `build.sh` and deliberately survives the
+end-of-run sweep, so the `build.yml` "Report build failures" step can read it.
+The engine itself makes no network calls for this — see
+[ci-pipelines.md](ci-pipelines.md#the-build-job-buildyml).
 
 ## From config to a build request
 
@@ -114,7 +135,10 @@ for adding surface without a measured gain
 7. **Naming and metadata** — `aapt2`/`aapt` re-reads the patched manifest, so a
    patcher that rewrote the package id is recorded honestly; output is
    `<file-prefix>-v<version>-<arch>.apk`; `write_build_info` appends the record
-   that becomes the release manifest.
+   that becomes the release manifest. One record is written **per arch**, each with
+   its own resolved version and applied-patch set — a single build can publish
+   arm64 at the newest version and fall back to an older one for an arch a source
+   could not serve, so the per-arch values must not be lost downstream.
 8. **Module mode** (`build-mode` `module`/`both`) — the `module/` template is
    copied to a scratch dir, `module_config` writes `config`
    (`PKG_NAME`/`PKG_VER`/`MODULE_ARCH`), `module_prop` writes `module.prop` and —
@@ -122,7 +146,16 @@ for adding surface without a measured gain
    `update_json_path()`. Output: `<file-prefix>-module-v<version>-<arch>.zip`.
 9. **Finalisation** — `merge_build_info` folds per-job fragments into
    `build.json`, scratch state is swept, `generate_release_notes.py` writes
-   `build.md` for the release body.
+   `build.md` for the release body. Because fragments share one key across arches,
+   the fold keeps the first-wins scalars (`version`, `applied_patches`) for
+   backward compatibility **and** records an additive `archVersion` / `archApplied`
+   map keyed by the filename arch token, so a mixed-version build retains each
+   arch's real version and patch set. `build_make_manifest.py` resolves each file's
+   version from the filename first, then the `archVersion` map, then the scalar (and
+   its patches from `archApplied` then the scalar). `generate_release_notes.py`
+   derives each file's version straight from its filename and splits an app into one
+   release-note bullet per distinct version, so a fallback arch is never reported
+   under the other arch's version.
 
 ## Download sources, in priority order
 
@@ -168,7 +201,7 @@ Supporting machinery:
 `build_cache_cleanup.sh` keeps `temp/apks` under an 8 GB watermark with tiered
 retention (30/14/7/3 days) so the Actions cache stays below GitHub's 10 GB
 per-repo limit. `update_usage_tracker.py` posts the versions actually consumed
-(`temp/used_versions.txt`) back to the cache repo, whose own weekly retention pass
+(`temp/used_versions.txt`) back to the cache repo, whose own monthly retention pass
 keeps the 10 newest versions per package and everything used in the last 30 days —
 see [cache-repo.md](cache-repo.md).
 

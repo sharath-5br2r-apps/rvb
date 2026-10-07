@@ -58,12 +58,10 @@ echo "FLAVOR_TAG=$FLAVOR_TAG" >> "$GITHUB_OUTPUT"
 
 if [ "$IS_DEV" = true ]; then
   echo "IS_PRERELEASE=true" >> "$GITHUB_OUTPUT"
-  echo "TG_THREAD_ID=${TG_THREAD_BETA:-350}" >> "$GITHUB_OUTPUT"
   echo "TITLE_SUFFIX= (Pre-release)" >> "$GITHUB_OUTPUT"
   echo "ARCHIVE_TAG=beta" >> "$GITHUB_OUTPUT"
 else
   echo "IS_PRERELEASE=false" >> "$GITHUB_OUTPUT"
-  echo "TG_THREAD_ID=${TG_THREAD_STABLE:-262}" >> "$GITHUB_OUTPUT"
   echo "TITLE_SUFFIX=" >> "$GITHUB_OUTPUT"
   echo "ARCHIVE_TAG=stable" >> "$GITHUB_OUTPUT"
 fi

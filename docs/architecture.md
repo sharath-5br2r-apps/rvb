@@ -6,7 +6,7 @@
    patch sources (github/gitlab/codeberg)         app sources (stores & mirrors)
    MorpheApp, ReVanced, anddea, Piko, devanced…   APKMirror, Uptodown, APKPure,
         │                                         APKCombo, archive.org, GitHub,
-        │ watcher lists releases, every 2 h       direct URL, shared APK cache
+        │ watcher lists releases, every 4 h       direct URL, shared APK cache
         ▼                                              │
  ┌──────────────────────────────────────┐              ▼
  │ sharath-5br2r-apps/rvb (this repo)   │      ┌───────────────────────┐
@@ -102,8 +102,8 @@ independent update channel.
 
 ## One build, end to end
 
-**Watcher** — `ci.yml`, cron `37 */2 * * *` (2 h cadence on an odd minute: GitHub's
-scheduler is best-effort and drops missed ticks — see
+**Watcher** — `ci.yml`, 6 UTC crons on a 4 h window grid with randomized minutes
+(GitHub's scheduler is best-effort and drops missed ticks — see
 [CI pipelines](ci-pipelines.md)), concurrency group `ci`:
 
 1. `fetch_data_branch.sh` materialises `configs/` + `state/` from `data`.
@@ -128,7 +128,7 @@ Cloudflare-bypass sidecar service on `:8000`:
 1. Checkout `main` (full history, submodules) → `fetch_data_branch.sh` →
    download `split-configs` artifact into workspace →
    `build_resolve_context.sh` maps the config file to `ARCHIVE_TAG`,
-   `IS_PRERELEASE`, Telegram thread and title suffix.
+   `IS_PRERELEASE` and title suffix.
 2. Install Bouncy Castle only if a BKS-needing Xposed module is in the config;
    install the signing keystore from secrets.
 3. `build_resolve_version.sh` computes `NEXT_VER_CODE`; the Actions APK cache is
@@ -149,7 +149,6 @@ Cloudflare-bypass sidecar service on `:8000`:
 9. `merge_archive_branch.sh` merges this build's manifest into `website`
    (`manifests/<tag>.json` + cumulative `archive/<channel>.json`), live-filtered
    against the archive release's actual files.
-10. Telegram notification for the build.
 
 **Cleanup** — `cleanup.yml`, called after a successful build:
 
@@ -187,7 +186,7 @@ only fires on `failure()`.
   empty base; the branch redesign made that path unrepresentable.
 - **Per-app and notification paths fail soft.** One broken app must not lose the
   other 60: `build_rv` failures log and continue, `continue-on-error: true` covers
-  the archive upload and Telegram, `update_usage_tracker.py` is `|| true`.
+  the archive upload, `update_usage_tracker.py` is `|| true`.
 - **Re-runs must be idempotent.** Asset uploads use `--clobber` and a 3-attempt
   per-file retry; catalogue pushes rebase and retry; the repair tools are dry-run
   by default.

@@ -55,6 +55,17 @@ index (`patchSetRef`, `changelogRef`, `patchSourceRef`). Dedup is keyed on the
 ordered list, so only byte-identical repeats collapse; an empty list is omitted
 entirely.
 
+**Per-file values are authoritative, not per-app.** A numbered build publishes each
+arch independently, so one build can carry `arm64` at the newest app version and
+`arm` at an older fallback, and their applied-patch sets can differ. rvb therefore
+stamps `version` and `appliedPatches` from each file's own name/arch (never a
+collapsed per-app scalar). The numbered build **card** is keyed by the build tag, so
+those mixed versions stay under one "Build <tag>" entry that lists every version it
+published (`build.versions`) and shows the version on each asset row; only the
+archive release keys its cards by version (it is a version history). When a build's
+arches carry distinct patch sets, the applied-patches view exposes per-arch tabs
+(like the Stable/Beta channel tabs) so each arch's list is shown.
+
 | v1 (rvb) | v2 (site) | Notes |
 |---|---|---|
 | key = asset filename | `assets[].name` | the join key for everything mutable |

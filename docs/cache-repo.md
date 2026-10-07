@@ -26,7 +26,7 @@ contract. The contributor workflow (getting write access, the three equivalent
 | `<ext>` | `apk`, `xapk`, `apkm`, `apks` |
 | `usage.json` | `"<pkg>-<version>"` → epoch seconds of last use, keys sorted (no version code, on purpose — see below) |
 | Uploaders | `upload_apks.ps1` / `.sh` / `.py` (human-contributed), the rvb engine (automated) |
-| Retention | `.github/scripts/cleanup-apks.py`, weekly |
+| Retention | `.github/scripts/cleanup-apks.py`, monthly (1st, 00:00 UTC) |
 
 The version-code infix is what lets one app version exist per ABI when a store
 serves different `versionCode`s per architecture (split APKs), instead of one file
@@ -98,7 +98,8 @@ still counts as usage, while a run that built nothing writes nothing.
 
 ## Retention (the part that decides what survives)
 
-`cleanup-apks.py` runs Sundays 00:00 UTC and works on **versions**, not files:
+`cleanup-apks.py` runs on the 1st of each month at 00:00 UTC and works on **versions**,
+not files:
 
 1. Group each release's assets by stripping the `[-vc]-<arch>.<ext>` suffix, giving
    the same key shape as `usage.json`.
@@ -112,6 +113,15 @@ still counts as usage, while a run that built nothing writes nothing.
    without bound or resurrect a deleted version's score.
 6. Rewrite `usage.json` with sorted keys and commit it back to `main` — but only when
    something actually changed.
+7. On success only, the workflow's last step deletes its own oldest Actions runs and
+   keeps the **10** newest. GitHub exposes nothing but day-based retention in settings,
+   so a run-count cap has to be enforced from inside the workflow; a failed prune leaves
+   the history untouched, which keeps the failing run's logs reachable.
+
+The monthly cadence costs precision: the 30-day inactivity window is sampled once a
+month, so a version is really evicted somewhere between 30 and ~61 days after its last
+use — never earlier than the window, and the `KEEP_COUNT` floor covers the gap for
+anything still in rotation.
 
 Net effect: a version CI keeps consuming never ages out, recent versions are
 protected even if unused, and the repo's storage cost tracks *live* demand instead
@@ -142,8 +152,8 @@ The trap, documented because it was walked into on 2026-09-29: appending the ver
 code to the usage key "so it matches the filename" looks like an obvious consistency
 fix and silently untracks the version instead — cleanup never derives such a key, so
 the version is scored by `upload time` alone and starts expiring after 30 days no
-matter how often CI pulls it, while the phantom key is deleted as a ghost entry the
-following Sunday. Verified against the live repo: every asset under
+matter how often CI pulls it, while the phantom key is deleted as a ghost entry at the
+next monthly run. Verified against the live repo: every asset under
 `com.facebook.katana`, including its version-code-named ones, resolves to a
 bare-version key that exists in `usage.json` with a current stamp.
 
@@ -156,14 +166,14 @@ invisible. The version code is the one component the key intentionally ignores.
 
 `usage.json` is machine-managed state that **two** workflows rewrite and push to the
 cache repo's `main` — `update_usage_tracker.py` here after every build run, and
-`cleanup-apks.py` on the weekly prune. Both dump with `sort_keys=True`, so a commit
+`cleanup-apks.py` on the monthly prune. Both dump with `sort_keys=True`, so a commit
 contains only the versions whose stamp actually moved.
 
 Without sorting, JSON order is insertion order: a key that already exists keeps its
 old line wherever it happens to sit, while every newly indexed version lands at the
 bottom. The files then drift apart between the two writers, and one of them eventually
 re-scrambles the whole file into a reorder commit that hides the handful of meaningful
-lines — and a build push racing the Sunday prune conflicts on a difference that is not
+lines — and a build push racing the monthly prune conflicts on a difference that is not
 a difference. Sorting also keeps the file legible when you read it after a cache miss:
 every version of one package sits on consecutive lines.
 
@@ -172,7 +182,7 @@ the other's next run produces the reorder again. Keys are ASCII package names, s
 order is by Unicode code point and identical on every runner; neither writer adds a
 trailing newline. Do not hand-edit the file to add an entry — an untracked version is
 indexed automatically at its upload time, and a key whose asset does not exist is
-pruned as a ghost entry the following Sunday.
+pruned as a ghost entry at the next monthly run.
 
 ## Debugging checklist
 

@@ -221,6 +221,48 @@ abort() {
 	trap - SIGTERM SIGINT EXIT
 	exit 1
 }
+# -- Per-app failure records (temp/failures) ---------------------------------
+# build.sh's post-build CI step reads these to report per-app failures once the
+# engine finishes. Each record is one jq-built JSON file; the engine writes them,
+# the CI step consumes them. Kept notification-free on purpose (no Telegram/curl
+# here) so the engine stays pure. A build failure leaves <slug>.json (descriptor)
+# plus <slug>.log (attached by build.sh's parent); a download-exhaustion leaves
+# only <slug>_dl.json. All fail-soft: a write error never aborts a build.
+#
+# The slug is derived from the display label "$table" (which already carries the
+# arch, e.g. "Foo (arm64-v8a)"), lowercased with every non-alphanumeric run
+# collapsed to a single '-'. build.sh and build_rv compute it identically so the
+# descriptor and the parent-attached log share a basename.
+failure_slug() { # $1=label ($table)
+	printf '%s' "${1:-}" | tr '[:upper:]' '[:lower:]' | tr -cs 'a-z0-9' '-' | sed 's/^-//; s/-$//'
+}
+
+# write_build_failure_descriptor — record an intended build for the current app so
+# that if any later step aborts, the parent can attach the log and report it.
+# Deleted by the parent on a clean build_rv return. Called from build_rv once the
+# version, version-code and patches-source are all resolved.
+write_build_failure_descriptor() { # $1=slug $2=app $3=version $4=vc $5=arch $6=patches_src
+	[ -n "${TEMP_DIR:-}" ] || return 0
+	local dir="$TEMP_DIR/failures"
+	mkdir -p "$dir" 2> /dev/null || return 0
+	jq -n --arg type "build_failed" --arg app "$2" --arg version "$3" \
+		--arg vc "$4" --arg arch "$5" --arg patches_src "$6" \
+		'{type:$type, app:$app, version:$version, vc:$vc, arch:$arch, patches_src:$patches_src}' \
+		> "$dir/$1.json" 2> /dev/null || true
+}
+
+# write_dl_failure_descriptor — record that every configured download source was
+# exhausted for this app. Emitted and build_rv returns 0 (skip), so the parent
+# never sees a non-zero rc for it and does not touch it.
+write_dl_failure_descriptor() { # $1=slug $2=app $3=version $4=vc $5=arch $6=pkg
+	[ -n "${TEMP_DIR:-}" ] || return 0
+	local dir="$TEMP_DIR/failures"
+	mkdir -p "$dir" 2> /dev/null || return 0
+	jq -n --arg type "dl_exhausted" --arg app "$2" --arg version "$3" \
+		--arg vc "$4" --arg arch "$5" --arg pkg "$6" \
+		'{type:$type, app:$app, version:$version, vc:$vc, arch:$arch, pkg:$pkg}' \
+		> "$dir/$1_dl.json" 2> /dev/null || true
+}
 # env -i keeps JVM runs hermetic; XDG_DATA_HOME is forwarded so callers can
 # relocate an app's per-user state dir out of the shared HOME (see the
 # instafel flows) — without it, parallel builds race on $HOME state.
@@ -3801,7 +3843,8 @@ write_build_info() {
 	local key=$1 arch=$2 ext=$3 name=$4 version=$5 patches=$6 changelog=$7
 	local pkg_name=${8:-${pkg_name:-}}
 	local display_name=${9:-${app_name:-${key}}}
-	local patches_source=${10:-${args[patches_src]:-}}
+	local engine_brand=${11:-${args[engine_brand]:-}}
+	local patch_brand=${12:-${args[patch_brand]:-${args[brand]:-}}}
 	local variant=${13:-${args[variant]:-}}
 	local sub_variant=${14:-${args[sub_variant]:-}}
 	local target_file=${15:-}
@@ -3809,9 +3852,9 @@ write_build_info() {
 	local cli_ref=${17:-${cli_ref:-${args[cli_source]:-${args[cli]:-}}}}
 	local dpi_val=${18:-${args[dpi]:-}}
 	local removed_patches=${19:-}
-	local engine_brand=${11:-${args[engine_brand]:-}}
-	local patch_brand=${12:-${args[patch_brand]:-}}
-
+	# Raw filename arch token (e.g. arm64-v8a) — captured before `arch` is folded
+	# into `ext` below.
+	local arch_token="$arch"
 	local arch_orig="${args[arch]// /}"
 	# asset_name is the full output filename (e.g. xrecorder-morphe-v2.5.4-all.apk).
 	# Falls back to arch+ext if target_file is not yet known at call time.
@@ -3889,44 +3932,68 @@ write_build_info() {
 	skipped_json=$(printf '%s\n' "$PATCH_OUTPUT" | grep -oP '(?<=INFO: Skipping disabled: ).*|(?<=INFO: Skipping incompatible patch \x27)[^\x27]+|(?<=WARN: Skipping patch \x27)[^\x27]+' | sed 's/[[:space:]]*$//' | jq -R -s -c 'split("\n") | map(select(length > 0))' 2>/dev/null || true)
 	[[ "$skipped_json" != \[* ]] && skipped_json='[]'
 
-	python3 "${CWD}/.github/scripts/build_json_lock.py" "${BUILD_JSON_FILE}.lock" --output "$BUILD_JSON_FILE" jq --arg key "$key" \
-			--arg asset_name "$asset_name" \
-			--arg ext "$ext" \
-			--arg arch "$arch" \
-			--arg name "$name" \
-			--arg version "$version" \
-			--arg min_sdk "$min_sdk" \
-			--arg version_code "$version_code" \
-			--arg cli "${cli_ref:-${cli_name_ver:-}}" \
-			--arg patches "$patches" \
-			--arg changelog "$changelog" \
-			--arg changelogs "${args[changelogs]:-}" \
-			--arg pkg_name "$pkg_name" \
-			--arg display_name "$display_name" \
-			--arg patches_source "$patches_source" \
-			--arg engine_brand "$engine_brand" \
-			--arg patch_brand "$patch_brand" \
-			--arg variant "$variant" \
-			--arg sub_variant "$sub_variant" \
-			--argjson applied "$applied_json" \
-			--argjson failed "$failed_json" \
-			--argjson skipped "$skipped_json" \
-			--argjson densities "$densities_json" \
-			--argjson native_libs "$native_libs_json" \
-			'
-		(if has($key) then
-			(if ($ext == ".apk" and $pkg_name != "") or ((.[$key].package_name // "") == "" and $pkg_name != "") then .[$key].package_name = $pkg_name | .[$key].pkgname = $pkg_name else . end) |
-			(if $display_name != "" then .[$key].display_name = $display_name else . end) |
-			(if $patches_source != "" then .[$key].patches_source = $patches_source else . end) |
-			(if $engine_brand != "" then .[$key].engine_brand = $engine_brand else . end) |
-			(if $patch_brand != "" then .[$key].patch_brand = $patch_brand else . end) |
-			del(.[$key].brand) |
-			(if $variant != "" then .[$key].variant = $variant else . end) |
-			(if $sub_variant != "" then .[$key].sub_variant = $sub_variant else . end) |
-			(if $cli != "" then .[$key].cli = $cli else . end) |
-			.[$key].changelog_urls = ($changelog | split(" ") | map(select(length > 0))) |
-			.[$key].changelogs = (if $changelogs != "" then [$changelogs] else (.[$key].changelogs // []) end) |
-			.[$key].assets = ((.[$key].assets // []) | map(select(.name != $asset_name)) + [
+	# Warn (don't fail) when a tool that reports applied patches yields none —
+	# previously this degraded silently into an empty catalog field. xposed
+	# modules and instafel are excluded: xposed reports none by design, and
+	# instafel prints its names before the -o build step whose captured
+	# PATCH_OUTPUT we parse here (its run/build split makes the empty case
+	# legitimately common).
+	if [ "$applied_json" = "[]" ] && [ -n "$PATCH_OUTPUT" ] && [ "${PATCHER_FLOW:-}" = cli-patch ]; then
+		wpr "No applied patches parsed from ${PATCHER_KIND:-cli-patch} CLI output for '$key' — catalog may show an empty patch list."
+	fi
+	# One fragment per write (key+arch+ext suffixed, pid-guarded): concurrent
+	# build processes never touch the same file; merge_build_info folds them
+	# into $BUILD_JSON_FILE at the end of the run.
+	local frag_dir="${TEMP_DIR}/build_info" fid
+	mkdir -p "$frag_dir"
+	fid=$(tr -cs 'a-zA-Z0-9._-' '-' <<<"${key}|${arch}|${ext}")
+	fid="${fid%%-}"; fid="${fid##-}"
+	jq -n --arg key "$key" \
+		--arg asset_name "$asset_name" \
+		--arg ext "$ext" \
+		--arg arch "$arch" \
+		--arg arch_token "$arch_token" \
+		--arg name "$name" \
+		--arg version "$version" \
+		--arg min_sdk "$min_sdk" \
+		--arg version_code "$version_code" \
+		--arg cli "${cli_ref:-${cli_name_ver:-}}" \
+		--arg patches "$patches" \
+		--arg changelog "$changelog" \
+		--arg changelogs "${args[changelogs]:-}" \
+		--arg pkg_name "$pkg_name" \
+		--arg display_name "$display_name" \
+		--arg patches_source "$patches_source" \
+		--arg engine_brand "$engine_brand" \
+		--arg patch_brand "$patch_brand" \
+		--arg variant "$variant" \
+		--arg sub_variant "$sub_variant" \
+		--argjson applied "$applied_json" \
+		--argjson failed "$failed_json" \
+		--argjson skipped "$skipped_json" \
+		--argjson densities "$densities_json" \
+		--argjson native_libs "$native_libs_json" \
+		'{ ($key): {
+			exts: [$ext],
+			name: $name,
+			arch: $arch,
+			arch_token: $arch_token,
+			version: $version,
+			cli: (if $cli != "" then $cli else null end),
+			patches: $patches,
+			changelog: $changelog,
+			changelog_urls: ($changelog | split(" ") | map(select(length > 0))),
+			changelogs: (if $changelogs != "" then [$changelogs] else [] end),
+			package_name: $pkg_name,
+			pkgname: $pkg_name,
+			display_name: $display_name,
+			patches_source: $patches_source,
+			engine_brand: (if $engine_brand != "" then $engine_brand else null end),
+			patch_brand: (if $patch_brand != "" then $patch_brand else null end),
+			variant: $variant,
+			sub_variant: $sub_variant,
+			applied_patches: $applied,
+			assets: [
 				{
 					name: $asset_name, arch: $arch, ext: $ext, os: "Android",
 					version_code: $version_code,
@@ -3941,48 +4008,8 @@ write_build_info() {
 				| if ($applied | length) > 0 then . else del(.appliedPatches) end
 				| if ($skipped | length) > 0 then . else del(.skippedPatches) end
 				| if ($failed | length) > 0 then . else del(.failedPatches) end
-			])
-		else
-			.[$key] = {
-				name: $name,
-				version: $version,
-				cli: $cli,
-				patches: $patches,
-				changelog: $changelog,
-				changelog_urls: ($changelog | split(" ") | map(select(length > 0))),
-				changelogs: (if $changelogs != "" then [$changelogs] else [] end),
-				package_name: $pkg_name,
-				pkgname: $pkg_name,
-				display_name: $display_name,
-				patches_source: $patches_source,
-				engine_brand: $engine_brand,
-				patch_brand: $patch_brand,
-				variant: $variant,
-				sub_variant: $sub_variant,
-				assets: [
-					{
-						name: $asset_name, arch: $arch, ext: $ext, os: "Android",
-						version_code: $version_code,
-						densities: $densities, native_libraries: $native_libs, min_sdk: $min_sdk,
-						appliedPatches: $applied, skippedPatches: $skipped, failedPatches: $failed
-					}
-					| if $arch != "" then . else del(.arch) end
-					| if ($densities | length) > 0 then . else del(.densities) end
-					| if ($native_libs | length) > 0 then . else del(.native_libraries) end
-					| if $min_sdk != "" then . else del(.min_sdk) end
-					| if $version_code != "" then . else del(.version_code) end
-					| if ($applied | length) > 0 then . else del(.appliedPatches) end
-					| if ($skipped | length) > 0 then . else del(.skippedPatches) end
-					| if ($failed | length) > 0 then . else del(.failedPatches) end
-				]
-			} |
-			if $cli != "" then . else del(.[$key].cli) end |
-			if $engine_brand != "" then . else del(.[$key].engine_brand) end |
-			del(.[$key].brand) |
-			if $patch_brand != "" then . else del(.[$key].patch_brand) end
-		end)
-			' \
-		"$BUILD_JSON_FILE"
+			]
+		} }' >"${frag_dir}/${fid}.$$.json"
 }
 
 # Recombine any per-write fragments from $TEMP_DIR/build_info into
@@ -4000,15 +4027,29 @@ merge_build_info() {
 	jq -s '
 		reduce .[] as $f ({};
 			($f | to_entries[0]) as $e |
-			if .[$e.key] == null then .[$e.key] = $e.value
+			(if .[$e.key] == null then .[$e.key] = $e.value
 			else
 				.[$e.key].exts = ((.[$e.key].exts + $e.value.exts) | unique) |
-				reduce (["name","arch","version","patches","changelog","package_name","display_name","patches_source","brand","variant","sub_variant"][]) as $k (.;
+				reduce (["name","arch","version","cli","patches","changelog","package_name","pkgname","display_name","patches_source","engine_brand","patch_brand","variant","sub_variant"][]) as $k (.;
 					if ((.[$e.key][$k] // "") == "") and (($e.value[$k] // "") != "")
 					then .[$e.key][$k] = $e.value[$k] else . end) |
+				if ((.[$e.key].changelog_urls | length) == 0) and (($e.value.changelog_urls | length) > 0)
+				then .[$e.key].changelog_urls = $e.value.changelog_urls else . end |
+				if ((.[$e.key].changelogs | length) == 0) and (($e.value.changelogs | length) > 0)
+				then .[$e.key].changelogs = $e.value.changelogs else . end |
 				if ((.[$e.key].applied_patches | length) == 0) and (($e.value.applied_patches | length) > 0)
-				then .[$e.key].applied_patches = $e.value.applied_patches else . end
+				then .[$e.key].applied_patches = $e.value.applied_patches else . end |
+				.[$e.key].assets = (((.[$e.key].assets // []) + ($e.value.assets // [])) | unique_by(.name))
 			end)
+			# Per-arch truth (additive): a single build can resolve different
+			# versions/patch-sets per arch (an arch falling back to an older build),
+			# which the first-wins scalars above lose. Key the concrete arch token to
+			# the version and applied patches of this fragment so downstream readers
+			# use the values of each file. The scalar version/applied_patches stay
+			# unchanged for backward compatibility.
+			| .[$e.key].archVersion = ((.[$e.key].archVersion // {}) + {($e.value.arch_token // "all"): ($e.value.version // "")})
+			| .[$e.key].archApplied  = ((.[$e.key].archApplied  // {}) + {($e.value.arch_token // "all"): ($e.value.applied_patches // [])})
+		)
 	' "${files[@]}" >"${BUILD_JSON_FILE}.merge-tmp" && mv -f "${BUILD_JSON_FILE}.merge-tmp" "$BUILD_JSON_FILE"
 	rm -rf "$frag_dir"
 }
@@ -4739,6 +4780,12 @@ build_rv() {
 
 			if [ -z "$dl_from" ]; then
 				epr "ERROR: No valid download source found for ${table}."
+				# Record so the CI step can ask for a manual cache-repo upload. version is
+				# the config value here (resolution hasn't run); show "unknown" when unpinned.
+				write_dl_failure_descriptor "$(failure_slug "$table")" "$table" \
+					"${resolved_version:-$version_mode}" \
+					"$(parse_arch_mapping "${args[version_code]:-}" "${arch_f:-}")" \
+					"$arch_f" "$pkg_name"
 				return 0
 			fi
 
@@ -4811,6 +4858,13 @@ build_rv() {
 			wpr "No compatible patches found in '${args[patches_src]:-${args[cli_source]:-}}' for '$pkg_name' v${version_f}. Skipping ${table}."
 			continue
 		fi
+
+		# Version, VC and patches-source are final here; anything that aborts from the
+		# build loop below leaves this descriptor for the CI step to report. The parent
+		# deletes it when build_rv returns clean. Written once with the requested arch.
+		write_build_failure_descriptor "$(failure_slug "$table")" "$table" "$version_f" \
+			"$(parse_arch_mapping "${args[version_code]:-}" "$arch_f")" \
+			"$arch_f" "${args[patches_src]:-${args[cli_source]:-}}"
 
 		for arch in "${arch_list[@]}"; do
 			arch_f="${arch// /}"

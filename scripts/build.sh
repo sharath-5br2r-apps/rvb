@@ -179,6 +179,27 @@ PAR_JOBS="${PARALLEL_JOBS:-1}"
 ((PAR_JOBS > 8)) && { wpr "capping parallel-jobs at 8 (runner is 4-core/16GB)"; PAR_JOBS=8; }
 pr "PARALLEL_JOBS: $PAR_JOBS"
 mkdir -p "$TEMP_DIR" "$BUILD_DIR"
+# Per-app failure records live here and MUST survive build.sh's end so the
+# post-build "Report build failures" CI step can read them; so this dir is
+# wiped only at START (a re-run begins clean), never by the closing sweep.
+FAILURES_DIR="$TEMP_DIR/failures"
+rm -rf "$FAILURES_DIR"
+mkdir -p "$FAILURES_DIR"
+
+# Attach the captured child log to a build-failure descriptor, keyed by the same
+# slug build_rv used. No-op when the descriptor is absent (clean skip, or the
+# failure happened before the version-resolution point).
+_attach_failure_log() { # $1=label $2=log-file
+	local slug; slug=$(failure_slug "$1")
+	[ -f "$FAILURES_DIR/$slug.json" ] || return 0
+	cp "$2" "$FAILURES_DIR/$slug.log" 2>/dev/null || true
+}
+# Drop any stale failure record for a build that ultimately returned clean.
+# Also removes the serial-mode tee log (same <slug>.log basename).
+_clear_failure_record() { # $1=label
+	local slug; slug=$(failure_slug "$1")
+	rm -f "$FAILURES_DIR/$slug.json" "$FAILURES_DIR/$slug.log" 2>/dev/null || true
+}
 
 : >build.md
 ENABLE_MODULE_UPDATE=$(toml_get "$main_config_t" enable-module-update) || ENABLE_MODULE_UPDATE=true
@@ -235,8 +256,11 @@ if ((PAR_JOBS > 1)); then
 			else
 				pr "End of ${JOB_LABEL[$id]}"
 			fi
-			if [ "$rc" != 0 ]; then
+			if [ "$rc" = 0 ]; then
+				_clear_failure_record "${JOB_LABEL[$id]}"
+			else
 				CURRENT_APP_NAME="${JOB_LABEL[$id]}" epr "Build failed for ${JOB_LABEL[$id]} (exit $rc)"
+				_attach_failure_log "${JOB_LABEL[$id]}" "${JOB_LOG[$id]}"
 			fi
 			rm -f "${JOB_LOG[$id]}" "${JOB_RC[$id]}"
 			unset "JOB_PID[$id]" "JOB_LABEL[$id]" "JOB_LOG[$id]" "JOB_RC[$id]"
@@ -270,13 +294,22 @@ if ((PAR_JOBS > 1)); then
 fi
 _run_build() {
 	if ((PAR_JOBS <= 1)); then
+		local _slug _log
+		_slug=$(failure_slug "$1")
+		_log="$FAILURES_DIR/$_slug.log"
 		if [ -n "${GITHUB_REPOSITORY:-}" ]; then
 			echo "::group::Building $1"
 		else
 			pr "Building $1"
 		fi
 		export CURRENT_APP_NAME="$1"
-		build_rv "$2" || epr "Build failed for $1"
+		# Tee so a serial failure still has a per-app log to upload; trimmed on success.
+		if build_rv "$2" 2>&1 | tee "$_log"; then
+			_clear_failure_record "$1"
+		else
+			epr "Build failed for $1"
+			_attach_failure_log "$1" "$_log"
+		fi
 		if [ -n "${GITHUB_REPOSITORY:-}" ]; then
 			echo "::endgroup::"
 		else

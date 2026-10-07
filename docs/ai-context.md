@@ -43,7 +43,7 @@ Releases, records build metadata on a Git branch, and feeds a static download si
    exactly one place (`join_args`). Do not add a second quoting site.
 9. **Fail loud where data could be silently lost** (branch fetch, manifest merge,
    archive sanity gate, `data` branch missing). **Fail soft where one app must not
-   stop sixty** (per-app build, archive upload `continue-on-error`, Telegram, usage
+   stop sixty** (per-app build, archive upload `continue-on-error`, usage
    tracker). Adding a new `|| true` to a metadata path is a regression.
 10. Commits: Conventional Commits (`fix(ci):`, `refactor(build):`, `feat(config):`,
     `perf(build):`, `docs:`), **one logical step per commit**, message body explains
@@ -55,7 +55,7 @@ Releases, records build metadata on a Git branch, and feeds a static download si
     that must run forever goes to `.github/traces/`. An absence assertion needs a
     negative control in the same harness.
 13. Nothing here runs on `push` to `main` except Trace Verify. A workflow change
-    takes effect on the next *scheduled* run (every 2 h) or a dispatch.
+    takes effect on the next *scheduled* run (every 4 h) or a dispatch.
 
 ## File map
 
@@ -112,7 +112,7 @@ source and the arch goes unbuilt if none supplies it
 |---|---|
 | The archive upload step passes no title/notes/prerelease | CI does not own release prose → [decisions/0001](decisions/0001-release-metadata-ownership.md) |
 | `--clobber` is unconditional on asset upload | retried runs must be idempotent; absence is not expressible for a file list |
-| `continue-on-error: true` on the archive upload, `|| true` on Telegram/usage tracker | one failed upload must not lose the other 60 apps' release |
+| `continue-on-error: true` on the archive upload, `|| true` on usage tracker | one failed upload must not lose the other 60 apps' release |
 | `merge_archive_branch.sh` has no "start from empty" fallback; fetch failure kills the job | the 2026-09-24 archive collapse |
 | `get_prebuilts` is called outside `$( )` | it writes `__PREBUILTS_CACHE__`; a subshell discards it |
 | `declare -gA JOB_…=()` has explicit empty initialisers | bash 5.3 treats a bare `declare -gA` as unset under `set -u` |

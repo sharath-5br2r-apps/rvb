@@ -12,6 +12,7 @@ single-writer lives on another branch, so `main`'s history stays human.
 | `data` | `configs/` (human TOMLs + generated pool JSON), `state/` (watcher JSONs) | `commit_data_branch.sh` (CI, `*.json`), `push_data_configs.sh` (maintainer, `*.toml`) | watcher + build jobs through `fetch_data_branch.sh` |
 | `website` | `manifests/<tag>.json`, `archive/{stable,beta}.json` | `merge_archive_branch.sh`; pruned by `cleanup_website_branch.sh` | the site's `rebuild_catalog.py` |
 | `update` | `changelogs/<code>.md`, `<channel>/<module-id>.json` | `build_update_changelog.sh`; pruned by `cleanup_update_branch.sh` | KernelSU / Magisk module updaters on phones |
+| `notify-queue` | `queue.jsonl` (pending debounced issue/PR alerts) | `notify_enqueue.sh` (append) + `notify_drain.sh` (prune), both via `notify_queue.sh` | the drain job only |
 
 GitHub Releases are storage too, and they are **not** mirrors of branches:
 releases hold files, branches hold the metadata that describes the files.
@@ -137,6 +138,19 @@ backend, not an updater — its APKs come from releases/Obtainium and never poll
 this branch. **Never "tidy" this layout:** every installed module carries the old
 URL and would 404, which is a forced re-flash for the user.
 
+## `notify-queue`
+
+A transient working branch, not product data: one append-only `queue.jsonl` holding
+issue/PR alerts that have not been delivered yet, so a burst of events coalesces
+into one debounced notification batch. The branch is created by the
+first `notify_enqueue.sh` append (a root commit off the empty tree), grows via
+push-retry under concurrent runs, and is emptied by `notify_drain.sh` once the
+batch posts — pruning exactly the prefix it sent, so an event that landed mid-send
+waits for the next drain rather than being dropped. Every write pins
+`core.autocrlf=false`/`core.eol=lf`: the file is byte-exact JSONL and the drain's
+prune matches whole lines, so a runner's git config must not be able to inject
+CRLF. Nothing reads it except the drain.
+
 ## GitHub Releases
 
 | | Numbered | Archive |
@@ -172,7 +186,7 @@ never consulted for version listing, so it cannot become a rival source of truth
 about upstream releases. The engine writes back anything it fetched freshly (never
 a copy that came from the cache itself or from `archive`), and
 `update_usage_tracker.py` stamps the versions a run consumed into the repo's
-`usage.json`, which is what its weekly retention pass keys on.
+`usage.json`, which is what its monthly retention pass keys on.
 
 This repo's Actions cache (`temp/apks`) is a fast local copy of the same
 population; both are caches, neither is authoritative. Layout, read/write rules,

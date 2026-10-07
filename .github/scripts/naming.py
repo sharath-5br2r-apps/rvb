@@ -18,6 +18,10 @@ _ARCH_TOKEN_RE = re.compile(
     re.IGNORECASE,
 )
 _FILE_PREFIX_RE = re.compile(r"^(.*?)-(?:v[0-9]|module-)", re.IGNORECASE)
+# The version segment sits between the `-v`/`-module-v` marker and the trailing
+# arch token; require a digit after `v` so a `-v` inside the prefix (e.g. the
+# `-vpn` of `proton-vpn-...`) is never mistaken for the version start.
+_VERSION_RE = re.compile(r"-(?:module-)?v(\d.*)$", re.IGNORECASE)
 
 
 def normalize_key(s):
@@ -75,6 +79,27 @@ def file_prefix(fname):
     """
     m = _FILE_PREFIX_RE.match(fname)
     return m.group(1) if m else fname.rsplit(".", 1)[0]
+
+
+def extract_version(fname, hint=""):
+    """App version token (no leading `v`) embedded in a build artifact filename.
+
+    `inshorts-bholeykabhakt-v6.12.18-arm64-v8a.apk` -> `6.12.18`; a module
+    `youtube-revanced-module-v19.16.39-arm64.zip` -> `19.16.39`. The filename is
+    the authoritative per-arch version: a single build can publish arm64 at one
+    version and arm at a fallback version, so callers must not trust a
+    collapsed scalar. Strips the trailing arch+extension, then takes what
+    follows the last `-v`/`-module-v` marker whose `v` is followed by a digit.
+    Returns `hint` (leading `v` stripped) when the name carries no parseable
+    version, else the empty string.
+    """
+    m = _ARCH_TOKEN_RE.search(fname)
+    stem = fname[:m.start()] if m else re.sub(
+        r"\.(?:apk|zip)$", "", fname, flags=re.IGNORECASE)
+    mv = _VERSION_RE.search(stem)
+    if mv:
+        return mv.group(1)
+    return (hint or "").lstrip("v")
 
 
 def parse_patch_info(patches_source, patches_ref):
