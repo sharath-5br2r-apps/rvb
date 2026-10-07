@@ -17,6 +17,7 @@ app-name = "GitHub"
 pkg-name = "com.github.android"
 sub-variant = "Experimental"
 version = "latest"
+patcher-args = "-f --continue-on-error"
 skip-patch-app-check = true
 included-patches = "'AMOLED dark theme' | 'Force system font (including monospace) (GitHub)'"
 apkmirror-dlurl = "https://www.apkmirror.com/apk/github/github-2"
