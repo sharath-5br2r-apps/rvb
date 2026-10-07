@@ -1,19 +1,20 @@
 {
   "patches-version": "stable",
   "enable-module-update": true,
-  "Pinterest-Morphe-Browzomje-Experimental": {
+  "Twitter-Morphe-Piko-Experimental": {
     "enable-module-update": true,
-    "patches-source": "browzomje/browzomje-patches",
-    "patch-brand": "Browzomje",
+    "patches-source": "crimera/piko",
+    "patch-brand": "Piko",
     "cli-type": "morphe",
     "enabled": true,
-    "app-name": "Pinterest",
+    "app-name": "Twitter",
     "sub-variant": "Experimental",
-    "pkg-name": "com.pinterest",
     "version": "latest",
-    "patcher-args": "-f --continue-on-error",
     "skip-patch-app-check": true,
-    "uptodown-dlurl": "https://pinterest.en.uptodown.com/android",
-    "apkmirror-dlurl": "https://www.apkmirror.com/apk/pinterest/pinterest-one-destination-for-a-world-of-inspiration"
+    "pkg-name": "com.twitter.android",
+    "excluded-patches": "'Dynamic Color'",
+    "patcher-args": "-f --continue-on-error",
+    "uptodown-dlurl": "https://twitter.en.uptodown.com/android",
+    "apkmirror-dlurl": "https://www.apkmirror.com/apk/x-corp/twitter/"
   }
 }
