@@ -3580,8 +3580,47 @@ dl_local() {
 }
 # --------------------------------------------------
 
+# Deduplicate boolean flags like -f/--force and --continue-on-error from patcher arguments
+dedup_patcher_args() {
+	local raw_args="${1:-}"
+	[ -z "$raw_args" ] && return 0
+	local -a words=()
+	eval "words=($raw_args)" 2>/dev/null || { printf "%s\n" "$raw_args"; return 0; }
+	local -a result=()
+	local seen_force=false seen_continue=false
+	for w in "${words[@]}"; do
+		case "$w" in
+			-f|--force)
+				if [ "$seen_force" = false ]; then
+					result+=("$w")
+					seen_force=true
+				fi
+				;;
+			--continue-on-error)
+				if [ "$seen_continue" = false ]; then
+					result+=("$w")
+					seen_continue=true
+				fi
+				;;
+			*)
+				result+=("$w")
+				;;
+		esac
+	done
+	local out=""
+	for r in "${result[@]}"; do
+		if [[ "$r" =~ [[:space:]] ]]; then
+			out+="${out:+ }'$r'"
+		else
+			out+="${out:+ }$r"
+		fi
+	done
+	printf "%s\n" "$out"
+}
+
 patch_apk() {
 	local stock_input=$1 patched_apk=$2 patcher_args=$3 cli_jar=$4 patches_jar=$5 cli_source=$6
+	patcher_args=$(dedup_patcher_args "$patcher_args")
 	local per_bundle_ed="${7:-}" cli_type="${8:-}"
 	local tmp_dir="${CWD}/${patched_apk}-temporary-files"
 	local IFS=$'\n'
@@ -5409,7 +5448,17 @@ build_rv() {
 
 	local patches_ref="${args[patches_ref]}"
 	local changelog_url="${args[changelog_url]}"
-	if [ "${args[patcher_args]}" ]; then p_patcher_args+=("${args[patcher_args]}"); fi
+	if [ "${args[patcher_args]}" ]; then
+		# If user/table explicitly provided -f/--force in patcher_args, remove auto -f
+		if [[ "${args[patcher_args]}" =~ (^|[[:space:]])(-f|--force)($|[[:space:]]) ]]; then
+			local -a _p_filt=()
+			for _pa in "${p_patcher_args[@]}"; do
+				[ "$_pa" != "-f" ] && [ "$_pa" != "--force" ] && _p_filt+=("$_pa")
+			done
+			p_patcher_args=("${_p_filt[@]}")
+		fi
+		p_patcher_args+=("${args[patcher_args]}")
+	fi
 	for arch in "${arch_list[@]}"; do
 		arch_f="${arch// /}"
 		local prepared_stock_apk="${final_stock_apk:-}"
