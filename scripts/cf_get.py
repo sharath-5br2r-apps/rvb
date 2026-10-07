@@ -658,6 +658,7 @@ def main() -> None:
         dest = sys.argv[3]
         referer = sys.argv[4] if len(sys.argv) > 4 else ""
         cookie_file = sys.argv[5] if len(sys.argv) > 5 else ""
+        sys.stderr.write(f"[cf_get] downloading: {dl_url}\n")
         success = download_file(dl_url, dest, referer, cookie_file)
         sys.exit(0 if success else 1)
 
@@ -666,6 +667,8 @@ def main() -> None:
     lock_file = sys.argv[3] if len(sys.argv) > 3 else ""
     referer = sys.argv[4] if len(sys.argv) > 4 else ""
 
+    sys.stderr.write(f"[cf_get] fetching: {url}\n")
+
     # Serialise concurrent requests via an exclusive file lock.
     _lock_fd = acquire_lock(lock_file) if lock_file else None  # noqa: F841
 
@@ -673,16 +676,27 @@ def main() -> None:
     # (which exits 0) or returns so the next method can be tried.
     # CF HTML / challenge detection happens inside every method.
 
-    sys.stderr.write("[cf_get] trying cf-bypasser (CFB)...\n")
-    cfb_get(url, referer)
+    if (os.environ.get("CFB_URL") or "").rstrip("/"):
+        sys.stderr.write("[cf_get] trying cf-bypasser (CFB)...\n")
+        cfb_get(url, referer)
+        sys.stderr.write("[cf_get] CFB failed.\n")
 
-    sys.stderr.write("[cf_get] CFB failed; trying Trawl.\n")
-    trawl_get(url, referer)
+    if (os.environ.get("TRAWL_URL") or "").rstrip("/"):
+        sys.stderr.write("[cf_get] trying Trawl...\n")
+        trawl_get(url, referer)
+        sys.stderr.write("[cf_get] Trawl failed.\n")
 
-    sys.stderr.write("[cf_get] Trawl failed; trying FlareSolverr.\n")
-    fs_get(url, referer)
+    if (
+        os.environ.get("FS_URL")
+        or os.environ.get("FLARESOLVERR_URL")
+        or os.environ.get("CF_BYPASS_SOLVER_FS_URL")
+        or ""
+    ).rstrip("/"):
+        sys.stderr.write("[cf_get] trying FlareSolverr...\n")
+        fs_get(url, referer)
+        sys.stderr.write("[cf_get] FlareSolverr failed.\n")
 
-    sys.stderr.write("[cf_get] FlareSolverr failed; trying curl_cffi.\n")
+    sys.stderr.write("[cf_get] trying curl_cffi...\n")
     curl_cffi_get(url, cookie_file)
 
     sys.stderr.write("[cf_get] All methods exhausted; giving up.\n")

@@ -192,7 +192,14 @@ log_build_event() {
 	fi
 }
 
-pr() { echo >&2 -e "\033[0;32m[+] ${1}\033[0m"; }
+pr() {
+	local app="${CURRENT_APP_NAME:-}"
+	local part="${CURRENT_BUILD_PART:-}"
+	local pfx="[+]"
+	[ -n "$app" ] && pfx="$pfx [$app]"
+	[ -n "$part" ] && pfx="$pfx [$part]"
+	echo >&2 -e "\033[0;32m${pfx} ${1}\033[0m"
+}
 epr() {
 	local app="${CURRENT_APP_NAME:-}"
 	local part="${CURRENT_BUILD_PART:-}"
@@ -3843,6 +3850,7 @@ write_build_info() {
 	local key=$1 arch=$2 ext=$3 name=$4 version=$5 patches=$6 changelog=$7
 	local pkg_name=${8:-${pkg_name:-}}
 	local display_name=${9:-${app_name:-${key}}}
+	local patches_source=${10:-${args[patches_src]:-${args[patches_sources_all]:-}}}
 	local engine_brand=${11:-${args[engine_brand]:-}}
 	local patch_brand=${12:-${args[patch_brand]:-${args[brand]:-}}}
 	local variant=${13:-${args[variant]:-}}
@@ -4459,6 +4467,7 @@ build_rv() {
 	export CURRENT_BUILD_PART="check_version"
 	local dl_from=${args[dl_from]}
 	local arch=${args[arch]}
+	local arch_f="${arch// /}"
 	local arch_list=()
 	read -r -a arch_list <<< "$arch"
 	[ "${#arch_list[@]}" -eq 0 ] && arch_list=(all arm64-v8a x86_64 armeabi-v7a x86)
@@ -4750,6 +4759,7 @@ build_rv() {
 		fi
 			for dl_p in "${DL_SRCS[@]}"; do
 				if [ -z "${args[${dl_p}_dlurl]}" ]; then continue; fi
+				CURRENT_BUILD_PART="check_version_${dl_p}"
 				
 				# If we need to find the latest version, do not use cache repositories as the source of truth
 				if [ -z "$resolved_version" ]; then
@@ -4850,6 +4860,7 @@ build_rv() {
 		if [[ "$version" == *" + "* && "$version" =~ ([0-9]+(\.[0-9]+)+([.-][A-Za-z0-9]+)*)$ ]]; then
 			version="${BASH_REMATCH[1]}"
 		fi
+		[ -n "$dl_from" ] && CURRENT_BUILD_PART="check_version_${dl_from}"
 		pr "Choosing version '${version}' for ${table}"
 		local version_f=${version// /}
 		version_f=${version_f#v}
@@ -5012,6 +5023,7 @@ build_rv() {
 						continue
 					fi
 					if [ -z "${args[${dl_p}_dlurl]}" ]; then release_apk_lock; continue; fi
+					CURRENT_BUILD_PART="download_${dl_p}"
 					pr "Downloading '${table}' from '${dl_p}'"
 					if ! isoneof $dl_p "${tried_dl[@]}"; then
 						if ! get_${dl_p}_resp "${args[${dl_p}_dlurl]}"; then

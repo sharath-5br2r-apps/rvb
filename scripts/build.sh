@@ -248,13 +248,13 @@ if ((PAR_JOBS > 1)); then
 			if [ -n "${GITHUB_REPOSITORY:-}" ]; then
 				echo "::group::Building ${JOB_LABEL[$id]}"
 			else
-				pr "Building ${JOB_LABEL[$id]}"
+				CURRENT_APP_NAME="${JOB_LABEL[$id]}" CURRENT_BUILD_PART="" pr "Building ${JOB_LABEL[$id]}"
 			fi
 			cat "${JOB_LOG[$id]}" 2>/dev/null
 			if [ -n "${GITHUB_REPOSITORY:-}" ]; then
 				echo "::endgroup::"
 			else
-				pr "End of ${JOB_LABEL[$id]}"
+				CURRENT_APP_NAME="${JOB_LABEL[$id]}" CURRENT_BUILD_PART="" pr "End of ${JOB_LABEL[$id]}"
 			fi
 			if [ "$rc" = 0 ]; then
 				_clear_failure_record "${JOB_LABEL[$id]}"
@@ -300,7 +300,7 @@ _run_build() {
 		if [ -n "${GITHUB_REPOSITORY:-}" ]; then
 			echo "::group::Building $1"
 		else
-			pr "Building $1"
+			CURRENT_APP_NAME="$1" CURRENT_BUILD_PART="" pr "Building $1"
 		fi
 		export CURRENT_APP_NAME="$1"
 		# Tee so a serial failure still has a per-app log to upload; trimmed on success.
@@ -313,7 +313,7 @@ _run_build() {
 		if [ -n "${GITHUB_REPOSITORY:-}" ]; then
 			echo "::endgroup::"
 		else
-			pr "End of $1"
+			CURRENT_APP_NAME="$1" CURRENT_BUILD_PART="" pr "End of $1"
 		fi
 	else
 		_enqueue_build "$2" "$1"
@@ -328,6 +328,8 @@ for table_name in $(toml_get_table_names); do
 	vtf "$enabled" "enabled"
 	if [ "$enabled" = false ]; then continue; fi
 
+	CURRENT_APP_NAME="$table_name"
+	CURRENT_BUILD_PART="prebuilts"
 	declare -A app_args
 	patches_src=$(toml_get "$t" patches-source) || patches_src=$DEF_PATCHES_SRC
 	patches_src_host=$(toml_get "$t" patches-source-host) || patches_src_host=$DEF_PATCHES_SRC_HOST
@@ -593,6 +595,8 @@ for table_name in $(toml_get_table_names); do
 		esac
 		_run_build "${app_args[table]}" "$(declare -p app_args)"
 	done
+	CURRENT_APP_NAME=""
+	CURRENT_BUILD_PART=""
 done
 
 # Drain the pool: replay every remaining job log as it finishes, then fold
