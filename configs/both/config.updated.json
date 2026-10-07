@@ -1,3 +1,18 @@
 {
-  "patches-version": "both"
+  "patches-version": "both",
+  "Pinterest-Morphe-Browzomje-Experimental": {
+    "enable-module-update": true,
+    "patches-source": "browzomje/browzomje-patches",
+    "patch-brand": "Browzomje",
+    "cli-type": "morphe",
+    "enabled": true,
+    "app-name": "Pinterest",
+    "sub-variant": "Experimental",
+    "pkg-name": "com.pinterest",
+    "version": "latest",
+    "patcher-args": "-f --continue-on-error",
+    "skip-patch-app-check": true,
+    "uptodown-dlurl": "https://pinterest.en.uptodown.com/android",
+    "apkmirror-dlurl": "https://www.apkmirror.com/apk/pinterest/pinterest-one-destination-for-a-world-of-inspiration"
+  }
 }
