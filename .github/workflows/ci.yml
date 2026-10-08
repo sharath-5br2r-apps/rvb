@@ -71,6 +71,11 @@ on:
         required: false
         type: string
         default: ""
+      do_not_release:
+        description: "Do not upload to releases or commit anything; only upload artifacts (Manual Config mode)"
+        required: false
+        type: boolean
+        default: false
 
 concurrency:
   group: ci
@@ -944,17 +949,18 @@ jobs:
       exclusive_apps: ${{ inputs.exclusive_apps || '' }}
       remove_apks: ${{ inputs.remove_apks || '' }}
       patches_version: ${{ inputs.patches_version || '' }}
+      do_not_release: ${{ inputs.do_not_release || false }}
     secrets: inherit
 
   trigger_cleanup:
     needs: [build_stable_1, build_stable_2, build_stable_3, build_stable_4, build_stable_5, build_dev_1, build_dev_2, build_dev_3, build_dev_4, build_dev_5, build_latest_1, build_latest_2, build_latest_3, build_latest_4, build_latest_5, aggregate_dev_logs, aggregate_stable_logs, aggregate_latest_logs, build_batch, aggregate_batch_logs, build_manual]
-    if: ${{ !cancelled() }}
+    if: ${{ !cancelled() && inputs.do_not_release != true }}
     uses: ./.github/workflows/cleanup.yml
     secrets: inherit
 
   trigger_website_update:
     needs: [build_stable_1, build_stable_2, build_stable_3, build_stable_4, build_stable_5, build_dev_1, build_dev_2, build_dev_3, build_dev_4, build_dev_5, build_latest_1, build_latest_2, build_latest_3, build_latest_4, build_latest_5, aggregate_dev_logs, aggregate_stable_logs, aggregate_latest_logs, build_batch, aggregate_batch_logs, build_manual, trigger_cleanup]
-    if: ${{ !cancelled() }}
+    if: ${{ !cancelled() && inputs.do_not_release != true }}
     uses: ./.github/workflows/update-website.yml
     secrets: inherit
 

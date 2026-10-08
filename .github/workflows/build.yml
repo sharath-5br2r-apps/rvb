@@ -31,6 +31,11 @@ on:
         required: false
         type: boolean
         default: true
+      do_not_release:
+        description: "Do not upload to releases or commit update files/manifests; upload artifacts only"
+        required: false
+        type: boolean
+        default: false
       aggregate_flavor:
         required: false
         type: string
@@ -186,6 +191,7 @@ jobs:
           cp -f temp/manifest/build.json build.json
 
       - name: Upload to release
+        if: ${{ inputs.do_not_release == false }}
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           RELEASE_TAG: ${{ steps.version.outputs.NEXT_VER_CODE }}
@@ -235,7 +241,7 @@ jobs:
       # Standalone (non-partitioned) builds have only one job so there is no
       # push race.  Commit update files and changelog directly to the update branch.
       - name: Commit module update files (standalone)
-        if: ${{ inputs.aggregate_flavor == '' && steps.update_changelog.outputs.has_modules == 'true' }}
+        if: ${{ inputs.do_not_release == false && inputs.aggregate_flavor == '' && steps.update_changelog.outputs.has_modules == 'true' }}
         env:
           NEXT_VER_CODE: ${{ steps.version.outputs.NEXT_VER_CODE }}
         run: |
@@ -261,6 +267,7 @@ jobs:
           git checkout main
 
       - name: Remove frequently updated apps
+        if: ${{ inputs.do_not_release == false }}
         run: |
           git checkout -f main
           bash .github/scripts/build_exclude_from_archive.sh
@@ -276,6 +283,7 @@ jobs:
 
       - name: Upload to release (Archive)
         id: archive_upload
+        if: ${{ inputs.do_not_release == false }}
         continue-on-error: true
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -290,7 +298,7 @@ jobs:
         run: bash .github/scripts/build_upload_release.sh
 
       - name: Merge archive manifest into website branch
-        if: ${{ inputs.aggregate_flavor == '' }}
+        if: ${{ inputs.do_not_release == false && inputs.aggregate_flavor == '' }}
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           ARCHIVE_TAG: ${{ steps.context.outputs.ARCHIVE_TAG }}
@@ -298,8 +306,24 @@ jobs:
           GITHUB_REPOSITORY: ${{ github.repository }}
         run: bash .github/scripts/merge_archive_branch.sh
 
+      - name: Upload build artifacts (when do_not_release is active)
+        if: ${{ inputs.do_not_release == true }}
+        uses: actions/upload-artifact@v7
+        with:
+          name: build-artifacts-${{ steps.version.outputs.NEXT_VER_CODE || 'manual' }}
+          path: |
+            build/
+            build.json
+            build.md
+            build_log.jsonl
+            build_log.md
+            built_files.txt
+            stable/
+            beta/
+          if-no-files-found: ignore
+
       - name: Upload part build metadata
-        if: ${{ inputs.upload_release_metadata == false }}
+        if: ${{ inputs.do_not_release == false && inputs.upload_release_metadata == false }}
         uses: actions/upload-artifact@v7
         with:
           name: part-logs-${{ inputs.aggregate_flavor || steps.context.outputs.FLAVOR_TAG || 'logs' }}-${{ steps.context.outputs.CONFIG_TAG || 'part' }}
@@ -317,7 +341,7 @@ jobs:
           if-no-files-found: ignore
 
       - name: Notify website catalog rebuild
-        if: ${{ inputs.upload_release_metadata != false }}
+        if: ${{ inputs.do_not_release == false && inputs.upload_release_metadata != false }}
         continue-on-error: true
         env:
           DISPATCH_TOKEN: ${{ secrets.WEBSITE_TOKEN || secrets.WEBSITE_DISPATCH_TOKEN || secrets.WEBSITE_REPO_TOKEN || secrets.APKS_REPO_TOKEN || secrets.PERSONAL_ACCESS_TOKEN || secrets.GH_TOKEN || secrets.GITHUB_TOKEN }}
