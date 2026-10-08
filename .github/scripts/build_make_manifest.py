@@ -2,7 +2,7 @@
 """Convert the builder's raw build.json into the unified filename-keyed manifest.
 
 The numbered release gets this file uploaded as build.json, and the archive
-releases (stable/beta) get a cumulative merge of it (see merge_archive_manifest.sh).
+releases (stable/beta) get a cumulative merge of it (see merge_archive_branch.sh).
 Schema matches .github/scripts/backfill_manifests.py output (schema version 1).
 
 Env:
