@@ -1,14 +1,14 @@
 # Comprehensive Downstream Fork Changes
 
-This document provides a detailed account of all structural, architectural, behavioural, and operational differences implemented in **`sharath-5br2r-apps/revanced-morphe-xposed-builder`** relative to upstream **`nullcpy/rvb`**, with in-depth analysis of modifications across `scripts/` and CI automation.
+This document provides an exhaustive, technical account of all architectural, behavioural, and operational differences implemented in **`sharath-5br2r-apps/revanced-morphe-xposed-builder`** relative to upstream **`nullcpy/rvb`**, derived directly from codebase inspection and `git diff upstream/main...HEAD`.
 
 ---
 
 ## 1. Local Build CLI & Execution (`scripts/build.sh`)
 
-### A. Rich Command-Line Interface & Flag Parsing
-- **Upstream**: Relied exclusively on positional arguments (`$1` as config file) and preset environment variables; had no built-in help flag or standard option parsing.
-- **Fork**: Implemented complete GNU-style command-line argument parsing supporting both `--flag=val` and `--flag val`:
+### A. Comprehensive Command-Line Argument Parser
+- **Upstream**: Accepted only positional configuration files (`$1`) and preset environment variables; lacked dedicated flag parsing or help menus.
+- **Fork**: Added full GNU-style option parsing supporting `--option=val` and `--option val`:
   - `--config=PATH`: Explicit configuration file path (defaults to `config.toml` or first positional argument).
   - `--allowed-apps=REGEX`: Filter applications to build by table name matching a regular expression.
   - `--output=DIR`: Overrides default build artifact destination directory (`build/`).
@@ -17,7 +17,7 @@ This document provides a detailed account of all structural, architectural, beha
   - `--help` / `-h`: Displays formatted CLI reference manual with environment variable documentation.
 
 ### B. Ad-Hoc Command-Line Table Filtering
-- **Upstream**: Filtering required modifying config files or setting workflow inputs.
+- **Upstream**: Required editing TOML/JSON configs or setting workflow inputs.
 - **Fork**: Added positional app filter arguments:
   ```bash
   ./scripts/build.sh configs/patches/morphe.toml YouTube Twitter   # include only
@@ -25,7 +25,7 @@ This document provides a detailed account of all structural, architectural, beha
   ```
 
 ### C. Concurrency Isolation & Post-Build Summaries
-- **Scratch Directory Isolation**: Cleans up worker scratch files (`temp/tmp.*`, `*-merge-tmp*`, `morphe-stage-*`) deterministically per job.
+- **Scratch Directory Isolation**: Deterministically purges worker scratch files (`temp/tmp.*`, `*-merge-tmp*`, `morphe-stage-*`) per process.
 - **Partition Support**: Propagates `CURRENT_BUILD_PART` to isolate logs and lock contexts when running parallel CI segments.
 - **Automated Step Summary**: Automatically invokes `generate_error_markdown.py` post-build to emit `error.md` for GitHub Actions step summaries and local terminal review.
 
@@ -34,7 +34,7 @@ This document provides a detailed account of all structural, architectural, beha
 ## 2. Core Build Utilities & Engine (`scripts/utils.sh`)
 
 ### A. Zero-Patch Rejection Policy
-- **Upstream**: When patchers produced 0 applied patches, upstream printed a warning (`wpr "No applied patches parsed..."`) and published unpatched/stock binaries into releases and manifests.
+- **Upstream**: When patchers produced 0 applied patches, upstream printed a warning (`wpr "No applied patches parsed..."`) and continued, resulting in publishing unpatched stock binaries into releases and manifests.
 - **Fork**: Enforces a strict validation gate:
   ```bash
   if [ "$applied_json" = "[]" ] && [ -n "$PATCH_OUTPUT" ] && [ "${PATCHER_FLOW:-}" = cli-patch ]; then
@@ -53,24 +53,34 @@ This document provides a detailed account of all structural, architectural, beha
 
 ### C. Module Update JSON Layout (`updateJson`)
 - **Upstream**: Flattened or customized pointer naming schemes.
-- **Fork**: Standardized `update_json_path()` to match Magisk/KernelSU updater clients:
+- **Fork**: Standardized `update_json_path()` to match Magisk/KernelSU updater expectations:
   - Stable pointers: `stable/<module-id>.json`
   - Beta pointers: `beta/<module-id>.json`
   - Eliminates author/channel duplicate suffixes (`<base_id>-stable` / `<base_id>-beta`).
 
 ### D. JSONL Telemetry & Logging
-- **Upstream**: Accumulated logs as in-memory JSON arrays in `error.json` and `build_log.json`, which frequently corrupted under concurrent step execution.
+- **Upstream**: Accumulated logs as in-memory JSON arrays in `error.json` and `build_log.json`, which corrupted under concurrent step execution.
 - **Fork**: Standardized all telemetry on JSON Lines (`error.jsonl` and `build_log.jsonl`):
   - Added `log_build_event()` for atomic appending.
   - Formatted logger helpers `pr()`, `epr()`, and `wpr()` automatically prefix active `CURRENT_APP_NAME` and `CURRENT_BUILD_PART`.
 
-### E. Multi-Host Patch Sources Support
-- **Upstream**: Tailored specifically to GitHub, GitLab, and Codeberg.
-- **Fork**:
-  - Implemented generic Git and Forgejo helpers (`dl_forgejo`, `get_forgejo_vers`, `dl_git_repo`, `get_git_repo_vers`, `parse_host_spec`, `source_req`, `source_dl`).
-  - Added `dedup_patcher_args` to sanitize and deduplicate patch argument lists.
+### E. Expanded Download Providers (`DL_SRCS`) & Options
+- **Upstream `DL_SRCS`**: `("cache_repo" "direct" "github" "archive" "apkmirror" "uptodown" "apkpure" "apkcombo")`
+- **Fork `DL_SRCS`**: `("local" "direct" "cache_repo" "github" "gitlab" "forgejo" "archive" "apkmirror" "uptodown" "apkpure" "apkcombo")`
+- **New Download Sources**:
+  - `local-dlurl`: Direct file system loading (`get_local_resp`, `get_local_vers`, `get_local_pkg_name`, `dl_local`). Supports raw paths and `file://` URLs.
+  - `gitlab-dlurl`: Native GitLab releases integration (`dl_gitlab`, `get_gitlab_resp`, `get_gitlab_vers`).
+  - `forgejo-dlurl`: Native Forgejo/Gitea API releases integration (`dl_forgejo`, `get_forgejo_resp`, `get_forgejo_vers`).
+  - Unified Git release downloader (`dl_git_repo`): Dynamically resolves tag versions and matches release assets via `${provider}_dlurl_regex` or `github_asset_regex`.
 
-### F. Keystore & Prebuilt Tooling
+### F. Patcher Registry Extensions (`patchers.sh`, `patchers.py`)
+- **New Patcher Kinds**:
+  - `apksigner`: Pure signing workflow (`flow=signing`), skipping patch application.
+  - `none`: Passthrough workflow (`flow=passthrough`), taking stock binaries directly.
+  - Disaggregated `npatch` and `lspatch` kinds from monolithic `xposed`.
+- **Argument Deduplication**: Added `dedup_patcher_args()` to strip redundant flags (like duplicated `-f`, `--force`, or `--continue-on-error`) from CLI invocations.
+
+### G. Keystore & Prebuilt Tooling
 - **Keystore Management**:
   - Loads local `.env` configurations automatically when present.
   - Implemented `require_p12()` using Bouncy Castle (`get_bcprov`) to convert BKS keystores to PKCS12 dynamically.
@@ -79,7 +89,7 @@ This document provides a detailed account of all structural, architectural, beha
   - Validates prebuilt CLI and tool JARs via `is_valid_zip_or_jar()` and SHA-256 verification.
   - Enforces native architecture checks via `has_native_arch`.
 
-### G. Extended Build Metadata Extraction
+### H. Extended Build Metadata Extraction
 - Expanded `write_build_info()` to capture:
   - `min_sdk` and `version_code` extracted directly from APK manifests.
   - `cli` reference version and name.
