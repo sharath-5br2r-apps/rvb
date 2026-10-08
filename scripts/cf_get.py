@@ -66,26 +66,6 @@ def is_challenge(status_code: int, text: str, headers: dict = None) -> bool:
     ))
 
 
-def is_cf_html(text: str) -> bool:
-    """Return True when *text* is an HTML page (CF interstitial or otherwise).
-
-    Used to reject any method's response that delivers an HTML page instead
-    of the real content, even when the server answers 200 OK.
-    """
-    if not text:
-        return False
-    lower = text.lstrip("\ufeff \t\r\n").lower()
-    if is_challenge(200, text):
-        return True
-    return (
-        lower.startswith("<!doctype html")
-        or lower.startswith("<html")
-        or lower.startswith("<head")
-        or lower.startswith("<body")
-        or "<meta http-equiv=" in lower[:4096]
-        or "<title>" in lower[:4096]
-    )
-
 
 def is_valid_download(path: str, content_type: str = "") -> bool:
     """Reject HTML/error pages without assuming the downloaded file type."""
