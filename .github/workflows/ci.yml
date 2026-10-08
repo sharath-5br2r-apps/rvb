@@ -366,19 +366,19 @@ jobs:
         id: collect_update
         run: |
           set -euo pipefail
-          mkdir -p changelogs
           tag="${{ needs.resolve_dev_version.outputs.next_ver_code_dev }}"
           json_file="dev_logs/aggregated_out/build.json"
           changelog_file="dev_logs/aggregated_out/build.md"
-          if [ -n "$tag" ] && [ -s "$json_file" ]; then
-            cp -f "$json_file" "build.json"
-            [ -s "$changelog_file" ] && cp -f "$changelog_file" "changelogs/${tag}.md"
+          mkdir -p changelogs stable beta
+          if [ -n "$tag" ] && [ -s "$changelog_file" ]; then
+            cp -f "$changelog_file" "changelogs/${tag}.md"
           fi
-          # Collect stable and beta module update files from every parallel build part artifact.
-          # Doing this once in the aggregation job avoids concurrent push races.
-          mkdir -p stable beta
-          find logs_artifacts -path "*/stable/*.json" -exec cp -f {} stable/ \; 2>/dev/null || true
-          find logs_artifacts -path "*/beta/*.json" -exec cp -f {} beta/ \; 2>/dev/null || true
+          # Collect stable and beta module update files aggregated from parts
+          [ -d dev_logs/aggregated_out/stable ] && cp -f dev_logs/aggregated_out/stable/*.json stable/ 2>/dev/null || true
+          [ -d dev_logs/aggregated_out/beta ] && cp -f dev_logs/aggregated_out/beta/*.json beta/ 2>/dev/null || true
+          [ -d dev_logs/aggregated_out/changelogs ] && cp -f dev_logs/aggregated_out/changelogs/*.md changelogs/ 2>/dev/null || true
+          # Clean up transient directories to prevent polluting the update branch
+          rm -rf logs_artifacts dev_logs
           if [ -n "$(find stable beta -name "*.json" -print -quit 2>/dev/null)" ]; then
             echo "has_modules=true" >> "$GITHUB_OUTPUT"
           else
@@ -548,18 +548,19 @@ jobs:
         id: collect_update
         run: |
           set -euo pipefail
-          mkdir -p changelogs
           tag="${{ needs.resolve_stable_version.outputs.next_ver_code_stable }}"
           json_file="stable_logs/aggregated_out/build.json"
           changelog_file="stable_logs/aggregated_out/build.md"
-          if [ -n "$tag" ] && [ -s "$json_file" ]; then
-            cp -f "$json_file" "build.json"
-            [ -s "$changelog_file" ] && cp -f "$changelog_file" "changelogs/${tag}.md"
+          mkdir -p changelogs stable beta
+          if [ -n "$tag" ] && [ -s "$changelog_file" ]; then
+            cp -f "$changelog_file" "changelogs/${tag}.md"
           fi
-          # Collect stable and beta module update files from every parallel build part artifact.
-          mkdir -p stable beta
-          find logs_artifacts -path "*/stable/*.json" -exec cp -f {} stable/ \; 2>/dev/null || true
-          find logs_artifacts -path "*/beta/*.json" -exec cp -f {} beta/ \; 2>/dev/null || true
+          # Collect stable and beta module update files aggregated from parts
+          [ -d stable_logs/aggregated_out/stable ] && cp -f stable_logs/aggregated_out/stable/*.json stable/ 2>/dev/null || true
+          [ -d stable_logs/aggregated_out/beta ] && cp -f stable_logs/aggregated_out/beta/*.json beta/ 2>/dev/null || true
+          [ -d stable_logs/aggregated_out/changelogs ] && cp -f stable_logs/aggregated_out/changelogs/*.md changelogs/ 2>/dev/null || true
+          # Clean up transient directories to prevent polluting the update branch
+          rm -rf logs_artifacts stable_logs
           if [ -n "$(find stable beta -name "*.json" -print -quit 2>/dev/null)" ]; then
             echo "has_modules=true" >> "$GITHUB_OUTPUT"
           else
@@ -734,18 +735,19 @@ jobs:
         id: collect_update
         run: |
           set -euo pipefail
-          mkdir -p changelogs
           tag="${{ needs.resolve_latest_version.outputs.next_ver_code_latest }}"
           json_file="latest_logs/aggregated_out/build.json"
           changelog_file="latest_logs/aggregated_out/build.md"
-          if [ -n "$tag" ] && [ -s "$json_file" ]; then
-            cp -f "$json_file" "build.json"
-            [ -s "$changelog_file" ] && cp -f "$changelog_file" "changelogs/${tag}.md"
+          mkdir -p changelogs stable beta
+          if [ -n "$tag" ] && [ -s "$changelog_file" ]; then
+            cp -f "$changelog_file" "changelogs/${tag}.md"
           fi
-          # Collect stable and beta module update files from every parallel build part artifact.
-          mkdir -p stable beta
-          find logs_artifacts -path "*/stable/*.json" -exec cp -f {} stable/ \; 2>/dev/null || true
-          find logs_artifacts -path "*/beta/*.json" -exec cp -f {} beta/ \; 2>/dev/null || true
+          # Collect stable and beta module update files aggregated from parts
+          [ -d latest_logs/aggregated_out/stable ] && cp -f latest_logs/aggregated_out/stable/*.json stable/ 2>/dev/null || true
+          [ -d latest_logs/aggregated_out/beta ] && cp -f latest_logs/aggregated_out/beta/*.json beta/ 2>/dev/null || true
+          [ -d latest_logs/aggregated_out/changelogs ] && cp -f latest_logs/aggregated_out/changelogs/*.md changelogs/ 2>/dev/null || true
+          # Clean up transient directories to prevent polluting the update branch
+          rm -rf logs_artifacts latest_logs
           if [ -n "$(find stable beta -name "*.json" -print -quit 2>/dev/null)" ]; then
             echo "has_modules=true" >> "$GITHUB_OUTPUT"
           else
@@ -880,18 +882,19 @@ jobs:
         id: collect_update
         run: |
           set -euo pipefail
-          mkdir -p changelogs
           tag="${{ needs.resolve_batch_version.outputs.next_ver_code_batch }}"
           json_file="batch_logs/aggregated_out/build.json"
           changelog_file="batch_logs/aggregated_out/build.md"
-          if [ -n "$tag" ] && [ -s "$json_file" ]; then
-            cp -f "$json_file" "build.json"
-            [ -s "$changelog_file" ] && cp -f "$changelog_file" "changelogs/${tag}.md"
+          mkdir -p changelogs stable beta
+          if [ -n "$tag" ] && [ -s "$changelog_file" ]; then
+            cp -f "$changelog_file" "changelogs/${tag}.md"
           fi
-          # Collect stable and beta module update files from every parallel build part artifact.
-          mkdir -p stable beta
-          find logs_artifacts -path "*/stable/*.json" -exec cp -f {} stable/ \; 2>/dev/null || true
-          find logs_artifacts -path "*/beta/*.json" -exec cp -f {} beta/ \; 2>/dev/null || true
+          # Collect stable and beta module update files aggregated from parts
+          [ -d batch_logs/aggregated_out/stable ] && cp -f batch_logs/aggregated_out/stable/*.json stable/ 2>/dev/null || true
+          [ -d batch_logs/aggregated_out/beta ] && cp -f batch_logs/aggregated_out/beta/*.json beta/ 2>/dev/null || true
+          [ -d batch_logs/aggregated_out/changelogs ] && cp -f batch_logs/aggregated_out/changelogs/*.md changelogs/ 2>/dev/null || true
+          # Clean up transient directories to prevent polluting the update branch
+          rm -rf logs_artifacts batch_logs
           if [ -n "$(find stable beta -name "*.json" -print -quit 2>/dev/null)" ]; then
             echo "has_modules=true" >> "$GITHUB_OUTPUT"
           else

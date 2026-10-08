@@ -121,6 +121,19 @@ if [ -s "$aggregated_md" ]; then
   echo "[+] Aggregated changelog size: $(wc -c < "$aggregated_md") bytes"
 fi
 
+# Aggregate module update files (stable/ and beta/) and changelogs into aggregated_out/
+mkdir -p aggregated_out/stable aggregated_out/beta aggregated_out/changelogs
+# Find all stable/*.json and beta/*.json from downloaded parts (excluding aggregated_out itself)
+find . -path "*/stable/*.json" ! -path "./aggregated_out/*" -exec cp -f {} aggregated_out/stable/ \; 2>/dev/null || true
+find . -path "*/beta/*.json" ! -path "./aggregated_out/*" -exec cp -f {} aggregated_out/beta/ \; 2>/dev/null || true
+# Also find any existing changelogs from parts or copy aggregated_md
+find . -path "*/changelogs/*.md" ! -path "./aggregated_out/*" -exec cp -f {} aggregated_out/changelogs/ \; 2>/dev/null || true
+
+# Prune empty directories if no module update files or changelogs were found
+rmdir aggregated_out/stable 2>/dev/null || true
+rmdir aggregated_out/beta 2>/dev/null || true
+rmdir aggregated_out/changelogs 2>/dev/null || true
+
 if jq -e 'has("files")' "$aggregated_json" >/dev/null 2>&1; then
   entries_count=$(jq '.files | length' "$aggregated_json" 2>/dev/null || echo 0)
 else
