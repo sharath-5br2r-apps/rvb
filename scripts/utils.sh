@@ -36,31 +36,63 @@ OS=$(uname -o)
 [[ $(uname -s) == *"NT"* ]] && javapathsep=";" || javapathsep=":"
 DEFAULT_UA="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/154.0.0.0 Safari/537.36"
 
-# Signing identity — overridable from CI (secrets written to these files/vars
-# by build.yml); defaults preserve the upstream keystore in the repo.
-# Preserve downstream local-build support in this same initialization block.
+# Signing identity — configured via universal keystore variables:
+# KEYSTORE, KEYSTORE_FILE, KEYSTORE_BASE64, KEYSTORE_PASSWORD, KEYSTORE_KEY_PASSWORD, KEYSTORE_ALIAS.
 if [ -f .env ]; then
 	echo "Using .env file for keystore and signing."
 	# shellcheck disable=SC1091
 	source .env
 fi
-RVB_KEYSTORE="${RVB_KEYSTORE:-ks.keystore}"
-RVB_KEYSTORE_PASS="${RVB_KEYSTORE_PASS:-${KEYSTORE_PASSWORD:-123456789}}"
-RVB_KEY_ALIAS="${RVB_KEY_ALIAS:-${KEYSTORE_ALIAS:-jhc}}"
 
-# Accept either a path to an existing keystore or the legacy base64 secret.
-# An explicit file takes precedence over KEYSTORE_BASE64.
+# Universal variables with fallback resolution
+KEYSTORE="${KEYSTORE:-${RVB_KEYSTORE:-}}"
+KEYSTORE_PASSWORD="${KEYSTORE_PASSWORD:-${RVB_KEYSTORE_PASS:-}}"
+KEYSTORE_KEY_PASSWORD="${KEYSTORE_KEY_PASSWORD:-${KEYSTORE_PASSWORD}}"
+KEYSTORE_ALIAS="${KEYSTORE_ALIAS:-${RVB_KEY_ALIAS:-}}"
+
+# Keystore file resolution (file path or base64 decoding)
 if [ -n "${KEYSTORE_FILE:-}" ]; then
 	if [ ! -f "$KEYSTORE_FILE" ]; then
 		echo "ERROR: KEYSTORE_FILE does not exist: $KEYSTORE_FILE" >&2
 		exit 1
 	fi
-	RVB_KEYSTORE="$KEYSTORE_FILE"
+	KEYSTORE="$KEYSTORE_FILE"
 elif [ -n "${KEYSTORE_BASE64:-}" ]; then
 	mkdir -p "$TEMP_DIR"
 	printf '%s' "$KEYSTORE_BASE64" | base64 -d > "$TEMP_DIR/ks.keystore"
-	RVB_KEYSTORE="$TEMP_DIR/ks.keystore"
+	KEYSTORE="$TEMP_DIR/ks.keystore"
+elif [ -z "$KEYSTORE" ] && [ -f "ks.keystore" ]; then
+	KEYSTORE="ks.keystore"
 fi
+
+# Synchronize internal / legacy variable names for backwards compatibility across functions
+RVB_KEYSTORE="$KEYSTORE"
+RVB_KEYSTORE_PASS="$KEYSTORE_PASSWORD"
+RVB_KEY_ALIAS="$KEYSTORE_ALIAS"
+RVB_KEYSTORE_P12="${KEYSTORE_P12:-${RVB_KEYSTORE_P12:-}}"
+
+require_signing_identity() {
+	local bad=0
+	if [ -z "$KEYSTORE" ]; then epr "KEYSTORE is not set"; bad=1; fi
+	if [ -z "$KEYSTORE_PASSWORD" ]; then epr "KEYSTORE_PASSWORD is not set"; bad=1; fi
+	if [ -z "$KEYSTORE_ALIAS" ]; then epr "KEYSTORE_ALIAS is not set"; bad=1; fi
+
+	if [ -n "$KEYSTORE" ] && [ ! -f "$KEYSTORE" ]; then epr "keystore not found: $KEYSTORE"; bad=1; fi
+
+	if [ -n "$KEYSTORE_PASSWORD" ] && [[ "$KEYSTORE_PASSWORD" =~ [^0-9A-Za-z] ]]; then
+		epr "KEYSTORE_PASSWORD must be alphanumeric: it is embedded in eval'd CLI arguments"
+		bad=1
+	fi
+	if [ -n "$KEYSTORE_ALIAS" ] && [[ "$KEYSTORE_ALIAS" =~ [^0-9A-Za-z_.-] ]]; then
+		epr "KEYSTORE_ALIAS must not contain characters that break eval'd CLI arguments"
+		bad=1
+	fi
+	if [ "$bad" -ne 0 ]; then
+		epr "no usable signing identity - set KEYSTORE (or KEYSTORE_BASE64 / KEYSTORE_FILE), KEYSTORE_PASSWORD, KEYSTORE_KEY_PASSWORD, and KEYSTORE_ALIAS"
+		return 1
+	fi
+	return 0
+}
 
 # Instafel fallbacks (used when the CLI manifest lacks a commit hash, and
 # when a config omits included-patches). Overridable without code edits.
@@ -3699,6 +3731,22 @@ patch_apk() {
 		for j in "${p_jars[@]}"; do
 			p_args_modules+=" -m '$j'"
 		done
+		# Both tools sign the output themselves, so the identity has to reach them as
+		# arguments: -k <path> <storePass> <alias> <aliasPass>, same order in LSPatch
+		# (KeystoreSpec.of) and NPatch. Which store each can read is a per-tool fact -
+		# NPatch asks JCA for a BKS type, LSPatch for the JDK default (PKCS12) - so the
+		# registry names it. Placed before $patcher_args so a config can still override.
+		local ks_args="" ks_file="$RVB_KEYSTORE_P12"
+		if [ "${PATCHER_SIGNING:-false}" = true ]; then
+			if [ "${PATCHER_KEYSTORE_FORMAT:-pkcs12}" = bks ]; then
+				ks_file="$RVB_KEYSTORE"
+			fi
+			if [ -z "$ks_file" ] || [ ! -f "$ks_file" ]; then
+				epr "No signing keystore for '$cli_source' (want a $PATCHER_KEYSTORE_FORMAT store; have RVB_KEYSTORE='$RVB_KEYSTORE' RVB_KEYSTORE_P12='$RVB_KEYSTORE_P12')"
+				return 1
+			fi
+			ks_args=" -k '$ks_file' '$RVB_KEYSTORE_PASS' '$RVB_KEY_ALIAS' '$RVB_KEYSTORE_PASS'"
+		fi
 		mkdir -p "$tmp_dir"
 		local cmd
 		if [ "$PATCHER_KIND" = npatch ]; then

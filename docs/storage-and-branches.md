@@ -177,6 +177,34 @@ manifest's recorded arch is authoritative, and the derivation itself lives in
 `naming.py` alone — the website imports that module rather than copying it
 ([website-contract.md](website-contract.md)).
 
+### Withdrawing a bad build
+
+Numbered releases are append-only for consumers, not for the maintainer: a build
+whose artifacts are broken can be pulled, but the order matters, because the site
+resolves download links from the Releases API and reads existence from the
+manifests. What happened to build 260210 (patched with no BouncyCastle provider, so
+NPatch died after it had embedded the stock APK: two signature-less stubs, reported
+as a green build) is the reference case:
+
+1. Delete the offending assets from the **archive** release first
+   (`gh api -X DELETE repos/<owner>/<repo>/releases/assets/<id>`). Releases are the
+   existence truth for `merge_archive_branch.sh`, so a later merge prunes the
+   archive manifest on its own.
+2. Delete the numbered release with its tag: `gh release delete <tag> --cleanup-tag`.
+3. Fix the `website` metadata that named them: remove `manifests/<tag>.json`, and
+   re-run the merge's own existence filter over `archive/<channel>.json` instead of
+   hand-deleting keys, so the result is what CI would have written. Leave
+   `meta.publishedAt` alone — restamping is the merge's job, not a hand fix's.
+4. Confirm nothing on `update` still points at a withdrawn file. Only module builds
+   write pointers, but an archived `zipUrl` that no longer resolves is a silent
+   failure for every phone holding that module version.
+
+Deleting the **highest** tag also frees that version code: `build_resolve_version.sh`
+counts above the highest existing tag, so the next build reuses the number (260210
+was withdrawn and recreated the same afternoon). A version code is therefore not a
+stable unique identifier across a withdrawal — the site keys on filenames and
+manifests, so those are what must be cleaned, not the tag alone.
+
 ## `sharath-5br2r-apps/apks-dump` (shared download cache)
 
 A **separate repository**, not a branch: one release per Android package name,

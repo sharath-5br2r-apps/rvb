@@ -276,17 +276,45 @@ Uses ReVanced CLI v4 / v5 argument structures, automatically handling `--patches
 Inject Xposed modules directly into stock APKs without ReVanced patches:
 ```toml
 [Discord]
-cli-source = "7723mod/NPatch"
+cli-source = "JingMatrix/LSPatch"                         # or "7723mod/NPatch"
 cli-version = "stable"
-patches-source = "revenge-mod/revenge-xposed"
+patches-source = "revenge-mod/revenge-xposed"           # the Xposed module is the "patches bundle"
 patches-version = "stable"
 version = "auto"
 github-dlurl = "https://github.com/discord/releases/..."
 patcher-args = "-l 2"
 ```
 
+### Signing is handled for you, so never write it here
+
+These tools sign their own output, so the engine passes your release identity to
+them itself: `-k <store> <password> <alias> <password>`, where the store is the BKS
+one for NPatch and the PKCS12 one for LSPatch (each can only read its own format).
+Do **not** put `-k`, a keystore path or any password into `patcher-args`: the
+configs are published to the public `data` branch, and the signing password would go
+with them. If a build ever reports it cannot find a keystore, that is a CI secret or
+a local environment configuration problem, not a config one
+(see [docs/contributing.md](docs/contributing.md)).
+
+### `-l` means different things in the two tools
+
+`patcher-args` is passed through verbatim, and the signature-bypass scale is not
+shared between them, so a level copied from one tool's docs is a different setting
+in the other:
+
+| Tool | Levels | Default | Notes |
+|---|---|---|---|
+| NPatch | `0` None, `1` Basic, `2` High, `3` Extreme, `4` Seccomp | `1` | `3` and `4` need manager mode and are rejected in embedded (`-m`) mode |
+| LSPatch | `0` disable, `1` pm, `2` pm+openat, `3` +raw-syscall hooks | `0` | `3` patches native code, so an app that verifies its own code may notice it |
+
+Omit `-l` to take the tool's own default. The same applies to `--injectdex`: it
+puts the loader into the app's own dex list so that *isolated* sub-processes get
+hooked, and it is an opt-in for modules that need those processes, not a fix for an
+app that crashes on launch.
+
 ### 4. Instafel Patcher (Instagram Alpha)
-Natively compiles Instagram Alpha using the Instafel Patcher core:
+
+You can natively build Instagram Alpha using the Instafel Patcher engine (`instafel/p-rel`) and Patcher Core (`instafel/pc-rel`).
 ```toml
 [instagram-instafel]
 cli-source = "instafel/p-rel"

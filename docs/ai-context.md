@@ -148,7 +148,7 @@ source and the arch goes unbuilt if none supplies it
 bash .github/scripts/fetch_data_branch.sh            # materialise configs/ + state/
 bash .github/traces/test_cache_helpers.sh            # cache helpers regression test
 bash .github/traces/test_bundle_helpers.sh           # bundle helpers regression test
-bash scripts/build.sh configs/config.manual.toml     # real build (network + java + jq)
+bash scripts/build.sh configs/config.manual.toml     # real build (network + java + jq; uses universal KEYSTORE vars)
 bash scripts/build.sh clean                          # reset temp/ build/ build.md
 bash .github/scripts/push_data_configs.sh "feat(config): …"   # publish TOML edits
 gh run list --repo sharath-5br2r-apps/rvb            # what ran and how

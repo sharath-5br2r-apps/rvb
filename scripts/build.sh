@@ -126,6 +126,10 @@ fi
 jq --version >/dev/null || abort "\`jq\` is not installed. install it with 'apt install jq' or equivalent"
 java --version >/dev/null || abort "\`java\` is not installed. install it with 'apt install openjdk-21-jre' or equivalent"
 zip --version >/dev/null || abort "\`zip\` is not installed. install it with 'apt install zip' or equivalent"
+# Before any download or patch work: every output is signed, and the signing
+# identity is no longer a file in this repository (the template's keystore private
+# key is public). Fail here rather than half-way through a pool.
+require_signing_identity || abort "cannot build without a signing identity (see 'Signing and identity' in docs/build-engine.md)"
 
 set_prebuilts
 

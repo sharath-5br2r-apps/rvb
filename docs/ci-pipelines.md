@@ -101,9 +101,14 @@ Step order, with the reason each is where it is:
 2. `build_resolve_context.sh` maps the config file (`configs/<channel>/config.part*.json` or manual TOML) to `ARCHIVE_TAG`,
    `IS_PRERELEASE` and `TITLE_SUFFIX` — the single owner of
    "which channel is this run".
-3. Install Bouncy Castle **only if** `patchers.py needs-bks` says a module in this
-   config requires a BKS keystore.
-4. `install_keystore.sh` writes the signing identity from secrets.
+3. Install Bouncy Castle **only if** `patchers.py needs-bks` says an app in this
+   config is patched with NPatch — the only tool that asks the **JVM** for a BKS
+   keystore type (single-argument `KeyStore.getInstance("BKS")`). ReVanced CLI and
+   Morphe also work in BKS but carry their own provider inside their jar, and
+   LSPatch uses `getDefaultType()`, so none of them trigger this step. A stock
+   Temurin has no BKS type, so getting the gate wrong either way is visible: skip
+   it for an NPatch config and patching dies on `KeyStoreException: BKS not found`.
+4. Keystore identity verification: In this fork, separate `install_keystore.sh` is removed and integrated directly into `scripts/utils.sh`. It resolves universal keystore variables (`KEYSTORE_BASE64`, `KEYSTORE_FILE`, `KEYSTORE_PASSWORD`, `KEYSTORE_KEY_PASSWORD`, `KEYSTORE_ALIAS`), converting BKS to PKCS12 via `require_p12()` as needed. `build.sh` enforces `require_signing_identity` before any download starts.
 5. `build_resolve_version.sh` computes `NEXT_VER_CODE` (`YY` + the next 4-digit
    sequence above the highest existing tag/release, e.g. `260141`).
 6. Restore the Actions APK cache (`temp/apks`), optionally drop named APKs, then
@@ -158,7 +163,7 @@ Step order, with the reason each is where it is:
 | Kind | Name | Used by | Notes |
 |---|---|---|---|
 | secret | `GITHUB_TOKEN` (auto) | all | `contents: write` on the jobs that push branches |
-| secret | `KEYSTORE_B64`, `KEYSTORE_P12_B64`, `KEYSTORE_PASSWORD`, `KEY_ALIAS` | build | signing identity |
+| secret | `KEYSTORE_BASE64`, `KEYSTORE_FILE`, `KEYSTORE_PASSWORD`, `KEYSTORE_KEY_PASSWORD`, `KEYSTORE_ALIAS` | build | signing identity (universal single-keystore configuration) |
 | secret | `APKS_REPO_TOKEN` | build, cleanup | cross-repo write to `sharath-5br2r-apps/apks-dump`, doubles as dispatch token |
 | secret | `CODEBERG_TOKEN` | watcher | raises Codeberg/Forgejo rate limits |
 | secret | `WEBSITE_DISPATCH_TOKEN` (optional) | cleanup | token for dispatching catalog updates |

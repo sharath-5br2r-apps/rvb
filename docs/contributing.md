@@ -65,11 +65,42 @@ Line endings are enforced by [.gitattributes](../.gitattributes): scripts, JSON,
 YAML and TOML are LF everywhere. If your editor writes CRLF into a `.sh`, the
 trace goldens will fail on byte comparison.
 
-Run a build locally to see the engine work end to end:
+Run a build locally to see the engine work end to end. It will refuse to start
+without a signing identity, on purpose: every artifact this project produces is
+signed, and the repository ships no keystore (the template's had a public private
+key - see [decisions/0008](decisions/0008-signing-identity-is-secret-only.md)). In
+CI the identity arrives from the four `KEYSTORE_*` secrets, so a local run has to
+supply the same four variables itself:
 
 ```bash
+export RVB_KEYSTORE=~/keys/ks.keystore           # BKS:    Morphe / ReVanced CLI, NPatch
+export RVB_KEYSTORE_P12=~/keys/ks-p12.keystore   # PKCS12: apksigner, LSPatch
+export RVB_KEYSTORE_PASS=<alnum-only>            # one password: store AND key
+export RVB_KEY_ALIAS=<alias>                      # one alias, present in both stores
 bash scripts/build.sh configs/config.manual.toml
 ```
+
+`build.sh` checks all of this before the first download and names whatever is
+missing. The password has to be alphanumeric because it is interpolated into
+`eval`'d CLI arguments.
+
+To get a throwaway pair for engine experiments (never the release key), one key
+stored in both formats:
+
+```bash
+keytool -genkeypair -alias test -keyalg RSA -keysize 2048 -validity 10950 \
+  -storetype PKCS12 -keystore ks-p12.keystore -storepass "$PASS" -keypass "$PASS" \
+  -dname "CN=test"
+keytool -importkeystore -providerpath bcprov-jdk18on-<ver>.jar \
+  -providerclass org.bouncycastle.jce.provider.BouncyCastleProvider -providername BC \
+  -srckeystore ks-p12.keystore -srcstoretype PKCS12 -srcstorepass "$PASS" -srcalias test \
+  -destkeystore ks.keystore -deststoretype BKS -deststorepass "$PASS" -destalias test
+```
+
+The second command needs a BouncyCastle provider jar because a stock JDK has no BKS
+type (`keytool error: java.security.KeyStoreException: BKS not found` is that gap
+talking). And never put a keystore path with its password into `configs/**`: the
+`data` branch is public.
 
 Expect it to need real network access to the stores. Module auto-update is
 disabled locally by design (there is no published `update` branch for a local run
