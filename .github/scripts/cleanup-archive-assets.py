@@ -4,10 +4,11 @@ import re
 import subprocess
 import sys
 
-def run_cmd(cmd):
+def run_cmd(cmd, check=True):
     result = subprocess.run(cmd, shell=True, capture_output=True, text=True)
     if result.returncode != 0:
-        print(f"Error running command: {cmd}\n{result.stderr}")
+        if check:
+            print(f"Error running command: {cmd}\n{result.stderr}")
         return None
     return result.stdout.strip()
 
@@ -15,9 +16,10 @@ def cleanup_release(tag):
     print(f"\n--- Fetching assets for release: {tag} ---")
     repo = os.environ.get("GITHUB_REPOSITORY")
     
-    # Get the release ID first
-    output = run_cmd(f"gh api repos/{repo}/releases/tags/{tag} --jq .id")
+    # Get the release ID first (check=False so 404/not found doesn't print error)
+    output = run_cmd(f"gh api repos/{repo}/releases/tags/{tag} --jq .id", check=False)
     if not output:
+        print(f"Release '{tag}' not found. Skipping.")
         return
     release_id = output.strip()
     
