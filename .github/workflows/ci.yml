@@ -204,18 +204,6 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: bash .github/scripts/commit_data_branch.sh
 
-      - name: Upload split config part artifacts
-        if: ${{ inputs.mode != 'Batch Build (Stable)' && inputs.mode != 'Batch Build (Both)' && (steps.compare.outputs.TRIGGER_STABLE == '1' || steps.compare.outputs.TRIGGER_PRERELEASE == '1' || steps.compare.outputs.TRIGGER_BLOCKED == '1' || steps.compare_apps.outputs.TRIGGER_APP_UPDATE == '1') }}
-        uses: actions/upload-artifact@v7
-        with:
-          name: split-configs
-          path: |
-            configs/stable/config.part*.json
-            configs/beta/config.part*.json
-            configs/both/config.part*.json
-            configs/batch/config.part*.json
-          if-no-files-found: ignore
-
   resolve_dev_version:
     needs: check_patch
     if: ${{ needs.check_patch.outputs.trigger_prerelease == '1' }}

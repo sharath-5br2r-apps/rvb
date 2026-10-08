@@ -89,12 +89,6 @@ jobs:
       - name: Fetch configs & state
         run: bash .github/scripts/fetch_data_branch.sh "${{ inputs.config_branch || 'data' }}"
 
-      - name: Download split config parts
-        uses: actions/download-artifact@v8
-        with:
-          name: split-configs
-        continue-on-error: true
-
       - name: Resolve build context
         id: context
         run: |

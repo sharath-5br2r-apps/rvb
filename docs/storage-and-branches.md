@@ -41,8 +41,8 @@ state/
 
 - Both directories are ignored on `main` ([.gitignore](../.gitignore)) and exist
   locally only as materialisations. Never `git add` them.
-- Strictly lives under `configs/` and `state/`. Temporary directories such as `temp_configs/` are not used; `fetch_data_branch.sh` materialises files directly into `configs/` and `state/` (preserving `configs/patches/` from HEAD).
-- Split config parts (`configs/<channel>/config.part*.json`) generated during CI are uploaded as the `split-configs` artifact and downloaded directly into `configs/` across parallel build jobs.
+- Strictly lives under `configs/` and `state/`. Temporary directories such as `temp_configs/` are not used; `fetch_data_branch.sh` materialises files directly from the `data` branch into `configs/` and `state/` (preserving `configs/patches/` from HEAD).
+- Split config parts (`configs/<channel>/config.part*.json`) generated during CI are committed directly to the `data` branch and fetched across parallel build jobs without relying on ephemeral actions artifacts.
 - **`fetch_data_branch.sh` overwrites local `configs/` and `state/`.** Publish
   hand-edited TOMLs *before* fetching, or lose them:
   `bash .github/scripts/push_data_configs.sh "<message>"` — plumbing temp-index

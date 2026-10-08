@@ -97,8 +97,7 @@ Step order, with the reason each is where it is:
 
 1. Java 21 (Temurin) → checkout `main` with `fetch-depth: 0` and submodules (full
    history is needed to enumerate existing tags and to commit to other branches) →
-   `fetch_data_branch.sh` (materialises `configs/` and `state/` directly) →
-   download `split-configs` artifact into workspace.
+   `fetch_data_branch.sh` (materialises `configs/` and `state/` directly from `data` branch).
 2. `build_resolve_context.sh` maps the config file (`configs/<channel>/config.part*.json` or manual TOML) to `ARCHIVE_TAG`,
    `IS_PRERELEASE` and `TITLE_SUFFIX` — the single owner of
    "which channel is this run".

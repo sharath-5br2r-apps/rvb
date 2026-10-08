@@ -126,7 +126,6 @@ independent update channel.
 Cloudflare-bypass sidecar service on `:8000`:
 
 1. Checkout `main` (full history, submodules) → `fetch_data_branch.sh` →
-   download `split-configs` artifact into workspace →
    `build_resolve_context.sh` maps the config file to `ARCHIVE_TAG`,
    `IS_PRERELEASE` and title suffix.
 2. Install Bouncy Castle only if a BKS-needing Xposed module is in the config;
