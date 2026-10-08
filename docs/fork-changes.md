@@ -123,11 +123,24 @@ This document provides an exhaustive, technical account of all architectural, be
 
 ## 3. Scraping & Download Helpers
 
-### A. APKMirror Scraper (`scripts/apkmirror_search.py`)
-- **Prefix Sanitization (1.1.1.1 / WARP)**: Strips Cloudflare WARP product prefixes (`re.sub(r'^1\.1\.1\.1\s*\+\s*', '', clean_text)`) so release titles don't trick the parser into returning `1.1.1.1` instead of the genuine semver (e.g., `6.38.9`).
-- **Flexible DPI Input**: Accepts string, list, or JSON dictionary formats for `dpi` configurations.
-- **Release Filtering (`rel_filter`)**: Added support for positive and negative variant regex filters (e.g. `!bundle` or `wear-os`).
-- **Fat-Bundle Arch Matching**: Expanded fallback hierarchy for multi-ABI and universal packages (`all`, `arm64-v8a + x86_64`, `arm64-v8a + armeabi-v7a`).
+### A. APKMirror Scraper & Pipeline Overhaul (`scripts/apkmirror_search.py`, `scripts/utils.sh`)
+- **Configurable Variant Filtering (`apkmirror_release_filter` / `rel_filter`)**:
+  - Implemented full support for both positive and negative regular expression filtering across release candidate URLs and variant description text.
+  - Prefixing with `!` (e.g. `!bundle` or `!wear-os`) excludes matching variants.
+  - Implemented synchronously in both Python (`apkmirror_search.py`) and Bash fallback HTML parser (`HTMLQ` in `utils.sh`), ensuring uniform filtering regardless of execution environment.
+- **DPI Flexibility & Structured Decoding**:
+  - Replaced strict space-delimited string parsing with multi-format deserialization: supports raw strings, lists, and JSON dictionaries (e.g. `{"phone": "nodpi", "tablet": "hdpi"}`) by unpacking values dynamically into the acceptable DPI match set.
+  - Supports automatic DPI fallbacks via `nodpi anydpi auto`.
+- **Target Version Code Resolution & `bypass`**:
+  - Added support for explicit target version code filtering (`target_vc`), while adding a `bypass` sentinel allowing builds to skip strict version code matching when targeting generic or updated mirror releases.
+- **Prefix Sanitization (1.1.1.1 / WARP)**:
+  - Strips Cloudflare WARP product prefixes (`re.sub(r'^1\.1\.1\.1\s*\+\s*', '', clean_text)`) so release titles don't trick the parser into returning `1.1.1.1` instead of genuine semver (e.g., `6.38.9`).
+- **Fat-Bundle Arch Hierarchy & Architecture Selection**:
+  - Re-architected multi-ABI matching:
+    - Universal (`all` architecture) queries prioritize universal/noarch packages or fat bundles (`arm64-v8a + x86_64`, `arm64-v8a + armeabi-v7a`), falling back gracefully to the first viable ABI if no universal package exists.
+    - Specific architectures (e.g. `arm64-v8a`, `armeabi-v7a`, `x86_64`) inspect multi-ABI fat bundles containing their target architecture in addition to standalone matching APKs.
+- **Template-Based Fast Release URL Construction**:
+  - In `dl_apkmirror()`, supports `apkmirror_example_url`: fast-tracks release resolution by substituting version tokens in known working release URLs, verifying matches against `apkmirror_release_filter` before falling back to multi-step search scrapers.
 
 ### B. Cloudflare Bypass & Fallback Scraper (`scripts/cf_get.py`)
 - **Multi-Method Fallback Chain**:
