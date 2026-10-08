@@ -1,21 +1,35 @@
 {
   "patches-version": "beta",
   "enable-module-update": true,
-  "YouTube-Morphe-Experimental": {
+  "YouTube-Morphe-AMOLED": {
     "enable-module-update": true,
     "patches-source": "MorpheApp/morphe-patches",
     "patch-brand": "morphe",
     "cli-type": "morphe",
     "enabled": true,
     "app-name": "YouTube",
-    "sub-variant": "Experimental",
+    "variant": "AMOLED",
     "build-mode": "both",
-    "version": "exp",
     "pkg-name": "com.google.android.youtube",
     "included-patches": "'Theme'",
+    "patcher-args": "-OdarkThemeBackgroundColor=#000000 -OlightThemeBackgroundColor=#FFFFFF",
     "uptodown-dlurl": "https://youtube.en.uptodown.com/android",
     "apkmirror-dlurl": "https://apkmirror.com/apk/google-inc/youtube",
     "apkpure-dlurl": "https://apkpure.com/youtube-app/com.google.android.youtube",
     "apkcombo-dlurl": "https://apkcombo.com/youtube/com.google.android.youtube"
+  },
+  "TikTok-Morphe-Kveld9": {
+    "enable-module-update": true,
+    "cli-type": "morphe",
+    "enabled": true,
+    "app-name": "TikTok",
+    "pkg-name": "com.zhiliaoapp.musically",
+    "patch-brand": "Kveld9",
+    "arch": "all arm64-v8a armeabi-v7a",
+    "uptodown-dlurl": "https://tiktok.en.uptodown.com/android",
+    "apkmirror-dlurl": "https://www.apkmirror.com/apk/tiktok-pte-ltd/tik-tok-including-musical-ly",
+    "apkpure-dlurl": "https://apkpure.com/tiktok-app/com.zhiliaoapp.musically",
+    "apkcombo-dlurl": "https://apkcombo.com/tiktok-videos-shop-live/com.zhiliaoapp.musically",
+    "patches-source": "kveld9/kveld-morphe-patches"
   }
 }
