@@ -2289,7 +2289,11 @@ dl_apkmirror() {
 				version_href=$(echo "$s_split" | grep -F "/${app_path_slug}/" | grep -F "$version" | grep -oP 'href="\K/apk/[^"]+' | grep -F -- '-release/' | head -1) || true
 			fi
 			if [ -n "$version_href" ]; then
-				release_url="$base_url$version_href"
+				if [[ "$version_href" == http* ]]; then
+					release_url="$version_href"
+				else
+					release_url="$base_url$version_href"
+				fi
 				_cf_get "$release_url" || return 1
 				resp="$html"
 			fi
@@ -2311,14 +2315,14 @@ dl_apkmirror() {
 			# 1. Exact URL match (strict)
 			version_href=$(echo "$all_links" | grep -F "$search_version-release" | head -1) || true
 			
-			# 2. Exact text match
+			# 2. Exact text match (must be an /apk/ link)
 			if [ -z "$version_href" ]; then
-				version_href=$(echo "$html_split" | grep -F "$version" | grep -oP 'href="\K[^"]+' | head -1) || true
+				version_href=$(echo "$html_split" | grep -F "$version" | grep -oP 'href="\K/apk/[^"]+' | head -1) || true
 			fi
 			
-			# 3. Clean text match
+			# 3. Clean text match (must be an /apk/ link)
 			if [ -z "$version_href" ] && [ -n "$clean_version" ] && [ "$clean_version" != "$version" ]; then
-				version_href=$(echo "$html_split" | grep -F "$clean_version" | grep -oP 'href="\K[^"]+' | head -1) || true
+				version_href=$(echo "$html_split" | grep -F "$clean_version" | grep -oP 'href="\K/apk/[^"]+' | head -1) || true
 			fi
 
 			# 4. Clean URL match
@@ -2332,7 +2336,11 @@ dl_apkmirror() {
 			fi
 
 				if [ -n "$version_href" ]; then
-					release_url="$base_url$version_href"
+					if [[ "$version_href" == http* ]]; then
+						release_url="$version_href"
+					else
+						release_url="$base_url$version_href"
+					fi
 					_cf_get "$release_url" || return 1
 					resp="$html"
 					break
@@ -2347,7 +2355,7 @@ dl_apkmirror() {
 			if [ -n "$html" ] && [ "$html" != "null" ]; then
 				local search_links=""
 				if [[ "$html" != *"No results found matching your query"* ]]; then
-					search_links=$($HTMLQ --attribute href "div.appRow h5 a" <<<"$html")
+					search_links=$($HTMLQ --attribute href "div.appRow h5 a" <<<"$html" | grep '^/apk/' || true)
 				fi
 				
 				# Try to find exact version match first to be safe
@@ -2357,7 +2365,11 @@ dl_apkmirror() {
 				fi
 
 				if [ -n "$version_href" ]; then
-					release_url="$base_url$version_href"
+					if [[ "$version_href" == http* ]]; then
+						release_url="$version_href"
+					else
+						release_url="$base_url$version_href"
+					fi
 					_cf_get "$release_url" || return 1
 					resp="$html"
 				fi
@@ -3888,12 +3900,12 @@ patch_apk() {
 	[ -n "$stage_dir" ] && rm -rf "$stage_dir"
 	echo "$PATCH_OUTPUT"
 	if [ $ret -eq 0 ] && [ -f "$patched_apk" ]; then
-		# For morphe and revanced patching flows, ensure at least one patch was applied
-		if [ "${PATCHER_KIND:-}" = morphe ] || [ "${PATCHER_KIND:-}" = revanced ]; then
+		# For morphe, revanced, and generic cli-patch flows, ensure at least one patch was applied
+		if [ "${PATCHER_KIND:-}" = morphe ] || [ "${PATCHER_KIND:-}" = revanced ] || [ "${PATCHER_FLOW:-}" = cli-patch ]; then
 			local applied_count
 			applied_count=$(printf '%s\n' "$PATCH_OUTPUT" | grep -cP '(?<=INFO: ")[^"\n]+(?=" succeeded)|(?<=INFO: Applied: ).*|(?<=I: Patch \x27)[^\x27]+(?=\x27 loaded)' || true)
 			if [ "${applied_count:-0}" -eq 0 ]; then
-				epr "Rejecting built APK: 0 patches applied for ${PATCHER_KIND} flow."
+				epr "Rejecting built APK: 0 patches applied for ${PATCHER_KIND:-cli-patch} flow."
 				rm -f "$patched_apk" 2>/dev/null || :
 				return 1
 			fi
@@ -4025,14 +4037,14 @@ write_build_info() {
 	skipped_json=$(printf '%s\n' "$PATCH_OUTPUT" | grep -oP '(?<=INFO: Skipping disabled: ).*|(?<=INFO: Skipping incompatible patch \x27)[^\x27]+|(?<=WARN: Skipping patch \x27)[^\x27]+' | sed 's/[[:space:]]*$//' | jq -R -s -c 'split("\n") | map(select(length > 0))' 2>/dev/null || true)
 	[[ "$skipped_json" != \[* ]] && skipped_json='[]'
 
-	# Warn (don't fail) when a tool that reports applied patches yields none —
-	# previously this degraded silently into an empty catalog field. xposed
-	# modules and instafel are excluded: xposed reports none by design, and
+	# Fail when a tool that reports applied patches yields none for morphe/revanced/cli-patch.
+	# xposed modules and instafel are excluded: xposed reports none by design, and
 	# instafel prints its names before the -o build step whose captured
-	# PATCH_OUTPUT we parse here (its run/build split makes the empty case
-	# legitimately common).
+	# PATCH_OUTPUT we parse here.
 	if [ "$applied_json" = "[]" ] && [ -n "$PATCH_OUTPUT" ] && [ "${PATCHER_FLOW:-}" = cli-patch ]; then
-		wpr "No applied patches parsed from ${PATCHER_KIND:-cli-patch} CLI output for '$key' — catalog may show an empty patch list."
+		epr "Rejecting build: No applied patches parsed from ${PATCHER_KIND:-cli-patch} CLI output for '$key'."
+		rm -f "$target_file" "$apk_output" "$patched_apk" 2>/dev/null || :
+		return 1
 	fi
 	# One fragment per write (key+arch+ext suffixed, pid-guarded): concurrent
 	# build processes never touch the same file; merge_build_info folds them
@@ -4924,6 +4936,7 @@ build_rv() {
 			local source_fallback_count=0
 			while IFS= read -r source_version; do
 				[ -n "$source_version" ] || continue
+				semver_validate "$source_version" || continue
 				[ "$source_fallback_count" -lt 3 ] || break
 				[ "$source_version" = "$version" ] && continue
 				all_resolved_versions+=("$source_version")
