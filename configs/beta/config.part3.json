@@ -1,19 +1,21 @@
 {
   "patches-version": "beta",
   "enable-module-update": true,
-  "TikTok-Morphe-Kveld9-Asia": {
+  "YouTube-Morphe-Experimental": {
     "enable-module-update": true,
+    "patches-source": "MorpheApp/morphe-patches",
+    "patch-brand": "morphe",
     "cli-type": "morphe",
     "enabled": true,
-    "app-name": "TikTok",
-    "variant": "Asia",
-    "pkg-name": "com.ss.android.ugc.trill",
-    "patch-brand": "Kveld9",
-    "arch": "all arm64-v8a armeabi-v7a",
-    "uptodown-dlurl": "https://tik-tok.en.uptodown.com/android",
-    "apkmirror-dlurl": "https://www.apkmirror.com/apk/tiktok-pte-ltd/tik-tok",
-    "apkpure-dlurl": "https://apkpure.com/tiktok-asia-app/com.ss.android.ugc.trill",
-    "apkcombo-dlurl": "https://apkcombo.com/tiktok-asia/com.ss.android.ugc.trill",
-    "patches-source": "kveld9/kveld-morphe-patches"
+    "app-name": "YouTube",
+    "sub-variant": "Experimental",
+    "build-mode": "both",
+    "version": "exp",
+    "pkg-name": "com.google.android.youtube",
+    "included-patches": "'Theme'",
+    "uptodown-dlurl": "https://youtube.en.uptodown.com/android",
+    "apkmirror-dlurl": "https://apkmirror.com/apk/google-inc/youtube",
+    "apkpure-dlurl": "https://apkpure.com/youtube-app/com.google.android.youtube",
+    "apkcombo-dlurl": "https://apkcombo.com/youtube/com.google.android.youtube"
   }
 }
