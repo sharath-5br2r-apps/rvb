@@ -17,8 +17,8 @@ DL_SRCS=("local" "direct" "cache_repo" "github" "gitlab" "forgejo" "archive" "ap
 BUILD_JSON_FILE="build.json"
 PATCH_OUTPUT=""
 RVB_ERROR_LOG="${RVB_ERROR_LOG:-error.log}"
-RVB_ERROR_JSON="${RVB_ERROR_JSON:-error.json}"
-RVB_LOG_JSON="${RVB_LOG_JSON:-build_log.json}"
+RVB_ERROR_JSON="${RVB_ERROR_JSON:-error.jsonl}"
+RVB_LOG_JSON="${RVB_LOG_JSON:-build_log.jsonl}"
 
 # Cross-platform advisory lock for shared downloads and generated metadata.
 # Uses fcntl on Unix and msvcrt on Windows through the same Python helper.
@@ -5781,7 +5781,8 @@ build_rv() {
 
 		# 1. Stable build: generate the -stable module
 		if [ "$is_beta" = false ]; then
-			local stable_upj="${stable_module_id,,}-update.json"
+			local stable_upj
+			stable_upj=$(update_json_path "${stable_module_id}" "${DEF_AUTHOR_NAME:-nullcpy}")
 			module_prop \
 				"${stable_module_id}" \
 				"${app_name} ${brand_display}" \
@@ -5808,7 +5809,8 @@ build_rv() {
 
 		# 2. Generate the -beta module
 		# Built for both Stable (as a companion) and Beta builds
-		local beta_upj="${beta_module_id,,}-update.json"
+		local beta_upj
+		beta_upj=$(update_json_path "${beta_module_id}" "${DEF_AUTHOR_NAME:-nullcpy}")
 		module_prop \
 			"${beta_module_id}" \
 			"${app_name} ${brand_display} beta" \
@@ -5900,8 +5902,18 @@ update_json_path() {
 	if [[ $mpn == *-beta ]]; then
 		chan="beta"
 		mpn=${mpn%-beta}
+	elif [[ $mpn == *-stable ]]; then
+		chan="stable"
+		mpn=${mpn%-stable}
 	fi
 	[ -n "$author" ] && mpn=${mpn%-$author}
+	if [[ $mpn == *-beta ]]; then
+		chan="beta"
+		mpn=${mpn%-beta}
+	elif [[ $mpn == *-stable ]]; then
+		chan="stable"
+		mpn=${mpn%-stable}
+	fi
 	echo "$chan/${mpn}${arch}.json"
 }
 

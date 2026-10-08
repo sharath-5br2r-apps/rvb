@@ -39,7 +39,11 @@ for OUTPUT in *module*.zip; do
   ZIP_S=$(unzip -p "$OUTPUT" module.prop)
   UPDATE_JSON=$(echo "$ZIP_S" | grep updateJson || true)
   [ -z "$UPDATE_JSON" ] && continue
-  UPDATE_JSON="${UPDATE_JSON##*/}"
+  # Extract the channel-relative path (e.g. stable/<module>.json or beta/<module>.json)
+  # from the full baked updateJson URL.
+  UPDATE_JSON="${UPDATE_JSON#*/update/}"
+  mkdir -p "../${UPDATE_OUT}/$(dirname "$UPDATE_JSON")"
+  echo "$UPDATE_JSON" >> ../.updated_pointers
   VER=$(echo "$ZIP_S" | grep 'version=' | head -1)
   VER="${VER##*=}"
   DLURL="$GITHUB_SERVER_URL/$GITHUB_REPOSITORY/releases/download/$ARCHIVE_TAG/${OUTPUT}"

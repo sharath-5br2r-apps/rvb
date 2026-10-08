@@ -14,7 +14,24 @@ def load_json(path: str) -> Any:
         return None
     try:
         with open(path, "r", encoding="utf-8") as f:
-            return json.load(f)
+            first_char = ""
+            entries = []
+            for line in f:
+                stripped = line.strip()
+                if not stripped:
+                    continue
+                if not first_char:
+                    first_char = stripped[0]
+                if first_char in ("[", "{"):
+                    f.seek(0)
+                    return json.load(f)
+                try:
+                    obj = json.loads(stripped)
+                    if isinstance(obj, dict):
+                        entries.append(obj)
+                except Exception:
+                    continue
+            return entries if entries else None
     except Exception:
         return None
 
@@ -22,9 +39,9 @@ def main() -> int:
     # 1. Locate all downloaded logs or artifacts
     search_dirs = ["logs_artifacts", "part_logs", "artifacts", "."]
     
-    # We want to find error.json, build_log.json, error.md, build.md grouped by artifact / folder
-    found_error_jsons = glob.glob("**/error.json", recursive=True)
-    found_build_log_jsons = glob.glob("**/build_log.json", recursive=True)
+    # We want to find error.json(l), build_log.json(l), error.md, build.md grouped by artifact / folder
+    found_error_jsons = glob.glob("**/error.jsonl", recursive=True) + glob.glob("**/error.json", recursive=True)
+    found_build_log_jsons = glob.glob("**/build_log.jsonl", recursive=True) + glob.glob("**/build_log.json", recursive=True)
     found_error_mds = glob.glob("**/error.md", recursive=True)
 
     all_entries: List[Dict[str, Any]] = []
@@ -65,7 +82,7 @@ def main() -> int:
     # Group by artifact directory name
     artifact_dirs = set()
     for f in glob.glob("**/*", recursive=True):
-        if os.path.isfile(f) and (os.path.basename(f) in ["error.log", "error.md", "error.json", "build_log.json"]):
+        if os.path.isfile(f) and (os.path.basename(f) in ["error.log", "error.md", "error.json", "error.jsonl", "build_log.json", "build_log.jsonl"]):
             d = os.path.dirname(f)
             if d and d != "." and not d.startswith("aggregated_out"):
                 artifact_dirs.add(d)
@@ -77,17 +94,18 @@ def main() -> int:
         # Check if error.md exists
         emd = os.path.join(ad, "error.md")
         ej = os.path.join(ad, "error.json")
+        ejl = os.path.join(ad, "error.jsonl")
         blj = os.path.join(ad, "build_log.json")
+        bljl = os.path.join(ad, "build_log.jsonl")
         el = os.path.join(ad, "error.log")
         
         has_content = False
         entries_in_part = []
-        if os.path.exists(ej):
-            d = load_json(ej)
-            if isinstance(d, list): entries_in_part.extend(d)
-        if os.path.exists(blj):
-            d = load_json(blj)
-            if isinstance(d, list): entries_in_part.extend(d)
+        for cand in [ejl, ej, bljl, blj]:
+            if os.path.exists(cand):
+                d = load_json(cand)
+                if isinstance(d, list):
+                    entries_in_part.extend(d)
             
         if entries_in_part:
             part_deduped = []

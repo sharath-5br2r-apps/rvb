@@ -9,7 +9,9 @@ aggregated_json="aggregated_out/build.json"
 aggregated_md="aggregated_out/build.md"
 aggregated_errors="aggregated_out/error.log"
 aggregated_errors_json="aggregated_out/error.json"
+aggregated_errors_jsonl="aggregated_out/error.jsonl"
 aggregated_log_json="aggregated_out/build_log.json"
+aggregated_log_jsonl="aggregated_out/build_log.jsonl"
 aggregated_errors_md="aggregated_out/error.md"
 aggregated_files="aggregated_out/built_files.txt"
 
@@ -18,11 +20,13 @@ echo "{}" > "$aggregated_json"
 > "$aggregated_md"
 > "$aggregated_errors"
 echo "[]" > "$aggregated_errors_json"
+> "$aggregated_errors_jsonl"
 echo "[]" > "$aggregated_log_json"
+> "$aggregated_log_jsonl"
 > "$aggregated_files"
 
 # Collect all downloaded part-logs (support build.json directly or inside subdirectories)
-for json_file in $(find . \( -name "build.json" -o -name "build*.json" \) ! -name "build_log.json" 2>/dev/null); do
+for json_file in $(find . \( -name "build.json" -o -name "build*.json" \) ! -name "build_log.json" ! -name "build_log.jsonl" 2>/dev/null); do
   # Avoid merging output target if running in same dir
   if [ -s "$json_file" ] && [ "${json_file#./}" != "$aggregated_json" ]; then
     echo "[+] Merging $json_file into $aggregated_json"
@@ -37,18 +41,24 @@ for json_file in $(find . \( -name "build.json" -o -name "build*.json" \) ! -nam
   fi
 done
 
-# Aggregate error.json files
-for ej in $(find . -type f -name "error.json" ! -path "./$aggregated_errors_json" 2>/dev/null); do
-  if [ -s "$ej" ] && jq -e 'type == "array" and length > 0' "$ej" >/dev/null 2>&1; then
+# Aggregate error.jsonl and error.json files
+for ej in $(find . -type f \( -name "error.jsonl" -o -name "error.json" \) ! -path "./$aggregated_errors_json" ! -path "./$aggregated_errors_jsonl" 2>/dev/null); do
+  [ -s "$ej" ] || continue
+  if [[ "$ej" == *.jsonl ]]; then
+    cat "$ej" >> "$aggregated_errors_jsonl"
+  elif jq -e 'type == "array" and length > 0' "$ej" >/dev/null 2>&1; then
     tmp_merged=$(mktemp)
     jq -s '.[0] + .[1]' "$aggregated_errors_json" "$ej" > "$tmp_merged"
     mv "$tmp_merged" "$aggregated_errors_json"
   fi
 done
 
-# Aggregate build_log.json files
-for bl in $(find . -type f -name "build_log.json" ! -path "./$aggregated_log_json" 2>/dev/null); do
-  if [ -s "$bl" ] && jq -e 'type == "array" and length > 0' "$bl" >/dev/null 2>&1; then
+# Aggregate build_log.jsonl and build_log.json files
+for bl in $(find . -type f \( -name "build_log.jsonl" -o -name "build_log.json" \) ! -path "./$aggregated_log_json" ! -path "./$aggregated_log_jsonl" 2>/dev/null); do
+  [ -s "$bl" ] || continue
+  if [[ "$bl" == *.jsonl ]]; then
+    cat "$bl" >> "$aggregated_log_jsonl"
+  elif jq -e 'type == "array" and length > 0' "$bl" >/dev/null 2>&1; then
     tmp_merged=$(mktemp)
     jq -s '.[0] + .[1]' "$aggregated_log_json" "$bl" > "$tmp_merged"
     mv "$tmp_merged" "$aggregated_log_json"

@@ -374,10 +374,12 @@ jobs:
             cp -f "$json_file" "build.json"
             [ -s "$changelog_file" ] && cp -f "$changelog_file" "changelogs/${tag}.md"
           fi
-          # Collect *-update.json from every parallel build part artifact.
+          # Collect stable and beta module update files from every parallel build part artifact.
           # Doing this once in the aggregation job avoids concurrent push races.
-          find logs_artifacts -name "*-update.json" -exec cp -f {} . \; 2>/dev/null || true
-          if [ -n "$(find . -maxdepth 1 -name "*-update.json" -print -quit 2>/dev/null)" ]; then
+          mkdir -p stable beta
+          find logs_artifacts -path "*/stable/*.json" -exec cp -f {} stable/ \; 2>/dev/null || true
+          find logs_artifacts -path "*/beta/*.json" -exec cp -f {} beta/ \; 2>/dev/null || true
+          if [ -n "$(find stable beta -name "*.json" -print -quit 2>/dev/null)" ]; then
             echo "has_modules=true" >> "$GITHUB_OUTPUT"
           else
             echo "has_modules=false" >> "$GITHUB_OUTPUT"
@@ -392,7 +394,7 @@ jobs:
           skip_checkout: true
           add_options: -f
           push_options: --force
-          file_pattern: "changelogs/*.md *-update.json"
+          file_pattern: "changelogs/*.md stable/*.json beta/*.json"
           commit_message: "Bump version ${{ needs.resolve_dev_version.outputs.next_ver_code_dev }}"
 
   resolve_stable_version:
@@ -554,9 +556,11 @@ jobs:
             cp -f "$json_file" "build.json"
             [ -s "$changelog_file" ] && cp -f "$changelog_file" "changelogs/${tag}.md"
           fi
-          # Collect *-update.json from every parallel build part artifact.
-          find logs_artifacts -name "*-update.json" -exec cp -f {} . \; 2>/dev/null || true
-          if [ -n "$(find . -maxdepth 1 -name "*-update.json" -print -quit 2>/dev/null)" ]; then
+          # Collect stable and beta module update files from every parallel build part artifact.
+          mkdir -p stable beta
+          find logs_artifacts -path "*/stable/*.json" -exec cp -f {} stable/ \; 2>/dev/null || true
+          find logs_artifacts -path "*/beta/*.json" -exec cp -f {} beta/ \; 2>/dev/null || true
+          if [ -n "$(find stable beta -name "*.json" -print -quit 2>/dev/null)" ]; then
             echo "has_modules=true" >> "$GITHUB_OUTPUT"
           else
             echo "has_modules=false" >> "$GITHUB_OUTPUT"
@@ -571,7 +575,7 @@ jobs:
           skip_checkout: true
           add_options: -f
           push_options: --force
-          file_pattern: "changelogs/*.md *-update.json"
+          file_pattern: "changelogs/*.md stable/*.json beta/*.json"
           commit_message: "Bump version ${{ needs.resolve_stable_version.outputs.next_ver_code_stable }}"
 
   resolve_latest_version:
@@ -738,9 +742,11 @@ jobs:
             cp -f "$json_file" "build.json"
             [ -s "$changelog_file" ] && cp -f "$changelog_file" "changelogs/${tag}.md"
           fi
-          # Collect *-update.json from every parallel build part artifact.
-          find logs_artifacts -name "*-update.json" -exec cp -f {} . \; 2>/dev/null || true
-          if [ -n "$(find . -maxdepth 1 -name "*-update.json" -print -quit 2>/dev/null)" ]; then
+          # Collect stable and beta module update files from every parallel build part artifact.
+          mkdir -p stable beta
+          find logs_artifacts -path "*/stable/*.json" -exec cp -f {} stable/ \; 2>/dev/null || true
+          find logs_artifacts -path "*/beta/*.json" -exec cp -f {} beta/ \; 2>/dev/null || true
+          if [ -n "$(find stable beta -name "*.json" -print -quit 2>/dev/null)" ]; then
             echo "has_modules=true" >> "$GITHUB_OUTPUT"
           else
             echo "has_modules=false" >> "$GITHUB_OUTPUT"
@@ -755,7 +761,7 @@ jobs:
           skip_checkout: true
           add_options: -f
           push_options: --force
-          file_pattern: "changelogs/*.md *-update.json"
+          file_pattern: "changelogs/*.md stable/*.json beta/*.json"
           commit_message: "Bump version ${{ needs.resolve_latest_version.outputs.next_ver_code_latest }}"
 
   resolve_batch_version:
@@ -882,9 +888,11 @@ jobs:
             cp -f "$json_file" "build.json"
             [ -s "$changelog_file" ] && cp -f "$changelog_file" "changelogs/${tag}.md"
           fi
-          # Collect *-update.json from every parallel build part artifact.
-          find logs_artifacts -name "*-update.json" -exec cp -f {} . \; 2>/dev/null || true
-          if [ -n "$(find . -maxdepth 1 -name "*-update.json" -print -quit 2>/dev/null)" ]; then
+          # Collect stable and beta module update files from every parallel build part artifact.
+          mkdir -p stable beta
+          find logs_artifacts -path "*/stable/*.json" -exec cp -f {} stable/ \; 2>/dev/null || true
+          find logs_artifacts -path "*/beta/*.json" -exec cp -f {} beta/ \; 2>/dev/null || true
+          if [ -n "$(find stable beta -name "*.json" -print -quit 2>/dev/null)" ]; then
             echo "has_modules=true" >> "$GITHUB_OUTPUT"
           else
             echo "has_modules=false" >> "$GITHUB_OUTPUT"
@@ -902,7 +910,7 @@ jobs:
           # Replace its previous generated snapshot so stale concurrent runs do
           # not fail with a non-fast-forward push.
           push_options: --force
-          file_pattern: "changelogs/*.md *-update.json"
+          file_pattern: "changelogs/*.md stable/*.json beta/*.json"
           commit_message: "Bump version ${{ needs.resolve_batch_version.outputs.next_ver_code_batch }}"
 
   resolve_manual_config:

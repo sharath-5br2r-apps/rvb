@@ -10,8 +10,8 @@ export RVB_UTILS_SH
 source "$RVB_UTILS_SH"
 echo '{}' > "$BUILD_JSON_FILE"
 : > "${RVB_ERROR_LOG:-error.log}"
-echo '[]' > "${RVB_ERROR_JSON:-error.json}"
-echo '[]' > "${RVB_LOG_JSON:-build_log.json}"
+: > "${RVB_ERROR_JSON:-error.jsonl}"
+: > "${RVB_LOG_JSON:-build_log.jsonl}"
 
 CONFIG_FILE="config.toml"
 ALLOWED_APPS=""
@@ -120,7 +120,7 @@ export CURRENT_BUILD_PART="${CURRENT_BUILD_PART:-}"
 trap "abort" INT
 
 if [ "${CLEAN_REQUESTED:-false}" = true ]; then
-	rm -rf "$TEMP_DIR" "$BUILD_DIR" build.md error.log error.json build_log.json error.md build.json.lock
+	rm -rf "$TEMP_DIR" "$BUILD_DIR" build.md error.log error.json error.jsonl build_log.json build_log.jsonl error.md build.json.lock
 	exit 0
 fi
 

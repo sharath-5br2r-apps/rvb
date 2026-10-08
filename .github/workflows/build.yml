@@ -204,7 +204,7 @@ jobs:
         run: bash .github/scripts/build_upload_release.sh
 
       - name: Upload error log
-        if: ${{ inputs.aggregate_flavor == '' && (hashFiles('error.log') != '' || hashFiles('error.json') != '' || hashFiles('error.md') != '') }}
+        if: ${{ inputs.aggregate_flavor == '' && (hashFiles('error.log') != '' || hashFiles('error.json') != '' || hashFiles('error.jsonl') != '' || hashFiles('error.md') != '') }}
         uses: actions/upload-artifact@v7
         with:
           name: error_log
@@ -212,6 +212,8 @@ jobs:
             error.log
             error.json
             build_log.json
+            error.jsonl
+            build_log.jsonl
             error.md
           if-no-files-found: ignore
 
@@ -229,16 +231,15 @@ jobs:
           GITHUB_REPOSITORY: ${{ github.repository }}
         run: bash .github/scripts/build_update_changelog.sh
 
-      # Copy staged *-update.json to the working-tree root so they can be:
+      # Copy staged update-files to the working tree so they can be:
       #  - picked up by the part-logs artifact upload (parallel builds), or
       #  - committed directly by the standalone commit step (single-job builds).
       - name: Stage module update files
         if: ${{ steps.update_changelog.outputs.has_modules == 'true' }}
         run: |
-          shopt -s nullglob
-          files=(temp/update-files/*-update.json)
-          shopt -u nullglob
-          for f in "${files[@]}"; do cp -f "$f" .; done
+          if [ -d temp/update-files ]; then
+            cp -r temp/update-files/* . 2>/dev/null || true
+          fi
 
       # Standalone (non-partitioned) builds have only one job so there is no
       # push race.  Commit update files and changelog directly to the update branch.
@@ -258,12 +259,12 @@ jobs:
           else
             git switch --orphan update
           fi
-          shopt -s nullglob
-          for f in temp/update-files/*-update.json; do cp -f "$f" .; done
-          shopt -u nullglob
+          if [ -d temp/update-files ]; then
+            cp -r temp/update-files/* . 2>/dev/null || true
+          fi
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add -f -- *-update.json changelogs/ 2>/dev/null || true
+          git add -f -- stable/ beta/ changelogs/ 2>/dev/null || true
           git diff --cached --quiet || git commit -m "Bump version ${NEXT_VER_CODE}"
           git push origin update --force
           git checkout main
@@ -317,8 +318,12 @@ jobs:
             error.log
             error.json
             build_log.json
+            error.jsonl
+            build_log.jsonl
             error.md
             built_files.txt
+            stable/
+            beta/
             *-update.json
             ${{ inputs.config_file }}
           if-no-files-found: ignore

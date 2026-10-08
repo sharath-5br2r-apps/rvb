@@ -8,19 +8,42 @@ import os
 import sys
 from typing import Any, Dict, List
 
-def load_json(path: str) -> List[Dict[str, Any]]:
+def load_log_entries(path: str) -> List[Dict[str, Any]]:
     if not os.path.exists(path) or os.path.getsize(path) == 0:
         return []
+    entries: List[Dict[str, Any]] = []
     try:
         with open(path, "r", encoding="utf-8") as f:
-            data = json.load(f)
-            if isinstance(data, list):
-                return data
-            elif isinstance(data, dict):
-                return [data]
+            first_char = ""
+            for line in f:
+                stripped = line.strip()
+                if not stripped:
+                    continue
+                if not first_char:
+                    first_char = stripped[0]
+                if first_char in ("[", "{"):
+                    # Regular JSON
+                    f.seek(0)
+                    data = json.load(f)
+                    if isinstance(data, list):
+                        return data
+                    elif isinstance(data, dict):
+                        return [data]
+                    return []
+                # JSONL line
+                try:
+                    obj = json.loads(stripped)
+                    if isinstance(obj, dict):
+                        entries.append(obj)
+                except Exception:
+                    continue
+        return entries
     except Exception as e:
         sys.stderr.write(f"Warning: Failed to load {path}: {e}\n")
     return []
+
+# Backwards compatible alias
+load_json = load_log_entries
 
 def format_report(log_entries: List[Dict[str, Any]]) -> str:
     errors: List[Dict[str, Any]] = []
@@ -93,18 +116,20 @@ def main() -> int:
     entries: List[Dict[str, Any]] = []
 
     if input_path and os.path.isfile(input_path):
-        entries.extend(load_json(input_path))
+        entries.extend(load_log_entries(input_path))
     else:
         # Check standard file locations
-        candidates = ["error.json", "build_log.json"]
+        candidates = ["error.jsonl", "build_log.jsonl", "error.json", "build_log.json"]
         if input_path and os.path.isdir(input_path):
             candidates = [
+                os.path.join(input_path, "error.jsonl"),
+                os.path.join(input_path, "build_log.jsonl"),
                 os.path.join(input_path, "error.json"),
                 os.path.join(input_path, "build_log.json"),
             ]
         for cand in candidates:
             if os.path.exists(cand):
-                entries.extend(load_json(cand))
+                entries.extend(load_log_entries(cand))
 
     # Deduplicate entries by timestamp + message + app + part
     deduped: List[Dict[str, Any]] = []
