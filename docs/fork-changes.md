@@ -68,19 +68,42 @@ This document provides an exhaustive, technical account of all architectural, be
 - **Upstream `DL_SRCS`**: `("cache_repo" "direct" "github" "archive" "apkmirror" "uptodown" "apkpure" "apkcombo")`
 - **Fork `DL_SRCS`**: `("local" "direct" "cache_repo" "github" "gitlab" "forgejo" "archive" "apkmirror" "uptodown" "apkpure" "apkcombo")`
 - **New Download Sources**:
-  - `local-dlurl`: Direct file system loading (`get_local_resp`, `get_local_vers`, `get_local_pkg_name`, `dl_local`). Supports raw paths and `file://` URLs.
+  - `local-dlurl`: Direct file system loading (`get_local_resp`, `get_local_vers`, `get_local_pkg_name`, `dl_local`). Supports raw paths and `file://` URLs for `.apk`, `.apks`, and `.xapk` bundles.
   - `gitlab-dlurl`: Native GitLab releases integration (`dl_gitlab`, `get_gitlab_resp`, `get_gitlab_vers`).
   - `forgejo-dlurl`: Native Forgejo/Gitea API releases integration (`dl_forgejo`, `get_forgejo_resp`, `get_forgejo_vers`).
   - Unified Git release downloader (`dl_git_repo`): Dynamically resolves tag versions and matches release assets via `${provider}_dlurl_regex` or `github_asset_regex`.
+- **Comprehensive `dlurl` Filtering & Token Interpolation**:
+  - **Dynamic Regexes**: Supported per-source regex matchers (`github_asset_regex`, `gitlab-dlurl-regex`, `forgejo-dlurl-regex`, `dlurl_regex`).
+  - **Negative Regex Exclusion Filters**: Added `gitlab-dlurl-exclude-filter` and `forgejo-dlurl-exclude-filter` (and matching CLI parameters) to ignore unwanted assets (e.g. debug builds or non-target ABIs) during release discovery.
+  - **Placeholder Substitution**: Asset match strings support dynamic token substitutions such as `{version}`, `{arch}`, and `{table}` to select architecture- or release-specific assets dynamically.
 
-### F. Patcher Registry Extensions (`patchers.sh`, `patchers.py`)
+### F. Application-Specific Compatibility Hacks
+- **WARP / 1.1.1.1 Version Sanitization**:
+  - Cloudflare WARP app listings and store scraping results frequently format titles as `1.1.1.1 + WARP: Safer Internet 6.38.9`, confusing version parsers into treating `1.1.1.1` as the application version.
+  - `scripts/utils.sh` (in `resolve_version_and_download()`): Strips leading product titles when `version` contains ` + ` and extracts the trailing semantic/numeric version via regex:
+    ```bash
+    if [[ "$version" == *" + "* && "$version" =~ ([0-9]+(\.[0-9]+)+([.-][A-Za-z0-9]+)*)$ ]]; then
+        version="${BASH_REMATCH[1]}"
+    fi
+    ```
+- **Gboard ABI Suffix Compatibility Stripping**:
+  - Gboard patch lists often hardcode the target ABI into the patch version string (e.g. `17.8.7-arm64-v8a`). Upstream version lookups failed because upstream stores and APK mirrors only index clean versions (`17.8.7`).
+  - `scripts/utils.sh` (in `get_patches_vers()`): When matching Gboard tables (`gboard` or `com.google.android.inputmethod.latin`), the engine automatically strips `-arm64-v8a`, `-armeabi-v7a`, `-x86_64`, and `-x86` before querying target version availability:
+    ```bash
+    local gboard_key="${table,,}${app_name,,}${pkg_name,,}"
+    if [[ "$gboard_key" == *gboard* || "$gboard_key" == *inputmethod.latin* ]]; then
+        resolved_version=$(sed -E 's/-(arm64-v8a|armeabi-v7a|x86_64|x86)$//I' <<<"$resolved_version")
+    fi
+    ```
+
+### G. Patcher Registry Extensions (`patchers.sh`, `patchers.py`)
 - **New Patcher Kinds**:
   - `apksigner`: Pure signing workflow (`flow=signing`), skipping patch application.
   - `none`: Passthrough workflow (`flow=passthrough`), taking stock binaries directly.
   - Disaggregated `npatch` and `lspatch` kinds from monolithic `xposed`.
 - **Argument Deduplication**: Added `dedup_patcher_args()` to strip redundant flags (like duplicated `-f`, `--force`, or `--continue-on-error`) from CLI invocations.
 
-### G. Keystore & Prebuilt Tooling
+### H. Keystore & Prebuilt Tooling
 - **Keystore Management**:
   - Loads local `.env` configurations automatically when present.
   - Implemented `require_p12()` using Bouncy Castle (`get_bcprov`) to convert BKS keystores to PKCS12 dynamically.
@@ -89,7 +112,7 @@ This document provides an exhaustive, technical account of all architectural, be
   - Validates prebuilt CLI and tool JARs via `is_valid_zip_or_jar()` and SHA-256 verification.
   - Enforces native architecture checks via `has_native_arch`.
 
-### H. Extended Build Metadata Extraction
+### I. Extended Build Metadata Extraction
 - Expanded `write_build_info()` to capture:
   - `min_sdk` and `version_code` extracted directly from APK manifests.
   - `cli` reference version and name.
@@ -101,7 +124,7 @@ This document provides an exhaustive, technical account of all architectural, be
 ## 3. Scraping & Download Helpers
 
 ### A. APKMirror Scraper (`scripts/apkmirror_search.py`)
-- **Prefix Sanitization**: Strips Cloudflare WARP product prefixes (`1.1.1.1 + `) so version numbers parse cleanly.
+- **Prefix Sanitization (1.1.1.1 / WARP)**: Strips Cloudflare WARP product prefixes (`re.sub(r'^1\.1\.1\.1\s*\+\s*', '', clean_text)`) so release titles don't trick the parser into returning `1.1.1.1` instead of the genuine semver (e.g., `6.38.9`).
 - **Flexible DPI Input**: Accepts string, list, or JSON dictionary formats for `dpi` configurations.
 - **Release Filtering (`rel_filter`)**: Added support for positive and negative variant regex filters (e.g. `!bundle` or `wear-os`).
 - **Fat-Bundle Arch Matching**: Expanded fallback hierarchy for multi-ABI and universal packages (`all`, `arm64-v8a + x86_64`, `arm64-v8a + armeabi-v7a`).
