@@ -710,7 +710,7 @@ jobs:
             if gh release view "$tag" >/dev/null 2>&1; then
               [ -s "$md_file" ] && gh release edit "$tag" --notes-file "$md_file" || true
             else
-              gh release create "$tag" --title "$release_title" "${notes_arg[@]}" || true
+              gh release create "$tag" --title "$release_title" --prerelease "${notes_arg[@]}" || true
             fi
           fi
 
@@ -854,10 +854,12 @@ jobs:
             notes_arg=("--notes" "")
             [ -s "$md_file" ] && notes_arg=("--notes-file" "$md_file")
             [ -s "$md_file" ] && mkdir -p changelogs && cp -f $md_file changelogs/$tag.md
+            prerelease_opt=()
+            [ "${{ inputs.mode }}" = "Batch Build (Both)" ] && prerelease_opt=("--prerelease")
             if gh release view "$tag" >/dev/null 2>&1; then
               [ -s "$md_file" ] && gh release edit "$tag" --notes-file "$md_file" || true
             else
-              gh release create "$tag" --title "$release_title" "${notes_arg[@]}" || true
+              gh release create "$tag" --title "$release_title" "${prerelease_opt[@]}" "${notes_arg[@]}" || true
             fi
           fi
 
