@@ -59,11 +59,13 @@ def cleanup_release(tag):
         else:
             print(f"Warning: Asset {name} does not match expected pattern, skipping.")
             
+    cleanup_all = os.environ.get("CLEANUP_ALL_RELEASES", "false").lower() in ("true", "1", "yes")
+
     for key, group_assets in groups.items():
         # Sort by created_at descending (newest first)
         group_assets.sort(key=lambda x: x['created_at'], reverse=True)
         
-        keep_count = 2
+        keep_count = 0 if cleanup_all else 2
         to_keep = group_assets[:keep_count]
         to_delete = group_assets[keep_count:]
         
@@ -75,6 +77,14 @@ def cleanup_release(tag):
             for a in to_delete:
                 print(f"  Deleting: {a['name']} ({a['created_at']})")
                 cmd = f'gh api -X DELETE repos/{repo}/releases/assets/{a["id"]}'
+                run_cmd(cmd)
+
+    # When cleaning up all releases/assets, also delete unmatched assets
+    if cleanup_all:
+        for asset in assets:
+            if not pattern.match(asset['name']):
+                print(f"  Deleting unmatched asset: {asset['name']}")
+                cmd = f'gh api -X DELETE repos/{repo}/releases/assets/{asset["id"]}'
                 run_cmd(cmd)
 
 if __name__ == "__main__":

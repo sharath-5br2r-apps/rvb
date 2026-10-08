@@ -51,6 +51,7 @@ jobs:
       - name: Cleanup Archive Release Assets
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          CLEANUP_ALL_RELEASES: ${{ inputs.cleanup_all_releases || false }}
         run: python3 .github/scripts/cleanup-archive-assets.py
 
       - name: Cleanup Update Branch Changelogs

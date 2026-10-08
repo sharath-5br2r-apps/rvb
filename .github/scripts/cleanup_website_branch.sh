@@ -40,6 +40,15 @@ if [ -d manifests ]; then
       rm -f "$f"
       DELETED_COUNT=$((DELETED_COUNT + 1))
     done
+    if [ -d archive ]; then
+      echo "No active releases — wiping archive manifests."
+      for f in archive/*.json; do
+        [ -f "$f" ] || continue
+        echo "Deleting: $f"
+        rm -f "$f"
+        DELETED_COUNT=$((DELETED_COUNT + 1))
+      done
+    fi
   else
     for f in manifests/*.json; do
       [ -f "$f" ] || continue
