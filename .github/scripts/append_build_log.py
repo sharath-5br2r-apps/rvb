@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Append structured JSON log entries safely without leaking secrets."""
+"""Append structured JSONL log entries safely without leaking secrets."""
 
 from __future__ import annotations
 
@@ -68,27 +68,8 @@ def main() -> int:
     os.makedirs(os.path.dirname(os.path.abspath(json_file)) or ".", exist_ok=True)
     with open(lock_path, "a+") as lock:
         lock_file(lock)
-        if json_file.endswith(".jsonl"):
-            with open(json_file, "a", encoding="utf-8") as f:
-                f.write(json.dumps(entry, ensure_ascii=False) + "\n")
-        else:
-            data = []
-            if os.path.exists(json_file) and os.path.getsize(json_file) > 0:
-                try:
-                    with open(json_file, "r", encoding="utf-8") as f:
-                        content = json.load(f)
-                        if isinstance(content, list):
-                            data = content
-                except Exception:
-                    data = []
-
-            data.append(entry)
-
-            tmp_file = f"{json_file}.tmp.{os.getpid()}"
-            with open(tmp_file, "w", encoding="utf-8") as f:
-                json.dump(data, f, indent=2, ensure_ascii=False)
-                f.write("\n")
-            os.replace(tmp_file, json_file)
+        with open(json_file, "a", encoding="utf-8") as f:
+            f.write(json.dumps(entry, ensure_ascii=False) + "\n")
 
     return 0
 

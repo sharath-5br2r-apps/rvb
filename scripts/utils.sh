@@ -17,7 +17,6 @@ DL_SRCS=("local" "direct" "cache_repo" "github" "gitlab" "forgejo" "archive" "ap
 BUILD_JSON_FILE="build.json"
 PATCH_OUTPUT=""
 RVB_ERROR_LOG="${RVB_ERROR_LOG:-error.log}"
-RVB_ERROR_JSON="${RVB_ERROR_JSON:-error.jsonl}"
 RVB_LOG_JSON="${RVB_LOG_JSON:-build_log.jsonl}"
 
 # Cross-platform advisory lock for shared downloads and generated metadata.
@@ -186,9 +185,6 @@ log_build_event() {
 	local part="${CURRENT_BUILD_PART:-}"
 	if [ -f "${CWD}/.github/scripts/append_build_log.py" ]; then
 		python3 "${CWD}/.github/scripts/append_build_log.py" "$RVB_LOG_JSON" "$level" "$msg" "$app" "$part" 2>/dev/null || true
-		if [ "$level" = "error" ] || [ "$level" = "warning" ]; then
-			python3 "${CWD}/.github/scripts/append_build_log.py" "$RVB_ERROR_JSON" "$level" "$msg" "$app" "$part" 2>/dev/null || true
-		fi
 	fi
 }
 

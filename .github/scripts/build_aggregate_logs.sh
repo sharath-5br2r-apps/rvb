@@ -8,25 +8,19 @@ echo "[+] Aggregating build logs for flavor: $FLAVOR"
 aggregated_json="aggregated_out/build.json"
 aggregated_md="aggregated_out/build.md"
 aggregated_errors="aggregated_out/error.log"
-aggregated_errors_json="aggregated_out/error.json"
-aggregated_errors_jsonl="aggregated_out/error.jsonl"
-aggregated_log_json="aggregated_out/build_log.json"
 aggregated_log_jsonl="aggregated_out/build_log.jsonl"
-aggregated_errors_md="aggregated_out/error.md"
+aggregated_build_log_md="aggregated_out/build_log.md"
 aggregated_files="aggregated_out/built_files.txt"
 
 mkdir -p aggregated_out
 echo "{}" > "$aggregated_json"
 > "$aggregated_md"
 > "$aggregated_errors"
-echo "[]" > "$aggregated_errors_json"
-> "$aggregated_errors_jsonl"
-echo "[]" > "$aggregated_log_json"
 > "$aggregated_log_jsonl"
 > "$aggregated_files"
 
 # Collect all downloaded part-logs (support build.json directly or inside subdirectories)
-for json_file in $(find . \( -name "build.json" -o -name "build*.json" \) ! -name "build_log.json" ! -name "build_log.jsonl" 2>/dev/null); do
+for json_file in $(find . \( -name "build.json" -o -name "build*.json" \) ! -name "build_log.json*" 2>/dev/null); do
   # Avoid merging output target if running in same dir
   if [ -s "$json_file" ] && [ "${json_file#./}" != "$aggregated_json" ]; then
     echo "[+] Merging $json_file into $aggregated_json"
@@ -41,28 +35,10 @@ for json_file in $(find . \( -name "build.json" -o -name "build*.json" \) ! -nam
   fi
 done
 
-# Aggregate error.jsonl and error.json files
-for ej in $(find . -type f \( -name "error.jsonl" -o -name "error.json" \) ! -path "./$aggregated_errors_json" ! -path "./$aggregated_errors_jsonl" 2>/dev/null); do
-  [ -s "$ej" ] || continue
-  if [[ "$ej" == *.jsonl ]]; then
-    cat "$ej" >> "$aggregated_errors_jsonl"
-  elif jq -e 'type == "array" and length > 0' "$ej" >/dev/null 2>&1; then
-    tmp_merged=$(mktemp)
-    jq -s '.[0] + .[1]' "$aggregated_errors_json" "$ej" > "$tmp_merged"
-    mv "$tmp_merged" "$aggregated_errors_json"
-  fi
-done
-
-# Aggregate build_log.jsonl and build_log.json files
-for bl in $(find . -type f \( -name "build_log.jsonl" -o -name "build_log.json" \) ! -path "./$aggregated_log_json" ! -path "./$aggregated_log_jsonl" 2>/dev/null); do
+# Aggregate build_log.jsonl files
+for bl in $(find . -type f -name "build_log.jsonl" ! -path "./$aggregated_log_jsonl" 2>/dev/null); do
   [ -s "$bl" ] || continue
-  if [[ "$bl" == *.jsonl ]]; then
-    cat "$bl" >> "$aggregated_log_jsonl"
-  elif jq -e 'type == "array" and length > 0' "$bl" >/dev/null 2>&1; then
-    tmp_merged=$(mktemp)
-    jq -s '.[0] + .[1]' "$aggregated_log_json" "$bl" > "$tmp_merged"
-    mv "$tmp_merged" "$aggregated_log_json"
-  fi
+  cat "$bl" >> "$aggregated_log_jsonl"
 done
 
 # Preserve warnings and errors emitted by each parallel build part.
@@ -85,11 +61,11 @@ if [ -s "$aggregated_files" ]; then
   echo "[+] Aggregated built files count: $(wc -l < "$aggregated_files")"
 fi
 
-# Generate aggregated error.md from aggregated JSON logs
+# Generate aggregated build_log.md from aggregated build_log.jsonl
 SCRIPT_DIR=$(CDPATH= cd -- "$(dirname -- "${BASH_SOURCE[0]}")" && pwd)
 ROOT_DIR=$(CDPATH= cd -- "$SCRIPT_DIR/../.." && pwd)
 if [ -f "$ROOT_DIR/.github/scripts/generate_error_markdown.py" ]; then
-  python3 "$ROOT_DIR/.github/scripts/generate_error_markdown.py" aggregated_out "$aggregated_errors_md" || true
+  python3 "$ROOT_DIR/.github/scripts/generate_error_markdown.py" aggregated_out "$aggregated_build_log_md" || true
 fi
 
 # Generate aggregated build.md directly from aggregated build.json

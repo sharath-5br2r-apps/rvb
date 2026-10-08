@@ -203,24 +203,21 @@ jobs:
           UPLOAD_CONCURRENCY: "${{ vars.UPLOAD_CONCURRENCY || '4' }}"
         run: bash .github/scripts/build_upload_release.sh
 
-      - name: Upload error log
-        if: ${{ inputs.aggregate_flavor == '' && (hashFiles('error.log') != '' || hashFiles('error.json') != '' || hashFiles('error.jsonl') != '' || hashFiles('error.md') != '') }}
+      - name: Upload build log
+        if: ${{ inputs.aggregate_flavor == '' && (hashFiles('error.log') != '' || hashFiles('build_log.jsonl') != '' || hashFiles('build_log.md') != '') }}
         uses: actions/upload-artifact@v7
         with:
           name: error_log
           path: |
             error.log
-            error.json
-            build_log.json
-            error.jsonl
             build_log.jsonl
-            error.md
+            build_log.md
           if-no-files-found: ignore
 
       - name: Display Build & Error Summary
-        if: ${{ inputs.aggregate_flavor == '' && hashFiles('error.md') != '' }}
+        if: ${{ inputs.aggregate_flavor == '' && hashFiles('build_log.md') != '' }}
         run: |
-          cat error.md >> "$GITHUB_STEP_SUMMARY"
+          cat build_log.md >> "$GITHUB_STEP_SUMMARY"
 
       - name: Generate module update files
         id: update_changelog
@@ -316,11 +313,8 @@ jobs:
             build.json
             build.md
             error.log
-            error.json
-            build_log.json
-            error.jsonl
             build_log.jsonl
-            error.md
+            build_log.md
             built_files.txt
             stable/
             beta/

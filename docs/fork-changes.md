@@ -27,7 +27,7 @@ This document provides an exhaustive, technical account of all architectural, be
 ### C. Concurrency Isolation & Post-Build Summaries
 - **Scratch Directory Isolation**: Deterministically purges worker scratch files (`temp/tmp.*`, `*-merge-tmp*`, `morphe-stage-*`) per process.
 - **Partition Support**: Propagates `CURRENT_BUILD_PART` to isolate logs and lock contexts when running parallel CI segments.
-- **Automated Step Summary**: Automatically invokes `generate_error_markdown.py` post-build to emit `error.md` for GitHub Actions step summaries and local terminal review.
+- **Automated Step Summary**: Automatically invokes `generate_error_markdown.py` post-build to emit `build_log.md` from `build_log.jsonl` for GitHub Actions step summaries and local terminal review.
 
 ---
 
@@ -60,7 +60,7 @@ This document provides an exhaustive, technical account of all architectural, be
 
 ### D. JSONL Telemetry & Logging
 - **Upstream**: Accumulated logs as in-memory JSON arrays in `error.json` and `build_log.json`, which corrupted under concurrent step execution.
-- **Fork**: Standardized all telemetry on JSON Lines (`error.jsonl` and `build_log.jsonl`):
+- **Fork**: Standardized all build telemetry purely on JSON Lines (`build_log.jsonl`) and generates formatted Markdown reports (`build_log.md`):
   - Added `log_build_event()` for atomic appending.
   - Formatted logger helpers `pr()`, `epr()`, and `wpr()` automatically prefix active `CURRENT_APP_NAME` and `CURRENT_BUILD_PART`.
 

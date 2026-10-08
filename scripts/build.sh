@@ -10,7 +10,6 @@ export RVB_UTILS_SH
 source "$RVB_UTILS_SH"
 echo '{}' > "$BUILD_JSON_FILE"
 : > "${RVB_ERROR_LOG:-error.log}"
-: > "${RVB_ERROR_JSON:-error.jsonl}"
 : > "${RVB_LOG_JSON:-build_log.jsonl}"
 
 CONFIG_FILE="config.toml"
@@ -120,7 +119,7 @@ export CURRENT_BUILD_PART="${CURRENT_BUILD_PART:-}"
 trap "abort" INT
 
 if [ "${CLEAN_REQUESTED:-false}" = true ]; then
-	rm -rf "$TEMP_DIR" "$BUILD_DIR" build.md error.log error.json error.jsonl build_log.json build_log.jsonl error.md build.json.lock
+	rm -rf "$TEMP_DIR" "$BUILD_DIR" build.md error.log error.json error.jsonl build_log.json build_log.jsonl error.md build_log.md build.json.lock
 	exit 0
 fi
 
@@ -233,7 +232,7 @@ JOB_SEQ=0
 if ((PAR_JOBS > 1)); then
 	mkdir -p "$QUEUE_DIR"
 	# vars build_rv reads as globals; children get them through the env
-	export RVB_UTILS_SH COMPRESSION_LEVEL ENABLE_MODULE_UPDATE DEF_AUTHOR_NAME REMOVE_RV_INTEGRATIONS_CHECKS RVB_ERROR_LOG RVB_ERROR_JSON RVB_LOG_JSON CURRENT_BUILD_PART
+	export RVB_UTILS_SH COMPRESSION_LEVEL ENABLE_MODULE_UPDATE DEF_AUTHOR_NAME REMOVE_RV_INTEGRATIONS_CHECKS RVB_ERROR_LOG RVB_LOG_JSON CURRENT_BUILD_PART
 
 	_reap_done() {
 		local id rc
@@ -614,7 +613,7 @@ if [ -z "$(ls -A1 "${BUILD_DIR}")" ]; then abort "All builds failed."; fi
 if command -v python3 >/dev/null 2>&1; then
 	python3 .github/scripts/generate_release_notes.py || true
 	if [ -f .github/scripts/generate_error_markdown.py ]; then
-		python3 .github/scripts/generate_error_markdown.py . error.md || true
+		python3 .github/scripts/generate_error_markdown.py . build_log.md || true
 	fi
 fi
 

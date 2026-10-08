@@ -9,49 +9,39 @@ import os
 import sys
 from typing import Any, Dict, List
 
-def load_json(path: str) -> Any:
+def load_jsonl(path: str) -> List[Dict[str, Any]]:
     if not os.path.exists(path) or os.path.getsize(path) == 0:
-        return None
+        return []
+    entries: List[Dict[str, Any]] = []
     try:
         with open(path, "r", encoding="utf-8") as f:
-            first_char = ""
-            entries = []
             for line in f:
                 stripped = line.strip()
                 if not stripped:
                     continue
-                if not first_char:
-                    first_char = stripped[0]
-                if first_char in ("[", "{"):
-                    f.seek(0)
-                    return json.load(f)
                 try:
                     obj = json.loads(stripped)
                     if isinstance(obj, dict):
                         entries.append(obj)
+                    elif isinstance(obj, list):
+                        entries.extend(x for x in obj if isinstance(x, dict))
                 except Exception:
                     continue
-            return entries if entries else None
+        return entries
     except Exception:
-        return None
+        return []
+
+# Backwards compatible alias
+load_json = load_jsonl
 
 def main() -> int:
     # 1. Locate all downloaded logs or artifacts
     search_dirs = ["logs_artifacts", "part_logs", "artifacts", "."]
     
-    # We want to find error.json(l), build_log.json(l), error.md, build.md grouped by artifact / folder
-    found_error_jsons = glob.glob("**/error.jsonl", recursive=True) + glob.glob("**/error.json", recursive=True)
-    found_build_log_jsons = glob.glob("**/build_log.jsonl", recursive=True) + glob.glob("**/build_log.json", recursive=True)
-    found_error_mds = glob.glob("**/error.md", recursive=True)
+    # Locate build_log.jsonl
+    found_build_log_jsons = glob.glob("**/build_log.jsonl", recursive=True)
 
     all_entries: List[Dict[str, Any]] = []
-    
-    for ej in found_error_jsons:
-        if "aggregated_out" in ej:
-            continue
-        data = load_json(ej)
-        if isinstance(data, list):
-            all_entries.extend(data)
 
     for bl in found_build_log_jsons:
         if "aggregated_out" in bl:
@@ -78,11 +68,10 @@ def main() -> int:
     # Build per-artifact error log sections
     per_artifact_sections: List[str] = []
     
-    # Find all error.log or error.md files grouped by directory / artifact
-    # Group by artifact directory name
+    # Find all build_log.md, error.md, or log files grouped by directory / artifact
     artifact_dirs = set()
     for f in glob.glob("**/*", recursive=True):
-        if os.path.isfile(f) and (os.path.basename(f) in ["error.log", "error.md", "error.json", "error.jsonl", "build_log.json", "build_log.jsonl"]):
+        if os.path.isfile(f) and (os.path.basename(f) in ["build_log.md", "error.md", "build_log.jsonl", "error.log"]):
             d = os.path.dirname(f)
             if d and d != "." and not d.startswith("aggregated_out"):
                 artifact_dirs.add(d)
@@ -91,21 +80,18 @@ def main() -> int:
         artifact_name = os.path.basename(ad)
         section_lines = [f"### 📁 Artifact / Job: `{artifact_name}`\n"]
         
-        # Check if error.md exists
+        # Check if build_log.md / error.md exists
+        blmd = os.path.join(ad, "build_log.md")
         emd = os.path.join(ad, "error.md")
-        ej = os.path.join(ad, "error.json")
-        ejl = os.path.join(ad, "error.jsonl")
-        blj = os.path.join(ad, "build_log.json")
         bljl = os.path.join(ad, "build_log.jsonl")
         el = os.path.join(ad, "error.log")
         
         has_content = False
         entries_in_part = []
-        for cand in [ejl, ej, bljl, blj]:
-            if os.path.exists(cand):
-                d = load_json(cand)
-                if isinstance(d, list):
-                    entries_in_part.extend(d)
+        if os.path.exists(bljl):
+            d = load_json(bljl)
+            if isinstance(d, list):
+                entries_in_part.extend(d)
             
         if entries_in_part:
             part_deduped = []
@@ -117,6 +103,10 @@ def main() -> int:
                     part_deduped.append(e)
             part_md = generate_error_markdown.format_report(part_deduped)
             section_lines.append(part_md)
+            has_content = True
+        elif os.path.exists(blmd) and os.path.getsize(blmd) > 0:
+            with open(blmd, "r", encoding="utf-8") as f:
+                section_lines.append(f.read())
             has_content = True
         elif os.path.exists(emd) and os.path.getsize(emd) > 0:
             with open(emd, "r", encoding="utf-8") as f:

@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Generate a clean Markdown report from error.json and/or build_log.json."""
+"""Generate a clean Markdown report from build_log.jsonl."""
 
 from __future__ import annotations
 
@@ -14,27 +14,16 @@ def load_log_entries(path: str) -> List[Dict[str, Any]]:
     entries: List[Dict[str, Any]] = []
     try:
         with open(path, "r", encoding="utf-8") as f:
-            first_char = ""
             for line in f:
                 stripped = line.strip()
                 if not stripped:
                     continue
-                if not first_char:
-                    first_char = stripped[0]
-                if first_char in ("[", "{"):
-                    # Regular JSON
-                    f.seek(0)
-                    data = json.load(f)
-                    if isinstance(data, list):
-                        return data
-                    elif isinstance(data, dict):
-                        return [data]
-                    return []
-                # JSONL line
                 try:
                     obj = json.loads(stripped)
                     if isinstance(obj, dict):
                         entries.append(obj)
+                    elif isinstance(obj, list):
+                        entries.extend(x for x in obj if isinstance(x, dict))
                 except Exception:
                     continue
         return entries
@@ -111,7 +100,7 @@ def format_report(log_entries: List[Dict[str, Any]]) -> str:
 def main() -> int:
     # Arguments: [input_json_or_dir] [output_md]
     input_path = sys.argv[1] if len(sys.argv) > 1 else ""
-    output_file = sys.argv[2] if len(sys.argv) > 2 else "error.md"
+    output_file = sys.argv[2] if len(sys.argv) > 2 else "build_log.md"
 
     entries: List[Dict[str, Any]] = []
 
@@ -119,13 +108,10 @@ def main() -> int:
         entries.extend(load_log_entries(input_path))
     else:
         # Check standard file locations
-        candidates = ["error.jsonl", "build_log.jsonl", "error.json", "build_log.json"]
+        candidates = ["build_log.jsonl"]
         if input_path and os.path.isdir(input_path):
             candidates = [
-                os.path.join(input_path, "error.jsonl"),
                 os.path.join(input_path, "build_log.jsonl"),
-                os.path.join(input_path, "error.json"),
-                os.path.join(input_path, "build_log.json"),
             ]
         for cand in candidates:
             if os.path.exists(cand):
