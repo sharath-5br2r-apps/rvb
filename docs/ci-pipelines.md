@@ -101,13 +101,7 @@ Step order, with the reason each is where it is:
 2. `build_resolve_context.sh` maps the config file (`configs/<channel>/config.part*.json` or manual TOML) to `ARCHIVE_TAG`,
    `IS_PRERELEASE` and `TITLE_SUFFIX` — the single owner of
    "which channel is this run".
-3. Install Bouncy Castle **only if** `patchers.py needs-bks` says an app in this
-   config is patched with NPatch — the only tool that asks the **JVM** for a BKS
-   keystore type (single-argument `KeyStore.getInstance("BKS")`). ReVanced CLI and
-   Morphe also work in BKS but carry their own provider inside their jar, and
-   LSPatch uses `getDefaultType()`, so none of them trigger this step. A stock
-   Temurin has no BKS type, so getting the gate wrong either way is visible: skip
-   it for an NPatch config and patching dies on `KeyStoreException: BKS not found`.
+3. Bouncy Castle provider: Handled dynamically by `scripts/utils.sh` via `get_bcprov` whenever needed (for BKS keystores, apksigner, or BKS-to-PKCS12 conversions).
 4. Keystore identity verification: In this fork, separate `install_keystore.sh` is removed and integrated directly into `scripts/utils.sh`. It resolves universal keystore variables (`KEYSTORE_BASE64`, `KEYSTORE_FILE`, `KEYSTORE_PASSWORD`, `KEYSTORE_KEY_PASSWORD`, `KEYSTORE_ALIAS`), converting BKS to PKCS12 via `require_p12()` as needed. `build.sh` enforces `require_signing_identity` before any download starts.
 5. `build_resolve_version.sh` computes `NEXT_VER_CODE` (`YY` + the next 4-digit
    sequence above the highest existing tag/release, e.g. `260141`).

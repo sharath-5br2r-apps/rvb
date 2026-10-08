@@ -210,20 +210,14 @@ see [cache-repo.md](cache-repo.md).
 `.github/scripts/patchers.sh` (sourced by the engine, overridable with
 `RVB_PATCHERS_SH` for tests) owns `resolve_patcher` and the `PATCHER_*` flags:
 which tool kind this is, whether it lists patches, whether it needs a mount arg,
-how its output is recovered. `.github/scripts/patchers.py` answers the CI-side
-question `needs-bks` (does this config contain an app whose patcher needs the
-**JVM** to provide a BKS keystore?). Only NPatch does: it calls the single-argument
-`KeyStore.getInstance("BKS")`, which is a global provider lookup, and ships its
-built-in stores as BKS files — so a stock Temurin answers `KeyStoreException: BKS
-not found` and the run must install the provider first. ReVanced CLI and Morphe use
-BKS too, but call `KeyStore.getInstance("BKS", "BC")` against a provider bundled in
-their own jar, and LSPatch reads a bundled JKS through `KeyStore.getDefaultType()`;
-none of those three needs anything installed, which is why the flag is set for the
-npatch flavour of the xposed flow alone.
+and how its output is recovered. Bouncy Castle provider setup (`bcprov.jar`) is
+managed on-demand by `scripts/utils.sh` (via `get_bcprov`) whenever BKS keystores
+or APK signing require it (Morphe provides its own bundle; other tools like NPatch,
+apksigner, and keytool BKS-to-PKCS12 conversions leverage `get_bcprov`).
 
-The same split decides `PATCHER_KEYSTORE_FORMAT`: the xposed tools sign their own
+The registry also declares `PATCHER_KEYSTORE_FORMAT`: the xposed tools sign their own
 output, so the identity reaches them as `-k <store> <pass> <alias> <pass>` (same
-argument order in both) and the flag names which of the two stores that tool can
+argument order in both) and the flag names which store format that tool can
 read. Adding a tool means editing the registry, not `build_rv`.
 
 ## Signing and identity

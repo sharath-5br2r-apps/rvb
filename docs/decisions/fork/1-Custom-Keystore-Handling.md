@@ -36,8 +36,10 @@ Additionally, in this fork, apksigner specifically requires BKS format for APK s
      ```
    - For tools that strictly require a PKCS12 store (e.g., LSPatch), `scripts/utils.sh` provides the `require_p12()` helper function. It dynamically inspects the BKS keystore using `keytool` and converts it to PKCS12 (`TEMP_DIR/ks-p12.keystore`) on-the-fly using Bouncy Castle (`get_bcprov`).
 
-3. **Integrated in `scripts/utils.sh` (No `install_keystore.sh`)**:
-   - The standalone `.github/scripts/install_keystore.sh` script is removed.
+3. **Integrated in `scripts/utils.sh` (No `install_keystore.sh` or External `needs-bks` Checks)**:
+   - The standalone `.github/scripts/install_keystore.sh` script and external `needs-bks` checks are removed as obsolete.
+   - All tools except Morphe require the Bouncy Castle provider (`bcprov.jar`) for BKS keystore access (NPatch, ReVanced CLI, apksigner, and keytool BKS conversions). Morphe bundles its own BC provider.
+   - Provider availability is managed on-demand via `get_bcprov` directly inside `scripts/utils.sh`.
    - Keystore decoding (if base64), path checks, parameter normalization, and identity verification (`require_signing_identity`) are executed directly inside `scripts/utils.sh` and checked before any downloads in `scripts/build.sh`.
 
 ## Verification
