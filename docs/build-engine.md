@@ -224,8 +224,9 @@ read. Adding a tool means editing the registry, not `build_rv`.
 
 | Env var | Default | Purpose |
 |---|---|---|
-| `RVB_KEYSTORE` / `RVB_KEYSTORE_P12` | none | the BKS store (ReVanced CLI, Morphe, NPatch) and the PKCS12 store (apksigner, LSPatch); `install_keystore.sh` writes both from `KEYSTORE_B64` / `KEYSTORE_P12_B64` and exports the two paths |
-| `RVB_KEYSTORE_PASS` / `RVB_KEY_ALIAS` | none | one password, passed as both store and key password, and one alias present in both stores. Alphanumeric only: both are interpolated into `eval`'d CLI arguments, and `require_signing_identity` rejects anything else |
+| `KEYSTORE` / `KEYSTORE_FILE` / `KEYSTORE_BASE64` | none | the primary keystore (BKS); `scripts/utils.sh` materializes the keystore file from `KEYSTORE_BASE64` / `KEYSTORE_FILE` and creates the PKCS12 store dynamically via `require_p12` when needed (apksigner, LSPatch) |
+| `KEYSTORE_PASSWORD` / `KEYSTORE_KEY_PASSWORD` | none | keystore password and optional key password (defaults to `KEYSTORE_PASSWORD` if unset) |
+| `KEYSTORE_ALIAS` | none | alias present in the keystore |
 | `RVB_MORPHE_PASSTHROUGH` | `true` | keep bundles whole for morphe instead of merging at download time |
 | `RVB_INSTAFEL_FALLBACK_COMMIT`, `RVB_INSTAFEL_DEFAULT_PATCHES` | see source | used when the InstaFel CLI manifest has no commit hash or a config omits `included-patches` |
 
@@ -235,13 +236,11 @@ default in `utils.sh` and no keystore ships in this repository — the two files
 inherited from the template this was forked from came with a public private key, so
 a missing secret meant every build here was signable by anyone holding the same
 template. `build.sh` calls `require_signing_identity` before the first download,
-and `install_keystore.sh` fails the run when any of the four secrets is absent
-instead of falling back; it also checks the BKS magic and that the alias really is
-readable in the PKCS12 store, so a wrong secret stops the job in seconds rather
-than at the first patch of every app. A local build must export all four itself,
-pointing at one key pair held in both BKS and PKCS12 form (same alias, same
-password). The price of adopting a fresh identity is paid once: every previously
-installed patched app has to be uninstalled, because its signer changed.
+failing the run when signing secrets are absent instead of falling back. A local
+build must supply `KEYSTORE` (or `KEYSTORE_BASE64` / `KEYSTORE_FILE`), `KEYSTORE_PASSWORD`,
+and `KEYSTORE_ALIAS` (plus optional `KEYSTORE_KEY_PASSWORD`). The price of adopting a fresh
+identity is paid once: every previously installed patched app has to be uninstalled,
+because its signer changed.
 
 ### Why the BKS copy cannot be dropped
 
@@ -255,10 +254,12 @@ One key pair, two store formats, because the consumers are not equally tolerant:
 | LSPatch | `KeyStore.getInstance(KeyStore.getDefaultType())` | no — it wants the PKCS12 copy |
 | apksigner | `--ks`, auto-detects | no — it wants the PKCS12 copy |
 
-So `RVB_KEYSTORE` stays BKS as long as any `ReVanced/revanced-cli` app is
-configured; collapsing to a single PKCS12 store would mean dropping one secret and
+So `KEYSTORE` stays BKS as long as any `ReVanced/revanced-cli` app is
+configured; collapsing to a single PKCS12 store would mean dropping one store format and
 breaking those builds, and was checked rather than assumed (verified against the
 `revanced-cli-6.0.0-all.jar` and `morphe-desktop.jar` bytecode, not documentation).
+In this fork, `require_p12` automatically generates the PKCS12 representation from the
+BKS store whenever a PKCS12 consumer runs.
 
 ## Guardrails
 

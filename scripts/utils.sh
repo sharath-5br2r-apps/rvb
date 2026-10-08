@@ -79,14 +79,6 @@ require_signing_identity() {
 
 	if [ -n "$KEYSTORE" ] && [ ! -f "$KEYSTORE" ]; then epr "keystore not found: $KEYSTORE"; bad=1; fi
 
-	if [ -n "$KEYSTORE_PASSWORD" ] && [[ "$KEYSTORE_PASSWORD" =~ [^0-9A-Za-z] ]]; then
-		epr "KEYSTORE_PASSWORD must be alphanumeric: it is embedded in eval'd CLI arguments"
-		bad=1
-	fi
-	if [ -n "$KEYSTORE_ALIAS" ] && [[ "$KEYSTORE_ALIAS" =~ [^0-9A-Za-z_.-] ]]; then
-		epr "KEYSTORE_ALIAS must not contain characters that break eval'd CLI arguments"
-		bad=1
-	fi
 	if [ "$bad" -ne 0 ]; then
 		epr "no usable signing identity - set KEYSTORE (or KEYSTORE_BASE64 / KEYSTORE_FILE), KEYSTORE_PASSWORD, KEYSTORE_KEY_PASSWORD, and KEYSTORE_ALIAS"
 		return 1

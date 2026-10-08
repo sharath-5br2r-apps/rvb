@@ -39,6 +39,7 @@ You can run builds directly on Linux or Android (Termux).
 ### Environment Variables
 | Variable | Description |
 |---|---|
+| `KEYSTORE` / `KEYSTORE_FILE` | Path to Java Keystore file (`.keystore` / `.jks`) |
 | `KEYSTORE_BASE64` | Base64-encoded Java Keystore (`.keystore` / `.jks`) |
 | `KEYSTORE_PASSWORD` | Password for the keystore |
 | `KEYSTORE_ALIAS` | Key alias in the keystore |

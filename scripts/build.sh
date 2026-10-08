@@ -57,14 +57,12 @@ Environment variables:
   NORB                      Set to 'true' to skip rebuilding already-patched APKs
 
   Keystore / signing:
-  RVB_KEYSTORE              Path to keystore file (default: ks.keystore)
-  RVB_KEYSTORE_PASS         Keystore + key password (default: 123456789)
-  RVB_KEY_ALIAS             Key alias in keystore (default: jhc)
-  KEYSTORE_FILE             Alternative: path to an existing keystore file
+  KEYSTORE / KEYSTORE_FILE  Path to keystore file (e.g. ks.keystore)
   KEYSTORE_BASE64           Alternative: base64-encoded keystore content
-  KEYSTORE_PASSWORD         Alternative: keystore password (alias for RVB_KEYSTORE_PASS)
-  KEYSTORE_KEY_PASSWORD     Alternative: key password if different from keystore password
-  KEYSTORE_ALIAS            Alternative: key alias (alias for RVB_KEY_ALIAS)
+  KEYSTORE_PASSWORD         Keystore password
+  KEYSTORE_KEY_PASSWORD     Key password (defaults to KEYSTORE_PASSWORD if unset)
+  KEYSTORE_ALIAS            Key alias in keystore
+  RVB_KEYSTORE*             Legacy aliases for KEYSTORE, KEYSTORE_PASSWORD, KEYSTORE_ALIAS
 
   Downloads:
   RVB_DL_MAX_TIME           Max download time in seconds (default: 1800)

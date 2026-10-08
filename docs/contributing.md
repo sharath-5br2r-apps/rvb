@@ -68,21 +68,19 @@ trace goldens will fail on byte comparison.
 Run a build locally to see the engine work end to end. It will refuse to start
 without a signing identity, on purpose: every artifact this project produces is
 signed, and the repository ships no keystore (the template's had a public private
-key - see [decisions/0008](decisions/0008-signing-identity-is-secret-only.md)). In
-CI the identity arrives from the four `KEYSTORE_*` secrets, so a local run has to
-supply the same four variables itself:
+key - see [decisions/0008](decisions/0008-signing-identity-is-secret-only.md)). In CI the identity arrives from the `KEYSTORE_*` secrets, so a local run has to
+supply the signing variables itself (or specify them in a `.env` file):
 
 ```bash
-export RVB_KEYSTORE=~/keys/ks.keystore           # BKS:    Morphe / ReVanced CLI, NPatch
-export RVB_KEYSTORE_P12=~/keys/ks-p12.keystore   # PKCS12: apksigner, LSPatch
-export RVB_KEYSTORE_PASS=<alnum-only>            # one password: store AND key
-export RVB_KEY_ALIAS=<alias>                      # one alias, present in both stores
+export KEYSTORE=~/keys/ks.keystore                   # BKS keystore (or KEYSTORE_FILE / KEYSTORE_BASE64)
+export KEYSTORE_PASSWORD=<password>                  # keystore password
+export KEYSTORE_KEY_PASSWORD=<password>              # key password (optional, defaults to KEYSTORE_PASSWORD)
+export KEYSTORE_ALIAS=<alias>                        # key alias
 bash scripts/build.sh configs/config.manual.toml
 ```
 
 `build.sh` checks all of this before the first download and names whatever is
-missing. The password has to be alphanumeric because it is interpolated into
-`eval`'d CLI arguments.
+missing. PKCS12 conversion is handled dynamically via `require_p12` when consumers like `apksigner` or `LSPatch` require it.
 
 To get a throwaway pair for engine experiments (never the release key), one key
 stored in both formats:
