@@ -65,6 +65,16 @@ elif [ -z "$KEYSTORE" ] && [ -f "ks.keystore" ]; then
 	KEYSTORE="ks.keystore"
 fi
 
+# Helper to escape $, `, \, and " so variables safely interpolate inside double-quoted eval strings
+_escape_eval_arg() {
+	local val="$1"
+	val="${val//\\/\\\\}"
+	val="${val//\$/\\\$}"
+	val="${val//\`/\\\`}"
+	val="${val//\"/\\\"}"
+	printf "%s" "$val"
+}
+
 # Synchronize internal / legacy variable names for backwards compatibility across functions
 RVB_KEYSTORE="$KEYSTORE"
 RVB_KEYSTORE_PASS="$KEYSTORE_PASSWORD"
@@ -3729,6 +3739,9 @@ patch_apk() {
 		# NPatch asks JCA for a BKS type, LSPatch for the JDK default (PKCS12) - so the
 		# registry names it. Placed before $patcher_args so a config can still override.
 		local ks_args="" ks_file="$RVB_KEYSTORE_P12"
+		local esc_ks_pass esc_key_alias esc_ks_file
+		esc_ks_pass=$(_escape_eval_arg "$RVB_KEYSTORE_PASS")
+		esc_key_alias=$(_escape_eval_arg "$RVB_KEY_ALIAS")
 		if [ "${PATCHER_SIGNING:-false}" = true ]; then
 			if [ "${PATCHER_KEYSTORE_FORMAT:-pkcs12}" = bks ]; then
 				ks_file="$RVB_KEYSTORE"
@@ -3737,15 +3750,18 @@ patch_apk() {
 				epr "No signing keystore for '$cli_source' (want a $PATCHER_KEYSTORE_FORMAT store; have RVB_KEYSTORE='$RVB_KEYSTORE' RVB_KEYSTORE_P12='$RVB_KEYSTORE_P12')"
 				return 1
 			fi
-			ks_args=" -k '$ks_file' '$RVB_KEYSTORE_PASS' '$RVB_KEY_ALIAS' '$RVB_KEYSTORE_PASS'"
+			esc_ks_file=$(_escape_eval_arg "$ks_file")
+			ks_args=" -k \"$esc_ks_file\" \"$esc_ks_pass\" \"$esc_key_alias\" \"$esc_ks_pass\""
 		fi
 		mkdir -p "$tmp_dir"
 		local cmd
 		if [ "$PATCHER_KIND" = npatch ]; then
 			get_bcprov || return 1
-			cmd="java -cp 'temp/bcprov.jar${javapathsep:-:}$cli_jar' -Djava.security.properties=temp/bc.security top.nkbe.npatch.patch.NPatch -k '$RVB_KEYSTORE' '$RVB_KEYSTORE_PASS' '$RVB_KEY_ALIAS' '$RVB_KEYSTORE_PASS' '$stock_input' -o '$tmp_dir' $p_args_modules $patcher_args"
+			esc_ks_file=$(_escape_eval_arg "$RVB_KEYSTORE")
+			cmd="java -cp 'temp/bcprov.jar${javapathsep:-:}$cli_jar' -Djava.security.properties=temp/bc.security top.nkbe.npatch.patch.NPatch -k \"$esc_ks_file\" \"$esc_ks_pass\" \"$esc_key_alias\" \"$esc_ks_pass\" '$stock_input' -o '$tmp_dir' $p_args_modules $patcher_args"
 		else
-			cmd="java -jar '$cli_jar' -k '$RVB_KEYSTORE_P12' '$RVB_KEYSTORE_PASS' '$RVB_KEY_ALIAS' '$RVB_KEYSTORE_PASS' -o '$tmp_dir' $p_args_modules $patcher_args '$stock_input'"
+			esc_ks_file=$(_escape_eval_arg "$RVB_KEYSTORE_P12")
+			cmd="java -jar '$cli_jar' -k \"$esc_ks_file\" \"$esc_ks_pass\" \"$esc_key_alias\" \"$esc_ks_pass\" -o '$tmp_dir' $p_args_modules $patcher_args '$stock_input'"
 		fi
 		pr "$cmd"
 		PATCH_OUTPUT=$(eval "$cmd" 2>&1)
@@ -3863,8 +3879,12 @@ patch_apk() {
 		fi
 	fi
 
-	local base_cmd="java -jar '$stage_jar' patch '$stock_input' -t '$tmp_dir' -o '$patched_apk' --keystore=$RVB_KEYSTORE \
---keystore-entry-password=$RVB_KEYSTORE_PASS --keystore-password=$RVB_KEYSTORE_PASS --signer=$RVB_KEY_ALIAS --keystore-entry-alias=$RVB_KEY_ALIAS"
+	local esc_ks_file esc_ks_pass esc_key_alias
+	esc_ks_file=$(_escape_eval_arg "$RVB_KEYSTORE")
+	esc_ks_pass=$(_escape_eval_arg "$RVB_KEYSTORE_PASS")
+	esc_key_alias=$(_escape_eval_arg "$RVB_KEY_ALIAS")
+	local base_cmd="java -jar '$stage_jar' patch '$stock_input' -t '$tmp_dir' -o '$patched_apk' --keystore=\"$esc_ks_file\" \
+--keystore-entry-password=\"$esc_ks_pass\" --keystore-password=\"$esc_ks_pass\" --signer=\"$esc_key_alias\" --keystore-entry-alias=\"$esc_key_alias\""
 
 	# Morphe writes a machine-readable summary of the run (-r): which patches applied,
 	# which failed, and per-step success. Other tools have no equivalent, so the
