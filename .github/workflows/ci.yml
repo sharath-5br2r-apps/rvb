@@ -851,13 +851,6 @@ jobs:
             fi
           fi
 
-      - name: Upload batch release manifest artifact
-        uses: actions/upload-artifact@v7
-        with:
-          name: batch-release-manifest
-          path: batch_logs/release-manifest/build.json
-          if-no-files-found: error
-
       - name: Merge and upload archive manifest (Batch)
         env:
           GH_TOKEN: ${{ secrets.PERSONAL_ACCESS_TOKEN || secrets.GITHUB_TOKEN }}
@@ -907,6 +900,7 @@ jobs:
           commit_message: "Bump version ${{ needs.resolve_batch_version.outputs.next_ver_code_batch }}"
 
   resolve_manual_config:
+    needs: check_patch
     if: ${{ inputs.mode == 'Manual Config' }}
     runs-on: ubuntu-latest
     outputs:
