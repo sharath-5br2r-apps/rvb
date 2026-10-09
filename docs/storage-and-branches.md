@@ -45,7 +45,7 @@ state/
 - Split config parts (`configs/<channel>/config.part*.json`) generated during CI are committed directly to the `data` branch and fetched across parallel build jobs without relying on ephemeral actions artifacts.
 - **`fetch_data_branch.sh` overwrites local `configs/` and `state/`.** Publish
   hand-edited TOMLs *before* fetching, or lose them:
-  `bash .github/scripts/push_data_configs.sh "<message>"` — plumbing temp-index
+  `bash scripts/push_data_configs.sh "<message>"` — plumbing temp-index
   commit of `configs/**/*.toml` only, using your git identity.
 - Writer boundaries are enforced by glob, not convention: the CI committer commits
   only `*.json` directly under those directories, so it can never sweep a

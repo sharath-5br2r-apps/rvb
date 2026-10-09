@@ -36,7 +36,7 @@ copying a neighbour's guess. The rules that people get wrong:
 ```bash
 bash .github/scripts/fetch_data_branch.sh            # materialise configs/ + state/
 # edit configs/patches/<family>.toml in the working tree (these paths are ignored on main)
-bash .github/scripts/push_data_configs.sh "feat(config): add Pinterest builds"
+bash scripts/push_data_configs.sh "feat(config): add Pinterest builds"
 ```
 
 `fetch_data_branch.sh` **overwrites** local `configs/`, so publish before you

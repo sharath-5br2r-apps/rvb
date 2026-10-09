@@ -8,7 +8,7 @@ before making a change. The rules below are the ones that cause damage when brok
    of the `data` branch; `temp/`, `build/`, `build.json`, `build.md` are scratch.
    Never `git add -A`, never commit those paths.
 2. **Human config is published, not committed:**
-   `bash .github/scripts/push_data_configs.sh "<msg>"`. `fetch_data_branch.sh`
+   `bash scripts/push_data_configs.sh "<msg>"`. `fetch_data_branch.sh`
    **overwrites** local `configs/` — publish before fetching or lose edits.
 3. **Local builds:**
    Run `scripts/fetch_local_data.sh [branch]` to checkout `configs/` and `state/` from local `data` branch.

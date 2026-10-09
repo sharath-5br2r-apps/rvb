@@ -8,7 +8,7 @@ set -euo pipefail
 # stale local JSON can never be pushed over the watcher's state.
 #
 # Usage (from a main checkout, after editing configs/**.toml):
-#   bash .github/scripts/push_data_configs.sh "feat(configs): add <app> patches"
+#   bash scripts/push_data_configs.sh "feat(configs): add <app> patches"
 #   # then pull the canonical copies back (optional):
 #   bash .github/scripts/fetch_data_branch.sh
 #

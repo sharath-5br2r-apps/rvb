@@ -18,7 +18,7 @@ Releases, records build metadata on a Git branch, and feeds a static download si
    of the `data` branch. Never commit them, never `git add -A`, never assume an
    edit to a local TOML has been saved anywhere.
 2. Publishing human config is a separate action:
-   `bash .github/scripts/push_data_configs.sh "<msg>"` (TOML only, plumbing index).
+   `bash scripts/push_data_configs.sh "<msg>"` (TOML only, plumbing index).
    CI's writer (`commit_data_branch.sh`) commits **only** `*.json` under
    `configs/`/`state/`. Neither can delete a file — renames need explicit removal.
 3. **`fetch_data_branch.sh` overwrites local `configs/` + `state/`.** Publish first.
@@ -150,7 +150,7 @@ bash .github/traces/test_cache_helpers.sh            # cache helpers regression 
 bash .github/traces/test_bundle_helpers.sh           # bundle helpers regression test
 bash scripts/build.sh configs/config.manual.toml     # real build (network + java + jq; uses universal KEYSTORE vars)
 bash scripts/build.sh clean                          # reset temp/ build/ build.md
-bash .github/scripts/push_data_configs.sh "feat(config): …"   # publish TOML edits
+bash scripts/push_data_configs.sh "feat(config): …"   # publish TOML edits
 gh run list --repo sharath-5br2r-apps/rvb            # what ran and how
 ```
 
