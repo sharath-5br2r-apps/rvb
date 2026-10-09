@@ -82,10 +82,52 @@ concurrency:
   cancel-in-progress: false
 
 jobs:
+  check_app_versions:
+    if: ${{ inputs.mode != 'Build Only' }}
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        shard: [1, 2, 3, 4, 5, 6]
+    services:
+      cf_solver:
+        image: ghcr.io/sarperavci/cloudflarebypassforscraping:latest
+        ports:
+          - 8000:8000
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v7
+        with:
+          ref: main
+          fetch-depth: 1
+
+      - name: Setup Python dependencies
+        run: pip install --no-cache-dir curl_cffi || true
+
+      - name: Fetch configs & state (data branch)
+        run: bash .github/scripts/fetch_data_branch.sh
+
+      - name: Fetch App Versions (Shard ${{ matrix.shard }}/6)
+        env:
+          CFB_URL: "http://localhost:8000"
+          FETCHED_APP_VERSIONS_FILE: "fetched_app_versions_${{ matrix.shard }}.json"
+        run: bash .github/scripts/ci_fetch_app_versions.sh --parallel="${{ matrix.shard }}:6"
+
+      - name: Upload Shard Artifact
+        uses: actions/upload-artifact@v7
+        with:
+          name: fetched-shard-${{ matrix.shard }}
+          path: |
+            fetched_app_versions_${{ matrix.shard }}.json
+            check_list.txt
+          if-no-files-found: ignore
+
   check_patch:
     permissions:
       contents: write
     runs-on: ubuntu-latest
+    needs: [check_app_versions]
+    if: ${{ always() && !cancelled() && (needs.check_app_versions.result == 'success' || needs.check_app_versions.result == 'skipped') }}
     env:
       KEYSTORE_BASE64: ${{ secrets.KEYSTORE_BASE64 }}
       KEYSTORE_PASSWORD: ${{ secrets.KEYSTORE_PASSWORD }}
@@ -128,6 +170,22 @@ jobs:
       - name: Fetch configs & state (data branch)
         run: bash .github/scripts/fetch_data_branch.sh
 
+      - name: Download all fetched version shards
+        if: ${{ inputs.mode != 'Build Only' }}
+        uses: actions/download-artifact@v7
+        with:
+          pattern: fetched-shard-*
+          merge-multiple: true
+
+      - name: Merge Fetched App Versions
+        if: ${{ inputs.mode != 'Build Only' }}
+        id: merge_versions
+        run: |
+          python3 .github/scripts/merge_fetched_versions.py
+          if [ -f fetched_app_versions.json ]; then
+            echo "merged=$(cat fetched_app_versions.json | jq -c .)" >> "$GITHUB_OUTPUT"
+          fi
+
       - name: Sync patch sources and fetch tags
         if: ${{ inputs.mode != 'Build Only' }}
         id: compare
@@ -136,13 +194,6 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.PERSONAL_ACCESS_TOKEN || secrets.GITHUB_TOKEN }}
           CODEBERG_TOKEN: ${{ secrets.CODEBERG_TOKEN }}
         run: python3 .github/scripts/sync_patch_sources.py
-
-      - name: Fetch App Versions
-        if: ${{ inputs.mode != 'Build Only' }}
-        id: fetch_app_versions
-        env:
-          CFB_URL: "http://localhost:8000"
-        run: bash .github/scripts/ci_fetch_app_versions.sh
 
       - name: Upload Fetch Versions log artifact
         if: ${{ inputs.mode != 'Build Only' && hashFiles('fetched_app_versions.json') != '' }}
@@ -158,7 +209,7 @@ jobs:
         if: ${{ inputs.mode != 'Build Only' }}
         id: compare_apps
         env:
-          FETCHED_APP_VERSIONS: ${{ steps.fetch_app_versions.outputs.fetched }}
+          FETCHED_APP_VERSIONS: ${{ steps.merge_versions.outputs.merged }}
         run: bash .github/scripts/ci_compare_app_versions.sh
 
       - name: Check App Patches (Bytecode Diff)

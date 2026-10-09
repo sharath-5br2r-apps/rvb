@@ -21,6 +21,7 @@ OUTPUT_FILE="${FETCHED_APP_VERSIONS_FILE:-$ROOT_DIR/fetched_app_versions.json}"
 NO_SLEEP="${NO_SLEEP:-${CI_FETCH_NO_SLEEP:-false}}"
 CONFIG_LIST="${CONFIG_FILES:-}"
 ALLOWED_APPS="${CI_FETCH_ALLOWED_APPS:-}"
+PARALLEL_PART="${PARALLEL_PART:-}"
 
 print_help() {
 	cat <<'EOF'
@@ -33,6 +34,9 @@ Options:
   --allowed-apps=REGEX, --allowed-apps REGEX
       Only fetch versions for apps whose name matches the given regex or
       comma/space-separated list. Unmatched apps retain their existing version.
+
+  --parallel=CUR:TOTAL, --parallel CUR:TOTAL
+      Partition the list of target apps and fetch only shard CUR of TOTAL (1-indexed).
 
   --help, -h
       Show this help message and exit.
@@ -65,15 +69,22 @@ For config file keys, see CONFIG.md.
 EOF
 }
 
-case "${1:-}" in
-	--help|-h) print_help; exit 0 ;;
-esac
-
-if [ "${1:-}" = "--allowed-apps" ] && [ -n "${2:-}" ]; then
-    ALLOWED_APPS="$2"
-elif [[ "${1:-}" == --allowed-apps=* ]]; then
-    ALLOWED_APPS="${1#--allowed-apps=}"
-fi
+while [ $# -gt 0 ]; do
+    case "$1" in
+        --help|-h)
+            print_help; exit 0 ;;
+        --allowed-apps)
+            ALLOWED_APPS="${2:-}"; shift 2 ;;
+        --allowed-apps=*)
+            ALLOWED_APPS="${1#--allowed-apps=}"; shift ;;
+        --parallel)
+            PARALLEL_PART="${2:-}"; shift 2 ;;
+        --parallel=*)
+            PARALLEL_PART="${1#--parallel=}"; shift ;;
+        *)
+            shift ;;
+    esac
+done
 
 source "$ROOT_DIR/scripts/utils.sh"
 set_prebuilts
@@ -128,6 +139,19 @@ if [ -n "$ALLOWED_APPS" ]; then
         "$allowed_apps_file" check_list.txt > "${allowed_apps_file}.list"
     mv "${allowed_apps_file}.list" check_list.txt
     rm -f "$allowed_apps_file"
+fi
+
+if [ -n "$PARALLEL_PART" ]; then
+    cur_part="${PARALLEL_PART%%:*}"
+    total_parts="${PARALLEL_PART##*:}"
+    if [[ "$cur_part" =~ ^[0-9]+$ ]] && [[ "$total_parts" =~ ^[0-9]+$ ]] && [ "$total_parts" -gt 0 ]; then
+        echo "Applying parallel partition: shard $cur_part of $total_parts"
+        partitioned_file=$(mktemp "${TMPDIR:-/tmp}/ci-fetch-part.XXXXXX")
+        awk -v cur="$cur_part" -v tot="$total_parts" '((NR - 1) % tot) + 1 == cur' check_list.txt > "$partitioned_file"
+        mv "$partitioned_file" check_list.txt
+    else
+        echo "Warning: invalid parallel format '$PARALLEL_PART', expected CUR:TOTAL (e.g. 1:6)" >&2
+    fi
 fi
 
 declare -A args
@@ -316,9 +340,9 @@ else
     FETCHED_JSON="{}"
 fi
 
-# With --allowed-apps, retain the current version for every unselected group.
-# This mirrors build.sh: restricted runs update only the requested applications.
-if [ -n "$ALLOWED_APPS" ]; then
+# With --allowed-apps (and not in parallel mode), retain the current version for every unselected group.
+# In parallel mode, each shard outputs only its fetched subset so they can be cleanly merged.
+if [ -n "$ALLOWED_APPS" ] && [ -z "$PARALLEL_PART" ]; then
     existing_versions=$(jq '
         with_entries(
             if (.value | type) == "object" then
