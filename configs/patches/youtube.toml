@@ -11,37 +11,6 @@ apkcombo-dlurl = "https://apkcombo.com/youtube/com.google.android.youtube"
 
 # ── YouTube morphe-amoled (#000000) ───────────────────────────────────────────
 
-[YouTube-Morphe-NordTheme]
-enabled = true
-pkg-name = "com.google.android.youtube"
-app-name = "YouTube"
-patches-source = "MorpheApp/morphe-patches"
-brand = "Morphe"
-build-mode = "both"
-variant = "Nord Theme"
-patch-folder = "youtube"
-patches-version = "stable"
-patcher-args = "-e 'Theme' -OdarkThemeBackgroundColor=#2E3440 -OlightThemeBackgroundColor=#E5E9F0"
-apkmirror-dlurl = "https://apkmirror.com/apk/google-inc/youtube"
-uptodown-dlurl = "https://youtube.en.uptodown.com/android"
-apkpure-dlurl = "https://apkpure.com/youtube-app/com.google.android.youtube"
-apkcombo-dlurl = "https://apkcombo.com/youtube/com.google.android.youtube"
-
-[YouTube-Morphe-MochaTheme]
-enabled = true
-pkg-name = "com.google.android.youtube"
-app-name = "YouTube"
-patches-source = "MorpheApp/morphe-patches"
-brand = "Morphe"
-build-mode = "both"
-variant = "Mocha Theme"
-patch-folder = "youtube"
-patches-version = "stable"
-patcher-args = "-e 'Theme' -OdarkThemeBackgroundColor=#FF181825 -OlightThemeBackgroundColor=#E6E9EF"
-apkmirror-dlurl = "https://apkmirror.com/apk/google-inc/youtube"
-uptodown-dlurl = "https://youtube.en.uptodown.com/android"
-apkpure-dlurl = "https://apkpure.com/youtube-app/com.google.android.youtube"
-apkcombo-dlurl = "https://apkcombo.com/youtube/com.google.android.youtube"
 
 [YouTube-Morphe-Experimental]
 enabled = true
@@ -68,33 +37,6 @@ apkmirror-dlurl = "https://apkmirror.com/apk/google-inc/youtube"
 
 # ── YouTube morphe-anddea-amoled (#000000 explicit) ───────────────────────────
 
-[youtube-anddea-nord]
-enabled = true
-pkg-name = "com.google.android.youtube"
-app-name = "YouTube"
-patches-source = "anddea/revanced-patches"
-brand = "anddea"
-build-mode = "both"
-patch-folder = "youtube"
-variant = "Nord Theme"
-included-patches = "'MaterialYou'"
-patcher-args = "-e 'Theme' -OdarkThemeBackgroundColor=#2E3440 -OlightThemeBackgroundColor=#E5E9F0"
-uptodown-dlurl = "https://youtube.en.uptodown.com/android"
-apkmirror-dlurl = "https://apkmirror.com/apk/google-inc/youtube"
-
-[youtube-anddea-mocha]
-enabled = true
-pkg-name = "com.google.android.youtube"
-app-name = "YouTube"
-patches-source = "anddea/revanced-patches"
-brand = "anddea"
-build-mode = "both"
-patch-folder = "youtube"
-variant = "Mocha Theme"
-included-patches = "'MaterialYou'"
-patcher-args = "-e 'Theme' -OdarkThemeBackgroundColor=#FF181825 -OlightThemeBackgroundColor=#E6E9EF"
-uptodown-dlurl = "https://youtube.en.uptodown.com/android"
-apkmirror-dlurl = "https://apkmirror.com/apk/google-inc/youtube"
 
 [YouTube-Morphe-Anddea-AMOLED]
 enabled = true
