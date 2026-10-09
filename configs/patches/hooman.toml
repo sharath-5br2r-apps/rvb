@@ -8,7 +8,7 @@ app-name = "Rumble"
 apkmirror-dlurl = "https://www.apkmirror.com/apk/rumble-inc/rumble"
 uptodown-dlurl = "https://rumble.en.uptodown.com/android"
 
-[BatteryGuru-Morphe-Hooman]
+[BatteryGuru-Hooman]
 enabled = true
 app-name = "Battery Guru"
 pkg-name = "com.paget96.batteryguru"
@@ -22,7 +22,7 @@ app-name = "Money Manager"
 apkmirror-dlurl = "https://www.apkmirror.com/apk/realbyte-inc/money-manager-expense-budget"
 uptodown-dlurl = "https://money-manager.en.uptodown.com/android"
 
-[Poweramp-Morphe-Hooman]
+[Poweramp-Hooman]
 enabled = true
 app-name = "Poweramp"
 arch = "arm64-v8a"
@@ -50,7 +50,7 @@ arch = "all"
 apkpure-dlurl = "https://apkpure.com/projectivy-launcher/com.spocky.projengmenu"
 apkcombo-dlurl = "https://apkcombo.com/projectivy-launcher/com.spocky.projengmenu/"
 
-[AdobeAcrobat-Morphe-Hooman]
+[AdobeAcrobat-Hooman]
 enabled = true
 app-name = "Adobe Acrobat"
 arch = "all arm64-v8a x86_64"
@@ -92,7 +92,7 @@ uptodown-dlurl = "https://google-phone.en.uptodown.com/android"
 apkpure-dlurl = "https://apkpure.com/phone-by-google-app/com.google.android.dialer"
 apkcombo-dlurl = "https://apkcombo.com/google-phone/com.google.android.dialer"
 
-[MicrosoftSwiftKey-Morphe-Hooman]
+[MicrosoftSwiftKey-Hooman]
 enabled = true
 app-name = "Microsoft SwiftKey"
 pkg-name = "com.touchtype.swiftkey"
@@ -109,28 +109,22 @@ uptodown-dlurl = "https://foldersync-lite.en.uptodown.com/android"
 apkpure-dlurl = "https://apkpure.com/foldersync/dk.tacit.android.foldersync.lite"
 apkcombo-dlurl = "https://apkcombo.com/foldersync/dk.tacit.android.foldersync.lite"
 
-[Symfonium-Morphe-Hooman]
+[Symfonium-Hooman]
 enabled = true
 app-name = "Symfonium"
 pkg-name = "app.symfonik.music.player"
 uptodown-dlurl = "https://symfonium.en.uptodown.com/android"
 apkmirror-dlurl = "https://www.apkmirror.com/apk/tolriq/symfonium-music-player-cast"
 
-[AdvancedDownloadManager-Morphe-Hooman]
+[AdvancedDownloadManager-Hooman]
 enabled = true
 app-name = "Advanced Download Manager"
 pkg-name = "com.dv.adm"
 uptodown-dlurl="https://advanced-download-manager.en.uptodown.com/android"
 apkmirror-dlurl="https://www.apkmirror.com/apk/admtorrent/advanced-download-manager/"
 
-[Twitch-Morphe-Hooman]
-enabled = true
-app-name = "Twitch"
-pkg-name = "tv.twitch.android.app"
-uptodown-dlurl = "https://twitch.en.uptodown.com/android"
-apkmirror-dlurl = "https://apkmirror.com/apk/twitch-interactive-inc/twitch"
 
-[BatteryGuru-Morphe-Hooman-Experimental]
+[BatteryGuru-Hooman-Experimental]
 enabled = true
 app-name = "Battery Guru"
 sub-variant = "Experimental"
@@ -140,7 +134,7 @@ pkg-name = "com.paget96.batteryguru"
 uptodown-dlurl = "https://battery-guru.en.uptodown.com/android"
 apkmirror-dlurl = "https://www.apkmirror.com/apk/paget96/battery-guru-health-saver/"
 
-[Poweramp-Morphe-Hooman-Experimental]
+[Poweramp-Hooman-Experimental]
 enabled = true
 app-name = "Poweramp"
 sub-variant = "Experimental"
@@ -154,7 +148,7 @@ apkmirror-dlurl = "https://www.apkmirror.com/apk/max-mp/poweramp/"
 apkpure-dlurl = "https://apkpure.com/poweramp-music-player-trial-app/com.maxmpz.audioplayer"
 apkcombo-dlurl = "https://apkcombo.com/poweramp/com.maxmpz.audioplayer"
 
-[AdobeAcrobat-Morphe-Hooman-Experimental]
+[AdobeAcrobat-Hooman-Experimental]
 enabled = true
 app-name = "Adobe Acrobat"
 sub-variant = "Experimental"

@@ -3,7 +3,7 @@ patches-source = "ch3thanhs/stylus"
 patch-brand = "Stylus"
 cli-type = "morphe"
 
-[Bitwarden-Morphe-Stylus-Experimental]
+[Bitwarden-Stylus-Experimental]
 enabled = true
 app-name = "Bitwarden"
 sub-variant = "Experimental"

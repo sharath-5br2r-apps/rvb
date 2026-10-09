@@ -55,7 +55,7 @@ included-patches = "'unlock_developer_options' 'remove_snooze_warning' 'remove_a
 dpi = "480dpi nodpi anydpi auto"
 apkmirror-dlurl = "https://www.apkmirror.com/apk/instagram/instagram-instagram"
 
-[Instagram-Morphe-Piko]
+[Instagram-Piko]
 enabled = true
 app-name = "Instagram"
 arch = "arm64-v8a x86_64"

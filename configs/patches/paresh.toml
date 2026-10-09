@@ -2,7 +2,7 @@ patches-source = "Paresh-Maheshwari/paresh-patches"
 patches-source-host = "gitlab"
 brand = "Paresh"
 
-[Cricbuzz-Morphe-Paresh]
+[Cricbuzz-Paresh]
 enabled = true
 app-name = "Cricbuzz"
 pkg-name = "com.cricbuzz.android"
@@ -17,7 +17,7 @@ uptodown-dlurl = "https://lumina-walls.en.uptodown.com/android"
 apkpure-dlurl = "https://apkpure.com/lumina-wallpapers/com.lumina.wallpapers"
 apkcombo-dlurl = "https://apkcombo.com/lumina-wallpapers/com.lumina.wallpapers"
 
-[Eyecon-Morphe-Paresh]
+[Eyecon-Paresh]
 enabled = true
 app-name = "Eyecon"
 pkg-name = "com.eyecon.global"
@@ -33,7 +33,7 @@ uptodown-dlurl = "https://ticktick.en.uptodown.com/android"
 apkpure-dlurl = "https://apkpure.com/ticktick-to-do-list-calendar/com.ticktick.task"
 apkcombo-dlurl = "https://apkcombo.com/ticktick/com.ticktick.task"
 
-[SDMaid-Morphe-Paresh]
+[SDMaid-Paresh]
 enabled = true
 app-name = "SD Maid 2/SE"
 pkg-name = "eu.darken.sdmse"
@@ -41,23 +41,15 @@ uptodown-dlurl = "https://sd-maid-se.en.uptodown.com/android"
 apkmirror-dlurl = "https://www.apkmirror.com/apk/darken/sd-maid-2-se-system-cleaner"
 apkmirror-example-url = "https://www.apkmirror.com/apk/darken/sd-maid-2-se-system-cleaner/sd-maid-2-se-system-cleaner-2-0-3-rc0-release"
 
-[Fing-Morphe-Paresh]
+[Fing-Paresh]
 enabled = true
 app-name = "Fing"
 pkg-name = "com.overlook.android.fing"
 uptodown-dlurl = "https://fing-network-tools.en.uptodown.com/android"
 apkmirror-dlurl = "https://www.apkmirror.com/apk/fing-limited/fing-network-tools"
 
-[Truecaller-Morphe-Paresh]
-enabled = true
-app-name = "Truecaller"
-build-mode = "both"
-arch = "all arm64-v8a armeabi-v7a"
-pkg-name = "com.truecaller"
-uptodown-dlurl = "https://truecaller.en.uptodown.com/android"
-apkmirror-dlurl = "https://www.apkmirror.com/apk/true-software-scandinavia-ab/truecaller-caller-id-block"
 
-[Fing-Morphe-Paresh-Experimental]
+[Fing-Paresh-Experimental]
 enabled = true
 app-name = "Fing"
 sub-variant = "Experimental"
@@ -70,16 +62,8 @@ apkmirror-dlurl = "https://www.apkmirror.com/apk/fing-limited/fing-network-tools
 
 arch = "all arm64-v8a armeabi-v7a"
 
-[ProtonVPN-Morphe-Paresh]
-enabled = true
-app-name = "Proton VPN"
-pkg-name = "ch.protonvpn.android"
-uptodown-dlurl = "https://protonvpn.en.uptodown.com/android"
-apkmirror-dlurl = "https://www.apkmirror.com/apk/proton-technologies-ag/protonvpn-secure-and-free-vpn"
-prefer-dl-mode = "bundle"
-dpi = "120-640dpi"
 
-[ProtonVPN-Morphe-Paresh-Experimental]
+[ProtonVPN-Paresh-Experimental]
 enabled = true
 app-name = "Proton VPN"
 sub-variant = "Experimental"
@@ -92,14 +76,14 @@ apkmirror-dlurl = "https://www.apkmirror.com/apk/proton-technologies-ag/protonvp
 prefer-dl-mode = "bundle"
 dpi = "120-640dpi"
 
-[Jiohotstar-Morphe-Paresh]
+[Jiohotstar-Paresh]
 enabled = true
 app-name = "JioHotstar"
 pkg-name = "in.startv.hotstar"
 apkmirror-dlurl = "https://www.apkmirror.com/apk/jiostar-india-private-limited/jiohotstar-4/"
 apkmirror-example-url = "https://www.apkmirror.com/apk/jiostar-india-private-limited/jiohotstar-4/jiohotstar-26-08-03-2-release/"
 
-[Jiohotstar-Morphe-Paresh-Experimental]
+[Jiohotstar-Paresh-Experimental]
 enabled = true
 app-name = "JioHotstar"
 sub-variant = "Experimental"
@@ -110,7 +94,7 @@ pkg-name = "in.startv.hotstar"
 apkmirror-dlurl = "https://www.apkmirror.com/apk/jiostar-india-private-limited/jiohotstar-4/"
 apkmirror-example-url = "https://www.apkmirror.com/apk/jiostar-india-private-limited/jiohotstar-4/jiohotstar-26-08-03-2-release/"
 
-[SDMaid-Morphe-Paresh-Experimental]
+[SDMaid-Paresh-Experimental]
 enabled = true
 app-name = "SD Maid 2/SE"
 sub-variant = "Experimental"
@@ -124,7 +108,7 @@ apkmirror-example-url = "https://www.apkmirror.com/apk/darken/sd-maid-2-se-syste
 
 # ── MX Player Pro (morphe-paresh) ─────────────────────────────────────────────
 
-[MXPlayerPro-Morphe-Paresh]
+[MXPlayerPro-Paresh]
 enabled = true
 app-name = "MX Player Pro"
 arch = "all arm64-v8a armeabi-v7a"
@@ -132,7 +116,7 @@ pkg-name = "com.mxtech.videoplayer.pro"
 apkmirror-dlurl = "https://www.apkmirror.com/apk/mx-media-entertainment-pte-ltd/mx-player-pro"
 uptodown-dlurl = "https://mx-player.en.uptodown.com/android"
 
-[MXPlayerPro-Morphe-Paresh-Experimental]
+[MXPlayerPro-Paresh-Experimental]
 enabled = true
 app-name = "MX Player Pro"
 sub-variant = "Experimental"
@@ -146,7 +130,7 @@ uptodown-dlurl = "https://mx-player.en.uptodown.com/android"
 
 # ── Cricbuzz (morphe-paresh) ──────────────────────────────────────────────────
 
-[Cricbuzz-Morphe-Paresh-Experimental]
+[Cricbuzz-Paresh-Experimental]
 enabled = true
 app-name = "Cricbuzz"
 sub-variant = "Experimental"
@@ -159,14 +143,14 @@ apkmirror-dlurl = "https://www.apkmirror.com/apk/cricbuzz-com/cricbuzz-live-cric
 
 # ── Doc Scanner (morphe-paresh) ───────────────────────────────────────────────
 
-[DocScanner-Morphe-Paresh]
+[DocScanner-Paresh]
 enabled = true
 app-name = "Doc Scanner"
 pkg-name = "com.cv.docscanner"
 uptodown-dlurl = "https://doc-scanner.en.uptodown.com/android"
 apkmirror-dlurl = "https://www.apkmirror.com/apk/lufick/document-scanner-pdf-creator"
 
-[DocScanner-Morphe-Paresh-Experimental]
+[DocScanner-Paresh-Experimental]
 enabled = true
 app-name = "Doc Scanner"
 sub-variant = "Experimental"

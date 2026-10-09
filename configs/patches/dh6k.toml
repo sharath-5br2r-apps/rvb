@@ -33,7 +33,7 @@ included-patches = "'Keep Titanium Extensions Child Processes Alive' 'Force high
 apkpure-dlurl = "https://apkpure.com/helium-browser/io.github.jqssun.helium"
 apkcombo-dlurl = "https://apkcombo.com/titanium-browser/io.github.jqssun.helium"
 
-[BraveBrowser-Beta-Morphe-Dh6k]
+[BraveBrowser-Beta-Dh6k]
 enabled = true
 app-name = "Brave Browser"
 patch-brand = "Dh6k"
@@ -47,7 +47,7 @@ github-dlurl = "https://github.com/brave/brave-browser/releases"
 github-asset-regex = "arm64-v8a: BraveMonoarm64\\.apk$ | armeabi-v7a: BraveMonoarm\\.apk$ | x86_64: BraveMonox64\\.apk$ | x86: BraveMonox86\\.apk$"
 github-release-name-regex = "^Beta v"
 
-[BraveBrowser-Nightly-Morphe-Dh6k]
+[BraveBrowser-Nightly-Dh6k]
 enabled = true
 app-name = "Brave Browser"
 patch-brand = "Dh6k"

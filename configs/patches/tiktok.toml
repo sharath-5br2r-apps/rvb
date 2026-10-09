@@ -1,4 +1,4 @@
-[TikTok-Morphe-Hushfeed]
+[TikTok-Hushfeed]
 enabled = true
 app-name = "TikTok"
 pkg-name = "com.zhiliaoapp.musically"
@@ -10,7 +10,7 @@ apkpure-dlurl = "https://apkpure.com/tiktok-app/com.zhiliaoapp.musically"
 apkcombo-dlurl = "https://apkcombo.com/tiktok-videos-shop-live/com.zhiliaoapp.musically"
 patches-source = "SysAdminDoc/hushfeed"
 
-[TikTok-Morphe-Hxreborn]
+[TikTok-Hxreborn]
 enabled = true
 app-name = "TikTok"
 pkg-name = "com.zhiliaoapp.musically"
@@ -22,7 +22,7 @@ apkpure-dlurl = "https://apkpure.com/tiktok-app/com.zhiliaoapp.musically"
 apkcombo-dlurl = "https://apkcombo.com/tiktok-videos-shop-live/com.zhiliaoapp.musically"
 patches-source = "hxreborn/hxreborn-tiktok-patches"
 
-[TikTok-Morphe-Icysymmetra]
+[TikTok-Icysymmetra]
 enabled = true
 app-name = "TikTok"
 pkg-name = "com.zhiliaoapp.musically"
@@ -34,7 +34,7 @@ apkpure-dlurl = "https://apkpure.com/tiktok-app/com.zhiliaoapp.musically"
 apkcombo-dlurl = "https://apkcombo.com/tiktok-videos-shop-live/com.zhiliaoapp.musically"
 patches-source = "icysymmetra/tiktok-patches-for-morphe"
 
-[TikTok-Morphe-Kveld9]
+[TikTok-Kveld9]
 enabled = true
 app-name = "TikTok"
 pkg-name = "com.zhiliaoapp.musically"
@@ -46,7 +46,7 @@ apkpure-dlurl = "https://apkpure.com/tiktok-app/com.zhiliaoapp.musically"
 apkcombo-dlurl = "https://apkcombo.com/tiktok-videos-shop-live/com.zhiliaoapp.musically"
 patches-source = "kveld9/kveld-morphe-patches"
 
-[TikTok-Morphe-Kveld9-Asia]
+[TikTok-Kveld9-Asia]
 enabled = true
 app-name = "TikTok"
 variant = "Asia"

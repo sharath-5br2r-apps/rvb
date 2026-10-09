@@ -1,7 +1,7 @@
 enable-module-update = true
 
 
-[Automate-Morphe-BholeyKaBhakt]
+[Automate-BholeyKaBhakt]
 patches-source = "BholeyKaBhakt/revanced-patches-xtra"
 enabled = true
 app-name = "Automate"
@@ -13,7 +13,7 @@ apkmirror-dlurl = "https://www.apkmirror.com/apk/llamalab/automate-llamalab"
 
 
 
-[Speedtest-Morphe-BholeyKaBhakt]
+[Speedtest-BholeyKaBhakt]
 patches-source = "BholeyKaBhakt/revanced-patches-xtra"
 enabled = true
 app-name = "Speedtest"
@@ -24,7 +24,7 @@ apkmirror-dlurl = "https://www.apkmirror.com/apk/ookla/speedtest"
 
 
 
-[Autosync-Morphe-BholeyKaBhakt]
+[Autosync-BholeyKaBhakt]
 patches-source = "BholeyKaBhakt/revanced-patches-xtra"
 enabled = true
 app-name = "Autosync"
@@ -37,7 +37,7 @@ apkmirror-dlurl = "https://www.apkmirror.com/apk/metactrl/autosync-universal-clo
 
 
 
-[Inshorts-Morphe-BholeyKaBhakt]
+[Inshorts-BholeyKaBhakt]
 patches-source = "BholeyKaBhakt/revanced-patches-xtra"
 enabled = true
 app-name = "Inshorts"
@@ -57,7 +57,7 @@ apkcombo-dlurl = "https://apkcombo.com/vpnify/com.vpn.free.hotspot.secure.vpnify
 
 
 
-[Backdrops-Morphe-BholeyKaBhakt]
+[Backdrops-BholeyKaBhakt]
 patches-source = "BholeyKaBhakt/revanced-patches-xtra"
 enabled = true
 app-name = "Backdrops"
@@ -67,7 +67,7 @@ apkmirror-dlurl = "https://www.apkmirror.com/apk/backdrops/backdrops-wallpapers"
 
 
 
-[Speedtest-Morphe-BholeyKaBhakt-Experimental]
+[Speedtest-BholeyKaBhakt-Experimental]
 patches-source = "BholeyKaBhakt/revanced-patches-xtra"
 enabled = true
 app-name = "Speedtest"
@@ -84,7 +84,7 @@ apkmirror-dlurl = "https://www.apkmirror.com/apk/ookla/speedtest"
 
 
 
-[Inshorts-Morphe-BholeyKaBhakt-Experimental]
+[Inshorts-BholeyKaBhakt-Experimental]
 patches-source = "BholeyKaBhakt/revanced-patches-xtra"
 enabled = true
 app-name = "Inshorts"
@@ -345,7 +345,7 @@ apkpure-dlurl = "https://apkpure.com/acalendar-your-calendar/org.withouthat.acal
 
 
 
-[CalcNote-Morphe-Binarymend]
+[CalcNote-Binarymend]
 patches-source = "binarymend/morphe-patches"
 enabled = true
 app-name = "CalcNote"
@@ -388,7 +388,7 @@ apkcombo-dlurl = "https://apkcombo.com/swift-backup/org.swiftapps.swiftbackup"
 
 
 
-[SmashHit-Morphe-Byehi98]
+[SmashHit-Byehi98]
 enabled = true
 app-name = "Smash Hit"
 pkg-name = "com.mediocre.smashhit"
@@ -397,7 +397,7 @@ apkmirror-dlurl = "https://www.apkmirror.com/apk/mediocre/smash-hit/"
 
 
 
-[Vector-Morphe-Byehi98]
+[Vector-Byehi98]
 enabled = true
 app-name = "Vector"
 pkg-name = "com.nekki.vector"
@@ -406,7 +406,7 @@ apkmirror-dlurl = "https://www.apkmirror.com/apk/nekki/vector/"
 
 
 
-[HillClimbRacing-Morphe-Byehi98]
+[HillClimbRacing-Byehi98]
 enabled = true
 app-name = "Hill Climb Racing"
 arch = "arm64-v8a armeabi-v7a"
@@ -416,7 +416,7 @@ apkmirror-dlurl = "https://www.apkmirror.com/apk/fingersoft/hill-climb-racing/"
 
 
 
-[JetpackJoyride-Morphe-Byehi98]
+[JetpackJoyride-Byehi98]
 enabled = true
 app-name = "Jetpack Joyride"
 pkg-name = "com.halfbrick.jetpackjoyride"
@@ -541,7 +541,7 @@ apkcombo-dlurl = "https://apkcombo.com/titanium-browser/io.github.jqssun.helium"
 
 
 
-[BraveBrowser-Beta-Morphe-Dh6k]
+[BraveBrowser-Beta-Dh6k]
 enabled = true
 app-name = "Brave Browser"
 patch-brand = "Dh6k"
@@ -557,7 +557,7 @@ github-release-name-regex = "^Beta v"
 
 
 
-[BraveBrowser-Nightly-Morphe-Dh6k]
+[BraveBrowser-Nightly-Dh6k]
 enabled = true
 app-name = "Brave Browser"
 patch-brand = "Dh6k"
@@ -686,7 +686,7 @@ apkpure-dlurl = "https://apkpure.com/fairemail-privacy-aware-email/eu.faircode.e
 apkcombo-dlurl = "https://apkcombo.com/fairemail-privacy-aware-email/eu.faircode.email"
 
 
-[Duolingo-Morphe-Hoodles]
+[Duolingo-Hoodles]
 patches-source = "hoo-dles/morphe-patches"
 enabled = true
 app-name = "Duolingo"
@@ -696,7 +696,7 @@ apkmirror-dlurl = "https://www.apkmirror.com/apk/duolingo/duolingo-duolingo"
 
 
 
-[WPSOffice-Morphe-Hoodles]
+[WPSOffice-Hoodles]
 patches-source = "hoo-dles/morphe-patches"
 enabled = true
 app-name = "WPS Office"
@@ -707,7 +707,7 @@ apkmirror-dlurl = "https://www.apkmirror.com/apk/wps-software-pte-ltd/wps-office
 
 
 
-[Wallcraft-Morphe-Hoodles]
+[Wallcraft-Hoodles]
 patches-source = "hoo-dles/morphe-patches"
 enabled = true
 app-name = "Wallcraft"
@@ -717,7 +717,7 @@ apkmirror-dlurl = "https://www.apkmirror.com/apk/nebuchadnezzar-doo/wallpapers-h
 
 
 
-[SolidExplorer-Morphe-Hoodles]
+[SolidExplorer-Hoodles]
 patches-source = "hoo-dles/morphe-patches"
 enabled = true
 app-name = "Solid Explorer"
@@ -738,7 +738,7 @@ archive-dlurl = "https://archive.org/download/geologically/apks/cn.ommiao.iconpa
 
 
 
-[PodcastAddict-Morphe-Hoodles]
+[PodcastAddict-Hoodles]
 patches-source = "hoo-dles/morphe-patches"
 enabled = true
 app-name = "Podcast Addict"
@@ -748,7 +748,7 @@ apkmirror-dlurl = "https://www.apkmirror.com/apk/xavier-guillemane/podcast-addic
 
 
 
-[SmartLauncher6-Morphe-Hoodles]
+[SmartLauncher6-Hoodles]
 patches-source = "hoo-dles/morphe-patches"
 enabled = true
 app-name = "Smart Launcher 6"
@@ -758,7 +758,7 @@ apkmirror-dlurl = "https://www.apkmirror.com/apk/smart-launcher-team/smart-launc
 
 
 
-[MerriamWebsterDictionary-Morphe-Hoodles]
+[MerriamWebsterDictionary-Hoodles]
 patches-source = "hoo-dles/morphe-patches"
 enabled = true
 app-name = "Merriam-Webster Dictionary"
@@ -768,7 +768,7 @@ apkmirror-dlurl = "https://www.apkmirror.com/apk/merriam-webster-inc/dictionary-
 
 
 
-[Pandora-Morphe-Hoodles]
+[Pandora-Hoodles]
 patches-source = "hoo-dles/morphe-patches"
 enabled = true
 app-name = "Pandora"
@@ -778,7 +778,7 @@ apkmirror-dlurl = "https://www.apkmirror.com/apk/pandora/pandora-music-podcasts"
 
 
 
-[XRecorder-Morphe-Hoodles]
+[XRecorder-Hoodles]
 patches-source = "hoo-dles/morphe-patches"
 enabled = true
 app-name = "XRecorder"
@@ -789,7 +789,7 @@ apkmirror-dlurl = "https://www.apkmirror.com/apk/inshot-inc-2/screen-recorder-vi
 
 
 
-[NovaLauncher-Morphe-Hoodles]
+[NovaLauncher-Hoodles]
 patches-source = "hoo-dles/morphe-patches"
 enabled = true
 app-name = "Nova Launcher"
@@ -800,7 +800,7 @@ apkmirror-dlurl = "https://www.apkmirror.com/apk/instabridge-sweden-ab/nova-laun
 
 
 
-[Ventusky-Morphe-Hoodles]
+[Ventusky-Hoodles]
 patches-source = "hoo-dles/morphe-patches"
 enabled = true
 app-name = "Ventusky"
@@ -810,7 +810,7 @@ apkmirror-dlurl = "https://www.apkmirror.com/apk/ventusky/ventusky-weather-maps-
 
 
 
-[CamScanner-Morphe-Hoodles]
+[CamScanner-Hoodles]
 patches-source = "hoo-dles/morphe-patches"
 enabled = true
 app-name = "CamScanner"
@@ -825,18 +825,8 @@ patcher-args = "--continue-on-error"
 
 
 
-[GitHub-hoodles]
-patches-source = "hoo-dles/morphe-patches"
-enabled = true
-pkg-name = "com.github.android"
-app-name = "GitHub"
-included-patches = "'AMOLED dark theme'"
-apkmirror-dlurl = "https://www.apkmirror.com/apk/github/github-2"
-uptodown-dlurl = "https://github-android.en.uptodown.com/android"
 
-
-
-[HelloChinese-Morphe-Hoodles]
+[HelloChinese-Hoodles]
 patches-source = "hoo-dles/morphe-patches"
 enabled = true
 app-name = "HelloChinese"
@@ -847,7 +837,7 @@ apkmirror-dlurl = "https://www.apkmirror.com/apk/hellochinese-learn-chinese-mand
 
 
 
-[MyFitnessPal-Morphe-Hoodles]
+[MyFitnessPal-Hoodles]
 patches-source = "hoo-dles/morphe-patches"
 enabled = true
 app-name = "MyFitnessPal"
@@ -869,7 +859,7 @@ apkcombo-dlurl = "https://apkcombo.com/prime-video/com.amazon.avod.thirdpartycli
 
 
 
-[Goodreads-Morphe-Hoodles]
+[Goodreads-Hoodles]
 patches-source = "hoo-dles/morphe-patches"
 enabled = true
 app-name = "Goodreads"
@@ -879,7 +869,7 @@ apkmirror-dlurl = "https://www.apkmirror.com/apk/goodreads/goodreads"
 
 
 
-[AdobeLightroom-Morphe-Hoodles]
+[AdobeLightroom-Hoodles]
 patches-source = "hoo-dles/morphe-patches"
 enabled = true
 app-name = "Adobe Lightroom"
@@ -890,7 +880,7 @@ apkmirror-dlurl = "https://www.apkmirror.com/apk/adobe/adobe-lightroom/"
 
 
 
-[Xodo-Morphe-Hoodles]
+[Xodo-Hoodles]
 patches-source = "hoo-dles/morphe-patches"
 enabled = true
 app-name = "Xodo PDF"
@@ -901,7 +891,7 @@ apkmirror-dlurl = "https://www.apkmirror.com/apk/xodo-technologies-inc/xodo-pdf-
 
 
 
-[GitHub-Morphe-Hoodles-Stylus]
+[GitHub-Hoodles-Stylus]
 patches-source = "hoo-dles/morphe-patches"
 enabled = true
 app-name = "GitHub"
@@ -912,7 +902,7 @@ apkmirror-example-url = "https://www.apkmirror.com/apk/github/github-2/github-1-
 
 
 
-[GitHub-Morphe-Hoodles-Stylus-Experimental]
+[GitHub-Hoodles-Stylus-Experimental]
 patches-source = "hoo-dles/morphe-patches"
 enabled = true
 app-name = "GitHub"
@@ -927,7 +917,7 @@ apkmirror-example-url = "https://www.apkmirror.com/apk/github/github-2/github-1-
 
 
 
-[PrimeVideo-Morphe-Hoodles-Experimental]
+[PrimeVideo-Hoodles-Experimental]
 patches-source = "hoo-dles/morphe-patches"
 enabled = true
 app-name = "Prime Video"
@@ -942,7 +932,7 @@ uptodown-dlurl = "https://amazon-video.en.uptodown.com/android"
 
 
 
-[PrimeVideo-Morphe-Hoodles-Shared-Experimental]
+[PrimeVideo-Hoodles-Shared-Experimental]
 patches-source = "hoo-dles/morphe-patches"
 enabled = true
 app-name = "Prime Video"
@@ -959,7 +949,7 @@ excluded-patches = "'Rename Shared Permissions'"
 
 
 
-[XRecorder-Morphe-Hoodles-Experimental]
+[XRecorder-Hoodles-Experimental]
 patches-source = "hoo-dles/morphe-patches"
 enabled = true
 app-name = "XRecorder"
@@ -974,17 +964,8 @@ apkmirror-dlurl = "https://www.apkmirror.com/apk/inshot-inc-2/screen-recorder-vi
 
 
 
-[SmartLauncher-Morphe-Hoodles]
-patches-source = "hoo-dles/morphe-patches"
-enabled = true
-app-name = "Smart Launcher"
-pkg-name = "ginlemon.flowerfree"
-uptodown-dlurl = "https://smart-launcher.en.uptodown.com/android"
-apkmirror-dlurl = "https://www.apkmirror.com/apk/smart-launcher-team/smart-launcher"
 
-
-
-[SmartLauncher6-Morphe-Hoodles-Experimental]
+[SmartLauncher6-Hoodles-Experimental]
 patches-source = "hoo-dles/morphe-patches"
 enabled = true
 app-name = "Smart Launcher 6"
@@ -998,7 +979,7 @@ apkmirror-dlurl = "https://www.apkmirror.com/apk/smart-launcher-team/smart-launc
 
 
 
-[NovaLauncher-Morphe-Hoodles-Experimental]
+[NovaLauncher-Hoodles-Experimental]
 patches-source = "hoo-dles/morphe-patches"
 enabled = true
 app-name = "Nova Launcher"
@@ -1013,7 +994,7 @@ apkmirror-dlurl = "https://www.apkmirror.com/apk/instabridge-sweden-ab/nova-laun
 
 
 
-[Xodo-Morphe-Hoodles-Experimental]
+[Xodo-Hoodles-Experimental]
 patches-source = "hoo-dles/morphe-patches"
 enabled = true
 app-name = "Xodo PDF"
@@ -1028,7 +1009,7 @@ apkmirror-dlurl = "https://www.apkmirror.com/apk/xodo-technologies-inc/xodo-pdf-
 
 
 
-[SolidExplorer-Morphe-Hoodles-Experimental]
+[SolidExplorer-Hoodles-Experimental]
 patches-source = "hoo-dles/morphe-patches"
 enabled = true
 app-name = "Solid Explorer"
@@ -1042,7 +1023,7 @@ apkmirror-dlurl = "https://www.apkmirror.com/apk/lmicp/solid-explorer-file-manag
 
 
 
-[Wallcraft-Morphe-Hoodles-Experimental]
+[Wallcraft-Hoodles-Experimental]
 patches-source = "hoo-dles/morphe-patches"
 enabled = true
 app-name = "Wallcraft"
@@ -1056,7 +1037,7 @@ apkmirror-dlurl = "https://www.apkmirror.com/apk/nebuchadnezzar-doo/wallpapers-h
 
 
 
-[PodcastAddict-Morphe-Hoodles-Experimental]
+[PodcastAddict-Hoodles-Experimental]
 patches-source = "hoo-dles/morphe-patches"
 enabled = true
 app-name = "Podcast Addict"
@@ -1070,7 +1051,7 @@ apkmirror-dlurl = "https://www.apkmirror.com/apk/xavier-guillemane/podcast-addic
 
 
 
-[Ventusky-Morphe-Hoodles-Experimental]
+[Ventusky-Hoodles-Experimental]
 patches-source = "hoo-dles/morphe-patches"
 enabled = true
 app-name = "Ventusky"
@@ -1084,7 +1065,7 @@ apkmirror-dlurl = "https://www.apkmirror.com/apk/ventusky/ventusky-weather-maps-
 
 
 
-[NiagaraLauncher-Morphe-Hoodles-Experimental]
+[NiagaraLauncher-Hoodles-Experimental]
 patches-source = "hoo-dles/morphe-patches"
 enabled = true
 app-name = "Niagara Launcher"
@@ -1098,7 +1079,7 @@ apkmirror-dlurl = "https://www.apkmirror.com/apk/mellowdrop-studio/niagara-launc
 
 
 
-[MyFitnessPal-Morphe-Hoodles-Experimental]
+[MyFitnessPal-Hoodles-Experimental]
 patches-source = "hoo-dles/morphe-patches"
 enabled = true
 app-name = "MyFitnessPal"
@@ -1112,7 +1093,7 @@ apkmirror-dlurl = "https://www.apkmirror.com/apk/myfitnesspal-inc/calorie-counte
 
 
 
-[Goodreads-Morphe-Hoodles-Experimental]
+[Goodreads-Hoodles-Experimental]
 patches-source = "hoo-dles/morphe-patches"
 enabled = true
 app-name = "Goodreads"
@@ -1135,7 +1116,7 @@ uptodown-dlurl = "https://rumble.en.uptodown.com/android"
 
 
 
-[BatteryGuru-Morphe-Hooman]
+[BatteryGuru-Hooman]
 patches-source = "arandomhooman/hoomans-morphe-patches"
 enabled = true
 app-name = "Battery Guru"
@@ -1155,7 +1136,7 @@ uptodown-dlurl = "https://money-manager.en.uptodown.com/android"
 
 
 
-[Poweramp-Morphe-Hooman]
+[Poweramp-Hooman]
 patches-source = "arandomhooman/hoomans-morphe-patches"
 enabled = true
 app-name = "Poweramp"
@@ -1192,7 +1173,7 @@ apkcombo-dlurl = "https://apkcombo.com/projectivy-launcher/com.spocky.projengmen
 
 
 
-[AdobeAcrobat-Morphe-Hooman]
+[AdobeAcrobat-Hooman]
 patches-source = "arandomhooman/hoomans-morphe-patches"
 enabled = true
 app-name = "Adobe Acrobat"
@@ -1249,7 +1230,7 @@ apkcombo-dlurl = "https://apkcombo.com/google-phone/com.google.android.dialer"
 
 
 
-[MicrosoftSwiftKey-Morphe-Hooman]
+[MicrosoftSwiftKey-Hooman]
 patches-source = "arandomhooman/hoomans-morphe-patches"
 enabled = true
 app-name = "Microsoft SwiftKey"
@@ -1272,7 +1253,7 @@ apkcombo-dlurl = "https://apkcombo.com/foldersync/dk.tacit.android.foldersync.li
 
 
 
-[Symfonium-Morphe-Hooman]
+[Symfonium-Hooman]
 patches-source = "arandomhooman/hoomans-morphe-patches"
 enabled = true
 app-name = "Symfonium"
@@ -1282,7 +1263,7 @@ apkmirror-dlurl = "https://www.apkmirror.com/apk/tolriq/symfonium-music-player-c
 
 
 
-[AdvancedDownloadManager-Morphe-Hooman]
+[AdvancedDownloadManager-Hooman]
 patches-source = "arandomhooman/hoomans-morphe-patches"
 enabled = true
 app-name = "Advanced Download Manager"
@@ -1292,17 +1273,8 @@ apkmirror-dlurl="https://www.apkmirror.com/apk/admtorrent/advanced-download-mana
 
 
 
-[Twitch-Morphe-Hooman]
-patches-source = "arandomhooman/hoomans-morphe-patches"
-enabled = true
-app-name = "Twitch"
-pkg-name = "tv.twitch.android.app"
-uptodown-dlurl = "https://twitch.en.uptodown.com/android"
-apkmirror-dlurl = "https://apkmirror.com/apk/twitch-interactive-inc/twitch"
 
-
-
-[BatteryGuru-Morphe-Hooman-Experimental]
+[BatteryGuru-Hooman-Experimental]
 patches-source = "arandomhooman/hoomans-morphe-patches"
 enabled = true
 app-name = "Battery Guru"
@@ -1315,7 +1287,7 @@ apkmirror-dlurl = "https://www.apkmirror.com/apk/paget96/battery-guru-health-sav
 
 
 
-[Poweramp-Morphe-Hooman-Experimental]
+[Poweramp-Hooman-Experimental]
 patches-source = "arandomhooman/hoomans-morphe-patches"
 enabled = true
 app-name = "Poweramp"
@@ -1332,7 +1304,7 @@ apkcombo-dlurl = "https://apkcombo.com/poweramp/com.maxmpz.audioplayer"
 
 
 
-[AdobeAcrobat-Morphe-Hooman-Experimental]
+[AdobeAcrobat-Hooman-Experimental]
 patches-source = "arandomhooman/hoomans-morphe-patches"
 enabled = true
 app-name = "Adobe Acrobat"
@@ -1456,7 +1428,7 @@ apkmirror-dlurl = "https://www.apkmirror.com/apk/instagram/instagram-instagram"
 
 
 
-[Instagram-Morphe-Piko]
+[Instagram-Piko]
 enabled = true
 app-name = "Instagram"
 arch = "arm64-v8a x86_64"
@@ -1498,40 +1470,7 @@ uptodown-dlurl = "https://instagram.en.uptodown.com/android"
 archive-dlurl = "https://archive.org/download/geologically/apks/com.instagram.android"
 
 
-[Gboard-jasonwu1994]
-patches-source = "jasonwu1994/Gboard-patches"
-patches-version = "both"
-arch = "arm64-v8a"
-enabled = true
-pkg-name = "com.google.android.inputmethod.latin"
-app-name = "Gboard"
-build-mode = "both"
-excluded-patches = "'Package Rename'"
-apkmirror-dlurl = "https://www.apkmirror.com/apk/google-inc/gboard"
-uptodown-dlurl = "https://gboard-go.en.uptodown.com/android"
-apkpure-dlurl = "https://apkpure.com/gboard-the-google-keyboard-app/com.google.android.inputmethod.latin"
-apkcombo-dlurl = "https://apkcombo.com/gboard/com.google.android.inputmethod.latin"
-archive-dlurl = "https://archive.org/download/geologically/apks/com.google.android.inputmethod.latin"
-
-
-
-[Gboard-jasonwu1994-Clone]
-patches-source = "jasonwu1994/Gboard-patches"
-patches-version = "both"
-arch = "arm64-v8a"
-enabled = true
-pkg-name = "com.google.android.inputmethod.latin"
-app-name = "Gboard"
-variant = "Clone"
-apkmirror-dlurl = "https://www.apkmirror.com/apk/google-inc/gboard"
-uptodown-dlurl = "https://gboard-go.en.uptodown.com/android"
-apkpure-dlurl = "https://apkpure.com/gboard-the-google-keyboard-app/com.google.android.inputmethod.latin"
-apkcombo-dlurl = "https://apkcombo.com/gboard/com.google.android.inputmethod.latin"
-archive-dlurl = "https://archive.org/download/geologically/apks/com.google.android.inputmethod.latin"
-
-
-
-[Gboard-Morphe-Jasonwu1994-Adobo]
+[Gboard-Jasonwu1994-Adobo]
 patches-source = "jasonwu1994/Gboard-patches"
 patches-version = "both"
 enabled = true
@@ -1550,7 +1489,7 @@ apkmirror-release-filter = "!(lite|beta)"
 
 
 
-[Gboard-Morphe-Jasonwu1994-Adobo-Clone]
+[Gboard-Jasonwu1994-Adobo-Clone]
 patches-source = "jasonwu1994/Gboard-patches"
 patches-version = "both"
 enabled = true
@@ -1579,22 +1518,7 @@ apkpure-dlurl = "https://apkpure.com/calorie-counter-by-fatsecret/com.fatsecret.
 apkcombo-dlurl = "https://apkcombo.com/fatsecret/com.fatsecret.android"
 
 
-
-[SoundCloud-Morphe-Kondratjev]
-patches-source = "kondratjev/morphe-patches"
-enabled = true
-app-name = "SoundCloud"
-version = "auto"
-arch = "arm64-v8a armeabi-v7a x86_64 x86"
-pkg-name = "com.soundcloud.android"
-uptodown-dlurl = "https://soundcloud.en.uptodown.com/android"
-apkmirror-dlurl = "https://www.apkmirror.com/apk/soundcloud/soundcloud-soundcloud/"
-apkmirror-example-url = "https://www.apkmirror.com/apk/soundcloud/soundcloud-soundcloud/soundcloud-the-music-you-love-2026-07-23-release-release"
-apkpure-dlurl = "https://apkpure.com/sound-cloud-android-app/com.soundcloud.android"
-apkcombo-dlurl = "https://apkcombo.com/soundcloud/com.soundcloud.android"
-
-
-[BraveBrowser-Morphe-Kveld9]
+[BraveBrowser-Kveld9]
 enabled = true
 app-name = "Brave Browser"
 patch-brand = "Kveld9"
@@ -1620,7 +1544,7 @@ apkcombo-dlurl = "https://apkcombo.com/hermit-lite-apps-browser/com.chimbori.her
 
 
 
-[Drofus-Morphe-Lain]
+[Drofus-Lain]
 patches-source = "kiraio-moe/Lain-Patches"
 enabled = true
 app-name = "Drofus"
@@ -1810,7 +1734,7 @@ pkg-name = "daniillnull.nulls.brawlstars"
 direct-dlurl = "http://dnull.xyz/latest_bs"
 
 
-[Cricbuzz-Morphe-Paresh]
+[Cricbuzz-Paresh]
 patches-source = "Paresh-Maheshwari/paresh-patches"
 patches-source-host = "gitlab"
 enabled = true
@@ -1833,7 +1757,7 @@ apkcombo-dlurl = "https://apkcombo.com/lumina-wallpapers/com.lumina.wallpapers"
 
 
 
-[Eyecon-Morphe-Paresh]
+[Eyecon-Paresh]
 patches-source = "Paresh-Maheshwari/paresh-patches"
 patches-source-host = "gitlab"
 enabled = true
@@ -1857,7 +1781,7 @@ apkcombo-dlurl = "https://apkcombo.com/ticktick/com.ticktick.task"
 
 
 
-[SDMaid-Morphe-Paresh]
+[SDMaid-Paresh]
 patches-source = "Paresh-Maheshwari/paresh-patches"
 patches-source-host = "gitlab"
 enabled = true
@@ -1869,7 +1793,7 @@ apkmirror-example-url = "https://www.apkmirror.com/apk/darken/sd-maid-2-se-syste
 
 
 
-[Fing-Morphe-Paresh]
+[Fing-Paresh]
 patches-source = "Paresh-Maheshwari/paresh-patches"
 patches-source-host = "gitlab"
 enabled = true
@@ -1880,20 +1804,8 @@ apkmirror-dlurl = "https://www.apkmirror.com/apk/fing-limited/fing-network-tools
 
 
 
-[Truecaller-Morphe-Paresh]
-patches-source = "Paresh-Maheshwari/paresh-patches"
-patches-source-host = "gitlab"
-enabled = true
-app-name = "Truecaller"
-build-mode = "both"
-arch = "all arm64-v8a armeabi-v7a"
-pkg-name = "com.truecaller"
-uptodown-dlurl = "https://truecaller.en.uptodown.com/android"
-apkmirror-dlurl = "https://www.apkmirror.com/apk/true-software-scandinavia-ab/truecaller-caller-id-block"
 
-
-
-[Fing-Morphe-Paresh-Experimental]
+[Fing-Paresh-Experimental]
 patches-source = "Paresh-Maheshwari/paresh-patches"
 patches-source-host = "gitlab"
 enabled = true
@@ -1910,20 +1822,8 @@ arch = "all arm64-v8a armeabi-v7a"
 
 
 
-[ProtonVPN-Morphe-Paresh]
-patches-source = "Paresh-Maheshwari/paresh-patches"
-patches-source-host = "gitlab"
-enabled = true
-app-name = "Proton VPN"
-pkg-name = "ch.protonvpn.android"
-uptodown-dlurl = "https://protonvpn.en.uptodown.com/android"
-apkmirror-dlurl = "https://www.apkmirror.com/apk/proton-technologies-ag/protonvpn-secure-and-free-vpn"
-prefer-dl-mode = "bundle"
-dpi = "120-640dpi"
 
-
-
-[ProtonVPN-Morphe-Paresh-Experimental]
+[ProtonVPN-Paresh-Experimental]
 patches-source = "Paresh-Maheshwari/paresh-patches"
 patches-source-host = "gitlab"
 enabled = true
@@ -1940,7 +1840,7 @@ dpi = "120-640dpi"
 
 
 
-[Jiohotstar-Morphe-Paresh]
+[Jiohotstar-Paresh]
 patches-source = "Paresh-Maheshwari/paresh-patches"
 patches-source-host = "gitlab"
 enabled = true
@@ -1951,7 +1851,7 @@ apkmirror-example-url = "https://www.apkmirror.com/apk/jiostar-india-private-lim
 
 
 
-[Jiohotstar-Morphe-Paresh-Experimental]
+[Jiohotstar-Paresh-Experimental]
 patches-source = "Paresh-Maheshwari/paresh-patches"
 patches-source-host = "gitlab"
 enabled = true
@@ -1966,7 +1866,7 @@ apkmirror-example-url = "https://www.apkmirror.com/apk/jiostar-india-private-lim
 
 
 
-[SDMaid-Morphe-Paresh-Experimental]
+[SDMaid-Paresh-Experimental]
 patches-source = "Paresh-Maheshwari/paresh-patches"
 patches-source-host = "gitlab"
 enabled = true
@@ -1984,7 +1884,7 @@ apkmirror-example-url = "https://www.apkmirror.com/apk/darken/sd-maid-2-se-syste
 
 
 
-[MXPlayerPro-Morphe-Paresh]
+[MXPlayerPro-Paresh]
 patches-source = "Paresh-Maheshwari/paresh-patches"
 patches-source-host = "gitlab"
 enabled = true
@@ -1996,7 +1896,7 @@ uptodown-dlurl = "https://mx-player.en.uptodown.com/android"
 
 
 
-[MXPlayerPro-Morphe-Paresh-Experimental]
+[MXPlayerPro-Paresh-Experimental]
 patches-source = "Paresh-Maheshwari/paresh-patches"
 patches-source-host = "gitlab"
 enabled = true
@@ -2014,7 +1914,7 @@ uptodown-dlurl = "https://mx-player.en.uptodown.com/android"
 
 
 
-[Cricbuzz-Morphe-Paresh-Experimental]
+[Cricbuzz-Paresh-Experimental]
 patches-source = "Paresh-Maheshwari/paresh-patches"
 patches-source-host = "gitlab"
 enabled = true
@@ -2031,7 +1931,7 @@ apkmirror-dlurl = "https://www.apkmirror.com/apk/cricbuzz-com/cricbuzz-live-cric
 
 
 
-[DocScanner-Morphe-Paresh]
+[DocScanner-Paresh]
 patches-source = "Paresh-Maheshwari/paresh-patches"
 patches-source-host = "gitlab"
 enabled = true
@@ -2042,7 +1942,7 @@ apkmirror-dlurl = "https://www.apkmirror.com/apk/lufick/document-scanner-pdf-cre
 
 
 
-[DocScanner-Morphe-Paresh-Experimental]
+[DocScanner-Paresh-Experimental]
 patches-source = "Paresh-Maheshwari/paresh-patches"
 patches-source-host = "gitlab"
 enabled = true
@@ -2114,7 +2014,7 @@ uptodown-dlurl = "https://pinterest.en.uptodown.com/android"
 
 
 
-[Pinterest-Morphe-Browzomje]
+[Pinterest-Browzomje]
 enabled = true
 app-name = "Pinterest"
 pkg-name = "com.pinterest"
@@ -2123,7 +2023,7 @@ apkmirror-dlurl = "https://www.apkmirror.com/apk/pinterest/pinterest-one-destina
 
 
 
-[Pinterest-Morphe-Browzomje-Experimental]
+[Pinterest-Browzomje-Experimental]
 enabled = true
 app-name = "Pinterest"
 sub-variant = "Experimental"
@@ -2160,7 +2060,7 @@ apkpure-dlurl = "https://apkpure.com/pixiv/jp.pxv.android"
 apkcombo-dlurl = "https://apkcombo.com/pixiv/jp.pxv.android"
 
 
-[ChessDotCom-Morphe-Prathxm]
+[ChessDotCom-Prathxm]
 patches-source = "PrathxmOp/Prathxm-Patches"
 enabled = true
 app-name = "Chess.com"
@@ -2172,7 +2072,7 @@ apkmirror-example-url = "https://www.apkmirror.com/apk/chess-com/chess-play-lear
 
 
 
-[ChessDotCom-Morphe-Prathxm-Clone]
+[ChessDotCom-Prathxm-Clone]
 patches-source = "PrathxmOp/Prathxm-Patches"
 enabled = true
 app-name = "Chess.com"
@@ -2353,16 +2253,6 @@ uptodown-dlurl = "https://viamaker.en.uptodown.com/android"
 apkpure-dlurl = "https://apkpure.com/capcut-video-editor/com.lemon.lvoverseas"
 
 
-[Cloudflare-WARP-rushiranpise]
-patches-source = "rushiranpise/morphe-patches"
-enabled = true
-pkg-name = "com.cloudflare.onedotonedotonedotone"
-app-name = "Cloudflare WARP"
-apkmirror-dlurl = "https://www.apkmirror.com/apk/cloudflare/1-1-1-1-faster-safer-internet"
-uptodown-dlurl = "https://1-1-1-1.en.uptodown.com/android"
-
-
-
 [HolaVPN-rushiranpise]
 patches-source = "rushiranpise/morphe-patches"
 enabled = true
@@ -2387,7 +2277,7 @@ apkcombo-dlurl = "https://apkcombo.com/ninja-vpn-fast-secure-vpn/app.ninjavpn.an
 
 
 
-[WindscribeVPN-Morphe-Rushiranpise]
+[WindscribeVPN-Rushiranpise]
 patches-source = "rushiranpise/morphe-patches"
 enabled = true
 app-name = "Windscribe VPN"
@@ -2423,7 +2313,7 @@ apkcombo-dlurl = "https://apkcombo.com/the-weather-channel/com.weather.Weather"
 
 
 
-[BetaManiac-Morphe-Rushiranpise]
+[BetaManiac-Rushiranpise]
 patches-source = "rushiranpise/morphe-patches"
 enabled = true
 app-name = "Beta Maniac"
@@ -2456,7 +2346,7 @@ apkcombo-dlurl = "https://apkcombo.com/rar/com.rarlab.rar"
 
 
 
-[AmazonIndia-Morphe-Rushiranpise]
+[AmazonIndia-Rushiranpise]
 patches-source = "rushiranpise/morphe-patches"
 enabled = true
 app-name = "Amazon India"
@@ -2483,7 +2373,7 @@ apkcombo-dlurl = "https://apkcombo.com/calm/com.calm.android"
 
 
 
-[BluetoothKeyboardAndMouse-Morphe-Rushiranpise]
+[BluetoothKeyboardAndMouse-Rushiranpise]
 patches-source = "rushiranpise/morphe-patches"
 enabled = true
 app-name = "Bluetooth Keyboard & Mouse"
@@ -2543,7 +2433,7 @@ apkcombo-dlurl = "https://apkcombo.com/citymapper/com.citymapper.app.release"
 
 
 
-[AmazonShopping-Morphe-Rushiranpise]
+[AmazonShopping-Rushiranpise]
 patches-source = "rushiranpise/morphe-patches"
 enabled = true
 app-name = "Amazon Shopping"
@@ -2570,7 +2460,7 @@ apkpure-dlurl = "https://apkpure.com/termius-modern-ssh-client/com.server.audito
 
 
 
-[MicrosoftWord-Morphe-Rushiranpise]
+[MicrosoftWord-Rushiranpise]
 patches-source = "rushiranpise/morphe-patches"
 enabled = true
 app-name = "Microsoft Word"
@@ -2583,7 +2473,7 @@ apkmirror-dlurl = "https://www.apkmirror.com/apk/microsoft-corporation/word/"
 
 
 
-[MicrosoftExcel-Morphe-Rushiranpise]
+[MicrosoftExcel-Rushiranpise]
 patches-source = "rushiranpise/morphe-patches"
 enabled = true
 app-name = "Microsoft Excel"
@@ -2596,7 +2486,7 @@ apkmirror-dlurl = "https://www.apkmirror.com/apk/microsoft-corporation/excel/"
 
 
 
-[AmazonIndia-Morphe-Rushiranpise-Experimental]
+[AmazonIndia-Rushiranpise-Experimental]
 patches-source = "rushiranpise/morphe-patches"
 enabled = true
 app-name = "Amazon India"
@@ -2615,7 +2505,7 @@ arch = "all arm64-v8a armeabi-v7a"
 
 
 
-[AmazonShopping-Morphe-Rushiranpise-Experimental]
+[AmazonShopping-Rushiranpise-Experimental]
 patches-source = "rushiranpise/morphe-patches"
 enabled = true
 app-name = "Amazon Shopping"
@@ -2634,7 +2524,7 @@ arch = "all arm64-v8a armeabi-v7a"
 
 
 
-[AdobeAcrobat-Morphe-Rushiranpise]
+[AdobeAcrobat-Rushiranpise]
 patches-source = "rushiranpise/morphe-patches"
 enabled = true
 app-name = "Adobe Acrobat"
@@ -2646,7 +2536,7 @@ custom-microg-patches = "'None'"
 
 
 
-[AdobeAcrobat-Morphe-Rushiranpise-Experimental]
+[AdobeAcrobat-Rushiranpise-Experimental]
 patches-source = "rushiranpise/morphe-patches"
 enabled = true
 app-name = "Adobe Acrobat"
@@ -2662,7 +2552,7 @@ custom-microg-patches = "'None'"
 
 
 
-[PCRemote-Morphe-Rushiranpise]
+[PCRemote-Rushiranpise]
 patches-source = "rushiranpise/morphe-patches"
 enabled = true
 app-name = "PC Remote"
@@ -2673,7 +2563,7 @@ apkmirror-dlurl = "https://www.apkmirror.com/apk/monect-suzhou-co-ltd/pc-remote/
 
 
 
-[PCRemote-Morphe-Rushiranpise-Experimental]
+[PCRemote-Rushiranpise-Experimental]
 patches-source = "rushiranpise/morphe-patches"
 enabled = true
 app-name = "PC Remote"
@@ -2688,7 +2578,7 @@ apkmirror-dlurl = "https://www.apkmirror.com/apk/monect-suzhou-co-ltd/pc-remote/
 
 
 
-[OxygenUpdater-Morphe-Rushiranpise]
+[OxygenUpdater-Rushiranpise]
 patches-source = "rushiranpise/morphe-patches"
 enabled = true
 app-name = "Oxygen Updater"
@@ -2699,7 +2589,7 @@ github-asset-regex = "Oxygen\\.Updater\\.{version}\\.apk"
 
 
 
-[OxygenUpdater-Morphe-Rushiranpise-Experimental]
+[OxygenUpdater-Rushiranpise-Experimental]
 patches-source = "rushiranpise/morphe-patches"
 enabled = true
 app-name = "Oxygen Updater"
@@ -2712,7 +2602,7 @@ github-asset-regex = "Oxygen\\.Updater\\.{version}\\.apk"
 
 
 
-[WindscribeVPN-Morphe-Rushiranpise-Experimental]
+[WindscribeVPN-Rushiranpise-Experimental]
 patches-source = "rushiranpise/morphe-patches"
 enabled = true
 app-name = "Windscribe VPN"
@@ -2728,7 +2618,7 @@ apkcombo-dlurl = "https://apkcombo.com/windscribe/com.windscribe.vpn"
 
 
 
-[CloudflareWarp-Morphe-Rushiranpise]
+[CloudflareWarp-Rushiranpise]
 patches-source = "rushiranpise/morphe-patches"
 enabled = true
 app-name = "Cloudflare WARP"
@@ -2740,7 +2630,7 @@ apkmirror-example-url = "https://www.apkmirror.com/apk/cloudflare/1-1-1-1-faster
 
 
 
-[CloudflareWarp-Morphe-Rushiranpise-Experimental]
+[CloudflareWarp-Rushiranpise-Experimental]
 patches-source = "rushiranpise/morphe-patches"
 enabled = true
 app-name = "Cloudflare WARP"
@@ -2756,7 +2646,7 @@ apkmirror-example-url = "https://www.apkmirror.com/apk/cloudflare/1-1-1-1-faster
 
 
 
-[AdGuard-Morphe-Rushiranpise]
+[AdGuard-Rushiranpise]
 patches-source = "rushiranpise/morphe-patches"
 enabled = true
 app-name = "AdGuard"
@@ -2767,7 +2657,7 @@ apkmirror-dlurl = "https://www.apkmirror.com/apk/adguard-software-limited/adguar
 
 
 
-[AdGuard-Morphe-Rushiranpise-Experimental]
+[AdGuard-Rushiranpise-Experimental]
 patches-source = "rushiranpise/morphe-patches"
 enabled = true
 app-name = "AdGuard"
@@ -2782,7 +2672,7 @@ apkmirror-dlurl = "https://www.apkmirror.com/apk/adguard-software-limited/adguar
 
 
 
-[BetaManiac-Morphe-Rushiranpise-Experimental]
+[BetaManiac-Rushiranpise-Experimental]
 patches-source = "rushiranpise/morphe-patches"
 enabled = true
 app-name = "Beta Maniac"
@@ -2798,17 +2688,8 @@ apkmirror-dlurl = "https://www.apkmirror.com/apk/mirko-dimartino/beta-maniac-lif
 
 
 
-[MacroDroid-Morphe-Rushiranpise]
-patches-source = "rushiranpise/morphe-patches"
-enabled = true
-app-name = "MacroDroid"
-pkg-name = "com.arlosoft.macrodroid"
-uptodown-dlurl = "https://macrodroid.en.uptodown.com/android"
-apkmirror-dlurl = "https://www.apkmirror.com/apk/arlosoft/macrodroid-device-automation-2/"
 
-
-
-[MacroDroid-Morphe-Rushiranpise-Experimental]
+[MacroDroid-Rushiranpise-Experimental]
 patches-source = "rushiranpise/morphe-patches"
 enabled = true
 app-name = "MacroDroid"
@@ -2824,7 +2705,7 @@ apkmirror-dlurl = "https://www.apkmirror.com/apk/arlosoft/macrodroid-device-auto
 
 
 
-[ProtonVPN-Morphe-Rushiranpise]
+[ProtonVPN-Rushiranpise]
 patches-source = "rushiranpise/morphe-patches"
 enabled = true
 app-name = "Proton VPN"
@@ -2836,7 +2717,7 @@ dpi = "120-640dpi"
 
 
 
-[ProtonVPN-Morphe-Rushiranpise-Experimental]
+[ProtonVPN-Rushiranpise-Experimental]
 patches-source = "rushiranpise/morphe-patches"
 enabled = true
 app-name = "Proton VPN"
@@ -2903,7 +2784,7 @@ apkpure-dlurl = "https://apkpure.com/sound-cloud-android-app/com.soundcloud.andr
 apkcombo-dlurl = "https://apkcombo.com/soundcloud/com.soundcloud.android"
 
 
-[Bitwarden-Morphe-Stylus-Experimental]
+[Bitwarden-Stylus-Experimental]
 enable-module-update = true
 patches-source = "ch3thanhs/stylus"
 patch-brand = "Stylus"
@@ -3079,7 +2960,7 @@ uptodown-dlurl = "https://threads.en.uptodown.com/android"
 apkpure-dlurl = "https://apkpure.com/threads-app/com.instagram.barcelona"
 
 
-[TikTok-Morphe-Hushfeed]
+[TikTok-Hushfeed]
 enabled = true
 app-name = "TikTok"
 pkg-name = "com.zhiliaoapp.musically"
@@ -3093,7 +2974,7 @@ patches-source = "SysAdminDoc/hushfeed"
 
 
 
-[TikTok-Morphe-Hxreborn]
+[TikTok-Hxreborn]
 enabled = true
 app-name = "TikTok"
 pkg-name = "com.zhiliaoapp.musically"
@@ -3107,7 +2988,7 @@ patches-source = "hxreborn/hxreborn-tiktok-patches"
 
 
 
-[TikTok-Morphe-Icysymmetra]
+[TikTok-Icysymmetra]
 enabled = true
 app-name = "TikTok"
 pkg-name = "com.zhiliaoapp.musically"
@@ -3121,7 +3002,7 @@ patches-source = "icysymmetra/tiktok-patches-for-morphe"
 
 
 
-[TikTok-Morphe-Kveld9]
+[TikTok-Kveld9]
 enabled = true
 app-name = "TikTok"
 pkg-name = "com.zhiliaoapp.musically"
@@ -3135,7 +3016,7 @@ patches-source = "kveld9/kveld-morphe-patches"
 
 
 
-[TikTok-Morphe-Kveld9-Asia]
+[TikTok-Kveld9-Asia]
 enabled = true
 app-name = "TikTok"
 variant = "Asia"
@@ -3195,23 +3076,24 @@ app-name = "Twitch"
 variant = "Android TV"
 patches-source = "ajstrick81/morphe-androidtv-patches"
 brand = "ajstrick81"
-arch = "all"
+arch = "all arm64-v8a arm-v7a"
 patch-folder = "twitchatv"
 apkmirror-dlurl = "https://www.apkmirror.com/apk/twitch-interactive-inc/twitch-android-tv/"
 apkpure-dlurl = "https://apkpure.com/twitch-livestream-multiplayer-games-esports-app/tv.twitch.android.app"
 apkcombo-dlurl = "https://apkcombo.com/twitch/tv.twitch.android.app"
 
 
-[Twitter-Morphe-Piko]
+[Twitter-Piko]
 enabled = true
-app-name = "Twitter"
 pkg-name = "com.twitter.android"
+app-name = "Twitter"
+patches-source = "crimera/piko"
+brand = "Piko"
 excluded-patches = "'Dynamic Color'"
 patcher-args = "--continue-on-error"
 uptodown-dlurl = "https://twitter.en.uptodown.com/android"
 apkmirror-dlurl = "https://www.apkmirror.com/apk/x-corp/twitter/"
-
-# ── X (Twitter) morphe-piko-materialyou (Material You / Dynamic Color) ──────────
+apkpure-dlurl = "https://apkpure.com/x-formerly-twitter/com.twitter.android"
 
 
 
@@ -3219,58 +3101,49 @@ apkmirror-dlurl = "https://www.apkmirror.com/apk/x-corp/twitter/"
 enabled = true
 pkg-name = "com.twitter.android"
 app-name = "Twitter"
-variant = "Material You"
 patches-source = "crimera/piko"
-patches-version = "both"
-build-mode = "both"
 brand = "Piko"
+variant = "Material You"
 included-patches = "'Bring back twitter' 'Dynamic color'"
+patcher-args = "--continue-on-error"
 apkmirror-dlurl = "https://www.apkmirror.com/apk/x-corp/twitter/"
 uptodown-dlurl = "https://twitter.en.uptodown.com/android"
 apkpure-dlurl = "https://apkpure.com/x-formerly-twitter/com.twitter.android"
 
 
 
-[Twitter-Morphe-Piko-Experimental]
+[Twitter-Piko-Experimental]
 enabled = true
+pkg-name = "com.twitter.android"
 app-name = "Twitter"
+patches-source = "crimera/piko"
+brand = "Piko"
 sub-variant = "Experimental"
 version = "latest"
 skip-patch-app-check = true
-pkg-name = "com.twitter.android"
 excluded-patches = "'Dynamic Color'"
 patcher-args = "-f --continue-on-error"
 uptodown-dlurl = "https://twitter.en.uptodown.com/android"
 apkmirror-dlurl = "https://www.apkmirror.com/apk/x-corp/twitter/"
-
-# ── X (Twitter) morphe-piko-materialyou (Material You / Dynamic Color) ──────────
-
+apkpure-dlurl = "https://apkpure.com/x-formerly-twitter/com.twitter.android"
 
 
-[Twitter-Morphe-Piko-MaterialYou]
+
+[Twitter-Piko-MaterialYou-Experimental]
 enabled = true
-app-name = "Twitter"
-variant = "MaterialYou"
 pkg-name = "com.twitter.android"
-included-patches = "'Dynamic Color'"
-patcher-args = "--continue-on-error"
-uptodown-dlurl = "https://twitter.en.uptodown.com/android"
-apkmirror-dlurl = "https://www.apkmirror.com/apk/x-corp/twitter/"
-
-
-
-[Twitter-Morphe-Piko-MaterialYou-Experimental]
-enabled = true
 app-name = "Twitter"
-variant = "MaterialYou"
+patches-source = "crimera/piko"
+brand = "Piko"
+variant = "Material You"
 sub-variant = "Experimental"
 version = "latest"
 skip-patch-app-check = true
-pkg-name = "com.twitter.android"
 included-patches = "'Dynamic Color'"
 patcher-args = "-f --continue-on-error"
 uptodown-dlurl = "https://twitter.en.uptodown.com/android"
 apkmirror-dlurl = "https://www.apkmirror.com/apk/x-corp/twitter/"
+apkpure-dlurl = "https://apkpure.com/x-formerly-twitter/com.twitter.android"
 
 
 [YouTubeMusic-Morphe]
@@ -3291,12 +3164,14 @@ apkcombo-dlurl = "https://apkcombo.com/youtube-music/com.google.android.apps.you
 
 [YouTubeMusic-Morphe-Experimental]
 enabled = true
+pkg-name = "com.google.android.apps.youtube.music"
 app-name = "YouTube Music"
+patches-source = "MorpheApp/morphe-patches"
+brand = "Morphe"
 sub-variant = "Experimental"
 build-mode = "both"
 arch = "arm64-v8a x86_64 armeabi-v7a x86"
 version = "exp"
-pkg-name = "com.google.android.apps.youtube.music"
 included-patches = "'Theme'"
 uptodown-dlurl = "https://youtube-music.en.uptodown.com/android"
 apkmirror-dlurl = "https://apkmirror.com/apk/google-inc/youtube-music"
@@ -3305,58 +3180,17 @@ apkcombo-dlurl = "https://apkcombo.com/youtube-music/com.google.android.apps.you
 
 
 
-[youtube-music-anddea]
-enabled = true
-pkg-name = "com.google.android.apps.youtube.music"
-app-name = "YouTube Music"
-patches-source = "anddea/revanced-patches"
-brand = "anddea"
-build-mode = "both"
-patch-folder = "music"
-patches-version = "both"
-patcher-args = "-e 'Dark theme' -OdarkThemeBackgroundColor=@android:color/black"
-uptodown-dlurl = "https://youtube-music.en.uptodown.com/android"
-apkmirror-dlurl = "https://apkmirror.com/apk/google-inc/youtube-music"
-
-
-
-
-[YouTubeMusic-Morphe-Anddea]
-enabled = true
-app-name = "YouTube Music"
-build-mode = "both"
-arch = "arm64-v8a x86_64 armeabi-v7a x86"
-pkg-name = "com.google.android.apps.youtube.music"
-patcher-args = "-e 'Dark theme' -OdarkThemeBackgroundColor=@android:color/black --continue-on-error"
-uptodown-dlurl = "https://youtube-music.en.uptodown.com/android"
-apkmirror-dlurl = "https://apkmirror.com/apk/google-inc/youtube-music"
-
-# ── YouTube Music morphe-anddea-amoled (#000000 explicit) ─────────────────────
-
-
-
-[YouTubeMusic-Morphe-Anddea-AMOLED]
-enabled = true
-app-name = "YouTube Music"
-variant = "AMOLED"
-build-mode = "both"
-arch = "arm64-v8a x86_64 armeabi-v7a x86"
-pkg-name = "com.google.android.apps.youtube.music"
-patcher-args = "-e 'Dark theme' -OdarkThemeBackgroundColor=#000000 --continue-on-error"
-uptodown-dlurl = "https://youtube-music.en.uptodown.com/android"
-apkmirror-dlurl = "https://apkmirror.com/apk/google-inc/youtube-music"
-
-
-
 [YouTubeMusic-Morphe-AMOLED-Experimental]
 enabled = true
+pkg-name = "com.google.android.apps.youtube.music"
 app-name = "YouTube Music"
+patches-source = "MorpheApp/morphe-patches"
+brand = "Morphe"
 variant = "AMOLED"
 sub-variant = "Experimental"
 build-mode = "both"
 arch = "arm64-v8a x86_64 armeabi-v7a x86"
 version = "exp"
-pkg-name = "com.google.android.apps.youtube.music"
 included-patches = "'Theme'"
 patcher-args = "-OdarkThemeBackgroundColor=#000000"
 uptodown-dlurl = "https://youtube-music.en.uptodown.com/android"
@@ -3365,73 +3199,77 @@ apkpure-dlurl = "https://apkpure.com/youtube-music/com.google.android.apps.youtu
 apkcombo-dlurl = "https://apkcombo.com/youtube-music/com.google.android.apps.youtube.music"
 
 
-[YouTube-Morphe]
+
+[YouTubeMusic-Anddea]
 enabled = true
-app-name = "YouTube"
+pkg-name = "com.google.android.apps.youtube.music"
+app-name = "YouTube Music"
+patches-source = "anddea/revanced-patches"
+brand = "anddea"
 build-mode = "both"
-pkg-name = "com.google.android.youtube"
-included-patches = "'Theme'"
-uptodown-dlurl = "https://youtube.en.uptodown.com/android"
-apkmirror-dlurl = "https://apkmirror.com/apk/google-inc/youtube"
-apkpure-dlurl = "https://apkpure.com/youtube-app/com.google.android.youtube"
-apkcombo-dlurl = "https://apkcombo.com/youtube/com.google.android.youtube"
-
-# ── YouTube morphe-amoled (#000000) ───────────────────────────────────────────
+arch = "arm64-v8a x86_64 armeabi-v7a x86"
+patcher-args = "-e 'Dark theme' -OdarkThemeBackgroundColor=@android:color/black --continue-on-error"
+uptodown-dlurl = "https://youtube-music.en.uptodown.com/android"
+apkmirror-dlurl = "https://apkmirror.com/apk/google-inc/youtube-music"
 
 
 
-
-[YouTube-Morphe-Experimental]
+[YouTubeMusic-Anddea-AMOLED]
 enabled = true
-app-name = "YouTube"
-sub-variant = "Experimental"
-build-mode = "both"
-version = "exp"
-pkg-name = "com.google.android.youtube"
-included-patches = "'Theme'"
-uptodown-dlurl = "https://youtube.en.uptodown.com/android"
-apkmirror-dlurl = "https://apkmirror.com/apk/google-inc/youtube"
-apkpure-dlurl = "https://apkpure.com/youtube-app/com.google.android.youtube"
-apkcombo-dlurl = "https://apkcombo.com/youtube/com.google.android.youtube"
-
-
-
-[YouTube-Morphe-Anddea]
-enabled = true
-app-name = "YouTube"
-build-mode = "both"
-pkg-name = "com.google.android.youtube"
-included-patches = "'MaterialYou'"
-patcher-args = "-e 'Theme' -OdarkThemeBackgroundColor=@android:color/black --continue-on-error"
-uptodown-dlurl = "https://youtube.en.uptodown.com/android"
-apkmirror-dlurl = "https://apkmirror.com/apk/google-inc/youtube"
-
-# ── YouTube morphe-anddea-amoled (#000000 explicit) ───────────────────────────
-
-
-
-
-[YouTube-Morphe-Anddea-AMOLED]
-enabled = true
-app-name = "YouTube"
+pkg-name = "com.google.android.apps.youtube.music"
+app-name = "YouTube Music"
+patches-source = "anddea/revanced-patches"
+brand = "anddea"
 variant = "AMOLED"
 build-mode = "both"
+arch = "arm64-v8a x86_64 armeabi-v7a x86"
+patcher-args = "-e 'Dark theme' -OdarkThemeBackgroundColor=#000000 --continue-on-error"
+uptodown-dlurl = "https://youtube-music.en.uptodown.com/android"
+apkmirror-dlurl = "https://apkmirror.com/apk/google-inc/youtube-music"
+
+
+[YouTube-Morphe]
+enabled = true
 pkg-name = "com.google.android.youtube"
-included-patches = "'MaterialYou'"
-patcher-args = "-e 'Theme' -OdarkThemeBackgroundColor=#000000 -OlightThemeBackgroundColor=#FFFFFF --continue-on-error"
+app-name = "YouTube"
+patches-source = "MorpheApp/morphe-patches"
+brand = "Morphe"
+build-mode = "both"
+included-patches = "'Theme'"
 uptodown-dlurl = "https://youtube.en.uptodown.com/android"
 apkmirror-dlurl = "https://apkmirror.com/apk/google-inc/youtube"
+apkpure-dlurl = "https://apkpure.com/youtube-app/com.google.android.youtube"
+apkcombo-dlurl = "https://apkcombo.com/youtube/com.google.android.youtube"
 
 
 
 [YouTube-Morphe-AMOLED]
 enabled = true
+pkg-name = "com.google.android.youtube"
 app-name = "YouTube"
+patches-source = "MorpheApp/morphe-patches"
+brand = "Morphe"
 variant = "AMOLED"
 build-mode = "both"
-pkg-name = "com.google.android.youtube"
 included-patches = "'Theme'"
 patcher-args = "-OdarkThemeBackgroundColor=#000000 -OlightThemeBackgroundColor=#FFFFFF"
+uptodown-dlurl = "https://youtube.en.uptodown.com/android"
+apkmirror-dlurl = "https://apkmirror.com/apk/google-inc/youtube"
+apkpure-dlurl = "https://apkpure.com/youtube-app/com.google.android.youtube"
+apkcombo-dlurl = "https://apkcombo.com/youtube/com.google.android.youtube"
+
+
+
+[YouTube-Morphe-Experimental]
+enabled = true
+pkg-name = "com.google.android.youtube"
+app-name = "YouTube"
+patches-source = "MorpheApp/morphe-patches"
+brand = "Morphe"
+sub-variant = "Experimental"
+build-mode = "both"
+version = "exp"
+included-patches = "'Theme'"
 uptodown-dlurl = "https://youtube.en.uptodown.com/android"
 apkmirror-dlurl = "https://apkmirror.com/apk/google-inc/youtube"
 apkpure-dlurl = "https://apkpure.com/youtube-app/com.google.android.youtube"
@@ -3441,16 +3279,47 @@ apkcombo-dlurl = "https://apkcombo.com/youtube/com.google.android.youtube"
 
 [YouTube-Morphe-AMOLED-Experimental]
 enabled = true
+pkg-name = "com.google.android.youtube"
 app-name = "YouTube"
+patches-source = "MorpheApp/morphe-patches"
+brand = "Morphe"
 variant = "AMOLED"
 sub-variant = "Experimental"
 build-mode = "both"
 version = "exp"
-pkg-name = "com.google.android.youtube"
 included-patches = "'Theme'"
 patcher-args = "-OdarkThemeBackgroundColor=#000000 -OlightThemeBackgroundColor=#FFFFFF"
 uptodown-dlurl = "https://youtube.en.uptodown.com/android"
 apkmirror-dlurl = "https://apkmirror.com/apk/google-inc/youtube"
 apkpure-dlurl = "https://apkpure.com/youtube-app/com.google.android.youtube"
 apkcombo-dlurl = "https://apkcombo.com/youtube/com.google.android.youtube"
+
+
+
+[YouTube-Anddea]
+enabled = true
+pkg-name = "com.google.android.youtube"
+app-name = "YouTube"
+patches-source = "anddea/revanced-patches"
+brand = "anddea"
+build-mode = "both"
+included-patches = "'MaterialYou'"
+patcher-args = "-e 'Theme' -OdarkThemeBackgroundColor=@android:color/black --continue-on-error"
+uptodown-dlurl = "https://youtube.en.uptodown.com/android"
+apkmirror-dlurl = "https://apkmirror.com/apk/google-inc/youtube"
+
+
+
+[YouTube-Anddea-AMOLED]
+enabled = true
+pkg-name = "com.google.android.youtube"
+app-name = "YouTube"
+patches-source = "anddea/revanced-patches"
+brand = "anddea"
+variant = "AMOLED"
+build-mode = "both"
+included-patches = "'MaterialYou'"
+patcher-args = "-e 'Theme' -OdarkThemeBackgroundColor=#000000 -OlightThemeBackgroundColor=#FFFFFF --continue-on-error"
+uptodown-dlurl = "https://youtube.en.uptodown.com/android"
+apkmirror-dlurl = "https://apkmirror.com/apk/google-inc/youtube"
 

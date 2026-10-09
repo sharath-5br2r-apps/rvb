@@ -1,7 +1,7 @@
 patches-source = "kveld9/kveld-morphe-patches"
 brand = "kveld9"
 
-[BraveBrowser-Morphe-Kveld9]
+[BraveBrowser-Kveld9]
 enabled = true
 app-name = "Brave Browser"
 patch-brand = "Kveld9"

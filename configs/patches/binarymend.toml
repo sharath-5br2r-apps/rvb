@@ -30,7 +30,7 @@ app-name = "aCalendar"
 uptodown-dlurl = "https://acalendar.en.uptodown.com/android"
 apkpure-dlurl = "https://apkpure.com/acalendar-your-calendar/org.withouthat.acalendar"
 
-[CalcNote-Morphe-Binarymend]
+[CalcNote-Binarymend]
 enabled = true
 app-name = "CalcNote"
 pkg-name = "com.burton999.notecal"

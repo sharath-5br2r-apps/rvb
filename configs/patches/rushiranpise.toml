@@ -1,12 +1,6 @@
 patches-source = "rushiranpise/morphe-patches"
 brand = "rushiranpise"
 
-[Cloudflare-WARP-rushiranpise]
-enabled = true
-pkg-name = "com.cloudflare.onedotonedotonedotone"
-app-name = "Cloudflare WARP"
-apkmirror-dlurl = "https://www.apkmirror.com/apk/cloudflare/1-1-1-1-faster-safer-internet"
-uptodown-dlurl = "https://1-1-1-1.en.uptodown.com/android"
 
 [HolaVPN-rushiranpise]
 enabled = true
@@ -26,7 +20,7 @@ arch = "arm64-v8a"
 apkpure-dlurl = "https://apkpure.com/ninja-vpn-fast-secure-vpn/app.ninjavpn.android"
 apkcombo-dlurl = "https://apkcombo.com/ninja-vpn-fast-secure-vpn/app.ninjavpn.android"
 
-[WindscribeVPN-Morphe-Rushiranpise]
+[WindscribeVPN-Rushiranpise]
 enabled = true
 app-name = "Windscribe VPN"
 custom-microg-patches = "'None'"
@@ -53,7 +47,7 @@ uptodown-dlurl = "https://the-weather-channel.en.uptodown.com/android"
 apkpure-dlurl = "https://apkpure.com/the-weather-channel-radar/com.weather.Weather"
 apkcombo-dlurl = "https://apkcombo.com/the-weather-channel/com.weather.Weather"
 
-[BetaManiac-Morphe-Rushiranpise]
+[BetaManiac-Rushiranpise]
 enabled = true
 app-name = "Beta Maniac"
 pkg-name = "it.mirko.beta"
@@ -77,7 +71,7 @@ uptodown-dlurl = "https://rar-for-android.en.uptodown.com/android"
 apkpure-dlurl = "https://apkpure.com/rar-extractor-manager/com.rarlab.rar"
 apkcombo-dlurl = "https://apkcombo.com/rar/com.rarlab.rar"
 
-[AmazonIndia-Morphe-Rushiranpise]
+[AmazonIndia-Rushiranpise]
 enabled = true
 app-name = "Amazon India"
 pkg-name = "in.amazon.mShop.android.shopping"
@@ -98,7 +92,7 @@ uptodown-dlurl = "https://calm.en.uptodown.com/android"
 apkpure-dlurl = "https://apkpure.com/calm-sleep-meditate-relax/com.calm.android"
 apkcombo-dlurl = "https://apkcombo.com/calm/com.calm.android"
 
-[BluetoothKeyboardAndMouse-Morphe-Rushiranpise]
+[BluetoothKeyboardAndMouse-Rushiranpise]
 enabled = true
 app-name = "Bluetooth Keyboard & Mouse"
 arch = "arm64-v8a x86_64"
@@ -143,7 +137,7 @@ uptodown-dlurl = "https://citymapper.en.uptodown.com/android"
 apkpure-dlurl = "https://apkpure.com/citymapper/com.citymapper.app.release"
 apkcombo-dlurl = "https://apkcombo.com/citymapper/com.citymapper.app.release"
 
-[AmazonShopping-Morphe-Rushiranpise]
+[AmazonShopping-Rushiranpise]
 enabled = true
 app-name = "Amazon Shopping"
 pkg-name = "com.amazon.mShop.android.shopping"
@@ -164,7 +158,7 @@ apkmirror-dlurl = "https://www.apkmirror.com/apk/termius-corporation/termius-ssh
 uptodown-dlurl = "https://serverauditor.en.uptodown.com/android"
 apkpure-dlurl = "https://apkpure.com/termius-modern-ssh-client/com.server.auditor.ssh.client"
 
-[MicrosoftWord-Morphe-Rushiranpise]
+[MicrosoftWord-Rushiranpise]
 enabled = true
 app-name = "Microsoft Word"
 custom-microg-patches = "'None'"
@@ -174,7 +168,7 @@ version-code = "arm64-v8a: 2006247667 | armeabi-v7a: 2005247673 | x86_64: 200524
 uptodown-dlurl = "https://microsoft-word-preview.en.uptodown.com/android"
 apkmirror-dlurl = "https://www.apkmirror.com/apk/microsoft-corporation/word/"
 
-[MicrosoftExcel-Morphe-Rushiranpise]
+[MicrosoftExcel-Rushiranpise]
 enabled = true
 app-name = "Microsoft Excel"
 custom-microg-patches = "'None'"
@@ -184,7 +178,7 @@ skip-version-code-check = true
 uptodown-dlurl = "https://microsoft-excel-preview.en.uptodown.com/android"
 apkmirror-dlurl = "https://www.apkmirror.com/apk/microsoft-corporation/excel/"
 
-[AmazonIndia-Morphe-Rushiranpise-Experimental]
+[AmazonIndia-Rushiranpise-Experimental]
 enabled = true
 app-name = "Amazon India"
 sub-variant = "Experimental"
@@ -200,7 +194,7 @@ skip-patch-app-check = true
 
 arch = "all arm64-v8a armeabi-v7a"
 
-[AmazonShopping-Morphe-Rushiranpise-Experimental]
+[AmazonShopping-Rushiranpise-Experimental]
 enabled = true
 app-name = "Amazon Shopping"
 sub-variant = "Experimental"
@@ -216,7 +210,7 @@ skip-patch-app-check = true
 
 arch = "all arm64-v8a armeabi-v7a"
 
-[AdobeAcrobat-Morphe-Rushiranpise]
+[AdobeAcrobat-Rushiranpise]
 enabled = true
 app-name = "Adobe Acrobat"
 arch = "all arm64-v8a x86_64"
@@ -225,7 +219,7 @@ uptodown-dlurl = "https://adobe-reader.en.uptodown.com/android"
 apkmirror-dlurl = "https://www.apkmirror.com/apk/adobe/adobe-acrobat"
 custom-microg-patches = "'None'"
 
-[AdobeAcrobat-Morphe-Rushiranpise-Experimental]
+[AdobeAcrobat-Rushiranpise-Experimental]
 enabled = true
 app-name = "Adobe Acrobat"
 sub-variant = "Experimental"
@@ -238,7 +232,7 @@ uptodown-dlurl = "https://adobe-reader.en.uptodown.com/android"
 apkmirror-dlurl = "https://www.apkmirror.com/apk/adobe/adobe-acrobat"
 custom-microg-patches = "'None'"
 
-[PCRemote-Morphe-Rushiranpise]
+[PCRemote-Rushiranpise]
 enabled = true
 app-name = "PC Remote"
 custom-microg-patches = "'None'"
@@ -246,7 +240,7 @@ pkg-name = "com.monect.portable"
 uptodown-dlurl = "https://monect-pc-remote.en.uptodown.com/android"
 apkmirror-dlurl = "https://www.apkmirror.com/apk/monect-suzhou-co-ltd/pc-remote/"
 
-[PCRemote-Morphe-Rushiranpise-Experimental]
+[PCRemote-Rushiranpise-Experimental]
 enabled = true
 app-name = "PC Remote"
 sub-variant = "Experimental"
@@ -258,7 +252,7 @@ pkg-name = "com.monect.portable"
 uptodown-dlurl = "https://monect-pc-remote.en.uptodown.com/android"
 apkmirror-dlurl = "https://www.apkmirror.com/apk/monect-suzhou-co-ltd/pc-remote/"
 
-[OxygenUpdater-Morphe-Rushiranpise]
+[OxygenUpdater-Rushiranpise]
 enabled = true
 app-name = "Oxygen Updater"
 custom-microg-patches = "'None'"
@@ -266,7 +260,7 @@ pkg-name = "com.arjanvlek.oxygenupdater"
 github-dlurl = "https://github.com/oxygen-updater/os-updater"
 github-asset-regex = "Oxygen\\.Updater\\.{version}\\.apk"
 
-[OxygenUpdater-Morphe-Rushiranpise-Experimental]
+[OxygenUpdater-Rushiranpise-Experimental]
 enabled = true
 app-name = "Oxygen Updater"
 sub-variant = "Experimental"
@@ -276,7 +270,7 @@ pkg-name = "com.arjanvlek.oxygenupdater"
 github-dlurl = "https://github.com/oxygen-updater/os-updater"
 github-asset-regex = "Oxygen\\.Updater\\.{version}\\.apk"
 
-[WindscribeVPN-Morphe-Rushiranpise-Experimental]
+[WindscribeVPN-Rushiranpise-Experimental]
 enabled = true
 app-name = "Windscribe VPN"
 sub-variant = "Experimental"
@@ -289,7 +283,7 @@ uptodown-dlurl = "https://windscribe.uptodown.com/android"
 apkmirror-dlurl = "https://www.apkmirror.com/apk/windscribe/windscribe-vpn"
 apkcombo-dlurl = "https://apkcombo.com/windscribe/com.windscribe.vpn"
 
-[CloudflareWarp-Morphe-Rushiranpise]
+[CloudflareWarp-Rushiranpise]
 enabled = true
 app-name = "Cloudflare WARP"
 custom-microg-patches = "'None'"
@@ -298,7 +292,7 @@ uptodown-dlurl = "https://1-1-1-1.en.uptodown.com/android"
 apkmirror-dlurl = "https://www.apkmirror.com/apk/cloudflare/1-1-1-1-faster-safer-internet"
 apkmirror-example-url = "https://www.apkmirror.com/apk/cloudflare/1-1-1-1-faster-safer-internet/1-1-1-1-warp-safer-internet-6-38-9-release/"
 
-[CloudflareWarp-Morphe-Rushiranpise-Experimental]
+[CloudflareWarp-Rushiranpise-Experimental]
 enabled = true
 app-name = "Cloudflare WARP"
 sub-variant = "Experimental"
@@ -311,7 +305,7 @@ uptodown-dlurl = "https://1-1-1-1.en.uptodown.com/android"
 apkmirror-dlurl = "https://www.apkmirror.com/apk/cloudflare/1-1-1-1-faster-safer-internet"
 apkmirror-example-url = "https://www.apkmirror.com/apk/cloudflare/1-1-1-1-faster-safer-internet/1-1-1-1-warp-safer-internet-6-38-9-release/"
 
-[AdGuard-Morphe-Rushiranpise]
+[AdGuard-Rushiranpise]
 enabled = true
 app-name = "AdGuard"
 custom-microg-patches = "'None'"
@@ -319,7 +313,7 @@ pkg-name = "com.adguard.android"
 uptodown-dlurl = "https://adguard-for-android.en.uptodown.com/android"
 apkmirror-dlurl = "https://www.apkmirror.com/apk/adguard-software-limited/adguard"
 
-[AdGuard-Morphe-Rushiranpise-Experimental]
+[AdGuard-Rushiranpise-Experimental]
 enabled = true
 app-name = "AdGuard"
 sub-variant = "Experimental"
@@ -331,7 +325,7 @@ pkg-name = "com.adguard.android"
 uptodown-dlurl = "https://adguard-for-android.en.uptodown.com/android"
 apkmirror-dlurl = "https://www.apkmirror.com/apk/adguard-software-limited/adguard"
 
-[BetaManiac-Morphe-Rushiranpise-Experimental]
+[BetaManiac-Rushiranpise-Experimental]
 enabled = true
 app-name = "Beta Maniac"
 sub-variant = "Experimental"
@@ -344,14 +338,8 @@ apkmirror-dlurl = "https://www.apkmirror.com/apk/mirko-dimartino/beta-maniac-lif
 
 # ── MacroDroid (morphe-rushiranpise) ──────────────────────────────────────────
 
-[MacroDroid-Morphe-Rushiranpise]
-enabled = true
-app-name = "MacroDroid"
-pkg-name = "com.arlosoft.macrodroid"
-uptodown-dlurl = "https://macrodroid.en.uptodown.com/android"
-apkmirror-dlurl = "https://www.apkmirror.com/apk/arlosoft/macrodroid-device-automation-2/"
 
-[MacroDroid-Morphe-Rushiranpise-Experimental]
+[MacroDroid-Rushiranpise-Experimental]
 enabled = true
 app-name = "MacroDroid"
 sub-variant = "Experimental"
@@ -364,7 +352,7 @@ apkmirror-dlurl = "https://www.apkmirror.com/apk/arlosoft/macrodroid-device-auto
 
 # ── Bluetooth Keyboard and Mouse (morphe-rushiranpise) ───────────────────────
 
-[ProtonVPN-Morphe-Rushiranpise]
+[ProtonVPN-Rushiranpise]
 enabled = true
 app-name = "Proton VPN"
 pkg-name = "ch.protonvpn.android"
@@ -373,7 +361,7 @@ apkmirror-dlurl = "https://www.apkmirror.com/apk/proton-technologies-ag/protonvp
 prefer-dl-mode = "bundle"
 dpi = "120-640dpi"
 
-[ProtonVPN-Morphe-Rushiranpise-Experimental]
+[ProtonVPN-Rushiranpise-Experimental]
 enabled = true
 app-name = "Proton VPN"
 sub-variant = "Experimental"

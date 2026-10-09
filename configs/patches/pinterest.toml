@@ -7,14 +7,14 @@ brand = "binarymend"
 apkmirror-dlurl = "https://www.apkmirror.com/apk/pinterest/pinterest-one-destination-for-a-world-of-inspiration"
 uptodown-dlurl = "https://pinterest.en.uptodown.com/android"
 
-[Pinterest-Morphe-Browzomje]
+[Pinterest-Browzomje]
 enabled = true
 app-name = "Pinterest"
 pkg-name = "com.pinterest"
 uptodown-dlurl = "https://pinterest.en.uptodown.com/android"
 apkmirror-dlurl = "https://www.apkmirror.com/apk/pinterest/pinterest-one-destination-for-a-world-of-inspiration"
 
-[Pinterest-Morphe-Browzomje-Experimental]
+[Pinterest-Browzomje-Experimental]
 enabled = true
 app-name = "Pinterest"
 sub-variant = "Experimental"
