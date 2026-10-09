@@ -430,15 +430,7 @@ jobs:
 
       - name: Commit update branch files (Dev)
         if: steps.collect_update.outputs.has_modules == 'true'
-        uses: stefanzweifel/git-auto-commit-action@v7
-        with:
-          branch: update
-          create_branch: true
-          skip_checkout: true
-          add_options: -f
-          push_options: --force
-          file_pattern: "changelogs/*.md stable/*.json beta/*.json"
-          commit_message: "Bump version ${{ needs.resolve_dev_version.outputs.next_ver_code_dev }}"
+        run: bash .github/scripts/commit_update_branch.sh "${{ needs.resolve_dev_version.outputs.next_ver_code_dev }}"
 
   resolve_stable_version:
     needs: [check_patch, build_dev_1, build_dev_2, build_dev_3, build_dev_4, build_dev_5, aggregate_dev_logs]
@@ -612,15 +604,7 @@ jobs:
 
       - name: Commit update branch files (Stable)
         if: steps.collect_update.outputs.has_modules == 'true'
-        uses: stefanzweifel/git-auto-commit-action@v7
-        with:
-          branch: update
-          create_branch: true
-          skip_checkout: true
-          add_options: -f
-          push_options: --force
-          file_pattern: "changelogs/*.md stable/*.json beta/*.json"
-          commit_message: "Bump version ${{ needs.resolve_stable_version.outputs.next_ver_code_stable }}"
+        run: bash .github/scripts/commit_update_branch.sh "${{ needs.resolve_stable_version.outputs.next_ver_code_stable }}"
 
   resolve_latest_version:
     needs: [check_patch, build_stable_1, build_stable_2, build_stable_3, build_stable_4, build_stable_5, aggregate_stable_logs]
@@ -799,15 +783,7 @@ jobs:
 
       - name: Commit update branch files (Latest)
         if: steps.collect_update.outputs.has_modules == 'true'
-        uses: stefanzweifel/git-auto-commit-action@v7
-        with:
-          branch: update
-          create_branch: true
-          skip_checkout: true
-          add_options: -f
-          push_options: --force
-          file_pattern: "changelogs/*.md stable/*.json beta/*.json"
-          commit_message: "Bump version ${{ needs.resolve_latest_version.outputs.next_ver_code_latest }}"
+        run: bash .github/scripts/commit_update_branch.sh "${{ needs.resolve_latest_version.outputs.next_ver_code_latest }}"
 
   resolve_batch_version:
     needs: check_patch
@@ -941,18 +917,7 @@ jobs:
 
       - name: Commit update branch files (Batch)
         if: steps.collect_update.outputs.has_modules == 'true'
-        uses: stefanzweifel/git-auto-commit-action@v7
-        with:
-          branch: update
-          create_branch: true
-          skip_checkout: true
-          add_options: -f
-          # The update branch is generated metadata, not a development branch.
-          # Replace its previous generated snapshot so stale concurrent runs do
-          # not fail with a non-fast-forward push.
-          push_options: --force
-          file_pattern: "changelogs/*.md stable/*.json beta/*.json"
-          commit_message: "Bump version ${{ needs.resolve_batch_version.outputs.next_ver_code_batch }}"
+        run: bash .github/scripts/commit_update_branch.sh "${{ needs.resolve_batch_version.outputs.next_ver_code_batch }}"
 
   resolve_manual_config:
     needs: check_patch

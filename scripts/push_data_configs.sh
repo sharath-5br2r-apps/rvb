@@ -29,6 +29,13 @@ build_commit() {
 	idx=$(mktemp)
 	GIT_INDEX_FILE=$idx git read-tree "$base"
 	shopt -s nullglob
+	# Remove any tracked TOML file in the base tree that no longer exists locally
+	for f in $(GIT_INDEX_FILE=$idx git ls-files 'configs/*.toml' 'configs/patches/*.toml'); do
+		if [ ! -f "$f" ]; then
+			GIT_INDEX_FILE=$idx git update-index --remove "$f"
+			changed=1
+		fi
+	done
 	for dir in configs configs/patches; do
 		for f in "$dir"/*.toml; do
 			blob=$(git hash-object -w "$f")
@@ -37,6 +44,13 @@ build_commit() {
 			GIT_INDEX_FILE=$idx git update-index --add --cacheinfo "100644,$blob,$f"
 			changed=1
 		done
+	done
+	for f in state/*.json; do
+		blob=$(git hash-object -w "$f")
+		old=$(git rev-parse "$base:$f" 2> /dev/null || echo '')
+		[ "$blob" = "$old" ] && continue
+		GIT_INDEX_FILE=$idx git update-index --add --cacheinfo "100644,$blob,$f"
+		changed=1
 	done
 	shopt -u nullglob
 	[ -n "$changed" ] || {

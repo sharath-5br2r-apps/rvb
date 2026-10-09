@@ -239,7 +239,7 @@ jobs:
           fi
 
       # Standalone (non-partitioned) builds have only one job so there is no
-      # push race.  Commit update files and changelog directly to the update branch.
+      # push race. Commit update files and changelog directly to the update branch.
       - name: Commit module update files (standalone)
         if: ${{ inputs.do_not_release == false && inputs.aggregate_flavor == '' && steps.update_changelog.outputs.has_modules == 'true' }}
         env:
@@ -250,21 +250,7 @@ jobs:
           src_md="build.md"
           [ -f build.tmp ] && src_md="build.tmp"
           [ -f "$src_md" ] && cp -f "$src_md" "changelogs/${NEXT_VER_CODE}.md"
-          git fetch origin update 2>/dev/null || true
-          if git ls-remote --heads origin update | grep -q 'refs/heads/update'; then
-            git checkout -B update origin/update
-          else
-            git switch --orphan update
-          fi
-          if [ -d temp/update-files ]; then
-            cp -r temp/update-files/* . 2>/dev/null || true
-          fi
-          git config user.name "github-actions[bot]"
-          git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add -f -- stable/ beta/ changelogs/ 2>/dev/null || true
-          git diff --cached --quiet || git commit -m "Bump version ${NEXT_VER_CODE}"
-          git push origin update --force
-          git checkout main
+          bash .github/scripts/commit_update_branch.sh "$NEXT_VER_CODE"
 
       - name: Remove frequently updated apps
         if: ${{ inputs.do_not_release == false }}
