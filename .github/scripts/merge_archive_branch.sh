@@ -19,7 +19,7 @@ set -euo pipefail
 ARCHIVE_TAG="${ARCHIVE_TAG:?ARCHIVE_TAG not set}"
 BUILD_TAG="${BUILD_TAG:?BUILD_TAG not set}"
 REPO="${GITHUB_REPOSITORY:?GITHUB_REPOSITORY not set}"
-BRANCH="website"
+BRANCH="${MANIFEST_BRANCH:-gh-pages}"
 NEW_MANIFEST="${NEW_MANIFEST:-temp/manifest/build.json}"
 OLD_MANIFEST="temp/manifest/archive-old.json"
 LIVE_LIST="temp/manifest/archive-live-assets.txt"
@@ -42,13 +42,15 @@ trap cleanup EXIT
 git fetch origin "$BRANCH"
 git checkout -q -B "$BRANCH" "origin/$BRANCH"
 
-mkdir -p manifests archive temp/manifest
+mkdir -p manifests manifests/archive temp/manifest
 cp "$NEW_MANIFEST" "manifests/$BUILD_TAG.json"
 
-if [ -f "archive/$ARCHIVE_TAG.json" ]; then
+if [ -f "manifests/archive/$ARCHIVE_TAG.json" ]; then
+  cp "manifests/archive/$ARCHIVE_TAG.json" "$OLD_MANIFEST"
+elif [ -f "archive/$ARCHIVE_TAG.json" ]; then
   cp "archive/$ARCHIVE_TAG.json" "$OLD_MANIFEST"
 else
-  echo "No archive/$ARCHIVE_TAG.json on $BRANCH yet — starting a fresh cumulative manifest."
+  echo "No manifests/archive/$ARCHIVE_TAG.json on $BRANCH yet — starting a fresh cumulative manifest."
   echo 'null' > "$OLD_MANIFEST"
 fi
 
@@ -68,9 +70,9 @@ jq -s --slurpfile live temp/manifest/archive-live.json \
        kind: "archive",
        meta: {build: $tag, channel: $tag, publishedAt: $now},
        files: ($merged | with_entries(select(.key as $k | $live[0] | index($k))))}
-  ' "$OLD_MANIFEST" "$NEW_MANIFEST" > "archive/$ARCHIVE_TAG.json"
+  ' "$OLD_MANIFEST" "$NEW_MANIFEST" > "manifests/archive/$ARCHIVE_TAG.json"
 
-ENTRIES=$(jq '.files | length' "archive/$ARCHIVE_TAG.json")
+ENTRIES=$(jq '.files | length' "manifests/archive/$ARCHIVE_TAG.json")
 # Sanity gate: every old/new entry whose file still lives on the release must
 # have survived the merge. A shortfall means something upstream went wrong —
 # refuse to publish instead of silently shrinking the archive manifest.
@@ -89,7 +91,7 @@ echo "Merged archive manifest for $ARCHIVE_TAG: $ENTRIES entries ($LIVE_COUNT li
 #    (paths are disjoint from cleanup's, so plain rebase is safe).
 git config user.name "github-actions[bot]"
 git config user.email "github-actions[bot]@users.noreply.github.com"
-git add "manifests/$BUILD_TAG.json" "archive/$ARCHIVE_TAG.json"
+git add "manifests/$BUILD_TAG.json" "manifests/archive/$ARCHIVE_TAG.json"
 git commit -q -m "chore: update $ARCHIVE_TAG manifest for build $BUILD_TAG [skip ci]"
 
 ATTEMPT=1
@@ -107,4 +109,4 @@ until git push -q origin "$BRANCH"; do
   fi
   sleep 15
 done
-echo "Website branch updated: manifests/$BUILD_TAG.json + archive/$ARCHIVE_TAG.json."
+echo "Manifests branch updated: manifests/$BUILD_TAG.json + manifests/archive/$ARCHIVE_TAG.json."

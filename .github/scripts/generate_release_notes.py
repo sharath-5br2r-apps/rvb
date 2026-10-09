@@ -433,7 +433,7 @@ def main():
     lines.append("• Use [Zygisk Detach](https://github.com/j-hc/zygisk-detach) to stop Play Store from updating Modules.  ")
     lines.append("")
     gh_repo = os.environ.get("GITHUB_REPOSITORY") or "nullcpy/rvb"
-    website_link = os.environ.get("RELEASE_NOTES_WEBSITE_LINK") or "https://sharath-5br2r.github.io/catalog"
+    website_link = os.environ.get("RELEASE_NOTES_WEBSITE_LINK") or "https://sharath-5br2r.github.io/apps"
     lines.append(f"🌐 [GitHub](https://github.com/{gh_repo}) | 🔗 [Website]({website_link})")
     lines.append("")
 

@@ -1,0 +1,124 @@
+name: Rebuild Catalog
+
+on:
+  repository_dispatch:
+    types: [catalog-updated]
+  schedule:
+    - cron: "23 */6 * * *"   # safety net for lost dispatches
+  workflow_call:
+  workflow_dispatch:
+    inputs:
+      dry_run:
+        description: "Rebuild and diff only, do not commit/push"
+        type: boolean
+        default: false
+
+concurrency:
+  group: catalog-rebuild
+  cancel-in-progress: false
+
+permissions:
+  contents: write
+  actions: write
+
+jobs:
+  rebuild:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v7
+        with:
+          ref: gh-pages
+
+      - name: Setup Python
+        uses: actions/setup-python@v7
+        with:
+          python-version: "3.12"
+
+      - name: Rebuild data.json from manifests and releases
+        env:
+          RVB_REPO: sharath-5br2r/apps
+          RVB_NAMING_DIR: ${{ github.workspace }}/.github/scripts
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          cp data.json temp_old_data.json || true
+          python3 .github/scripts/rebuild_catalog.py \
+            --repos \
+              "sharath-5br2r/apps" \
+              "sharath-5br2r-apps/Eden-Workflow" \
+              "sharath-5br2r-apps/Dolphin-Extra" \
+              "sharath-5br2r-apps/LeviLaunchroid-Extra" \
+              "sharath-5br2r-apps/ZalithLauncher2-Extra" \
+            --manifest-dir . \
+            --out "data.json.new" \
+            --existing "temp_old_data.json" \
+            --ignore-existing \
+            --no-gzip
+          echo "REBUILT_OK=1" >> "$GITHUB_ENV"
+
+      - name: Report diff
+        run: |
+          echo "### Rebuilt catalog summary" >> "$GITHUB_STEP_SUMMARY"
+          python3 - << 'EOF' >> "$GITHUB_STEP_SUMMARY"
+          import json
+          new = json.load(open("data.json.new"))
+          apps = len(new["apps"])
+          builds = sum(len(b["builds"]) for a in new["apps"] for b in a["brands"])
+          assets = sum(len(x["assets"]) for a in new["apps"] for b in a["brands"] for x in b["builds"])
+          print(f"- apps: {apps}, build entries: {builds}, assets: {assets}")
+          EOF
+
+      - name: Commit and push (if content changed)
+        if: ${{ github.event.inputs.dry_run != 'true' }}
+        run: |
+          # Compare ignoring updated_at, which changes every run
+          strip() { python3 -c "import json,sys; d=json.load(open(sys.argv[1])); d.pop('updated_at',None); print(json.dumps(d,sort_keys=True,separators=(',',':')))" "$1"; }
+          if cmp -s <(strip data.json) <(strip data.json.new); then
+            echo "No material catalog change."
+            rm -f data.json.new
+            exit 0
+          fi
+          mv data.json.new data.json
+          gzip -9knf data.json
+          git config user.name 'github-actions[bot]'
+          git config user.email 'github-actions[bot]@users.noreply.github.com'
+          git add data.json data.json.gz
+          git commit -m "chore: rebuild catalog from manifests and release manifests [skip ci]"
+          # Note: the push itself won't redeploy Pages (deploy-pages.yml ignores data.json
+          # pushes); an explicit dispatch below refreshes the deployed copy instead.
+          pushed=0
+          for attempt in 1 2 3; do
+            if git push origin gh-pages; then pushed=1; break; fi
+            echo "Push attempt $attempt failed; integrating with remote..."
+            if ! git pull --rebase origin gh-pages; then
+              # Conflict in a derived file: drop our commit and let the next
+              # (dispatch/scheduled) rebuild converge from fresh inputs.
+              git rebase --abort || true
+              git fetch origin gh-pages && git reset --hard origin/gh-pages
+              echo "::warning::Conflicting catalog push; deferred to next rebuild run."
+              exit 0
+            fi
+          done
+          if [ "$pushed" != "1" ]; then
+            echo "::error::Failed to push rebuilt data.json after 3 attempts."
+            exit 1
+          fi
+          echo "CATALOG_PUSHED=1" >> "$GITHUB_ENV"
+
+      - name: Trigger Pages deployment
+        # data.json is served from the deployed Pages copy, so refresh it explicitly.
+        if: env.CATALOG_PUSHED == '1'
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          gh workflow run deploy-pages.yml --ref gh-pages
+          echo "Dispatched deploy-pages workflow."
+
+  trigger_notify_failure:
+    needs: [rebuild]
+    if: failure()
+    uses: ./.github/workflows/notify.yml
+    with:
+      workflow_name: "Rebuild Catalog"
+    secrets: inherit

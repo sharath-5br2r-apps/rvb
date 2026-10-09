@@ -3,11 +3,11 @@
 
 <p align="center"><b>Automatically builds and publishes APKs & Magisk/KernelSU Modules whenever new patches are released.</b></p>
 
-<p align="center"><a href="https://sharath-5br2r.github.io/catalog"><img src="https://img.shields.io/badge/Download-21a378?style=flat&logo=data:image/svg+xml;base64,PHN2ZyBmaWxsPSIjZmZmZmZmIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyNCIgaGVpZ2h0PSIyNCIgdmlld0JveD0iMCAwIDI0IDI0Ij48cGF0aCBkPSJNNSAyMGgxNHYtMkg1djJ6TTE5IDloLTRWM0g5djZINWw3IDcgNy03eiIvPjwvc3ZnPg==&logoColor=white"></a> <a href="#credits--acknowledgements"><img src="https://img.shields.io/badge/Donate%20to%20Upstream-ea4335?style=flat&logo=ko-fi&logoColor=white"></a></p>
+<p align="center"><a href="https://sharath-5br2r.github.io/apps"><img src="https://img.shields.io/badge/Download-21a378?style=flat&logo=data:image/svg+xml;base64,PHN2ZyBmaWxsPSIjZmZmZmZmIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyNCIgaGVpZ2h0PSIyNCIgdmlld0JveD0iMCAwIDI0IDI0Ij48cGF0aCBkPSJNNSAyMGgxNHYtMkg1djJ6TTE5IDloLTRWM0g5djZINWw3IDcgNy03eiIvPjwvc3ZnPg==&logoColor=white"></a> <a href="#credits--acknowledgements"><img src="https://img.shields.io/badge/Donate%20to%20Upstream-ea4335?style=flat&logo=ko-fi&logoColor=white"></a></p>
 
-<p align="center"><a href="https://github.com/sharath-5br2r-apps/revanced-morphe-xposed-builder"><img src="https://img.shields.io/github/stars/sharath-5br2r-apps/revanced-morphe-xposed-builder?label=Stars&logo=github&style=social"></a> <a href="https://sharath-5br2r.github.io/catalog"><img src="https://img.shields.io/github/downloads/sharath-5br2r-apps/revanced-morphe-xposed-builder/total?logo=data:image/svg+xml;base64,PHN2ZyBmaWxsPSIjMDAwMDAwIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyNCIgaGVpZ2h0PSIyNCIgdmlld0JveD0iMCAwIDI0IDI0Ij48cGF0aCBkPSJNNSAyMGgxNHYtMkg1djJ6TTE5IDloLTRWM0g5djZINWw3IDcgNy03eiIvPjwvc3ZnPg==&label=Downloads&style=social"></a></p>
+<p align="center"><a href="https://github.com/sharath-5br2r-apps/revanced-morphe-xposed-builder"><img src="https://img.shields.io/github/stars/sharath-5br2r-apps/revanced-morphe-xposed-builder?label=Stars&logo=github&style=social"></a> <a href="https://sharath-5br2r.github.io/apps"><img src="https://img.shields.io/github/downloads/sharath-5br2r-apps/revanced-morphe-xposed-builder/total?logo=data:image/svg+xml;base64,PHN2ZyBmaWxsPSIjMDAwMDAwIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyNCIgaGVpZ2h0PSIyNCIgdmlld0JveD0iMCAwIDI0IDI0Ij48cGF0aCBkPSJNNSAyMGgxNHYtMkg1djJ6TTE5IDloLTRWM0g5djZINWw3IDcgNy03eiIvPjwvc3ZnPg==&label=Downloads&style=social"></a></p>
 
-<p align="center"><a href="https://sharath-5br2r.github.io/catalog"><img src="https://visitor-badge.laobi.icu/badge?page_id=sharath-5br2r.github.io.my-patched-apks&left_text=Website%20Visitors&right_color=%231283c3&format=true&query_only=true"></a> <a href="https://github.com/sharath-5br2r-apps/revanced-morphe-xposed-builder"><img src="https://visitor-badge.laobi.icu/badge?page_id=sharath-5br2r.my-patched-apks&left_text=GitHub%20Visitors&format=true"></a> </p>
+<p align="center"><a href="https://sharath-5br2r.github.io/apps"><img src="https://visitor-badge.laobi.icu/badge?page_id=sharath-5br2r.github.io.my-patched-apks&left_text=Website%20Visitors&right_color=%231283c3&format=true&query_only=true"></a> <a href="https://github.com/sharath-5br2r-apps/revanced-morphe-xposed-builder"><img src="https://visitor-badge.laobi.icu/badge?page_id=sharath-5br2r.my-patched-apks&left_text=GitHub%20Visitors&format=true"></a> </p>
 
 ---
 
@@ -28,7 +28,7 @@ Thank you to everyone in the open-source community who helps keep these projects
 
 > [!NOTE]
 >
-> 🌐 **[Visit Download Website](https://sharath-5br2r.github.io/catalog)**
+> 🌐 **[Visit Download Website](https://sharath-5br2r.github.io/apps)**
 >
 > For the best experience, please download from the website. It features:
 >

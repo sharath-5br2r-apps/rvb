@@ -20,13 +20,15 @@ cleanup() {
 }
 trap cleanup EXIT
 
-echo "--- Checking out website branch ---"
-if ! git ls-remote --exit-code --heads origin website >/dev/null 2>&1; then
-  echo "No website branch on origin — nothing to prune."
+BRANCH="${MANIFEST_BRANCH:-gh-pages}"
+
+echo "--- Checking out $BRANCH branch ---"
+if ! git ls-remote --exit-code --heads origin "$BRANCH" >/dev/null 2>&1; then
+  echo "No $BRANCH branch on origin — nothing to prune."
   exit 0
 fi
-git fetch origin website
-git checkout -B website origin/website
+git fetch origin "$BRANCH"
+git checkout -B "$BRANCH" "origin/$BRANCH"
 
 DELETED_COUNT=0
 if [ -d manifests ]; then
@@ -40,9 +42,9 @@ if [ -d manifests ]; then
       rm -f "$f"
       DELETED_COUNT=$((DELETED_COUNT + 1))
     done
-    if [ -d archive ]; then
+    if [ -d manifests/archive ]; then
       echo "No active releases — wiping archive manifests."
-      for f in archive/*.json; do
+      for f in manifests/archive/*.json; do
         [ -f "$f" ] || continue
         echo "Deleting: $f"
         rm -f "$f"
@@ -66,12 +68,12 @@ fi
 echo "Pruned $DELETED_COUNT orphaned manifest(s)."
 
 if ! git diff --quiet || ! git diff --cached --quiet || [ -n "$(git status --porcelain)" ]; then
-  echo "--- Committing and pushing cleaned website branch ---"
+  echo "--- Committing and pushing cleaned $BRANCH branch ---"
   git config user.name "github-actions[bot]"
   git config user.email "github-actions[bot]@users.noreply.github.com"
-  git add -A
-  git commit -m "chore: prune orphaned manifests on website branch [skip ci]"
-  git push origin website
+  git add manifests/
+  git commit -m "chore: prune orphaned manifests on $BRANCH branch [skip ci]"
+  git push origin "$BRANCH"
 else
-  echo "No orphaned manifests to prune. Website branch is clean."
+  echo "No orphaned manifests to prune. $BRANCH branch is clean."
 fi
