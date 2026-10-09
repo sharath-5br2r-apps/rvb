@@ -3429,6 +3429,17 @@ function createModalBuildMarkup(app, brand, build, openByDefault = false) {
   const assetsByArch = groupAssetsByArchitecture(assetsToDisplay);
   const titleText = build.isArchive ? escapeHtml(build.build) : `Build ${escapeHtml(build.build)}`;
   const bKey = build.buildKey || build.releaseId || build.build;
+  // A numbered build publishes each arch independently, so it can carry several
+  // versions at once (arm64 newest, arm a fallback). Show at most two joined by
+  // " / " and fold the rest into a "+ N" overflow so long version lists stay compact.
+  const versionsArr = (build.versions && build.versions.length) ? build.versions : (build.version ? [build.version] : []);
+  let verText = "";
+  if (versionsArr.length === 1) {
+    verText = `v${versionsArr[0]}`;
+  } else if (versionsArr.length > 1) {
+    const extra = versionsArr.length - 2;
+    verText = versionsArr.slice(0, 2).map((v) => `v${v}`).join(" / ") + (extra > 0 ? ` + ${extra}` : "");
+  }
 
   let downloadsMarkup = "";
 
@@ -3470,7 +3481,7 @@ function createModalBuildMarkup(app, brand, build, openByDefault = false) {
         <div class="download-btn ${escapeHtml(arch)}">
           <div class="asset-left">
             <span class="asset-title">${escapeHtml(app.appName)}</span>
-            <span class="asset-subtitle">${escapeHtml(build.version || "Latest")} • ${escapeHtml(fileTypeStr)}</span>
+            <span class="asset-subtitle">${escapeHtml(asset.version ? `v${asset.version}` : (build.version ? `v${build.version}` : "Latest"))} • ${escapeHtml(fileTypeStr)}</span>
           </div>
           <div class="asset-right">
             <span class="btn-text">${sizeStr} • ${getFaSvg("download")} ${downloads}</span>
@@ -3516,7 +3527,7 @@ function createModalBuildMarkup(app, brand, build, openByDefault = false) {
       <div class="modal-build-header" role="button" tabindex="0">
         <div class="modal-build-header-left">
           <div class="modal-build-title">${titleText}</div>
-          <div class="modal-build-date">${formatDate(build.publishedAt)}${build.isArchive ? "" : ` • ${escapeHtml(build.version)}`}</div>
+          <div class="modal-build-date">${formatDate(build.publishedAt)}${build.isArchive || !verText ? "" : ` • ${escapeHtml(verText)}`}</div>
         </div>
         <div class="modal-build-header-right">
           <span class="badge-group">
@@ -3569,7 +3580,6 @@ function openAppliedPatchesModal(appKey, brandKey, buildKey, assetName = null) {
   if (DOM.appliedPatchesTitle) {
     DOM.appliedPatchesTitle.textContent = `${app.appName} • ${brand.brandName || formatBrandDisplayName(brand.brandKey)}`;
   }
-
   if (DOM.appliedPatchesMeta) {
     const versionStr = build?.version || build?.build || "";
     DOM.appliedPatchesMeta.textContent = `Build ${versionStr}${asset?.name ? ` • ${asset.name}` : ""}`;
@@ -4113,7 +4123,21 @@ function formatChangelogForBuild(build, customBody = null) {
   return formatChangelogBody(body, releaseUrl, `Build: ${buildTag}`);
 }
 
-// Resolve a build applied-patches list from the deduped patchSetRef
+// Resolve one arch's applied-patches list from its asset-level patchSetRef
+// (schema v2). A numbered build can carry distinct patch sets per arch, so the
+// card's arch tabs read here rather than the single build-level list.
+function getArchAppliedPatches(build, arch) {
+  if (!build || !Array.isArray(build.assets) || !arch) return null;
+  const targetArch = String(arch).toLowerCase();
+  const asset = build.assets.find((a) => (a.arch || "").toLowerCase() === targetArch);
+  if (!asset || !Number.isInteger(asset.patchSetRef)) return null;
+  const set = cachedPatchSets[asset.patchSetRef];
+  return Array.isArray(set) && set.length > 0 ? set : null;
+}
+
+// Resolve a build's changelogs / patchSources from the shared top-level tables
+// (schema v2 dedup), falling back to any legacy inline array so the client
+// renders correctly both before and after a catalog rebuild.
 function _resolveSetRef(ref, table, inline) {
   if (Number.isInteger(ref)) {
     const set = table[ref];

@@ -22,7 +22,7 @@ from datetime import datetime, timezone
 from pathlib import Path
 
 DEFAULT_REPOS = [
-    "sharath-5br2r-apps/rvb",
+    "sharath-5br2r/apps",
     "sharath-5br2r-apps/Eden-Workflow",
     "sharath-5br2r-apps/Dolphin-Extra",
     "sharath-5br2r-apps/LeviLaunchroid-Extra",
@@ -40,8 +40,18 @@ DOWNLOADABLE_EXTENSIONS = (
 )
 
 
+def _ver_key(v):
+    """Numeric-aware version sort key so 6.12.18 outranks 6.12.9; non-numeric
+    segments (e.g. `1.42.1-dev.2`) fall back to their string form."""
+    parts = re.split(r"[.\-]+", str(v))
+    return [(0, int(p)) if p.isdigit() else (1, p) for p in parts]
+
+
+
 def _load_rvb_naming():
     candidates = []
+    # Local in same directory
+    candidates.append(Path(__file__).resolve().parent / "naming.py")
     env = os.environ.get("RVB_NAMING_DIR")
     if env:
         candidates.append(Path(env) / "naming.py")
@@ -310,15 +320,14 @@ def fetch_manifest(repo, tag, rel, cache_dir=None):
 
 
 def manifest_from_dir(manifest_dir, tag):
-    """Load one manifest from branch checkout (same return contract as fetch_manifest)."""
-    sub = "archive" if tag in ("stable", "beta") else "manifests"
-    p = Path(manifest_dir) / sub / f"{tag}.json"
-    if not p.exists():
-        alt = Path(manifest_dir) / f"{tag}.json"
-        if alt.exists():
-            p = alt
-        else:
-            return None, None
+    """Load one manifest from tree (same return contract as fetch_manifest)."""
+    md = Path(manifest_dir)
+    if tag in ("stable", "beta"):
+        p = md / "manifests" / "archive" / f"{tag}.json"
+    else:
+        p = md / "manifests" / f"{tag}.json"
+    if not p.is_file():
+        return None, None
     try:
         m = json.loads(p.read_text(encoding="utf-8"))
         if not isinstance(m, dict) or not isinstance(m.get("files"), dict):
@@ -453,7 +462,11 @@ def group_files(manifest, live_assets, tag, rel, is_archive, repo=None):
             brand_name,
             variant,
             sub_variant,
-            ver if is_archive else None,
+            # A numbered release is ONE build card keyed by the tag; the app
+            # version is per-file (a fallback arch can differ from arm64), so it
+            # must not split the card. The archive release is a version history,
+            # so there the version stays part of the card identity.
+            (e.get("version") or ver) if is_archive else None,
         )
         groups.setdefault(gk, []).append((fname, e))
 
@@ -487,6 +500,13 @@ def build_assets(group, live_assets):
             "size": live.get("size", 0),
             "download_count": live.get("download_count", 0),
             "arch": normalize_arch(raw_arch),
+            # Per-file truth: a numbered build can hold several versions, so each
+            # asset names its own; appliedPatches is carried inline here and folded
+            # into the shared patchSets table (as a per-asset patchSetRef) in finalize.
+            "version": e.get("version") or "",
+            "appliedPatches": e.get("appliedPatches") or [],
+            # fileType intentionally omitted: it is always derivable from the
+            # asset name (.apk -> APK, .zip -> Module) and computed client-side.
         }
         for field in ("minSdk", "versionCode", "densities", "nativeLibraries"):
             val = e.get(field)
@@ -508,8 +528,14 @@ def apply_numbered(cat, repo, tag, rel, manifest):
         rel.get("published_at") or "").replace("+00:00", "Z")
     live_assets = live_downloadable_assets(rel)
     groups = group_files(manifest, live_assets, tag, rel, is_archive=False, repo=repo)
-    for (app_key, app_name, brand_key, brand_name, variant, sub_variant, version), group in groups.items():
+    for (app_key, app_name, brand_key, brand_name, variant, sub_variant, _version), group in groups.items():
         e0 = next((e for _, e in group if e.get("appliedPatches") or e.get("patchSources") or e.get("changelogs") or e.get("changelogUrls") or e.get("skippedPatches") or e.get("failedPatches") or e.get("removedPatches")), group[0][1])
+        # Distinct versions across this card's files, newest first. `version` is
+        # the primary (highest) for back-compat (latestVersion, channel pointers);
+        # `versions` lets the UI show every version one build actually published.
+        vers = sorted({(e.get("version") or "")
+                      for _, e in group if e.get("version")}, key=_ver_key, reverse=True)
+        version = vers[0] if vers else ""
         prefix = next((e.get("name") for _, e in group if e.get("name")), "")
         pkg = next((e.get("packageName") for _, e in group if e.get("packageName")), "")
         app_entry = cat.app(app_key, app_name)
@@ -533,6 +559,7 @@ def apply_numbered(cat, repo, tag, rel, manifest):
             "releaseType": release_type,
             "isArchive": False,
             "version": build_version,
+            "versions": vers,
             "variant": variant,
             "subVariant": sub_variant,
             "publishedAt": published_at,
@@ -697,6 +724,14 @@ def finalize(cat):
     _dedup_lists(all_builds, "failedPatches", "failedPatchSetRef", failed_patch_sets)
     _dedup_lists(all_builds, "removedPatches", "removedPatchSetRef", removed_patch_sets)
 
+    # Per-arch applied patches: each asset carries the list its own file applied
+    # (a fallback arch can differ). Fold those into the SAME patchSets table so a
+    # list identical to another collapses to a shared index (no duplication), while
+    # a genuinely different one gets its own — the UI then shows per-arch tabs only
+    # where the asset refs actually differ.
+    all_assets = [a for build in all_builds for a in build.get("assets", [])]
+    _dedup_lists(all_assets, "appliedPatches", "patchSetRef", patch_sets)
+
     return {
         "version": 2,
         "updated_at": cat.now_iso,
@@ -741,7 +776,7 @@ def main():
         dest="repos",
         help="One or more GitHub repositories (owner/repo). Defaults to all 5 repos."
     )
-    ap.add_argument("--rvb-repo", default=os.environ.get("RVB_REPO", "sharath-5br2r-apps/rvb"),
+    ap.add_argument("--rvb-repo", default=os.environ.get("RVB_REPO", "sharath-5br2r/apps"),
                     help="rvb repository name that uses manifest-dir")
     ap.add_argument("--manifest-dir", default=None,
                     help="checkout of rvb's website branch; when set, manifests for rvb "
@@ -765,6 +800,16 @@ def main():
     cache_dir = None if args.no_cache else args.cache_dir
     cat = Catalog()
 
+    default_manifest_dir = args.manifest_dir
+    if not default_manifest_dir:
+        cwd_manifests = Path("manifests")
+        if cwd_manifests.is_dir():
+            default_manifest_dir = "."
+        else:
+            repo_root_manifests = Path(__file__).resolve().parents[2] / "manifests"
+            if repo_root_manifests.is_dir():
+                default_manifest_dir = str(repo_root_manifests.parent)
+
     for repo in repos:
         print(f"\n--- Processing repository: {repo} ---")
         releases = fetch_releases(repo, cache_dir=cache_dir)
@@ -779,7 +824,7 @@ def main():
         )
         all_tags = numbered_tags + [t for t in ("stable", "beta") if t in releases]
 
-        repo_manifest_dir = args.manifest_dir if (args.manifest_dir and (repo == args.rvb_repo or "rvb" in repo.lower())) else None
+        repo_manifest_dir = default_manifest_dir if (default_manifest_dir and (repo == args.rvb_repo or "rvb" in repo.lower())) else None
         fetched = fetch_all_manifests(repo, releases, all_tags, max_workers=6, cache_dir=cache_dir, manifest_dir=repo_manifest_dir)
 
         missing_manifests = []

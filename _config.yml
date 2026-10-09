@@ -1,8 +1,8 @@
 # GitHub Pages Configuration
 title: Catalog
 description: Fast, clean catalog for some of my repos
-url: https://sharath-5br2r.github.io/catalog
-repository: sharath-5br2r/catalog
+url: https://sharath-5br2r.github.io/apps
+repository: sharath-5br2r/apps
 
 # Theme (optional)
 theme: null
