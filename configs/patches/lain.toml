@@ -1,7 +1,5 @@
-enable-module-update = true
 patches-source = "kiraio-moe/Lain-Patches"
-patch-brand = "Lain"
-cli-type = "morphe"
+brand = "Lain"
 
 [Hermit-Lain]
 enabled = true
@@ -12,6 +10,7 @@ apkmirror-dlurl = "https://www.apkmirror.com/apk/chimbori/hermit-lite-apps-brows
 uptodown-dlurl = "https://hermit.en.uptodown.com/android"
 apkpure-dlurl = "https://apkpure.com/hermit-%E2%80%94-lite-apps-browser/com.chimbori.hermitcrab"
 apkcombo-dlurl = "https://apkcombo.com/hermit-lite-apps-browser/com.chimbori.hermitcrab"
+
 [Drofus-Morphe-Lain]
 enabled = true
 app-name = "Drofus"

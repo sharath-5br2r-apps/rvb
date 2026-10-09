@@ -20,3 +20,12 @@ pkg-name = "com.discord"
 app-name = "Discord"
 apkmirror-dlurl = "https://www.apkmirror.com/apk/discord/discord-chat-for-gamers"
 apkcombo-dlurl = "https://apkcombo.com/discord/com.discord"
+
+[Discord-NPatch-Revenge]
+enabled = true 
+app-name = "Discord"
+pkg-name = "com.discord"
+patcher-args = "-l 0"
+uptodown-dlurl = "https://discord-chat-for-gamers.en.uptodown.com/android"
+apkmirror-dlurl = "https://www.apkmirror.com/apk/discord/discord-chat-for-gamers"
+apkmirror-example-url = "https://www.apkmirror.com/apk/discord/discord-chat-for-gamers/discord-talk-play-hang-out-341-13-stable-release/"

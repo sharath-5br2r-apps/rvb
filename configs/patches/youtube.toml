@@ -1,16 +1,15 @@
 [YouTube-Morphe]
 enabled = true
-pkg-name = "com.google.android.youtube"
 app-name = "YouTube"
-patches-source = "MorpheApp/morphe-patches"
-brand = "Morphe"
-patches-version = "both"
 build-mode = "both"
-patch-folder = "youtube"
-apkmirror-dlurl = "https://apkmirror.com/apk/google-inc/youtube"
+pkg-name = "com.google.android.youtube"
+included-patches = "'Theme'"
 uptodown-dlurl = "https://youtube.en.uptodown.com/android"
+apkmirror-dlurl = "https://apkmirror.com/apk/google-inc/youtube"
 apkpure-dlurl = "https://apkpure.com/youtube-app/com.google.android.youtube"
 apkcombo-dlurl = "https://apkcombo.com/youtube/com.google.android.youtube"
+
+# ── YouTube morphe-amoled (#000000) ───────────────────────────────────────────
 
 [YouTube-Morphe-NordTheme]
 enabled = true
@@ -46,32 +45,28 @@ apkcombo-dlurl = "https://apkcombo.com/youtube/com.google.android.youtube"
 
 [YouTube-Morphe-Experimental]
 enabled = true
-pkg-name = "com.google.android.youtube"
 app-name = "YouTube"
-patches-source = "MorpheApp/morphe-patches"
-brand = "Morphe"
-patches-version = "both"
+sub-variant = "Experimental"
 build-mode = "both"
-variant = "Experimental"
-patch-folder = "youtube"
 version = "exp"
-apkmirror-dlurl = "https://apkmirror.com/apk/google-inc/youtube"
+pkg-name = "com.google.android.youtube"
+included-patches = "'Theme'"
 uptodown-dlurl = "https://youtube.en.uptodown.com/android"
+apkmirror-dlurl = "https://apkmirror.com/apk/google-inc/youtube"
 apkpure-dlurl = "https://apkpure.com/youtube-app/com.google.android.youtube"
 apkcombo-dlurl = "https://apkcombo.com/youtube/com.google.android.youtube"
 
-[youtube-anddea]
+[YouTube-Morphe-Anddea]
 enabled = true
-pkg-name = "com.google.android.youtube"
 app-name = "YouTube"
-patches-source = "anddea/revanced-patches"
-brand = "anddea"
 build-mode = "both"
-patch-folder = "youtube"
-patches-version = "both"
-patcher-args = "-e 'Theme' -OdarkThemeBackgroundColor=@android:color/black"
+pkg-name = "com.google.android.youtube"
+included-patches = "'MaterialYou'"
+patcher-args = "-e 'Theme' -OdarkThemeBackgroundColor=@android:color/black --continue-on-error"
 uptodown-dlurl = "https://youtube.en.uptodown.com/android"
 apkmirror-dlurl = "https://apkmirror.com/apk/google-inc/youtube"
+
+# ── YouTube morphe-anddea-amoled (#000000 explicit) ───────────────────────────
 
 [youtube-anddea-nord]
 enabled = true
@@ -101,3 +96,41 @@ patcher-args = "-e 'Theme' -OdarkThemeBackgroundColor=#FF181825 -OlightThemeBack
 uptodown-dlurl = "https://youtube.en.uptodown.com/android"
 apkmirror-dlurl = "https://apkmirror.com/apk/google-inc/youtube"
 
+[YouTube-Morphe-Anddea-AMOLED]
+enabled = true
+app-name = "YouTube"
+variant = "AMOLED"
+build-mode = "both"
+pkg-name = "com.google.android.youtube"
+included-patches = "'MaterialYou'"
+patcher-args = "-e 'Theme' -OdarkThemeBackgroundColor=#000000 -OlightThemeBackgroundColor=#FFFFFF --continue-on-error"
+uptodown-dlurl = "https://youtube.en.uptodown.com/android"
+apkmirror-dlurl = "https://apkmirror.com/apk/google-inc/youtube"
+
+[YouTube-Morphe-AMOLED]
+enabled = true
+app-name = "YouTube"
+variant = "AMOLED"
+build-mode = "both"
+pkg-name = "com.google.android.youtube"
+included-patches = "'Theme'"
+patcher-args = "-OdarkThemeBackgroundColor=#000000 -OlightThemeBackgroundColor=#FFFFFF"
+uptodown-dlurl = "https://youtube.en.uptodown.com/android"
+apkmirror-dlurl = "https://apkmirror.com/apk/google-inc/youtube"
+apkpure-dlurl = "https://apkpure.com/youtube-app/com.google.android.youtube"
+apkcombo-dlurl = "https://apkcombo.com/youtube/com.google.android.youtube"
+
+[YouTube-Morphe-AMOLED-Experimental]
+enabled = true
+app-name = "YouTube"
+variant = "AMOLED"
+sub-variant = "Experimental"
+build-mode = "both"
+version = "exp"
+pkg-name = "com.google.android.youtube"
+included-patches = "'Theme'"
+patcher-args = "-OdarkThemeBackgroundColor=#000000 -OlightThemeBackgroundColor=#FFFFFF"
+uptodown-dlurl = "https://youtube.en.uptodown.com/android"
+apkmirror-dlurl = "https://apkmirror.com/apk/google-inc/youtube"
+apkpure-dlurl = "https://apkpure.com/youtube-app/com.google.android.youtube"
+apkcombo-dlurl = "https://apkcombo.com/youtube/com.google.android.youtube"

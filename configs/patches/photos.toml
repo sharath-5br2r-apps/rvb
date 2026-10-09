@@ -27,7 +27,3 @@ build-mode = "both"
 patches-source = "Akash-Sriram/morphe-google-photos"
 apkmirror-dlurl = "https://apkmirror.com/apk/google-inc/photos"
 uptodown-dlurl = "https://google-photos.en.uptodown.com/android"
-
-
-
-

@@ -1,14 +1,13 @@
-[Twitter-Piko]
+[Twitter-Morphe-Piko]
 enabled = true
-pkg-name = "com.twitter.android"
 app-name = "Twitter"
-patches-source = "crimera/piko"
-patches-version = "both"
-build-mode = "both"
-brand = "Piko"
-apkmirror-dlurl = "https://www.apkmirror.com/apk/x-corp/twitter"
+pkg-name = "com.twitter.android"
+excluded-patches = "'Dynamic Color'"
+patcher-args = "--continue-on-error"
 uptodown-dlurl = "https://twitter.en.uptodown.com/android"
-apkpure-dlurl = "https://apkpure.com/x-formerly-twitter/com.twitter.android"
+apkmirror-dlurl = "https://www.apkmirror.com/apk/x-corp/twitter/"
+
+# ── X (Twitter) morphe-piko-materialyou (Material You / Dynamic Color) ──────────
 
 [Twitter-Piko-MaterialYou]
 enabled = true
@@ -24,4 +23,39 @@ apkmirror-dlurl = "https://www.apkmirror.com/apk/x-corp/twitter/"
 uptodown-dlurl = "https://twitter.en.uptodown.com/android"
 apkpure-dlurl = "https://apkpure.com/x-formerly-twitter/com.twitter.android"
 
+[Twitter-Morphe-Piko-Experimental]
+enabled = true
+app-name = "Twitter"
+sub-variant = "Experimental"
+version = "latest"
+skip-patch-app-check = true
+pkg-name = "com.twitter.android"
+excluded-patches = "'Dynamic Color'"
+patcher-args = "-f --continue-on-error"
+uptodown-dlurl = "https://twitter.en.uptodown.com/android"
+apkmirror-dlurl = "https://www.apkmirror.com/apk/x-corp/twitter/"
 
+# ── X (Twitter) morphe-piko-materialyou (Material You / Dynamic Color) ──────────
+
+[Twitter-Morphe-Piko-MaterialYou]
+enabled = true
+app-name = "Twitter"
+variant = "MaterialYou"
+pkg-name = "com.twitter.android"
+included-patches = "'Dynamic Color'"
+patcher-args = "--continue-on-error"
+uptodown-dlurl = "https://twitter.en.uptodown.com/android"
+apkmirror-dlurl = "https://www.apkmirror.com/apk/x-corp/twitter/"
+
+[Twitter-Morphe-Piko-MaterialYou-Experimental]
+enabled = true
+app-name = "Twitter"
+variant = "MaterialYou"
+sub-variant = "Experimental"
+version = "latest"
+skip-patch-app-check = true
+pkg-name = "com.twitter.android"
+included-patches = "'Dynamic Color'"
+patcher-args = "-f --continue-on-error"
+uptodown-dlurl = "https://twitter.en.uptodown.com/android"
+apkmirror-dlurl = "https://www.apkmirror.com/apk/x-corp/twitter/"

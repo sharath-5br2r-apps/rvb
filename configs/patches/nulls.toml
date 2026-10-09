@@ -11,12 +11,14 @@ app-name = "Clash of Clans"
 arch = "all"
 pkg-name = "nullsclash.night.rel"
 direct-dlurl = "http://dnull.xyz/latest_coc"
+
 [ClashRoyale-Nulls]
 enabled = true
 app-name = "Clash Royale"
 arch = "all"
 pkg-name = "nullsroyale.rel.free"
 direct-dlurl = "http://dnull.xyz/latest_cr"
+
 [BrawlStars-Nulls]
 enabled = true
 app-name = "Brawl Stars"

@@ -12,4 +12,5 @@ github-dlurl = "https://github.com/bitwarden/android"
 github-dlurl-regex = "fdroid.apk$"
 github-release-regex = "bwpm"
 version = "latest"
+patcher-args = "-f --continue-on-error"
 skip-patch-app-check = true

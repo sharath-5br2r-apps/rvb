@@ -1,7 +1,5 @@
-enable-module-update = true
 patches-source = "kondratjev/morphe-patches"
-patch-brand = "Kondratjev"
-cli-type = "morphe"
+brand = "kondratjev"
 
 [CalorieCounter-kondratjev]
 enabled = true
@@ -11,6 +9,7 @@ apkmirror-dlurl = "https://www.apkmirror.com/apk/fatsecret/calorie-counter-by-fa
 uptodown-dlurl = "https://fatsecret-calorie-counter.en.uptodown.com/android"
 apkpure-dlurl = "https://apkpure.com/calorie-counter-by-fatsecret/com.fatsecret.android"
 apkcombo-dlurl = "https://apkcombo.com/fatsecret/com.fatsecret.android"
+
 [SoundCloud-Morphe-Kondratjev]
 enabled = true
 app-name = "SoundCloud"
