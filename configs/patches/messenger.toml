@@ -1,0 +1,51 @@
+[Messenger-DeVanced]
+enabled = true
+pkg-name = "com.facebook.orca"
+app-name = "Messenger"
+patches-source = "RookieEnough/De-Vanced"
+brand = "DeVanced"
+apkmirror-dlurl = "https://www.apkmirror.com/apk/facebook-2/messenger"
+uptodown-dlurl = "https://facebook-messenger.en.uptodown.com/android"
+apkpure-dlurl = "https://apkpure.com/facebook-messenger/com.facebook.orca"
+apkcombo-dlurl = "https://apkcombo.com/facebook-messenger/com.facebook.orca"
+
+[Messenger-rushiranpise]
+enabled = true
+pkg-name = "com.facebook.orca"
+app-name = "Messenger"
+patches-source = "rushiranpise/morphe-patches"
+brand = "rushiranpise"
+excluded-patches = "'Remove Meta AI' 'Hide inbox stories and notes tray' 'Hide inbox subtabs' 'Hide Facebook buttons'"
+apkmirror-dlurl = "https://www.apkmirror.com/apk/facebook-2/messenger"
+uptodown-dlurl = "https://facebook-messenger.en.uptodown.com/android"
+apkpure-dlurl = "https://apkpure.com/facebook-messenger/com.facebook.orca"
+apkcombo-dlurl = "https://apkcombo.com/facebook-messenger/com.facebook.orca"
+
+[Messenger-HushMessenger]
+enabled = true
+pkg-name = "com.facebook.orca"
+app-name = "Messenger"
+patches-source = "SysAdminDoc/HushMessenger"
+brand = "HushMessenger"
+arch = "arm64-v8a"
+apkmirror-dlurl = "https://www.apkmirror.com/apk/facebook-2/messenger"
+uptodown-dlurl = "https://facebook-messenger.en.uptodown.com/android"
+apkpure-dlurl = "https://apkpure.com/facebook-messenger/com.facebook.orca"
+apkcombo-dlurl = "https://apkcombo.com/facebook-messenger/com.facebook.orca"
+
+[Messenger-HushMessenger-MaterialYou]
+enabled = true
+pkg-name = "com.facebook.orca"
+app-name = "Messenger"
+patches-source = "SysAdminDoc/HushMessenger"
+brand = "HushMessenger"
+arch = "arm64-v8a"
+variant = "Material You"
+included-patches = "'Material You theme'"
+apkmirror-dlurl = "https://www.apkmirror.com/apk/facebook-2/messenger"
+uptodown-dlurl = "https://facebook-messenger.en.uptodown.com/android"
+apkpure-dlurl = "https://apkpure.com/facebook-messenger/com.facebook.orca"
+apkcombo-dlurl = "https://apkcombo.com/facebook-messenger/com.facebook.orca"
+
+
+

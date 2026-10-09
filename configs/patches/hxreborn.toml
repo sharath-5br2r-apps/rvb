@@ -1,0 +1,37 @@
+patches-source = "hxreborn/morphe-patches"
+brand = "hxreborn"
+
+[Showly-hxreborn]
+enabled = true
+pkg-name = "com.michaldrabik.showly2"
+app-name = "Showly"
+apkmirror-dlurl = "https://www.apkmirror.com/apk/trakt/showly"
+uptodown-dlurl = "https://showly-2-0.en.uptodown.com/android"
+apkpure-dlurl = "https://apkpure.com/showly-track-tv-shows-movie/com.michaldrabik.showly2"
+apkcombo-dlurl = "https://apkcombo.com/showly-track-shows-movies/com.michaldrabik.showly2"
+
+[AtvTools-hxreborn]
+enabled = true
+pkg-name = "dev.vodik7.atvtools"
+app-name = "atvTools"
+apkpure-dlurl = "https://apkpure.com/atvtools/dev.vodik7.atvtools"
+apkcombo-dlurl = "https://apkcombo.com/atvtools/dev.vodik7.atvtools"
+
+[PocketWhip-hxreborn]
+enabled = true
+pkg-name = "com.greenstone.pocketwhip"
+app-name = "Pocket Whip"
+uptodown-dlurl = "https://com-greenstone-pocketwhip.en.uptodown.com/android"
+apkpure-dlurl = "https://apkpure.com/pocket-whip-original-whip-app/com.greenstone.pocketwhip"
+apkcombo-dlurl = "https://apkcombo.com/pocket-whip-original-whip-app/com.greenstone.pocketwhip"
+
+[Terabox-hxreborn]
+enabled = true
+pkg-name = "com.dubox.drive"
+app-name = "TeraBox"
+apkmirror-dlurl = "https://www.apkmirror.com/apk/flextech-inc/terabox-cloud-storage-cloud-backup-data-backup"
+apkpure-dlurl = "https://apkpure.com/terabox-1tb-cloud-ai-space-app/com.dubox.drive"
+apkcombo-dlurl = "https://apkcombo.com/terabox/com.dubox.drive"
+
+
+

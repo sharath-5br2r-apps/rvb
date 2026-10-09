@@ -1,0 +1,69 @@
+[YouTubeMusic-Morphe]
+enabled = true
+pkg-name = "com.google.android.apps.youtube.music"
+app-name = "YouTube Music"
+patches-source = "MorpheApp/morphe-patches"
+brand = "Morphe"
+patches-version = "both"
+build-mode = "both"
+patch-folder = "music"
+apkmirror-dlurl = "https://apkmirror.com/apk/google-inc/youtube-music"
+uptodown-dlurl = "https://youtube-music.en.uptodown.com/android"
+apkpure-dlurl = "https://apkpure.com/youtube-music/com.google.android.apps.youtube.music"
+apkcombo-dlurl = "https://apkcombo.com/youtube-music/com.google.android.apps.youtube.music"
+
+[YouTubeMusic-Morphe-Experimental]
+enabled = true
+pkg-name = "com.google.android.apps.youtube.music"
+app-name = "YouTube Music"
+patches-source = "MorpheApp/morphe-patches"
+brand = "Morphe"
+patches-version = "both"
+build-mode = "both"
+variant = "Experimental"
+patch-folder = "music"
+version = "exp"
+apkmirror-dlurl = "https://apkmirror.com/apk/google-inc/youtube-music"
+uptodown-dlurl = "https://youtube-music.en.uptodown.com/android"
+apkpure-dlurl = "https://apkpure.com/youtube-music/com.google.android.apps.youtube.music"
+apkcombo-dlurl = "https://apkcombo.com/youtube-music/com.google.android.apps.youtube.music"
+
+[youtube-music-anddea]
+enabled = true
+pkg-name = "com.google.android.apps.youtube.music"
+app-name = "YouTube Music"
+patches-source = "anddea/revanced-patches"
+brand = "anddea"
+build-mode = "both"
+patch-folder = "music"
+patches-version = "both"
+patcher-args = "-e 'Dark theme' -OdarkThemeBackgroundColor=@android:color/black"
+uptodown-dlurl = "https://youtube-music.en.uptodown.com/android"
+apkmirror-dlurl = "https://apkmirror.com/apk/google-inc/youtube-music"
+
+[youtube-music-anddea-nord]
+enabled = true
+pkg-name = "com.google.android.apps.youtube.music"
+app-name = "YouTube Music"
+patches-source = "anddea/revanced-patches"
+brand = "anddea"
+build-mode = "both"
+patch-folder = "music"
+variant = "Nord Theme"
+patcher-args = "-e 'Dark theme' -OdarkThemeBackgroundColor=#2E3440 -OmaterialYou=#5E81AC"
+uptodown-dlurl = "https://youtube-music.en.uptodown.com/android"
+apkmirror-dlurl = "https://apkmirror.com/apk/google-inc/youtube-music"
+
+[youtube-music-anddea-mocha]
+enabled = true
+pkg-name = "com.google.android.apps.youtube.music"
+app-name = "YouTube Music"
+patches-source = "anddea/revanced-patches"
+brand = "anddea"
+build-mode = "both"
+patch-folder = "music"
+variant = "Mocha Theme"
+patcher-args = "-e 'Dark theme' -OdarkThemeBackgroundColor=#FF181825 -OmaterialYou=#89B4FA"
+uptodown-dlurl = "https://youtube-music.en.uptodown.com/android"
+apkmirror-dlurl = "https://apkmirror.com/apk/google-inc/youtube-music"
+

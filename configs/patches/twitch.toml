@@ -1,0 +1,21 @@
+[Twitch-hooman]
+enabled = true
+pkg-name = "tv.twitch.android.app"
+app-name = "Twitch"
+patches-source = "arandomhooman/hoomans-morphe-patches"
+brand = "hooman"
+apkmirror-dlurl = "https://apkmirror.com/apk/twitch-interactive-inc/twitch"
+uptodown-dlurl = "https://twitch.en.uptodown.com/android"
+
+[Twitch-ajstrick81-AndroidTV]
+enabled = true
+pkg-name = "tv.twitch.android.app"
+app-name = "Twitch"
+variant = "Android TV"
+patches-source = "ajstrick81/morphe-androidtv-patches"
+brand = "ajstrick81"
+arch = "all"
+patch-folder = "twitchatv"
+apkmirror-dlurl = "https://www.apkmirror.com/apk/twitch-interactive-inc/twitch-android-tv/"
+apkpure-dlurl = "https://apkpure.com/twitch-livestream-multiplayer-games-esports-app/tv.twitch.android.app"
+apkcombo-dlurl = "https://apkcombo.com/twitch/tv.twitch.android.app"

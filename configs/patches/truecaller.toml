@@ -1,0 +1,24 @@
+[Truecaller-Paresh]
+enabled = true
+pkg-name = "com.truecaller"
+app-name = "Truecaller"
+patches-source = "Paresh-Maheshwari/paresh-patches"
+patches-source-host = "gitlab"
+brand = "Paresh"
+build-mode = "both"
+apkmirror-dlurl = "https://www.apkmirror.com/apk/true-software-scandinavia-ab/truecaller-caller-id-block"
+uptodown-dlurl = "https://truecaller.en.uptodown.com/android"
+archive-dlurl = "https://archive.org/download/geologically/apks/com.truecaller"
+
+[Truecaller-bufferk]
+enabled = true
+pkg-name = "com.truecaller"
+app-name = "Truecaller"
+patches-source = "bufferk/morphe-patches"
+brand = "bufferk"
+build-mode = "both"
+patches-version = "both"
+apkmirror-dlurl = "https://www.apkmirror.com/apk/true-software-scandinavia-ab/truecaller-caller-id-block"
+uptodown-dlurl = "https://truecaller.en.uptodown.com/android"
+apkpure-dlurl = "https://apkpure.com/truecaller-caller-id-block-for-android-2024/com.truecaller"
+archive-dlurl = "https://archive.org/download/geologically/apks/com.truecaller"

@@ -1,0 +1,21 @@
+[MacroDroid-Paresh]
+enabled = true
+pkg-name = "com.arlosoft.macrodroid"
+app-name = "MacroDroid"
+patches-source = "Paresh-Maheshwari/paresh-patches"
+patches-source-host = "gitlab"
+brand = "Paresh"
+build-mode = "both"
+apkmirror-dlurl = "https://www.apkmirror.com/apk/arlosoft/macrodroid-device-automation-2"
+uptodown-dlurl = "https://macrodroid.en.uptodown.com/android"
+
+[MacroDroid-rushiranpise]
+enabled = true
+pkg-name = "com.arlosoft.macrodroid"
+app-name = "MacroDroid"
+patches-source = "rushiranpise/morphe-patches"
+brand = "rushiranpise"
+apkmirror-dlurl = "https://www.apkmirror.com/apk/arlosoft/macrodroid-device-automation-2"
+uptodown-dlurl = "https://macrodroid.en.uptodown.com/android"
+apkpure-dlurl = "https://apkpure.com/macrodroid-device-automation-app/com.arlosoft.macrodroid"
+apkcombo-dlurl = "https://apkcombo.com/macrodroid/com.arlosoft.macrodroid"

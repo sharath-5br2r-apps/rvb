@@ -1,0 +1,30 @@
+[ProtonVPN-hoodles]
+enabled = true
+pkg-name = "ch.protonvpn.android"
+app-name = "Proton VPN"
+patches-source = "hoo-dles/morphe-patches"
+brand = "hoodles"
+apkmirror-dlurl = "https://www.apkmirror.com/apk/proton-technologies-ag/protonvpn-secure-and-free-vpn"
+uptodown-dlurl = "https://protonvpn.en.uptodown.com/android"
+apkcombo-dlurl = "https://apkcombo.com/proton-vpn/ch.protonvpn.android"
+
+[ProtonVPN-hxreborn]
+enabled = true
+pkg-name = "ch.protonvpn.android"
+app-name = "Proton VPN"
+patches-source = "hxreborn/morphe-patches"
+brand = "hxreborn"
+apkmirror-dlurl = "https://www.apkmirror.com/apk/proton-technologies-ag/protonvpn-secure-and-free-vpn"
+uptodown-dlurl = "https://protonvpn.en.uptodown.com/android"
+apkcombo-dlurl = "https://apkcombo.com/proton-vpn/ch.protonvpn.android"
+
+[ProtonVPN-Paresh]
+enabled = true
+pkg-name = "ch.protonvpn.android"
+app-name = "Proton VPN"
+patches-source = "Paresh-Maheshwari/paresh-patches"
+patches-source-host = "gitlab"
+brand = "Paresh"
+apkmirror-dlurl = "https://www.apkmirror.com/apk/proton-technologies-ag/protonvpn-secure-and-free-vpn"
+uptodown-dlurl = "https://protonvpn.en.uptodown.com/android"
+apkcombo-dlurl = "https://apkcombo.com/proton-vpn/ch.protonvpn.android"

@@ -1,0 +1,22 @@
+cli-source = "JingMatrix/LSPatch"
+
+[Discord-revenge]
+enabled = true
+patches-source = "revenge-mod/revenge-xposed"
+patches-version = "stable"
+brand = "revenge"
+pkg-name = "com.discord"
+app-name = "Discord"
+apkmirror-dlurl = "https://www.apkmirror.com/apk/discord/discord-chat-for-gamers"
+apkcombo-dlurl = "https://apkcombo.com/discord/com.discord"
+
+[Discord-rain]
+enabled = true
+patches-source = "raincord/rainXposed"
+patches-source-host = "codeberg"
+patches-version = "stable"
+brand = "rain"
+pkg-name = "com.discord"
+app-name = "Discord"
+apkmirror-dlurl = "https://www.apkmirror.com/apk/discord/discord-chat-for-gamers"
+apkcombo-dlurl = "https://apkcombo.com/discord/com.discord"

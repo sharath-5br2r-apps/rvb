@@ -1,0 +1,21 @@
+[AdGuard-hoodles]
+enabled = true
+pkg-name = "com.adguard.android"
+app-name = "AdGuard"
+patches-source = "hoo-dles/morphe-patches"
+brand = "hoodles"
+build-mode = "both"
+apkmirror-dlurl = "https://www.apkmirror.com/apk/adguard-software-limited/adguard"
+uptodown-dlurl = "https://adguard-for-android.en.uptodown.com/android"
+apkpure-dlurl = "https://apkpure.com/adguard/com.adguard.android"
+
+[AdGuard-rushiranpise-Nightly]
+enabled = true
+pkg-name = "com.adguard.android"
+app-name = "AdGuard"
+patches-source = "rushiranpise/morphe-patches"
+brand = "rushiranpise"
+variant = "Nightly"
+build-mode = "both"
+apkmirror-dlurl = "https://www.apkmirror.com/apk/adguard-software-limited/adguard"
+uptodown-dlurl = "https://adguard-for-android.en.uptodown.com/android"

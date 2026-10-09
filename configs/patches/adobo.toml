@@ -1,0 +1,12 @@
+patches-source = "jkennethcarino/adobo"
+brand = "adobo"
+
+[IMDb-adobo]
+enabled = true
+pkg-name = "com.imdb.mobile"
+app-name = "IMDb"
+arch = "all"
+apkmirror-dlurl = "https://www.apkmirror.com/apk/imdb/imdb-imdb"
+uptodown-dlurl = "https://imdb-cine-tv.en.uptodown.com/android"
+apkpure-dlurl = "https://apkpure.com/imdb-movies-tv-shows-app/com.imdb.mobile"
+apkcombo-dlurl = "https://apkcombo.com/imdb/com.imdb.mobile"

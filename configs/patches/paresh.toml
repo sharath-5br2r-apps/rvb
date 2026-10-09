@@ -4,6 +4,52 @@ patches-source-host = "gitlab"
 patch-brand = "Paresh"
 cli-type = "morphe"
 
+[Cricbuzz-Paresh]
+enabled = true
+pkg-name = "com.cricbuzz.android"
+app-name = "Cricbuzz"
+apkmirror-dlurl = "https://www.apkmirror.com/apk/cricbuzz-com/cricbuzz-live-cricket-scores-news"
+uptodown-dlurl = "https://cricbuzz-cricket-scores-and-news.en.uptodown.com/android"
+apkpure-dlurl = "https://apkpure.com/cricbuzz-live-cricket-scores/com.cricbuzz.android"
+apkcombo-dlurl = "https://apkcombo.com/cricbuzz/com.cricbuzz.android"
+[LuminaWallpapers-Paresh]
+enabled = true
+pkg-name = "com.lumina.wallpapers"
+app-name = "Lumina Wallpapers"
+uptodown-dlurl = "https://lumina-walls.en.uptodown.com/android"
+apkpure-dlurl = "https://apkpure.com/lumina-wallpapers/com.lumina.wallpapers"
+apkcombo-dlurl = "https://apkcombo.com/lumina-wallpapers/com.lumina.wallpapers"
+[Eyecon-Paresh]
+enabled = true
+pkg-name = "com.eyecon.global"
+app-name = "Eyecon"
+apkmirror-dlurl = "https://www.apkmirror.com/apk/eyecon-phone-dialer-contacts/eyecon-caller-id-spam-block"
+uptodown-dlurl = "https://eyecon-phone-dialer-and-cont-eyecon.en.uptodown.com/android"
+apkpure-dlurl = "https://apkpure.com/eyecon-caller-id-spam-block/com.eyecon.global"
+apkcombo-dlurl = "https://apkcombo.com/eyecon/com.eyecon.global"
+[TickTick-Paresh]
+enabled = true
+pkg-name = "com.ticktick.task"
+app-name = "TickTick"
+apkmirror-dlurl = "https://www.apkmirror.com/apk/ticktick-limited/ticktick-to-do-list-with-reminder-day-planner"
+uptodown-dlurl = "https://ticktick.en.uptodown.com/android"
+apkpure-dlurl = "https://apkpure.com/ticktick-to-do-list-calendar/com.ticktick.task"
+apkcombo-dlurl = "https://apkcombo.com/ticktick/com.ticktick.task"
+[SDMaid-Paresh]
+enabled = true
+pkg-name = "eu.darken.sdmse"
+app-name = "SD Maid 2/SE"
+patch-folder = "sdmaidse"
+apkmirror-dlurl = "https://www.apkmirror.com/apk/darken/sd-maid-2-se-system-cleaner"
+uptodown-dlurl = "https://sd-maid-se.en.uptodown.com/android"
+apkpure-dlurl = "https://apkpure.com/sd-maid-2-se-system-cleaner/eu.darken.sdmse"
+apkcombo-dlurl = "https://apkcombo.com/sd-maid-2-se-system-cleaner/eu.darken.sdmse"
+[Fing-Paresh]
+enabled = true
+pkg-name = "com.overlook.android.fing"
+app-name = "Fing"
+apkmirror-dlurl = "https://www.apkmirror.com/apk/fing-limited/fing-network-tools"
+uptodown-dlurl = "https://fing-network-tools.en.uptodown.com/android"
 [Truecaller-Morphe-Paresh]
 enabled = true
 app-name = "Truecaller"
@@ -12,27 +58,23 @@ arch = "all arm64-v8a armeabi-v7a"
 pkg-name = "com.truecaller"
 uptodown-dlurl = "https://truecaller.en.uptodown.com/android"
 apkmirror-dlurl = "https://www.apkmirror.com/apk/true-software-scandinavia-ab/truecaller-caller-id-block"
-
 [Fing-Morphe-Paresh]
 enabled = true
 app-name = "Fing"
 pkg-name = "com.overlook.android.fing"
 uptodown-dlurl = "https://fing-network-tools.en.uptodown.com/android"
 apkmirror-dlurl = "https://www.apkmirror.com/apk/fing-limited/fing-network-tools"
-
 [Fing-Morphe-Paresh-Experimental]
 enabled = true
 app-name = "Fing"
 sub-variant = "Experimental"
 version = "latest"
-patcher-args = "-f --continue-on-error"
 skip-patch-app-check = true
 pkg-name = "com.overlook.android.fing"
 uptodown-dlurl = "https://fing-network-tools.en.uptodown.com/android"
 apkmirror-dlurl = "https://www.apkmirror.com/apk/fing-limited/fing-network-tools"
 
 arch = "all arm64-v8a armeabi-v7a"
-
 [ProtonVPN-Morphe-Paresh]
 enabled = true
 app-name = "Proton VPN"
@@ -41,38 +83,32 @@ uptodown-dlurl = "https://protonvpn.en.uptodown.com/android"
 apkmirror-dlurl = "https://www.apkmirror.com/apk/proton-technologies-ag/protonvpn-secure-and-free-vpn"
 prefer-dl-mode = "bundle"
 dpi = "120-640dpi"
-
 [ProtonVPN-Morphe-Paresh-Experimental]
 enabled = true
 app-name = "Proton VPN"
 sub-variant = "Experimental"
 version = "latest"
-patcher-args = "-f --continue-on-error"
 skip-patch-app-check = true
 pkg-name = "ch.protonvpn.android"
 uptodown-dlurl = "https://protonvpn.en.uptodown.com/android"
 apkmirror-dlurl = "https://www.apkmirror.com/apk/proton-technologies-ag/protonvpn-secure-and-free-vpn"
 prefer-dl-mode = "bundle"
 dpi = "120-640dpi"
-
 [Jiohotstar-Morphe-Paresh]
 enabled = true
 app-name = "JioHotstar"
 pkg-name = "in.startv.hotstar"
 apkmirror-dlurl = "https://www.apkmirror.com/apk/jiostar-india-private-limited/jiohotstar-4/"
 apkmirror-example-url = "https://www.apkmirror.com/apk/jiostar-india-private-limited/jiohotstar-4/jiohotstar-26-08-03-2-release/"
-
 [Jiohotstar-Morphe-Paresh-Experimental]
 enabled = true
 app-name = "JioHotstar"
 sub-variant = "Experimental"
 version = "latest"
-patcher-args = "-f --continue-on-error"
 skip-patch-app-check = true
 pkg-name = "in.startv.hotstar"
 apkmirror-dlurl = "https://www.apkmirror.com/apk/jiostar-india-private-limited/jiohotstar-4/"
 apkmirror-example-url = "https://www.apkmirror.com/apk/jiostar-india-private-limited/jiohotstar-4/jiohotstar-26-08-03-2-release/"
-
 [SDMaid-Morphe-Paresh]
 enabled = true
 app-name = "SD Maid 2/SE"
@@ -80,13 +116,11 @@ pkg-name = "eu.darken.sdmse"
 uptodown-dlurl = "https://sd-maid-se.en.uptodown.com/android"
 apkmirror-dlurl = "https://www.apkmirror.com/apk/darken/sd-maid-2-se-system-cleaner"
 apkmirror-example-url = "https://www.apkmirror.com/apk/darken/sd-maid-2-se-system-cleaner/sd-maid-2-se-system-cleaner-2-0-3-rc0-release"
-
 [SDMaid-Morphe-Paresh-Experimental]
 enabled = true
 app-name = "SD Maid 2/SE"
 sub-variant = "Experimental"
 version = "latest"
-patcher-args = "-f --continue-on-error"
 skip-patch-app-check = true
 pkg-name = "eu.darken.sdmse"
 uptodown-dlurl = "https://sd-maid-se.en.uptodown.com/android"
@@ -101,13 +135,11 @@ arch = "all arm64-v8a armeabi-v7a"
 pkg-name = "com.mxtech.videoplayer.pro"
 apkmirror-dlurl = "https://www.apkmirror.com/apk/mx-media-entertainment-pte-ltd/mx-player-pro"
 uptodown-dlurl = "https://mx-player.en.uptodown.com/android"
-
 [MXPlayerPro-Morphe-Paresh-Experimental]
 enabled = true
 app-name = "MX Player Pro"
 sub-variant = "Experimental"
 version = "latest"
-patcher-args = "-f --continue-on-error"
 skip-patch-app-check = true
 arch = "all arm64-v8a armeabi-v7a"
 pkg-name = "com.mxtech.videoplayer.pro"
@@ -121,13 +153,11 @@ app-name = "Cricbuzz"
 pkg-name = "com.cricbuzz.android"
 uptodown-dlurl = "https://cricbuzz-cricket-scores-and-news.en.uptodown.com/android"
 apkmirror-dlurl = "https://www.apkmirror.com/apk/cricbuzz-com/cricbuzz-live-cricket-scores-news"
-
 [Cricbuzz-Morphe-Paresh-Experimental]
 enabled = true
 app-name = "Cricbuzz"
 sub-variant = "Experimental"
 version = "latest"
-patcher-args = "-f --continue-on-error"
 skip-patch-app-check = true
 pkg-name = "com.cricbuzz.android"
 uptodown-dlurl = "https://cricbuzz-cricket-scores-and-news.en.uptodown.com/android"
@@ -140,13 +170,11 @@ app-name = "Doc Scanner"
 pkg-name = "com.cv.docscanner"
 uptodown-dlurl = "https://doc-scanner.en.uptodown.com/android"
 apkmirror-dlurl = "https://www.apkmirror.com/apk/lufick/document-scanner-pdf-creator"
-
 [DocScanner-Morphe-Paresh-Experimental]
 enabled = true
 app-name = "Doc Scanner"
 sub-variant = "Experimental"
 version = "latest"
-patcher-args = "-f --continue-on-error"
 skip-patch-app-check = true
 pkg-name = "com.cv.docscanner"
 uptodown-dlurl = "https://doc-scanner.en.uptodown.com/android"

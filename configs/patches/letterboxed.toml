@@ -1,0 +1,24 @@
+[Letterboxd-mvaishak]
+enabled = true
+pkg-name = "com.letterboxd.letterboxd"
+app-name = "Letterboxd"
+brand = "mvaishak"
+patches-source = "mvaishak/letterboxd-morphe-patches"
+excluded-patches = "'Material You theme'"
+apkmirror-dlurl = "https://www.apkmirror.com/apk/letterboxd-limited/letterboxd"
+uptodown-dlurl = "https://letterboxd.en.uptodown.com/android"
+apkpure-dlurl = "https://apkpure.com/letterboxd/com.letterboxd.letterboxd"
+apkcombo-dlurl = "https://apkcombo.com/letterboxd/com.letterboxd.letterboxd"
+
+[Letterboxd-mvaishak-MaterialYou]
+enabled = true
+pkg-name = "com.letterboxd.letterboxd"
+app-name = "Letterboxd"
+brand = "mvaishak"
+variant = "Material You"
+patches-source = "mvaishak/letterboxd-morphe-patches"
+included-patches = "'Material You theme'"
+apkmirror-dlurl = "https://www.apkmirror.com/apk/letterboxd-limited/letterboxd"
+uptodown-dlurl = "https://letterboxd.en.uptodown.com/android"
+apkpure-dlurl = "https://apkpure.com/letterboxd/com.letterboxd.letterboxd"
+apkcombo-dlurl = "https://apkcombo.com/letterboxd/com.letterboxd.letterboxd"

@@ -1,0 +1,97 @@
+[Telegram-Aunali321-GooglePlay]
+enabled = true
+pkg-name = "org.telegram.messenger"
+app-name = "Telegram"
+variant = "Google Play"
+patches-source = "Aunali321/ReVancedExperiments"
+cli-source = "ReVanced/revanced-cli"
+brand = "Aunali321"
+uptodown-dlurl = "https://telegram-google-play-version.en.uptodown.com/android"
+apkmirror-dlurl = "https://www.apkmirror.com/apk/telegram-fz-llc/telegram"
+
+[Telegram-Aunali321-FOSS]
+enabled = true
+pkg-name = "org.telegram.messenger.web"
+app-name = "Telegram"
+variant = "FOSS"
+patches-source = "Aunali321/ReVancedExperiments"
+cli-source = "ReVanced/revanced-cli"
+brand = "Aunali321"
+uptodown-dlurl = "https://telegram.en.uptodown.com/android"
+apkmirror-dlurl = "https://www.apkmirror.com/apk/telegram-fz-llc/telegram-web-version"
+
+[Telegram-Paresh-FOSS]
+enabled = true
+pkg-name = "org.telegram.messenger.web"
+app-name = "Telegram"
+variant = "FOSS"
+patches-source = "Paresh-Maheshwari/paresh-patches"
+patches-source-host = "gitlab"
+brand = "Paresh"
+apkmirror-dlurl = "https://www.apkmirror.com/apk/telegram-fz-llc/telegram-web-version"
+uptodown-dlurl = "https://telegram.en.uptodown.com/android"
+apkpure-dlurl = "https://apkpure.com/telegram-messenger/org.telegram.messenger.web"
+apkcombo-dlurl = "https://apkcombo.com/telegram/org.telegram.messenger.web"
+
+[PlusMessenger-Paresh]
+enabled = true
+pkg-name = "org.telegram.plus"
+app-name = "Plus Messenger"
+patches-source = "Paresh-Maheshwari/paresh-patches"
+patches-source-host = "gitlab"
+brand = "Paresh"
+apkmirror-dlurl = "https://www.apkmirror.com/apk/rafalense/plus-messenger"
+uptodown-dlurl = "https://telegram-plus.en.uptodown.com/android"
+apkpure-dlurl = "https://apkpure.com/2025-plus-messenger-questions-tool/org.telegram.plus"
+apkcombo-dlurl = "https://apkcombo.com/plus-messenger/org.telegram.plus"
+
+[Telegram-rushiranpise-GooglePlay]
+enabled = true
+pkg-name = "org.telegram.messenger"
+app-name = "Telegram"
+variant = "Google Play"
+patches-source = "rushiranpise/morphe-patches"
+brand = "rushiranpise"
+uptodown-dlurl = "https://telegram-google-play-version.en.uptodown.com/android"
+apkmirror-dlurl = "https://www.apkmirror.com/apk/telegram-fz-llc/telegram"
+
+[Telegram-newuser7171-GooglePlay]
+enabled = true
+pkg-name = "org.telegram.messenger"
+app-name = "Telegram"
+variant = "Google Play"
+patches-source = "newuser7171/telegram-morphe-patches-"
+brand = "newuser7171"
+uptodown-dlurl = "https://telegram-google-play-version.en.uptodown.com/android"
+apkmirror-dlurl = "https://www.apkmirror.com/apk/telegram-fz-llc/telegram"
+
+[Telegram-newuser7171-FOSS]
+enabled = true
+pkg-name = "org.telegram.messenger.web"
+app-name = "Telegram"
+variant = "FOSS"
+patches-source = "newuser7171/telegram-morphe-patches-"
+brand = "newuser7171"
+uptodown-dlurl = "https://telegram.en.uptodown.com/android"
+apkmirror-dlurl = "https://www.apkmirror.com/apk/telegram-fz-llc/telegram-web-version"
+
+[PlusMessenger-newuser7171]
+enabled = true
+pkg-name = "org.telegram.plus"
+app-name = "Plus Messenger"
+patches-source = "newuser7171/telegram-morphe-patches-"
+brand = "newuser7171"
+apkmirror-dlurl = "https://www.apkmirror.com/apk/rafalense/plus-messenger"
+uptodown-dlurl = "https://telegram-plus.en.uptodown.com/android"
+apkpure-dlurl = "https://apkpure.com/2025-plus-messenger-questions-tool/org.telegram.plus"
+apkcombo-dlurl = "https://apkcombo.com/plus-messenger/org.telegram.plus"
+
+[Telegram-HushTelegram-FOSS]
+enabled = true
+pkg-name = "org.telegram.messenger.web"
+app-name = "Telegram"
+variant = "FOSS"
+patches-source = "SysAdminDoc/HushTelegram"
+brand = "HushTelegram"
+uptodown-dlurl = "https://telegram.en.uptodown.com/android"
+apkmirror-dlurl = "https://www.apkmirror.com/apk/telegram-fz-llc/telegram-web-version"
