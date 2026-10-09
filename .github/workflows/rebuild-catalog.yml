@@ -46,10 +46,10 @@ jobs:
           python3 .github/scripts/rebuild_catalog.py \
             --repos \
               "sharath-5br2r/apps" \
-              "sharath-5br2r-apps/Eden-Workflow" \
-              "sharath-5br2r-apps/Dolphin-Extra" \
-              "sharath-5br2r-apps/LeviLaunchroid-Extra" \
-              "sharath-5br2r-apps/ZalithLauncher2-Extra" \
+              "sharath-5br2r/Eden-Workflow" \
+              "sharath-5br2r/Dolphin-Extra" \
+              "sharath-5br2r/LeviLaunchroid-Extra" \
+              "sharath-5br2r/ZalithLauncher2-Extra" \
             --manifest-dir . \
             --out "data.json.new" \
             --existing "temp_old_data.json" \
