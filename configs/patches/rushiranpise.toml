@@ -351,25 +351,3 @@ uptodown-dlurl = "https://macrodroid.en.uptodown.com/android"
 apkmirror-dlurl = "https://www.apkmirror.com/apk/arlosoft/macrodroid-device-automation-2/"
 
 # ── Bluetooth Keyboard and Mouse (morphe-rushiranpise) ───────────────────────
-
-[ProtonVPN-Rushiranpise]
-enabled = true
-app-name = "Proton VPN"
-pkg-name = "ch.protonvpn.android"
-uptodown-dlurl = "https://protonvpn.en.uptodown.com/android"
-apkmirror-dlurl = "https://www.apkmirror.com/apk/proton-technologies-ag/protonvpn-secure-and-free-vpn/"
-prefer-dl-mode = "bundle"
-dpi = "120-640dpi"
-
-[ProtonVPN-Rushiranpise-Experimental]
-enabled = true
-app-name = "Proton VPN"
-sub-variant = "Experimental"
-version = "latest"
-patcher-args = "-f --continue-on-error"
-skip-patch-app-check = true
-pkg-name = "ch.protonvpn.android"
-uptodown-dlurl = "https://protonvpn.en.uptodown.com/android"
-apkmirror-dlurl = "https://www.apkmirror.com/apk/proton-technologies-ag/protonvpn-secure-and-free-vpn/"
-prefer-dl-mode = "bundle"
-dpi = "120-640dpi"
