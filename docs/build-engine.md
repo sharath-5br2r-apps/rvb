@@ -35,7 +35,10 @@ to `-`) is identical in the pooled child, the serial parent and the CI step.
   yields an uploadable log.
 - **Download exhaustion** — writing `temp/failures/<slug>_dl.json` and returning 0
   (a skip, not a failure), so it never gets a `.log`; it only asks for a manual
-  cache-repo upload.
+  cache-repo upload. Both exhaustion points record: no source that can be read at
+  all, and every version tried through every source with nothing accepted — the
+  second one used to skip silently, because returning 0 makes the parent delete the
+  app's `<slug>.json` as a clean return, and only the `_dl` name survives that sweep.
 
 `temp/failures/` is wiped at the START of `build.sh` and deliberately survives the
 end-of-run sweep, so the `build.yml` "Report build failures" step can read it.
@@ -171,7 +174,7 @@ in; the first source that yields a verified artifact **carrying the requested ar
 | 4 | `archive` | `archive.org` item, the long-term fallback for delisted versions |
 | 5 | `apkmirror` | universal-bundle strategy; package/version read from the HTML |
 | 6 | `uptodown` | |
-| 7 | `apkpure` | XAPK handling in `_apkpure_install_xapk` |
+| 7 | `apkpure` | one link per ABI read off `/downloading/<v>` → `/download/<v>` → `/download`, the page's featured `#download_link` being only one candidate, with the store's own `?versionCode=&nc=` link form as the last resort when a page yields nothing; XAPK handling in `_apkpure_install_xapk` |
 | 8 | `apkcombo` | trusts the served filename over its object key |
 
 Supporting machinery:
@@ -180,6 +183,27 @@ Supporting machinery:
   `ghcr.io/sarperavci/cloudflarebypassforscraping` service in `build.yml`), asked
   about the **effective URL after redirects**, not the request URL; `curl_cffi`
   (`scripts/cf_get.py`) for TLS-fingerprint walls.
+- **Which page a scrape actually saw** — the sidecar answers in two shapes, and they
+  are not the same document: clearance cookies let `curl_cffi` fetch the **raw** page,
+  while its `/html` endpoint returns a **JS-rendered DOM**, in which rendering has
+  already deleted or rewritten server-rendered markup (measured on APKPure's
+  `downloading/<v>` page: ~71k characters shorter, with its featured anchor gone). A
+  page that yields nothing is therefore ambiguous without a record, so `cf_get.py`
+  writes the producing path plus the sidecar's final URL to `temp/cf_source.txt`, and
+  `_cf_get` exposes it as `__CF_GET_VIA__` for a scraper's failure message.
+- **Stores answer 200 for things they do not have** — APKPure returns a generic
+  "Free APK Downloader" page for a version it does not carry, so a missing link is
+  named as *page not served* rather than as a parse failure; the two call for
+  different retries (another version, or another source). For this host the rendered
+  DOM is worse than ambiguous: measured across run 37964499217, every page the sidecar
+  returned (~206k characters, three pages per build) contained **no** `d.apkpure.com`
+  link at all, while the same URLs in a normal browser list one per ABI. Scraping
+  APKPure from a datacenter address is therefore not a solvable problem — which is why
+  `dl_apkpure` ends with the link the store writes into its own download markup
+  (`/b/XAPK/<pkg>?versionCode=<vc>&nc=<abi>`, verified to select different bytes per
+  `nc` and to serve nothing for an unknown `nc`). It is used only when the engine has
+  already resolved a version code and the arch has a store spelling, it is logged as
+  constructed, and the artifact is judged from its bytes like any other.
 - **Transfer guards** — `_req` sets connect *and* absolute ceilings plus a low-
   speed stall guard, because a mirror that trickles would otherwise hold a build
   slot forever.
