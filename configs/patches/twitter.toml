@@ -1,7 +1,7 @@
-[Twitter-Piko]
+[X-Piko]
 enabled = true
 pkg-name = "com.twitter.android"
-app-name = "Twitter"
+app-name = "X"
 patches-source = "crimera/piko"
 brand = "Piko"
 excluded-patches = "'Dynamic Color'"
@@ -10,23 +10,23 @@ uptodown-dlurl = "https://twitter.en.uptodown.com/android"
 apkmirror-dlurl = "https://www.apkmirror.com/apk/x-corp/twitter/"
 apkpure-dlurl = "https://apkpure.com/x-formerly-twitter/com.twitter.android"
 
-[Twitter-Piko-MaterialYou]
+[X-Piko-MaterialYou]
 enabled = true
 pkg-name = "com.twitter.android"
-app-name = "Twitter"
+app-name = "X"
 patches-source = "crimera/piko"
 brand = "Piko"
 variant = "Material You"
-included-patches = "'Bring back twitter' 'Dynamic color'"
+included-patches = "'Dynamic color'"
 patcher-args = "--continue-on-error"
 apkmirror-dlurl = "https://www.apkmirror.com/apk/x-corp/twitter/"
 uptodown-dlurl = "https://twitter.en.uptodown.com/android"
 apkpure-dlurl = "https://apkpure.com/x-formerly-twitter/com.twitter.android"
 
-[Twitter-Piko-Experimental]
+[X-Piko-Experimental]
 enabled = true
 pkg-name = "com.twitter.android"
-app-name = "Twitter"
+app-name = "X"
 patches-source = "crimera/piko"
 brand = "Piko"
 sub-variant = "Experimental"
@@ -38,10 +38,10 @@ uptodown-dlurl = "https://twitter.en.uptodown.com/android"
 apkmirror-dlurl = "https://www.apkmirror.com/apk/x-corp/twitter/"
 apkpure-dlurl = "https://apkpure.com/x-formerly-twitter/com.twitter.android"
 
-[Twitter-Piko-MaterialYou-Experimental]
+[X-Piko-MaterialYou-Experimental]
 enabled = true
 pkg-name = "com.twitter.android"
-app-name = "Twitter"
+app-name = "X"
 patches-source = "crimera/piko"
 brand = "Piko"
 variant = "Material You"
