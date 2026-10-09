@@ -149,3 +149,39 @@ uptodown-dlurl = "https://doc-scanner.en.uptodown.com/android"
 apkmirror-dlurl = "https://www.apkmirror.com/apk/lufick/document-scanner-pdf-creator"
 
 # ── Eyecon (morphe-paresh) ────────────────────────────────────────────────────
+
+[LuminaWallpapers-Paresh-Experimental]
+enabled = true
+app-name = "Lumina Wallpapers"
+sub-variant = "Experimental"
+version = "latest"
+patcher-args = "-f --continue-on-error"
+skip-patch-app-check = true
+pkg-name = "com.lumina.wallpapers"
+uptodown-dlurl = "https://lumina-walls.en.uptodown.com/android"
+apkpure-dlurl = "https://apkpure.com/lumina-wallpapers/com.lumina.wallpapers"
+apkcombo-dlurl = "https://apkcombo.com/lumina-wallpapers/com.lumina.wallpapers"
+
+[Eyecon-Paresh-Experimental]
+enabled = true
+app-name = "Eyecon"
+sub-variant = "Experimental"
+version = "latest"
+patcher-args = "-f --continue-on-error"
+skip-patch-app-check = true
+pkg-name = "com.eyecon.global"
+apkmirror-dlurl = "https://www.apkmirror.com/apk/eyecon-phone-dialer-contacts/eyecon-caller-id-spam-block"
+uptodown-dlurl = "https://eyecon-phone-dialer-and-cont-eyecon.en.uptodown.com/android"
+
+[TickTick-Paresh-Experimental]
+enabled = true
+app-name = "TickTick"
+sub-variant = "Experimental"
+version = "latest"
+patcher-args = "-f --continue-on-error"
+skip-patch-app-check = true
+pkg-name = "com.ticktick.task"
+apkmirror-dlurl = "https://www.apkmirror.com/apk/ticktick-limited/ticktick-to-do-list-with-reminder-day-planner"
+uptodown-dlurl = "https://ticktick.en.uptodown.com/android"
+apkpure-dlurl = "https://apkpure.com/ticktick-to-do-list-calendar/com.ticktick.task"
+apkcombo-dlurl = "https://apkcombo.com/ticktick/com.ticktick.task"

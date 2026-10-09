@@ -10,3 +10,17 @@ apkmirror-dlurl = "https://www.apkmirror.com/apk/imdb/imdb-imdb"
 uptodown-dlurl = "https://imdb-cine-tv.en.uptodown.com/android"
 apkpure-dlurl = "https://apkpure.com/imdb-movies-tv-shows-app/com.imdb.mobile"
 apkcombo-dlurl = "https://apkcombo.com/imdb/com.imdb.mobile"
+
+[IMDb-adobo-Experimental]
+enabled = true
+app-name = "IMDb"
+sub-variant = "Experimental"
+version = "latest"
+patcher-args = "-f --continue-on-error"
+skip-patch-app-check = true
+arch = "all"
+pkg-name = "com.imdb.mobile"
+apkmirror-dlurl = "https://www.apkmirror.com/apk/imdb/imdb-imdb"
+uptodown-dlurl = "https://imdb-cine-tv.en.uptodown.com/android"
+apkpure-dlurl = "https://apkpure.com/imdb-movies-tv-shows-app/com.imdb.mobile"
+apkcombo-dlurl = "https://apkcombo.com/imdb/com.imdb.mobile"

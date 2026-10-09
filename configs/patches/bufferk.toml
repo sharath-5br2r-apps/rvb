@@ -9,3 +9,16 @@ apkmirror-dlurl = "https://www.apkmirror.com/apk/a-medium-corporation/medium"
 uptodown-dlurl = "https://medium.en.uptodown.com/android"
 apkpure-dlurl = "https://apkpure.com/medium/com.medium.reader"
 apkcombo-dlurl = "https://apkcombo.com/medium/com.medium.reader"
+
+[Medium-bufferk-Experimental]
+enabled = true
+app-name = "Medium"
+sub-variant = "Experimental"
+version = "latest"
+patcher-args = "-f --continue-on-error"
+skip-patch-app-check = true
+pkg-name = "com.medium.reader"
+apkmirror-dlurl = "https://www.apkmirror.com/apk/a-medium-corporation/medium"
+uptodown-dlurl = "https://medium.en.uptodown.com/android"
+apkpure-dlurl = "https://apkpure.com/medium/com.medium.reader"
+apkcombo-dlurl = "https://apkcombo.com/medium/com.medium.reader"

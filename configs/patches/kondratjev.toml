@@ -9,3 +9,16 @@ apkmirror-dlurl = "https://www.apkmirror.com/apk/fatsecret/calorie-counter-by-fa
 uptodown-dlurl = "https://fatsecret-calorie-counter.en.uptodown.com/android"
 apkpure-dlurl = "https://apkpure.com/calorie-counter-by-fatsecret/com.fatsecret.android"
 apkcombo-dlurl = "https://apkcombo.com/fatsecret/com.fatsecret.android"
+
+[CalorieCounter-kondratjev-Experimental]
+enabled = true
+app-name = "Calorie Counter"
+sub-variant = "Experimental"
+version = "latest"
+patcher-args = "-f --continue-on-error"
+skip-patch-app-check = true
+pkg-name = "com.fatsecret.android"
+apkmirror-dlurl = "https://www.apkmirror.com/apk/fatsecret/calorie-counter-by-fatsecret/"
+uptodown-dlurl = "https://fatsecret-calorie-counter.en.uptodown.com/android"
+apkpure-dlurl = "https://apkpure.com/calorie-counter-by-fatsecret/com.fatsecret.android"
+apkcombo-dlurl = "https://apkcombo.com/fatsecret/com.fatsecret.android"

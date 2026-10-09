@@ -10,3 +10,17 @@ apkmirror-dlurl = "https://www.apkmirror.com/apk/alibaba-mobile/aliexpress-shopp
 uptodown-dlurl = "https://aliexpress.en.uptodown.com/android"
 apkpure-dlurl = "https://apkpure.com/aliexpress/com.alibaba.aliexpresshd"
 apkcombo-dlurl = "https://apkcombo.com/aliexpress-shopping-app/com.alibaba.aliexpresshd"
+
+[AliExpress-Quantro100-Experimental]
+enabled = true
+app-name = "AliExpress"
+sub-variant = "Experimental"
+version = "latest"
+patcher-args = "-f --continue-on-error"
+skip-patch-app-check = true
+pkg-name = "com.alibaba.aliexpresshd"
+included-patches = "'Enable image saving' 'Disable splash screen'"
+apkmirror-dlurl = "https://www.apkmirror.com/apk/alibaba-mobile/aliexpress-shopping-app"
+uptodown-dlurl = "https://aliexpress.en.uptodown.com/android"
+apkpure-dlurl = "https://apkpure.com/aliexpress/com.alibaba.aliexpresshd"
+apkcombo-dlurl = "https://apkcombo.com/aliexpress-shopping-app/com.alibaba.aliexpresshd"

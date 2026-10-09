@@ -1,4 +1,4 @@
-cli-source = "JingMatrix/LSPatch"
+cli-type = "lspatch"
 
 [Discord-revenge]
 enabled = true

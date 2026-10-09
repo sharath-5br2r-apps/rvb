@@ -7,3 +7,14 @@ pkg-name = "com.microsoft.emmx"
 app-name = "Microsoft Edge"
 apkmirror-dlurl = "https://www.apkmirror.com/apk/microsoft-corporation/microsoft-edge"
 uptodown-dlurl = "https://microsoft-edge.en.uptodown.com/android"
+
+[MicrosoftEdge-quantavil-Experimental]
+enabled = true
+app-name = "Microsoft Edge"
+sub-variant = "Experimental"
+version = "latest"
+patcher-args = "-f --continue-on-error"
+skip-patch-app-check = true
+pkg-name = "com.microsoft.emmx"
+apkmirror-dlurl = "https://www.apkmirror.com/apk/microsoft-corporation/microsoft-edge"
+uptodown-dlurl = "https://microsoft-edge.en.uptodown.com/android"

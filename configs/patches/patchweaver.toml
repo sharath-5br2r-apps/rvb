@@ -6,3 +6,16 @@ brand = "patchweaver"
 patches-source = "ispacecase/patchweaver"
 apkmirror-dlurl = "https://www.apkmirror.com/apk/f-droid-limited/f-droid"
 apkpure-dlurl = "https://apkpure.com/f-droid/org.fdroid.fdroid"
+
+[Fdroid-patchweaver-Experimental]
+enabled = true
+app-name = "F-Droid"
+sub-variant = "Experimental"
+version = "latest"
+patcher-args = "-f --continue-on-error"
+skip-patch-app-check = true
+pkg-name = "org.fdroid.fdroid"
+patches-source = "ispacecase/patchweaver"
+brand = "patchweaver"
+apkmirror-dlurl = "https://www.apkmirror.com/apk/f-droid-limited/f-droid"
+apkpure-dlurl = "https://apkpure.com/f-droid/org.fdroid.fdroid"

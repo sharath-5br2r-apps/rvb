@@ -8,3 +8,15 @@ app-name = "CapCut"
 apkmirror-dlurl = "https://www.apkmirror.com/apk/bytedance-pte-ltd/capcut"
 uptodown-dlurl = "https://viamaker.en.uptodown.com/android"
 apkpure-dlurl = "https://apkpure.com/capcut-video-editor/com.lemon.lvoverseas"
+
+[CapCut-riky-Experimental]
+enabled = true
+app-name = "CapCut"
+sub-variant = "Experimental"
+version = "latest"
+patcher-args = "-f --continue-on-error"
+skip-patch-app-check = true
+pkg-name = "com.lemon.lvoverseas"
+apkmirror-dlurl = "https://www.apkmirror.com/apk/bytedance-pte-ltd/capcut"
+uptodown-dlurl = "https://viamaker.en.uptodown.com/android"
+apkpure-dlurl = "https://apkpure.com/capcut-video-editor/com.lemon.lvoverseas"

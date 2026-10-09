@@ -38,3 +38,64 @@ pkg-name = "com.halfbrick.jetpackjoyride"
 uptodown-dlurl = "https://jetpack-joyride.en.uptodown.com/android"
 apkmirror-dlurl = "https://www.apkmirror.com/apk/halfbrick-studios/jetpack-joyride/"
 apkmirror-example-url = "https://www.apkmirror.com/apk/halfbrick-studios/jetpack-joyride/jetpack-joyride-1-104-1-release/"
+
+[SwiftBackup-byehi98-Experimental]
+enabled = true
+app-name = "Swift Backup"
+sub-variant = "Experimental"
+version = "latest"
+patcher-args = "-f --continue-on-error"
+skip-patch-app-check = true
+pkg-name = "org.swiftapps.swiftbackup"
+patches-source = "byehi98/okish-morphe-patches"
+brand = "byehi98"
+apkmirror-dlurl = "https://www.apkmirror.com/apk/swiftapps-org/swift-backup"
+uptodown-dlurl = "https://swift-backup.en.uptodown.com/android"
+apkpure-dlurl = "https://apkpure.com/swift-backup/org.swiftapps.swiftbackup"
+apkcombo-dlurl = "https://apkcombo.com/swift-backup/org.swiftapps.swiftbackup"
+
+[SmashHit-Byehi98-Experimental]
+enabled = true
+app-name = "Smash Hit"
+sub-variant = "Experimental"
+version = "latest"
+patcher-args = "-f --continue-on-error"
+skip-patch-app-check = true
+pkg-name = "com.mediocre.smashhit"
+apkmirror-dlurl = "https://www.apkmirror.com/apk/mediocre/smash-hit/"
+uptodown-dlurl = "https://smash-hit.en.uptodown.com/android"
+
+[Vector-Byehi98-Experimental]
+enabled = true
+app-name = "Vector"
+sub-variant = "Experimental"
+version = "latest"
+patcher-args = "-f --continue-on-error"
+skip-patch-app-check = true
+pkg-name = "com.nekki.vector"
+apkmirror-dlurl = "https://www.apkmirror.com/apk/nekki/vector/"
+uptodown-dlurl = "https://vector.en.uptodown.com/android"
+
+[HillClimbRacing-Byehi98-Experimental]
+enabled = true
+app-name = "Hill Climb Racing"
+sub-variant = "Experimental"
+version = "latest"
+patcher-args = "-f --continue-on-error"
+skip-patch-app-check = true
+arch = "arm64-v8a armeabi-v7a"
+pkg-name = "com.fingersoft.hillclimb"
+apkmirror-dlurl = "https://www.apkmirror.com/apk/fingersoft/hill-climb-racing/"
+uptodown-dlurl = "https://hill-climb-racing.en.uptodown.com/android"
+
+[JetpackJoyride-Byehi98-Experimental]
+enabled = true
+app-name = "Jetpack Joyride"
+sub-variant = "Experimental"
+version = "latest"
+patcher-args = "-f --continue-on-error"
+skip-patch-app-check = true
+pkg-name = "com.halfbrick.jetpackjoyride"
+apkmirror-dlurl = "https://www.apkmirror.com/apk/halfbrick-studios/jetpack-joyride/"
+uptodown-dlurl = "https://jetpack-joyride.en.uptodown.com/android"
+apkmirror-example-url = "https://www.apkmirror.com/apk/halfbrick-studios/jetpack-joyride/jetpack-joyride-1-104-1-release/"

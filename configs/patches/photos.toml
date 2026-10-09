@@ -27,3 +27,42 @@ build-mode = "both"
 patches-source = "Akash-Sriram/morphe-google-photos"
 apkmirror-dlurl = "https://apkmirror.com/apk/google-inc/photos"
 uptodown-dlurl = "https://google-photos.en.uptodown.com/android"
+
+[GooglePhotos-DeVanced-Experimental]
+enabled = true
+app-name = "Google Photos"
+sub-variant = "Experimental"
+version = "latest"
+patcher-args = "-f --continue-on-error"
+skip-patch-app-check = true
+pkg-name = "com.google.android.apps.photos"
+patches-source = "RookieEnough/De-Vanced"
+brand = "DeVanced"
+apkmirror-dlurl = "https://apkmirror.com/apk/google-inc/photos"
+
+[GooglePhotos-rushiranpise-Experimental]
+enabled = true
+app-name = "Google Photos"
+sub-variant = "Experimental"
+version = "latest"
+patcher-args = "-f --continue-on-error"
+skip-patch-app-check = true
+pkg-name = "com.google.android.apps.photos"
+patches-source = "rushiranpise/morphe-patches"
+brand = "rushiranpise"
+included-patches = "'AMOLED dark theme' 'Change package name' 'Enable DCIM folders backup control' 'Fix DCIM folder classification'"
+apkmirror-dlurl = "https://apkmirror.com/apk/google-inc/photos"
+uptodown-dlurl = "https://google-photos.en.uptodown.com/android"
+
+[GooglePhotos-AkashSriram-Experimental]
+enabled = true
+app-name = "Google Photos"
+sub-variant = "Experimental"
+version = "latest"
+patcher-args = "-f --continue-on-error"
+skip-patch-app-check = true
+pkg-name = "com.google.android.apps.photos"
+patches-source = "Akash-Sriram/morphe-google-photos"
+brand = "AkashSriram"
+apkmirror-dlurl = "https://apkmirror.com/apk/google-inc/photos"
+uptodown-dlurl = "https://google-photos.en.uptodown.com/android"

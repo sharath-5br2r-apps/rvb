@@ -8,3 +8,15 @@ app-name = "ByAir"
 apkmirror-dlurl = "https://www.apkmirror.com/apk/byairapp-s-l/byair-flight-tracker-status"
 apkpure-dlurl = "https://apkpure.com/byair-flight-tracker-status/com.byairapp.android"
 apkcombo-dlurl = "https://apkcombo.com/byair-flight-tracker-status/com.byairapp.android"
+
+[ByAir-franticg33k-Experimental]
+enabled = true
+app-name = "ByAir"
+sub-variant = "Experimental"
+version = "latest"
+patcher-args = "-f --continue-on-error"
+skip-patch-app-check = true
+pkg-name = "com.byairapp.android"
+apkmirror-dlurl = "https://www.apkmirror.com/apk/byairapp-s-l/byair-flight-tracker-status"
+apkpure-dlurl = "https://apkpure.com/byair-flight-tracker-status/com.byairapp.android"
+apkcombo-dlurl = "https://apkcombo.com/byair-flight-tracker-status/com.byairapp.android"

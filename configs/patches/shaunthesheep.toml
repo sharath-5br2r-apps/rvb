@@ -8,3 +8,15 @@ app-name = "KineStop"
 apkmirror-dlurl = "https://www.apkmirror.com/apk/urbandroid-team/kinestop-car-sickness-aid"
 apkpure-dlurl = "https://apkpure.com/kinestop-car-sickness-aid/com.urbandroid.kinestop"
 apkcombo-dlurl = "https://apkcombo.com/kinestop-car-sickness-aid/com.urbandroid.kinestop"
+
+[KineStop-ShaunTheSheep-Experimental]
+enabled = true
+app-name = "KineStop"
+sub-variant = "Experimental"
+version = "latest"
+patcher-args = "-f --continue-on-error"
+skip-patch-app-check = true
+pkg-name = "com.urbandroid.kinestop"
+apkmirror-dlurl = "https://www.apkmirror.com/apk/urbandroid-team/kinestop-car-sickness-aid"
+apkpure-dlurl = "https://apkpure.com/kinestop-car-sickness-aid/com.urbandroid.kinestop"
+apkcombo-dlurl = "https://apkcombo.com/kinestop-car-sickness-aid/com.urbandroid.kinestop"

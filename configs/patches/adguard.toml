@@ -19,3 +19,31 @@ variant = "Nightly"
 build-mode = "both"
 apkmirror-dlurl = "https://www.apkmirror.com/apk/adguard-software-limited/adguard"
 uptodown-dlurl = "https://adguard-for-android.en.uptodown.com/android"
+
+[AdGuard-hoodles-Experimental]
+enabled = true
+app-name = "AdGuard"
+sub-variant = "Experimental"
+version = "latest"
+patcher-args = "-f --continue-on-error"
+skip-patch-app-check = true
+pkg-name = "com.adguard.android"
+patches-source = "hoo-dles/morphe-patches"
+brand = "hoodles"
+apkmirror-dlurl = "https://www.apkmirror.com/apk/adguard-software-limited/adguard"
+uptodown-dlurl = "https://adguard-for-android.en.uptodown.com/android"
+apkpure-dlurl = "https://apkpure.com/adguard/com.adguard.android"
+
+[AdGuard-rushiranpise-Nightly-Experimental]
+enabled = true
+app-name = "AdGuard"
+variant = "Nightly"
+sub-variant = "Experimental"
+version = "latest"
+patcher-args = "-f --continue-on-error"
+skip-patch-app-check = true
+pkg-name = "com.adguard.android"
+patches-source = "rushiranpise/morphe-patches"
+brand = "rushiranpise"
+apkmirror-dlurl = "https://www.apkmirror.com/apk/adguard-software-limited/adguard"
+uptodown-dlurl = "https://adguard-for-android.en.uptodown.com/android"

@@ -38,3 +38,19 @@ uptodown-dlurl = "https://reddit-official-app.en.uptodown.com/android"
 apkpure-dlurl = "https://apkpure.com/reddit-app/com.reddit.frontpage"
 apkcombo-dlurl = "https://apkcombo.com/reddit/com.reddit.frontpage"
 archive-dlurl = "https://archive.org/download/geologically/apks/com.reddit.frontpage"
+
+[Reddit-adobo-Experimental]
+enabled = true
+app-name = "Reddit"
+sub-variant = "Experimental"
+version = "latest"
+patcher-args = "-f --continue-on-error"
+skip-patch-app-check = true
+pkg-name = "com.reddit.frontpage"
+patches-source = "jkennethcarino/adobo"
+brand = "adobo"
+apkmirror-dlurl = "https://apkmirror.com/apk/redditinc/reddit"
+uptodown-dlurl = "https://reddit-official-app.en.uptodown.com/android"
+apkpure-dlurl = "https://apkpure.com/reddit-app/com.reddit.frontpage"
+apkcombo-dlurl = "https://apkcombo.com/reddit/com.reddit.frontpage"
+archive-dlurl = "https://archive.org/download/geologically/apks/com.reddit.frontpage"

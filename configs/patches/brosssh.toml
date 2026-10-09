@@ -8,3 +8,15 @@ app-name = "Komoot"
 apkmirror-dlurl = "https://www.apkmirror.com/apk/komoot-gmbh/komoot-cycling-hiking-mountain-biking-maps"
 uptodown-dlurl = "https://komoot.en.uptodown.com/android"
 apkpure-dlurl = "https://apkpure.com/komoot-hike-bike-run/de.komoot.android"
+
+[komoot-brosssh-Experimental]
+enabled = true
+app-name = "Komoot"
+sub-variant = "Experimental"
+version = "latest"
+patcher-args = "-f --continue-on-error"
+skip-patch-app-check = true
+pkg-name = "de.komoot.android"
+apkmirror-dlurl = "https://www.apkmirror.com/apk/komoot-gmbh/komoot-cycling-hiking-mountain-biking-maps"
+uptodown-dlurl = "https://komoot.en.uptodown.com/android"
+apkpure-dlurl = "https://apkpure.com/komoot-hike-bike-run/de.komoot.android"

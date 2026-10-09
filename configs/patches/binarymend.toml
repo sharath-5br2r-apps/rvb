@@ -36,3 +36,59 @@ app-name = "CalcNote"
 pkg-name = "com.burton999.notecal"
 uptodown-dlurl = "https://calcnote-notepad-calculator.en.uptodown.com/android"
 apkmirror-dlurl = "https://www.apkmirror.com/apk/burton999/calcnote-notepad-calculator"
+
+[MoonPlusReader-binarymend-Experimental]
+enabled = true
+app-name = "Moon+ Reader"
+sub-variant = "Experimental"
+version = "latest"
+patcher-args = "-f --continue-on-error"
+skip-patch-app-check = true
+pkg-name = "com.flyersoft.moonreader"
+apkmirror-dlurl = "https://www.apkmirror.com/apk/moon/moon-reader"
+uptodown-dlurl = "https://moon-reader.en.uptodown.com/android"
+
+[Symfonium-binarymend-Experimental]
+enabled = true
+app-name = "Symfonium"
+sub-variant = "Experimental"
+version = "latest"
+patcher-args = "-f --continue-on-error"
+skip-patch-app-check = true
+pkg-name = "app.symfonik.music.player"
+apkmirror-dlurl = "https://www.apkmirror.com/apk/tolriq/symfonium-music-player-cast"
+uptodown-dlurl = "https://symfonium.en.uptodown.com/android"
+archive-dlurl = "https://archive.org/download/geologically/apks/app.symfonik.music.player"
+
+[CalcNote-binarymend-Experimental]
+enabled = true
+app-name = "CalcNote"
+sub-variant = "Experimental"
+version = "latest"
+patcher-args = "-f --continue-on-error"
+skip-patch-app-check = true
+pkg-name = "com.appumstudios.calcnote"
+apkmirror-dlurl = "https://www.apkmirror.com/apk/burton999/calcnote-notepad-calculator"
+uptodown-dlurl = "https://calcnote-notepad-calculator.en.uptodown.com/android"
+
+[aCalendar-binarymend-Experimental]
+enabled = true
+app-name = "aCalendar"
+sub-variant = "Experimental"
+version = "latest"
+patcher-args = "-f --continue-on-error"
+skip-patch-app-check = true
+pkg-name = "org.withouthat.acalendar"
+uptodown-dlurl = "https://acalendar.en.uptodown.com/android"
+apkpure-dlurl = "https://apkpure.com/acalendar-your-calendar/org.withouthat.acalendar"
+
+[CalcNote-Binarymend-Experimental]
+enabled = true
+app-name = "CalcNote"
+sub-variant = "Experimental"
+version = "latest"
+patcher-args = "-f --continue-on-error"
+skip-patch-app-check = true
+pkg-name = "com.burton999.notecal"
+apkmirror-dlurl = "https://www.apkmirror.com/apk/burton999/calcnote-notepad-calculator"
+uptodown-dlurl = "https://calcnote-notepad-calculator.en.uptodown.com/android"

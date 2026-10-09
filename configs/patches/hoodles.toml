@@ -397,22 +397,3 @@ pkg-name = "com.xodo.pdf.reader"
 uptodown-dlurl = "https://xodo-pdf-reader-editor.en.uptodown.com/android"
 apkmirror-dlurl = "https://www.apkmirror.com/apk/xodo-technologies-inc/xodo-pdf-reader-editor"
 
-[GitHub-Hoodles-Stylus]
-enabled = true
-app-name = "GitHub"
-pkg-name = "com.github.android"
-included-patches = "'AMOLED dark theme' | 'Force system font (including monospace) (GitHub)'"
-apkmirror-dlurl = "https://www.apkmirror.com/apk/github/github-2"
-apkmirror-example-url = "https://www.apkmirror.com/apk/github/github-2/github-1-202-0-release/"
-
-[GitHub-Hoodles-Stylus-Experimental]
-enabled = true
-app-name = "GitHub"
-sub-variant = "Experimental"
-version = "latest"
-patcher-args = "-f --continue-on-error"
-skip-patch-app-check = true
-pkg-name = "com.github.android"
-included-patches = "'AMOLED dark theme' | 'Force system font (including monospace) (GitHub)'"
-apkmirror-dlurl = "https://www.apkmirror.com/apk/github/github-2"
-apkmirror-example-url = "https://www.apkmirror.com/apk/github/github-2/github-1-202-0-release/"

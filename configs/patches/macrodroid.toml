@@ -19,3 +19,32 @@ apkmirror-dlurl = "https://www.apkmirror.com/apk/arlosoft/macrodroid-device-auto
 uptodown-dlurl = "https://macrodroid.en.uptodown.com/android"
 apkpure-dlurl = "https://apkpure.com/macrodroid-device-automation-app/com.arlosoft.macrodroid"
 apkcombo-dlurl = "https://apkcombo.com/macrodroid/com.arlosoft.macrodroid"
+
+[MacroDroid-Paresh-Experimental]
+enabled = true
+app-name = "MacroDroid"
+sub-variant = "Experimental"
+version = "latest"
+patcher-args = "-f --continue-on-error"
+skip-patch-app-check = true
+pkg-name = "com.arlosoft.macrodroid"
+patches-source = "Paresh-Maheshwari/paresh-patches"
+patches-source-host = "gitlab"
+brand = "Paresh"
+apkmirror-dlurl = "https://www.apkmirror.com/apk/arlosoft/macrodroid-device-automation-2"
+uptodown-dlurl = "https://macrodroid.en.uptodown.com/android"
+
+[MacroDroid-rushiranpise-Experimental]
+enabled = true
+app-name = "MacroDroid"
+sub-variant = "Experimental"
+version = "latest"
+patcher-args = "-f --continue-on-error"
+skip-patch-app-check = true
+pkg-name = "com.arlosoft.macrodroid"
+patches-source = "rushiranpise/morphe-patches"
+brand = "rushiranpise"
+apkmirror-dlurl = "https://www.apkmirror.com/apk/arlosoft/macrodroid-device-automation-2"
+uptodown-dlurl = "https://macrodroid.en.uptodown.com/android"
+apkpure-dlurl = "https://apkpure.com/macrodroid-device-automation-app/com.arlosoft.macrodroid"
+apkcombo-dlurl = "https://apkcombo.com/macrodroid/com.arlosoft.macrodroid"

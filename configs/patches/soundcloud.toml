@@ -20,3 +20,34 @@ apkmirror-dlurl = "https://www.apkmirror.com/apk/soundcloud/soundcloud-soundclou
 uptodown-dlurl = "https://soundcloud.en.uptodown.com/android"
 apkpure-dlurl = "https://apkpure.com/sound-cloud-android-app/com.soundcloud.android"
 apkcombo-dlurl = "https://apkcombo.com/soundcloud/com.soundcloud.android"
+
+[SoundCloud-hoodles-Experimental]
+enabled = true
+app-name = "SoundCloud"
+sub-variant = "Experimental"
+version = "latest"
+patcher-args = "-f --continue-on-error"
+skip-patch-app-check = true
+pkg-name = "com.soundcloud.android"
+patches-source = "hoo-dles/morphe-patches"
+brand = "hoodles"
+included-patches = "'AMOLED dark theme'"
+apkmirror-dlurl = "https://www.apkmirror.com/apk/soundcloud/soundcloud-soundcloud"
+uptodown-dlurl = "https://soundcloud.en.uptodown.com/android"
+apkpure-dlurl = "https://apkpure.com/sound-cloud-android-app/com.soundcloud.android"
+apkcombo-dlurl = "https://apkcombo.com/soundcloud/com.soundcloud.android"
+
+[SoundCloud-kondratjev-Experimental]
+enabled = true
+app-name = "SoundCloud"
+sub-variant = "Experimental"
+version = "latest"
+patcher-args = "-f --continue-on-error"
+skip-patch-app-check = true
+pkg-name = "com.soundcloud.android"
+patches-source = "kondratjev/morphe-patches"
+brand = "kondratjev"
+apkmirror-dlurl = "https://www.apkmirror.com/apk/soundcloud/soundcloud-soundcloud"
+uptodown-dlurl = "https://soundcloud.en.uptodown.com/android"
+apkpure-dlurl = "https://apkpure.com/sound-cloud-android-app/com.soundcloud.android"
+apkcombo-dlurl = "https://apkcombo.com/soundcloud/com.soundcloud.android"

@@ -32,3 +32,51 @@ app-name = "TeraBox"
 apkmirror-dlurl = "https://www.apkmirror.com/apk/flextech-inc/terabox-cloud-storage-cloud-backup-data-backup"
 apkpure-dlurl = "https://apkpure.com/terabox-1tb-cloud-ai-space-app/com.dubox.drive"
 apkcombo-dlurl = "https://apkcombo.com/terabox/com.dubox.drive"
+
+[Showly-hxreborn-Experimental]
+enabled = true
+app-name = "Showly"
+sub-variant = "Experimental"
+version = "latest"
+patcher-args = "-f --continue-on-error"
+skip-patch-app-check = true
+pkg-name = "com.michaldrabik.showly2"
+apkmirror-dlurl = "https://www.apkmirror.com/apk/trakt/showly"
+uptodown-dlurl = "https://showly-2-0.en.uptodown.com/android"
+apkpure-dlurl = "https://apkpure.com/showly-track-tv-shows-movie/com.michaldrabik.showly2"
+apkcombo-dlurl = "https://apkcombo.com/showly-track-shows-movies/com.michaldrabik.showly2"
+
+[AtvTools-hxreborn-Experimental]
+enabled = true
+app-name = "atvTools"
+sub-variant = "Experimental"
+version = "latest"
+patcher-args = "-f --continue-on-error"
+skip-patch-app-check = true
+pkg-name = "dev.vodik7.atvtools"
+apkpure-dlurl = "https://apkpure.com/atvtools/dev.vodik7.atvtools"
+apkcombo-dlurl = "https://apkcombo.com/atvtools/dev.vodik7.atvtools"
+
+[PocketWhip-hxreborn-Experimental]
+enabled = true
+app-name = "Pocket Whip"
+sub-variant = "Experimental"
+version = "latest"
+patcher-args = "-f --continue-on-error"
+skip-patch-app-check = true
+pkg-name = "com.greenstone.pocketwhip"
+uptodown-dlurl = "https://com-greenstone-pocketwhip.en.uptodown.com/android"
+apkpure-dlurl = "https://apkpure.com/pocket-whip-original-whip-app/com.greenstone.pocketwhip"
+apkcombo-dlurl = "https://apkcombo.com/pocket-whip-original-whip-app/com.greenstone.pocketwhip"
+
+[Terabox-hxreborn-Experimental]
+enabled = true
+app-name = "TeraBox"
+sub-variant = "Experimental"
+version = "latest"
+patcher-args = "-f --continue-on-error"
+skip-patch-app-check = true
+pkg-name = "com.dubox.drive"
+apkmirror-dlurl = "https://www.apkmirror.com/apk/flextech-inc/terabox-cloud-storage-cloud-backup-data-backup"
+apkpure-dlurl = "https://apkpure.com/terabox-1tb-cloud-ai-space-app/com.dubox.drive"
+apkcombo-dlurl = "https://apkcombo.com/terabox/com.dubox.drive"
