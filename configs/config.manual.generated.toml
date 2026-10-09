@@ -506,8 +506,8 @@ enabled = true
 pkg-name = "io.github.jqssun.helium"
 app-name = "Titanium Browser"
 included-patches = "'Keep Titanium Extensions Child Processes Alive' 'Force highest refresh rate'"
-apkpure-dlurl = "https://apkpure.com/helium-browser/io.github.jqssun.helium"
-apkcombo-dlurl = "https://apkcombo.com/titanium-browser/io.github.jqssun.helium"
+github-dlurl = "https://github.com/jqssun/android-titanium-browser"
+version = "latest"
 
 
 
@@ -1086,10 +1086,38 @@ uptodown-dlurl = "https://rumble.en.uptodown.com/android"
 
 
 
+[Rumble-hooman-Experimental]
+patches-source = "arandomhooman/hoomans-morphe-patches"
+enabled = true
+app-name = "Rumble"
+sub-variant = "Experimental"
+version = "latest"
+patcher-args = "-f --continue-on-error"
+skip-patch-app-check = true
+pkg-name = "com.rumble.battles"
+apkmirror-dlurl = "https://www.apkmirror.com/apk/rumble-inc/rumble"
+uptodown-dlurl = "https://rumble.en.uptodown.com/android"
+
+
+
 [BatteryGuru-Hooman]
 patches-source = "arandomhooman/hoomans-morphe-patches"
 enabled = true
 app-name = "Battery Guru"
+pkg-name = "com.paget96.batteryguru"
+uptodown-dlurl = "https://battery-guru.en.uptodown.com/android"
+apkmirror-dlurl = "https://www.apkmirror.com/apk/paget96/battery-guru-health-saver/"
+
+
+
+[BatteryGuru-Hooman-Experimental]
+patches-source = "arandomhooman/hoomans-morphe-patches"
+enabled = true
+app-name = "Battery Guru"
+sub-variant = "Experimental"
+version = "latest"
+patcher-args = "-f --continue-on-error"
+skip-patch-app-check = true
 pkg-name = "com.paget96.batteryguru"
 uptodown-dlurl = "https://battery-guru.en.uptodown.com/android"
 apkmirror-dlurl = "https://www.apkmirror.com/apk/paget96/battery-guru-health-saver/"
@@ -1106,6 +1134,20 @@ uptodown-dlurl = "https://money-manager.en.uptodown.com/android"
 
 
 
+[MoneyManager-hooman-Experimental]
+patches-source = "arandomhooman/hoomans-morphe-patches"
+enabled = true
+app-name = "Money Manager"
+sub-variant = "Experimental"
+version = "latest"
+patcher-args = "-f --continue-on-error"
+skip-patch-app-check = true
+pkg-name = "com.realbyteapps.moneymanagerfree"
+apkmirror-dlurl = "https://www.apkmirror.com/apk/realbyte-inc/money-manager-expense-budget"
+uptodown-dlurl = "https://money-manager.en.uptodown.com/android"
+
+
+
 [Poweramp-Hooman]
 patches-source = "arandomhooman/hoomans-morphe-patches"
 enabled = true
@@ -1116,144 +1158,6 @@ uptodown-dlurl = "https://poweramp-music-player.en.uptodown.com/android"
 apkmirror-dlurl = "https://www.apkmirror.com/apk/max-mp/poweramp/"
 apkpure-dlurl = "https://apkpure.com/poweramp-music-player-trial-app/com.maxmpz.audioplayer"
 apkcombo-dlurl = "https://apkcombo.com/poweramp/com.maxmpz.audioplayer"
-
-
-
-[AT4KLauncher-hooman-AndroidTV]
-patches-source = "arandomhooman/hoomans-morphe-patches"
-enabled = true
-pkg-name = "com.overdevs.at4k"
-app-name = "AT4K Launcher"
-variant = "Android TV"
-arch = "all"
-apkmirror-dlurl = "https://www.apkmirror.com/apk/cute-little-apps/at4k-launcher-android-tv"
-apkpure-dlurl = "https://apkpure.com/at4k-launcher/com.overdevs.at4k"
-
-
-
-[ProjectivyLauncher-hooman-AndroidTV]
-patches-source = "arandomhooman/hoomans-morphe-patches"
-enabled = true
-pkg-name = "com.spocky.projengmenu"
-app-name = "Projectivy Launcher"
-variant = "Android TV"
-arch = "all"
-apkpure-dlurl = "https://apkpure.com/projectivy-launcher/com.spocky.projengmenu"
-apkcombo-dlurl = "https://apkcombo.com/projectivy-launcher/com.spocky.projengmenu/"
-
-
-
-[AdobeAcrobat-Hooman]
-patches-source = "arandomhooman/hoomans-morphe-patches"
-enabled = true
-app-name = "Adobe Acrobat"
-arch = "all arm64-v8a x86_64"
-pkg-name = "com.adobe.reader"
-uptodown-dlurl = "https://adobe-reader.en.uptodown.com/android"
-apkmirror-dlurl = "https://www.apkmirror.com/apk/adobe/adobe-acrobat/"
-
-
-
-[InShot-hooman]
-patches-source = "arandomhooman/hoomans-morphe-patches"
-enabled = true
-pkg-name = "com.camerasideas.instashot"
-app-name = "InShot"
-apkmirror-dlurl = "https://www.apkmirror.com/apk/inshot-inc/inshot-video-editor-photo-editor"
-uptodown-dlurl = "https://inshot-editor.en.uptodown.com/android"
-
-
-
-[Todoist-hooman]
-patches-source = "arandomhooman/hoomans-morphe-patches"
-enabled = true
-pkg-name = "com.todoist"
-app-name = "Todoist"
-apkmirror-dlurl = "https://www.apkmirror.com/apk/doist/todoist"
-apkpure-dlurl = "https://apkpure.com/todoist-to-do-list-planner/com.todoist"
-apkcombo-dlurl = "https://apkcombo.com/todoist/com.todoist"
-
-
-
-[Tumblr-hooman]
-patches-source = "arandomhooman/hoomans-morphe-patches"
-enabled = true
-pkg-name = "com.tumblr"
-app-name = "Tumblr"
-apkmirror-dlurl = "https://www.apkmirror.com/apk/tumblr-inc/tumblr"
-uptodown-dlurl = "https://tumblr.en.uptodown.com/android"
-apkpure-dlurl = "https://apkpure.com/tumblr-1-for-android-app/com.tumblr"
-apkcombo-dlurl = "https://apkcombo.com/tumblr/com.tumblr"
-
-
-
-[GooglePhone-hooman]
-patches-source = "arandomhooman/hoomans-morphe-patches"
-enabled = true
-pkg-name = "com.google.android.dialer"
-app-name = "Google Phone"
-build-mode = "both"
-apkmirror-dlurl = "https://www.apkmirror.com/apk/google-inc/google-phone"
-uptodown-dlurl = "https://google-phone.en.uptodown.com/android"
-apkpure-dlurl = "https://apkpure.com/phone-by-google-app/com.google.android.dialer"
-apkcombo-dlurl = "https://apkcombo.com/google-phone/com.google.android.dialer"
-
-
-
-[MicrosoftSwiftKey-Hooman]
-patches-source = "arandomhooman/hoomans-morphe-patches"
-enabled = true
-app-name = "Microsoft SwiftKey"
-pkg-name = "com.touchtype.swiftkey"
-skip-patch-app-check = true
-uptodown-dlurl = "https://swiftkey-keyboard.en.uptodown.com/android"
-apkmirror-dlurl = "https://www.apkmirror.com/apk/swiftkey/swiftkey-keyboard"
-
-
-
-[FolderSync-hooman]
-patches-source = "arandomhooman/hoomans-morphe-patches"
-enabled = true
-pkg-name = "dk.tacit.android.foldersync.lite"
-app-name = "FolderSync"
-apkmirror-dlurl = "https://www.apkmirror.com/apk/tacit-dynamics/foldersync"
-uptodown-dlurl = "https://foldersync-lite.en.uptodown.com/android"
-apkpure-dlurl = "https://apkpure.com/foldersync/dk.tacit.android.foldersync.lite"
-apkcombo-dlurl = "https://apkcombo.com/foldersync/dk.tacit.android.foldersync.lite"
-
-
-
-[Symfonium-Hooman]
-patches-source = "arandomhooman/hoomans-morphe-patches"
-enabled = true
-app-name = "Symfonium"
-pkg-name = "app.symfonik.music.player"
-uptodown-dlurl = "https://symfonium.en.uptodown.com/android"
-apkmirror-dlurl = "https://www.apkmirror.com/apk/tolriq/symfonium-music-player-cast"
-
-
-
-[AdvancedDownloadManager-Hooman]
-patches-source = "arandomhooman/hoomans-morphe-patches"
-enabled = true
-app-name = "Advanced Download Manager"
-pkg-name = "com.dv.adm"
-uptodown-dlurl="https://advanced-download-manager.en.uptodown.com/android"
-apkmirror-dlurl="https://www.apkmirror.com/apk/admtorrent/advanced-download-manager/"
-
-
-
-
-[BatteryGuru-Hooman-Experimental]
-patches-source = "arandomhooman/hoomans-morphe-patches"
-enabled = true
-app-name = "Battery Guru"
-sub-variant = "Experimental"
-version = "latest"
-patcher-args = "-f --continue-on-error"
-pkg-name = "com.paget96.batteryguru"
-uptodown-dlurl = "https://battery-guru.en.uptodown.com/android"
-apkmirror-dlurl = "https://www.apkmirror.com/apk/paget96/battery-guru-health-saver/"
 
 
 
@@ -1274,6 +1178,73 @@ apkcombo-dlurl = "https://apkcombo.com/poweramp/com.maxmpz.audioplayer"
 
 
 
+[AT4KLauncher-hooman-AndroidTV]
+patches-source = "arandomhooman/hoomans-morphe-patches"
+enabled = true
+pkg-name = "com.overdevs.at4k"
+app-name = "AT4K Launcher"
+variant = "Android TV"
+arch = "all arm64-v8a armeabi-v7a"
+apkmirror-dlurl = "https://www.apkmirror.com/apk/cute-little-apps/at4k-launcher-android-tv"
+apkpure-dlurl = "https://apkpure.com/at4k-launcher/com.overdevs.at4k"
+
+
+
+[AT4KLauncher-hooman-AndroidTV-Experimental]
+patches-source = "arandomhooman/hoomans-morphe-patches"
+enabled = true
+app-name = "AT4K Launcher"
+variant = "Android TV"
+sub-variant = "Experimental"
+version = "latest"
+patcher-args = "-f --continue-on-error"
+skip-patch-app-check = true
+arch = "all arm64-v8a armeabi-v7a"
+pkg-name = "com.overdevs.at4k"
+apkmirror-dlurl = "https://www.apkmirror.com/apk/cute-little-apps/at4k-launcher-android-tv"
+apkpure-dlurl = "https://apkpure.com/at4k-launcher/com.overdevs.at4k"
+
+
+
+[ProjectivyLauncher-hooman-AndroidTV]
+patches-source = "arandomhooman/hoomans-morphe-patches"
+enabled = true
+pkg-name = "com.spocky.projengmenu"
+app-name = "Projectivy Launcher"
+variant = "Android TV"
+arch = "all arm64-v8a armeabi-v7a"
+apkpure-dlurl = "https://apkpure.com/projectivy-launcher/com.spocky.projengmenu"
+apkcombo-dlurl = "https://apkcombo.com/projectivy-launcher/com.spocky.projengmenu/"
+
+
+
+[ProjectivyLauncher-hooman-AndroidTV-Experimental]
+patches-source = "arandomhooman/hoomans-morphe-patches"
+enabled = true
+app-name = "Projectivy Launcher"
+variant = "Android TV"
+sub-variant = "Experimental"
+version = "latest"
+patcher-args = "-f --continue-on-error"
+skip-patch-app-check = true
+arch = "all arm64-v8a armeabi-v7a"
+pkg-name = "com.spocky.projengmenu"
+apkpure-dlurl = "https://apkpure.com/projectivy-launcher/com.spocky.projengmenu"
+apkcombo-dlurl = "https://apkcombo.com/projectivy-launcher/com.spocky.projengmenu/"
+
+
+
+[AdobeAcrobat-Hooman]
+patches-source = "arandomhooman/hoomans-morphe-patches"
+enabled = true
+app-name = "Adobe Acrobat"
+arch = "all arm64-v8a x86_64"
+pkg-name = "com.adobe.reader"
+uptodown-dlurl = "https://adobe-reader.en.uptodown.com/android"
+apkmirror-dlurl = "https://www.apkmirror.com/apk/adobe/adobe-acrobat/"
+
+
+
 [AdobeAcrobat-Hooman-Experimental]
 patches-source = "arandomhooman/hoomans-morphe-patches"
 enabled = true
@@ -1286,6 +1257,215 @@ arch = "all arm64-v8a x86_64"
 pkg-name = "com.adobe.reader"
 uptodown-dlurl = "https://adobe-reader.en.uptodown.com/android"
 apkmirror-dlurl = "https://www.apkmirror.com/apk/adobe/adobe-acrobat/"
+
+
+
+[InShot-hooman]
+patches-source = "arandomhooman/hoomans-morphe-patches"
+enabled = true
+pkg-name = "com.camerasideas.instashot"
+app-name = "InShot"
+apkmirror-dlurl = "https://www.apkmirror.com/apk/inshot-inc/inshot-video-editor-photo-editor"
+uptodown-dlurl = "https://inshot-editor.en.uptodown.com/android"
+
+
+
+[InShot-hooman-Experimental]
+patches-source = "arandomhooman/hoomans-morphe-patches"
+enabled = true
+app-name = "InShot"
+sub-variant = "Experimental"
+version = "latest"
+patcher-args = "-f --continue-on-error"
+skip-patch-app-check = true
+pkg-name = "com.camerasideas.instashot"
+apkmirror-dlurl = "https://www.apkmirror.com/apk/inshot-inc/inshot-video-editor-photo-editor"
+uptodown-dlurl = "https://inshot-editor.en.uptodown.com/android"
+
+
+
+[Todoist-hooman]
+patches-source = "arandomhooman/hoomans-morphe-patches"
+enabled = true
+pkg-name = "com.todoist"
+app-name = "Todoist"
+apkmirror-dlurl = "https://www.apkmirror.com/apk/doist/todoist"
+apkpure-dlurl = "https://apkpure.com/todoist-to-do-list-planner/com.todoist"
+apkcombo-dlurl = "https://apkcombo.com/todoist/com.todoist"
+
+
+
+[Todoist-hooman-Experimental]
+patches-source = "arandomhooman/hoomans-morphe-patches"
+enabled = true
+app-name = "Todoist"
+sub-variant = "Experimental"
+version = "latest"
+patcher-args = "-f --continue-on-error"
+skip-patch-app-check = true
+pkg-name = "com.todoist"
+apkmirror-dlurl = "https://www.apkmirror.com/apk/doist/todoist"
+apkpure-dlurl = "https://apkpure.com/todoist-to-do-list-planner/com.todoist"
+apkcombo-dlurl = "https://apkcombo.com/todoist/com.todoist"
+
+
+
+[Tumblr-hooman]
+patches-source = "arandomhooman/hoomans-morphe-patches"
+enabled = true
+pkg-name = "com.tumblr"
+app-name = "Tumblr"
+apkmirror-dlurl = "https://www.apkmirror.com/apk/tumblr-inc/tumblr"
+uptodown-dlurl = "https://tumblr.en.uptodown.com/android"
+apkpure-dlurl = "https://apkpure.com/tumblr-1-for-android-app/com.tumblr"
+apkcombo-dlurl = "https://apkcombo.com/tumblr/com.tumblr"
+
+
+
+[Tumblr-hooman-Experimental]
+patches-source = "arandomhooman/hoomans-morphe-patches"
+enabled = true
+app-name = "Tumblr"
+sub-variant = "Experimental"
+version = "latest"
+patcher-args = "-f --continue-on-error"
+skip-patch-app-check = true
+pkg-name = "com.tumblr"
+apkmirror-dlurl = "https://www.apkmirror.com/apk/tumblr-inc/tumblr"
+uptodown-dlurl = "https://tumblr.en.uptodown.com/android"
+apkpure-dlurl = "https://apkpure.com/tumblr-1-for-android-app/com.tumblr"
+apkcombo-dlurl = "https://apkcombo.com/tumblr/com.tumblr"
+
+
+
+[GooglePhone-hooman]
+patches-source = "arandomhooman/hoomans-morphe-patches"
+enabled = true
+pkg-name = "com.google.android.dialer"
+app-name = "Google Phone"
+build-mode = "both"
+apkmirror-dlurl = "https://www.apkmirror.com/apk/google-inc/google-phone"
+uptodown-dlurl = "https://google-phone.en.uptodown.com/android"
+apkpure-dlurl = "https://apkpure.com/phone-by-google-app/com.google.android.dialer"
+apkcombo-dlurl = "https://apkcombo.com/google-phone/com.google.android.dialer"
+
+
+
+[GooglePhone-hooman-Experimental]
+patches-source = "arandomhooman/hoomans-morphe-patches"
+enabled = true
+app-name = "Google Phone"
+sub-variant = "Experimental"
+version = "latest"
+patcher-args = "-f --continue-on-error"
+skip-patch-app-check = true
+build-mode = "both"
+pkg-name = "com.google.android.dialer"
+apkmirror-dlurl = "https://www.apkmirror.com/apk/google-inc/google-phone"
+uptodown-dlurl = "https://google-phone.en.uptodown.com/android"
+apkpure-dlurl = "https://apkpure.com/phone-by-google-app/com.google.android.dialer"
+apkcombo-dlurl = "https://apkcombo.com/google-phone/com.google.android.dialer"
+
+
+
+[MicrosoftSwiftKey-Hooman]
+patches-source = "arandomhooman/hoomans-morphe-patches"
+enabled = true
+app-name = "Microsoft SwiftKey"
+pkg-name = "com.touchtype.swiftkey"
+skip-patch-app-check = true
+uptodown-dlurl = "https://swiftkey-keyboard.en.uptodown.com/android"
+apkmirror-dlurl = "https://www.apkmirror.com/apk/swiftkey/swiftkey-keyboard"
+
+
+
+[MicrosoftSwiftKey-Hooman-Experimental]
+patches-source = "arandomhooman/hoomans-morphe-patches"
+enabled = true
+app-name = "Microsoft SwiftKey"
+sub-variant = "Experimental"
+version = "latest"
+patcher-args = "-f --continue-on-error"
+skip-patch-app-check = true
+pkg-name = "com.touchtype.swiftkey"
+uptodown-dlurl = "https://swiftkey-keyboard.en.uptodown.com/android"
+apkmirror-dlurl = "https://www.apkmirror.com/apk/swiftkey/swiftkey-keyboard"
+
+
+
+[FolderSync-hooman]
+patches-source = "arandomhooman/hoomans-morphe-patches"
+enabled = true
+pkg-name = "dk.tacit.android.foldersync.lite"
+app-name = "FolderSync"
+apkmirror-dlurl = "https://www.apkmirror.com/apk/tacit-dynamics/foldersync"
+uptodown-dlurl = "https://foldersync-lite.en.uptodown.com/android"
+apkpure-dlurl = "https://apkpure.com/foldersync/dk.tacit.android.foldersync.lite"
+apkcombo-dlurl = "https://apkcombo.com/foldersync/dk.tacit.android.foldersync.lite"
+
+
+
+[FolderSync-hooman-Experimental]
+patches-source = "arandomhooman/hoomans-morphe-patches"
+enabled = true
+app-name = "FolderSync"
+sub-variant = "Experimental"
+version = "latest"
+patcher-args = "-f --continue-on-error"
+skip-patch-app-check = true
+pkg-name = "dk.tacit.android.foldersync.lite"
+apkmirror-dlurl = "https://www.apkmirror.com/apk/tacit-dynamics/foldersync"
+uptodown-dlurl = "https://foldersync-lite.en.uptodown.com/android"
+apkpure-dlurl = "https://apkpure.com/foldersync/dk.tacit.android.foldersync.lite"
+apkcombo-dlurl = "https://apkcombo.com/foldersync/dk.tacit.android.foldersync.lite"
+
+
+
+[Symfonium-Hooman]
+patches-source = "arandomhooman/hoomans-morphe-patches"
+enabled = true
+app-name = "Symfonium"
+pkg-name = "app.symfonik.music.player"
+uptodown-dlurl = "https://symfonium.en.uptodown.com/android"
+apkmirror-dlurl = "https://www.apkmirror.com/apk/tolriq/symfonium-music-player-cast"
+
+
+
+[Symfonium-Hooman-Experimental]
+patches-source = "arandomhooman/hoomans-morphe-patches"
+enabled = true
+app-name = "Symfonium"
+sub-variant = "Experimental"
+version = "latest"
+patcher-args = "-f --continue-on-error"
+skip-patch-app-check = true
+pkg-name = "app.symfonik.music.player"
+uptodown-dlurl = "https://symfonium.en.uptodown.com/android"
+apkmirror-dlurl = "https://www.apkmirror.com/apk/tolriq/symfonium-music-player-cast"
+
+
+
+[AdvancedDownloadManager-Hooman]
+patches-source = "arandomhooman/hoomans-morphe-patches"
+enabled = true
+app-name = "Advanced Download Manager"
+pkg-name = "com.dv.adm"
+uptodown-dlurl = "https://advanced-download-manager.en.uptodown.com/android"
+apkmirror-dlurl = "https://www.apkmirror.com/apk/admtorrent/advanced-download-manager/"
+
+
+
+[AdvancedDownloadManager-Hooman-Experimental]
+patches-source = "arandomhooman/hoomans-morphe-patches"
+enabled = true
+app-name = "Advanced Download Manager"
+sub-variant = "Experimental"
+version = "latest"
+patcher-args = "-f --continue-on-error"
+skip-patch-app-check = true
+pkg-name = "com.dv.adm"
+uptodown-dlurl = "https://advanced-download-manager.en.uptodown.com/android"
+apkmirror-dlurl = "https://www.apkmirror.com/apk/admtorrent/advanced-download-manager/"
 
 
 [Showly-hxreborn]
@@ -1420,7 +1600,7 @@ patches-source = "crimera/piko"
 patches-version = "both"
 brand = "Piko"
 build-mode = "apk"
-arch = "arm64-v8a"
+arch = "arm64-v8a x86_64"
 included-patches = "'Clone'"
 apkmirror-dlurl = "https://www.apkmirror.com/apk/instagram/instagram-instagram"
 uptodown-dlurl = "https://instagram.en.uptodown.com/android"
@@ -1433,7 +1613,7 @@ pkg-name = "com.instagram.android"
 app-name = "Instagram"
 patches-source = "SysAdminDoc/HushGram"
 brand = "HushGram"
-arch = "arm64-v8a"
+arch = "arm64-v8a x86_64 armeabi-v7a x86"
 inclusive-patches = true
 apkmirror-dlurl = "https://www.apkmirror.com/apk/instagram/instagram-instagram"
 uptodown-dlurl = "https://instagram.en.uptodown.com/android"

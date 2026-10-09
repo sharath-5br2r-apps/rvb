@@ -7,8 +7,8 @@ enabled = true
 pkg-name = "io.github.jqssun.helium"
 app-name = "Titanium Browser"
 included-patches = "'Keep Titanium Extensions Child Processes Alive' 'Force highest refresh rate'"
-apkpure-dlurl = "https://apkpure.com/helium-browser/io.github.jqssun.helium"
-apkcombo-dlurl = "https://apkcombo.com/titanium-browser/io.github.jqssun.helium"
+github-dlurl = "https://github.com/jqssun/android-titanium-browser"
+version = "latest"
 
 [BraveBrowser-Beta-Dh6k]
 enabled = true
