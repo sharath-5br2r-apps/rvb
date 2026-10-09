@@ -2,10 +2,10 @@
 
 A fast, modern, and clean catalog for patched Android applications, desktop builds, and Magisk/KernelSU modules built across multiple automated repositories.
 
-[![Website](https://img.shields.io/badge/Store-Website-21a378?style=flat&logo=homeassistantcommunitystore&logoColor=white)](https://sharath-5br2r-apps.github.io/)
-[![GitHub Stars](https://img.shields.io/github/stars/sharath-5br2r-apps/sharath-5br2r-apps.github.io?label=Stars&logo=github&style=social)](https://github.com/sharath-5br2r-apps/sharath-5br2r-apps.github.io)
-[![Discussions](https://img.shields.io/badge/Discussions-Join-blue?style=flat&logo=github&logoColor=white)](https://github.com/orgs/sharath-5br2r-apps/discussions)
-[![Website Visitors](https://visitor-badge.laobi.icu/badge?page_id=sharath-5br2r-apps.github.io&left_text=Website%20Visitors&right_color=%231283c3&format=true&query_only=true)](https://sharath-5br2r-apps.github.io)
+[![Website](https://img.shields.io/badge/Store-Website-21a378?style=flat&logo=homeassistantcommunitystore&logoColor=white)](https://sharath-5br2r.github.io/apps)
+[![GitHub Stars](https://img.shields.io/github/stars/sharath-5br2r/apps?label=Stars&logo=github&style=social)](https://github.com/sharath-5br2r/apps)
+[![Discussions](https://img.shields.io/badge/Discussions-Join-blue?style=flat&logo=github&logoColor=white)](https://github.com/sharath-5br2r/apps/discussions)
+[![Website Visitors](https://visitor-badge.laobi.icu/badge?page_id=sharath-5br2r.github.io.apps&left_text=Website%20Visitors&right_color=%231283c3&format=true&query_only=true)](https://sharath-5br2r.github.io/apps)
 
 ---
 
@@ -13,11 +13,11 @@ A fast, modern, and clean catalog for patched Android applications, desktop buil
 
 ### 📦 Multi-Repository Aggregation
 - **Unified Catalog**: Automatically aggregates, merges, and presents builds across multiple automated repositories into a single responsive frontend:
-  - [`rvb`](https://github.com/sharath-5br2r-apps/rvb): Core ReVanced & Morphe patched applications.
-  - [`Eden-Workflow`](https://github.com/sharath-5br2r-apps/Eden-Workflow): Eden Android and PC/Desktop builds.
-  - [`Dolphin-Extra`](https://github.com/sharath-5br2r-apps/Dolphin-Extra): Custom Dolphin emulator forks and enhancements.
-  - [`LeviLaunchroid-Extra`](https://github.com/sharath-5br2r-apps/LeviLaunchroid-Extra): Specialized launcher builds.
-  - [`ZalithLauncher2-Extra`](https://github.com/sharath-5br2r-apps/ZalithLauncher2-Extra): ZalithLauncher2 workflow releases.
+  - [`apps`](https://github.com/sharath-5br2r/apps): Core ReVanced & Morphe patched applications.
+  - [`Eden-Workflow`](https://github.com/sharath-5br2r/Eden-Workflow): Eden Android and PC/Desktop builds.
+  - [`Dolphin-Extra`](https://github.com/sharath-5br2r/Dolphin-Extra): Custom Dolphin emulator forks and enhancements.
+  - [`LeviLaunchroid-Extra`](https://github.com/sharath-5br2r/LeviLaunchroid-Extra): Specialized launcher builds.
+  - [`ZalithLauncher2-Extra`](https://github.com/sharath-5br2r/ZalithLauncher2-Extra): ZalithLauncher2 workflow releases.
 - **Automated Workflow Pipeline**: GitHub Actions periodically rebuild and deduplicate catalog data using Schema v2, with zero-downtime deployment to GitHub Pages.
 
 ### 🔍 Advanced Filter Toolbar & In-Memory Search

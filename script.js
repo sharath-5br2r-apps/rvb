@@ -45,15 +45,15 @@ function getFaSvg(name, extraClass) {
 }
 
 const CONFIG = {
-  "owner": "sharath-5br2r-apps",
-  "repo": "rvb",
+  "owner": "sharath-5br2r",
+  "repo": "apps",
   // Support for multiple GitHub APK release repositories
   repos: [
-    { owner: "sharath-5br2r-apps", repo: "rvb" },
-    { owner: "sharath-5br2r-apps", repo: "Eden-Workflow" },
-    { owner: "sharath-5br2r-apps", repo: "Dolphin-Extra" },
-    { owner: "sharath-5br2r-apps", repo: "LeviLaunchroid-Extra" },
-    { owner: "sharath-5br2r-apps", repo: "ZalithLauncher2-Extra" }
+    { owner: "sharath-5br2r", repo: "apps" },
+    { owner: "sharath-5br2r", repo: "Eden-Workflow" },
+    { owner: "sharath-5br2r", repo: "Dolphin-Extra" },
+    { owner: "sharath-5br2r", repo: "LeviLaunchroid-Extra" },
+    { owner: "sharath-5br2r", repo: "ZalithLauncher2-Extra" }
   ],
   cacheDuration: 1, // Cache duration in minutes
 
@@ -825,7 +825,7 @@ const CONFIG = {
       text: "Due to shared permissions between Amazon apps and Prime Video (shared login), all Amazon apps must be installed with the same signature.",
       links: [
         { label: "Download apps from here", url: "./" },
-        { label: "Discussions", url: "https://github.com/orgs/sharath-5br2r-apps/discussions" },
+        { label: "Discussions", url: "https://github.com/sharath-5br2r/apps/discussions" },
       ],
     },
     {
@@ -836,7 +836,7 @@ const CONFIG = {
       title: "Dolphin Extra",
       text: "It is a fork of Dolphin that incorporates aspects from DolphinCS and Better-Wii-Menu-DE.",
       links: [
-        { label: "Source Code", url: "https://github.com/sharath-5br2r-apps/Dolphin-Extra" },
+        { label: "Source Code", url: "https://github.com/sharath-5br2r/Dolphin-Extra" },
       ],
     },
     {
@@ -848,7 +848,7 @@ const CONFIG = {
       title: "LeviLaunchroid Extra",
       text: "Additional modules and builds for LeviLaunchroid.",
       links: [
-        { label: "Source Code", url: "https://github.com/sharath-5br2r-apps/LeviLaunchroid-Extra" },
+        { label: "Source Code", url: "https://github.com/sharath-5br2r/LeviLaunchroid-Extra" },
       ],
     },
     {
@@ -860,7 +860,7 @@ const CONFIG = {
       title: "ZalithLauncher2 Extra",
       text: "Additional builds and releases for ZalithLauncher2.",
       links: [
-        { label: "Source Code", url: "https://github.com/sharath-5br2r-apps/ZalithLauncher2-Extra" },
+        { label: "Source Code", url: "https://github.com/sharath-5br2r/ZalithLauncher2-Extra" },
       ],
     },
     {
@@ -894,7 +894,7 @@ function getConfigRepos() {
   if (CONFIG.owner && CONFIG.repo) {
     return [{ owner: CONFIG.owner, repo: CONFIG.repo }];
   }
-  return [{ owner: "sharath-5br2r-apps", repo: "rvb" }];
+  return [{ owner: "sharath-5br2r", repo: "apps" }];
 }
 
 // Explicit Extension Matching (Includes .tar.{ext} like .tar.gz, .tar.xz, .tar.bz2, .tar.zst)

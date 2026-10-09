@@ -23,10 +23,10 @@ from pathlib import Path
 
 DEFAULT_REPOS = [
     "sharath-5br2r/apps",
-    "sharath-5br2r-apps/Eden-Workflow",
-    "sharath-5br2r-apps/Dolphin-Extra",
-    "sharath-5br2r-apps/LeviLaunchroid-Extra",
-    "sharath-5br2r-apps/ZalithLauncher2-Extra",
+    "sharath-5br2r/Eden-Workflow",
+    "sharath-5br2r/Dolphin-Extra",
+    "sharath-5br2r/LeviLaunchroid-Extra",
+    "sharath-5br2r/ZalithLauncher2-Extra",
 ]
 
 ARCH_ORDER = {"arm64": 0, "arm": 1, "all": 2, "universal": 3, "x86_64": 4, "x86": 5}
