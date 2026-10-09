@@ -47,6 +47,14 @@ def classify(cli_source: str) -> str:
     return "generic"
 
 
+def ci_bundle_diffable(cli_sources) -> bool:
+    """Preserves ci_check_app_patches.py's rule: a repo with no known cli is
+    treated diffable; otherwise any cli-source containing 'revanced' or 'morphe'."""
+    if not cli_sources:
+        return True
+    return any("revanced" in c or "morphe" in c for c in cli_sources)
+
+
 def main(argv):
     if len(argv) < 2:
         print(__doc__.strip(), file=sys.stderr)
