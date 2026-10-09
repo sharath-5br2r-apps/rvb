@@ -1,15 +1,15 @@
-# Website Architecture & Configuration Guide (`nullcpy.github.io`)
+# Website Architecture & Configuration Guide (`sharath-5br2r.github.io/apps`)
 
-This document details the configuration, data schema, styling, and synchronization mechanisms powering the **NullStore** web catalog.
+This document details the configuration, data schema, styling, and synchronization mechanisms powering the **AdvancedStore** web catalog.
 
 ---
 
 ## 1. Architecture Overview
 
 - **Stack**: Pure Vanilla HTML5, CSS3, and modern ECMAScript (zero runtime frameworks or bundled bloat).
-- **Hosting**: GitHub Pages (`https://nullcpy.github.io/`).
+- **Hosting**: GitHub Pages (`https://sharath-5br2r.github.io/apps`).
 - **Data Source**: Static [`data.json`](./data.json) file serialized under **Schema v2**.
-- **Decoupled Design**: The build pipeline in [`nullcpy/rvb`](https://github.com/nullcpy/rvb) pushes catalog updates over GitHub API. The website operates entirely as an independent client.
+- **Integrated Design**: Hosted directly on the `gh-pages` branch of `sharath-5br2r/apps`. Manifests are read locally from `manifests/` and cumulative `manifests/archive/` without external repository dispatches.
 
 ---
 
@@ -247,7 +247,7 @@ Unmatched apps return `Infinity` and are filtered out instantly.
 ## 6. Maintenance & CI Lifecycle
 
 - **Sole writer of `data.json`**:
-  - [`.github/scripts/rebuild_catalog.py`](.github/scripts/rebuild_catalog.py) regenerates the entire catalog in **this** repo and is the *only* component that writes `data.json`. Its `finalize()` step emits the deduped schema: a top-level `patchSets` table with per-build integer `patchSetRef`, channel pointers stored as bare **build-id strings**, `releaseId` omitted when equal to `build`, and asset `fileType` omitted (derived client-side).
-  - It runs via [`rebuild-catalog.yml`](.github/workflows/rebuild-catalog.yml) on `repository_dispatch` (from rvb releases), the ~6-hourly schedule safety-net, or manual `workflow_dispatch`, then self-dispatches a Pages deploy.
-- **rvb is an input source only**:
-  - `nullcpy/rvb` does **not** write or patch `data.json`. `rebuild_catalog.py` reads it through the GitHub API — each release's `build.json` manifest plus the releases/assets listings — and derives every field locally.
+  - [`.github/scripts/rebuild_catalog.py`](.github/scripts/rebuild_catalog.py) regenerates the catalog on `gh-pages` and is the *only* component that writes `data.json`. Its `finalize()` step emits the deduped schema: a top-level `patchSets` table with per-build integer `patchSetRef`, channel pointers stored as bare **build-id strings**, `releaseId` omitted when equal to `build`, and asset `fileType` omitted (derived client-side).
+  - It runs via [`.github/workflows/rebuild-catalog.yml`](.github/workflows/rebuild-catalog.yml) triggered directly from build pipelines (`workflow_call` or `gh workflow run`) or manual `workflow_dispatch`.
+- **Integrated Manifest Input**:
+  - `rebuild_catalog.py` reads manifests directly from `manifests/` and cumulative `manifests/archive/` on `gh-pages` and resolves live asset downloads from GitHub Releases without external git clones.
