@@ -586,7 +586,7 @@ pkg-name = "com.facebook.katana"
 app-name = "Facebook"
 patches-source = "SapitoSucio/FroggoMorphePatches"
 brand = "Froggo"
-arch = "arm64-v8a"
+arch = "arm64-v8a x86_64"
 apkmirror-dlurl = "https://www.apkmirror.com/apk/facebook-2/facebook"
 uptodown-dlurl = "https://facebook.en.uptodown.com/android"
 apkpure-dlurl = "https://apkpure.com/facebook-app/com.facebook.katana"
@@ -614,7 +614,7 @@ pkg-name = "com.facebook.katana"
 app-name = "Facebook"
 patches-source = "SysAdminDoc/HushFacebook"
 brand = "HushFacebook"
-arch = "arm64-v8a"
+arch = "arm64-v8a x86_64"
 apkmirror-dlurl = "https://www.apkmirror.com/apk/facebook-2/facebook"
 uptodown-dlurl = "https://facebook.en.uptodown.com/android"
 apkpure-dlurl = "https://apkpure.com/facebook-app/com.facebook.katana"
@@ -666,10 +666,39 @@ apkmirror-dlurl = "https://www.apkmirror.com/apk/duolingo/duolingo-duolingo"
 
 
 
+[Duolingo-Hoodles-Experimental]
+patches-source = "hoo-dles/morphe-patches"
+enabled = true
+app-name = "Duolingo"
+sub-variant = "Experimental"
+version = "latest"
+patcher-args = "-f --continue-on-error"
+skip-patch-app-check = true
+pkg-name = "com.duolingo"
+uptodown-dlurl = "https://duolingo.en.uptodown.com/android"
+apkmirror-dlurl = "https://www.apkmirror.com/apk/duolingo/duolingo-duolingo"
+
+
+
 [WPSOffice-Hoodles]
 patches-source = "hoo-dles/morphe-patches"
 enabled = true
 app-name = "WPS Office"
+arch = "arm64-v8a armeabi-v7a"
+pkg-name = "cn.wps.moffice_eng"
+uptodown-dlurl = "https://wps-office.en.uptodown.com/android"
+apkmirror-dlurl = "https://www.apkmirror.com/apk/wps-software-pte-ltd/wps-office-pdf/"
+
+
+
+[WPSOffice-Hoodles-Experimental]
+patches-source = "hoo-dles/morphe-patches"
+enabled = true
+app-name = "WPS Office"
+sub-variant = "Experimental"
+version = "latest"
+patcher-args = "-f --continue-on-error"
+skip-patch-app-check = true
 arch = "arm64-v8a armeabi-v7a"
 pkg-name = "cn.wps.moffice_eng"
 uptodown-dlurl = "https://wps-office.en.uptodown.com/android"
@@ -687,6 +716,20 @@ apkmirror-dlurl = "https://www.apkmirror.com/apk/nebuchadnezzar-doo/wallpapers-h
 
 
 
+[Wallcraft-Hoodles-Experimental]
+patches-source = "hoo-dles/morphe-patches"
+enabled = true
+app-name = "Wallcraft"
+sub-variant = "Experimental"
+version = "latest"
+patcher-args = "-f --continue-on-error"
+skip-patch-app-check = true
+pkg-name = "com.wallpaperscraft.wallpaper"
+uptodown-dlurl = "https://wallpaperscraft.en.uptodown.com/android"
+apkmirror-dlurl = "https://www.apkmirror.com/apk/nebuchadnezzar-doo/wallpapers-hd-4k-backgrounds"
+
+
+
 [SolidExplorer-Hoodles]
 patches-source = "hoo-dles/morphe-patches"
 enabled = true
@@ -697,14 +740,40 @@ apkmirror-dlurl = "https://www.apkmirror.com/apk/lmicp/solid-explorer-file-manag
 
 
 
+[SolidExplorer-Hoodles-Experimental]
+patches-source = "hoo-dles/morphe-patches"
+enabled = true
+app-name = "Solid Explorer"
+sub-variant = "Experimental"
+version = "latest"
+patcher-args = "-f --continue-on-error"
+skip-patch-app-check = true
+pkg-name = "pl.solidexplorer2"
+uptodown-dlurl = "https://solid-explorer-file-manager.en.uptodown.com/android"
+apkmirror-dlurl = "https://www.apkmirror.com/apk/lmicp/solid-explorer-file-manager"
+
+
+
 [IconPacker-hoodles]
 patches-source = "hoo-dles/morphe-patches"
 enabled = true
-pkg-name = "cn.ommiao.iconpacker"
 app-name = "Icon Packer"
+pkg-name = "cn.ommiao.iconpacker"
 apkpure-dlurl = "https://apkpure.com/icon-packer/cn.ommiao.iconpacker"
 apkcombo-dlurl = "https://apkcombo.com/icon-packer/cn.ommiao.iconpacker"
 archive-dlurl = "https://archive.org/download/geologically/apks/cn.ommiao.iconpacker"
+
+
+
+[IconPacker-hoodles-Experimental]
+patches-source = "hoo-dles/morphe-patches"
+enabled = true
+app-name = "Icon Packer"
+sub-variant = "Experimental"
+version = "latest"
+patcher-args = "-f --continue-on-error"
+skip-patch-app-check = true
+pkg-name = "cn.ommiao.iconpacker"
 
 
 
@@ -712,6 +781,20 @@ archive-dlurl = "https://archive.org/download/geologically/apks/cn.ommiao.iconpa
 patches-source = "hoo-dles/morphe-patches"
 enabled = true
 app-name = "Podcast Addict"
+pkg-name = "com.bambuna.podcastaddict"
+uptodown-dlurl = "https://podcast-addict.en.uptodown.com/android"
+apkmirror-dlurl = "https://www.apkmirror.com/apk/xavier-guillemane/podcast-addict"
+
+
+
+[PodcastAddict-Hoodles-Experimental]
+patches-source = "hoo-dles/morphe-patches"
+enabled = true
+app-name = "Podcast Addict"
+sub-variant = "Experimental"
+version = "latest"
+patcher-args = "-f --continue-on-error"
+skip-patch-app-check = true
 pkg-name = "com.bambuna.podcastaddict"
 uptodown-dlurl = "https://podcast-addict.en.uptodown.com/android"
 apkmirror-dlurl = "https://www.apkmirror.com/apk/xavier-guillemane/podcast-addict"
@@ -728,10 +811,38 @@ apkmirror-dlurl = "https://www.apkmirror.com/apk/smart-launcher-team/smart-launc
 
 
 
+[SmartLauncher6-Hoodles-Experimental]
+patches-source = "hoo-dles/morphe-patches"
+enabled = true
+app-name = "Smart Launcher 6"
+sub-variant = "Experimental"
+version = "latest"
+patcher-args = "-f --continue-on-error"
+skip-patch-app-check = true
+pkg-name = "ginlemon.flowerfree"
+uptodown-dlurl = "https://smart-launcher.en.uptodown.com/android"
+apkmirror-dlurl = "https://www.apkmirror.com/apk/smart-launcher-team/smart-launcher"
+
+
+
 [MerriamWebsterDictionary-Hoodles]
 patches-source = "hoo-dles/morphe-patches"
 enabled = true
 app-name = "Merriam-Webster Dictionary"
+pkg-name = "com.merriamwebster"
+uptodown-dlurl = "https://merriam-webster.en.uptodown.com/android"
+apkmirror-dlurl = "https://www.apkmirror.com/apk/merriam-webster-inc/dictionary-merriam-webster"
+
+
+
+[MerriamWebsterDictionary-Hoodles-Experimental]
+patches-source = "hoo-dles/morphe-patches"
+enabled = true
+app-name = "Merriam-Webster Dictionary"
+sub-variant = "Experimental"
+version = "latest"
+patcher-args = "-f --continue-on-error"
+skip-patch-app-check = true
 pkg-name = "com.merriamwebster"
 uptodown-dlurl = "https://merriam-webster.en.uptodown.com/android"
 apkmirror-dlurl = "https://www.apkmirror.com/apk/merriam-webster-inc/dictionary-merriam-webster"
@@ -748,10 +859,39 @@ apkmirror-dlurl = "https://www.apkmirror.com/apk/pandora/pandora-music-podcasts"
 
 
 
+[Pandora-Hoodles-Experimental]
+patches-source = "hoo-dles/morphe-patches"
+enabled = true
+app-name = "Pandora"
+sub-variant = "Experimental"
+version = "latest"
+patcher-args = "-f --continue-on-error"
+skip-patch-app-check = true
+pkg-name = "com.pandora.android"
+uptodown-dlurl = "https://pandora.en.uptodown.com/android"
+apkmirror-dlurl = "https://www.apkmirror.com/apk/pandora/pandora-music-podcasts"
+
+
+
 [XRecorder-Hoodles]
 patches-source = "hoo-dles/morphe-patches"
 enabled = true
 app-name = "XRecorder"
+arch = "all arm64-v8a armeabi-v7a"
+pkg-name = "videoeditor.videorecorder.screenrecorder"
+uptodown-dlurl = "https://videoeditor-videorecorder-screenrecorder.en.uptodown.com/android"
+apkmirror-dlurl = "https://www.apkmirror.com/apk/inshot-inc-2/screen-recorder-video-recorder-xrecorder"
+
+
+
+[XRecorder-Hoodles-Experimental]
+patches-source = "hoo-dles/morphe-patches"
+enabled = true
+app-name = "XRecorder"
+sub-variant = "Experimental"
+version = "latest"
+patcher-args = "-f --continue-on-error"
+skip-patch-app-check = true
 arch = "all arm64-v8a armeabi-v7a"
 pkg-name = "videoeditor.videorecorder.screenrecorder"
 uptodown-dlurl = "https://videoeditor-videorecorder-screenrecorder.en.uptodown.com/android"
@@ -770,10 +910,39 @@ apkmirror-dlurl = "https://www.apkmirror.com/apk/instabridge-sweden-ab/nova-laun
 
 
 
+[NovaLauncher-Hoodles-Experimental]
+patches-source = "hoo-dles/morphe-patches"
+enabled = true
+app-name = "Nova Launcher"
+sub-variant = "Experimental"
+version = "latest"
+patcher-args = "-f --continue-on-error"
+skip-patch-app-check = true
+arch = "all arm64-v8a armeabi-v7a"
+pkg-name = "com.teslacoilsw.launcher"
+uptodown-dlurl = "https://nova-launcher.en.uptodown.com/android"
+apkmirror-dlurl = "https://www.apkmirror.com/apk/instabridge-sweden-ab/nova-launcher"
+
+
+
 [Ventusky-Hoodles]
 patches-source = "hoo-dles/morphe-patches"
 enabled = true
 app-name = "Ventusky"
+pkg-name = "cz.ackee.ventusky"
+uptodown-dlurl = "https://ventusky-weather-maps-and-radar.en.uptodown.com/android"
+apkmirror-dlurl = "https://www.apkmirror.com/apk/ventusky/ventusky-weather-maps-radar"
+
+
+
+[Ventusky-Hoodles-Experimental]
+patches-source = "hoo-dles/morphe-patches"
+enabled = true
+app-name = "Ventusky"
+sub-variant = "Experimental"
+version = "latest"
+patcher-args = "-f --continue-on-error"
+skip-patch-app-check = true
 pkg-name = "cz.ackee.ventusky"
 uptodown-dlurl = "https://ventusky-weather-maps-and-radar.en.uptodown.com/android"
 apkmirror-dlurl = "https://www.apkmirror.com/apk/ventusky/ventusky-weather-maps-radar"
@@ -785,14 +954,29 @@ patches-source = "hoo-dles/morphe-patches"
 enabled = true
 app-name = "CamScanner"
 arch = "all arm64-v8a"
+patcher-args = "--continue-on-error"
 pkg-name = "com.intsig.camscanner"
 uptodown-dlurl = "https://camscanner-pdf-creator.en.uptodown.com/android"
 apkmirror-dlurl = "https://www.apkmirror.com/apk/intsig-pte/camscanner-phone-pdf-creator"
 apkmirror-example-url = "https://www.apkmirror.com/apk/intsig-pte/camscanner-phone-pdf-creator/camscanner-scanner-pdf-maker-7-24-0-2608130000-release/"
 apkpure-dlurl = "https://apkpure.com/camscanner-scanner-pdf-maker/com.intsig.camscanner"
 apkcombo-dlurl = "https://apkcombo.com/camscanner/com.intsig.camscanner"
-patcher-args = "--continue-on-error"
 
+
+
+[CamScanner-Hoodles-Experimental]
+patches-source = "hoo-dles/morphe-patches"
+enabled = true
+app-name = "CamScanner"
+sub-variant = "Experimental"
+version = "latest"
+patcher-args = "-f --continue-on-error"
+skip-patch-app-check = true
+arch = "all arm64-v8a"
+pkg-name = "com.intsig.camscanner"
+uptodown-dlurl = "https://camscanner-pdf-creator.en.uptodown.com/android"
+apkmirror-dlurl = "https://www.apkmirror.com/apk/intsig-pte/camscanner-phone-pdf-creator"
+apkmirror-example-url = "https://www.apkmirror.com/apk/intsig-pte/camscanner-phone-pdf-creator/camscanner-scanner-pdf-maker-7-24-0-2608130000-release/"
 
 
 
@@ -800,6 +984,21 @@ patcher-args = "--continue-on-error"
 patches-source = "hoo-dles/morphe-patches"
 enabled = true
 app-name = "HelloChinese"
+arch = "arm64-v8a"
+pkg-name = "com.hellochinese"
+uptodown-dlurl = "https://hellochinese.en.uptodown.com/android"
+apkmirror-dlurl = "https://www.apkmirror.com/apk/hellochinese-learn-chinese-mandarin/hellochinese-learn-chinese/"
+
+
+
+[HelloChinese-Hoodles-Experimental]
+patches-source = "hoo-dles/morphe-patches"
+enabled = true
+app-name = "HelloChinese"
+sub-variant = "Experimental"
+version = "latest"
+patcher-args = "-f --continue-on-error"
+skip-patch-app-check = true
 arch = "arm64-v8a"
 pkg-name = "com.hellochinese"
 uptodown-dlurl = "https://hellochinese.en.uptodown.com/android"
@@ -817,73 +1016,54 @@ apkmirror-dlurl = "https://www.apkmirror.com/apk/myfitnesspal-inc/calorie-counte
 
 
 
-[PrimeVideo-hoodles]
+[MyFitnessPal-Hoodles-Experimental]
 patches-source = "hoo-dles/morphe-patches"
 enabled = true
-pkg-name = "com.amazon.avod.thirdpartyclient"
-app-name = "Prime Video"
-apkmirror-dlurl = "https://www.apkmirror.com/apk/amazon-mobile-llc/amazon-prime-video"
-uptodown-dlurl = "https://amazon-video.en.uptodown.com/android"
-apkpure-dlurl = "https://apkpure.com/prime-video-android-tv/com.amazon.amazonvideo.livingroom"
-apkcombo-dlurl = "https://apkcombo.com/prime-video/com.amazon.avod.thirdpartyclient"
-
-
-
-[Goodreads-Hoodles]
-patches-source = "hoo-dles/morphe-patches"
-enabled = true
-app-name = "Goodreads"
-pkg-name = "com.goodreads"
-uptodown-dlurl = "https://goodreads.en.uptodown.com/android"
-apkmirror-dlurl = "https://www.apkmirror.com/apk/goodreads/goodreads"
-
-
-
-[AdobeLightroom-Hoodles]
-patches-source = "hoo-dles/morphe-patches"
-enabled = true
-app-name = "Adobe Lightroom"
-arch = "arm64-v8a"
-pkg-name = "com.adobe.lrmobile"
-uptodown-dlurl = "https://adobe-lightroom-mobile.en.uptodown.com/android"
-apkmirror-dlurl = "https://www.apkmirror.com/apk/adobe/adobe-lightroom/"
-
-
-
-[Xodo-Hoodles]
-patches-source = "hoo-dles/morphe-patches"
-enabled = true
-app-name = "Xodo PDF"
-arch = "arm64-v8a x86_64 armeabi-v7a x86"
-pkg-name = "com.xodo.pdf.reader"
-uptodown-dlurl = "https://xodo-pdf-reader-editor.en.uptodown.com/android"
-apkmirror-dlurl = "https://www.apkmirror.com/apk/xodo-technologies-inc/xodo-pdf-reader-editor"
-
-
-
-[GitHub-Hoodles-Stylus]
-patches-source = "hoo-dles/morphe-patches"
-enabled = true
-app-name = "GitHub"
-pkg-name = "com.github.android"
-included-patches = "'AMOLED dark theme' | 'Force system font (including monospace) (GitHub)'"
-apkmirror-dlurl = "https://www.apkmirror.com/apk/github/github-2"
-apkmirror-example-url = "https://www.apkmirror.com/apk/github/github-2/github-1-202-0-release/"
-
-
-
-[GitHub-Hoodles-Stylus-Experimental]
-patches-source = "hoo-dles/morphe-patches"
-enabled = true
-app-name = "GitHub"
-pkg-name = "com.github.android"
+app-name = "MyFitnessPal"
 sub-variant = "Experimental"
 version = "latest"
 patcher-args = "-f --continue-on-error"
 skip-patch-app-check = true
-included-patches = "'AMOLED dark theme' | 'Force system font (including monospace) (GitHub)'"
-apkmirror-dlurl = "https://www.apkmirror.com/apk/github/github-2"
-apkmirror-example-url = "https://www.apkmirror.com/apk/github/github-2/github-1-202-0-release/"
+pkg-name = "com.myfitnesspal.android"
+uptodown-dlurl = "https://calorie-counter-myfitnesspal.en.uptodown.com/android"
+apkmirror-dlurl = "https://www.apkmirror.com/apk/myfitnesspal-inc/calorie-counter-myfitnesspal"
+
+
+
+[NiagaraLauncher-Hoodles]
+patches-source = "hoo-dles/morphe-patches"
+enabled = true
+app-name = "Niagara Launcher"
+pkg-name = "bitpit.launcher"
+uptodown-dlurl = "https://niagara-launcher.en.uptodown.com/android"
+apkmirror-dlurl = "https://www.apkmirror.com/apk/mellowdrop-studio/niagara-launcher-%f0%9f%94%b9-fresh-clean"
+
+
+
+[NiagaraLauncher-Hoodles-Experimental]
+patches-source = "hoo-dles/morphe-patches"
+enabled = true
+app-name = "Niagara Launcher"
+sub-variant = "Experimental"
+version = "latest"
+patcher-args = "-f --continue-on-error"
+skip-patch-app-check = true
+pkg-name = "bitpit.launcher"
+uptodown-dlurl = "https://niagara-launcher.en.uptodown.com/android"
+apkmirror-dlurl = "https://www.apkmirror.com/apk/mellowdrop-studio/niagara-launcher-%f0%9f%94%b9-fresh-clean"
+
+
+
+[PrimeVideo-hoodles]
+patches-source = "hoo-dles/morphe-patches"
+enabled = true
+app-name = "Prime Video"
+arch = "arm64-v8a armeabi-v7a"
+pkg-name = "com.amazon.avod.thirdpartyclient"
+apkmirror-dlurl = "https://www.apkmirror.com/apk/amazon-mobile-llc/amazon-prime-video"
+uptodown-dlurl = "https://amazon-video.en.uptodown.com/android"
+apkpure-dlurl = "https://apkpure.com/prime-video-android-tv/com.amazon.amazonvideo.livingroom"
+apkcombo-dlurl = "https://apkcombo.com/prime-video/com.amazon.avod.thirdpartyclient"
 
 
 
@@ -892,11 +1072,11 @@ patches-source = "hoo-dles/morphe-patches"
 enabled = true
 app-name = "Prime Video"
 sub-variant = "Experimental"
-pkg-name = "com.amazon.avod.thirdpartyclient"
 version = "latest"
 patcher-args = "-f --continue-on-error"
 skip-patch-app-check = true
 arch = "arm64-v8a armeabi-v7a"
+pkg-name = "com.amazon.avod.thirdpartyclient"
 apkmirror-dlurl = "https://www.apkmirror.com/apk/amazon-mobile-llc/amazon-prime-video"
 uptodown-dlurl = "https://amazon-video.en.uptodown.com/android"
 
@@ -919,48 +1099,64 @@ excluded-patches = "'Rename Shared Permissions'"
 
 
 
-[XRecorder-Hoodles-Experimental]
+[Goodreads-Hoodles]
 patches-source = "hoo-dles/morphe-patches"
 enabled = true
-app-name = "XRecorder"
+app-name = "Goodreads"
+pkg-name = "com.goodreads"
+uptodown-dlurl = "https://goodreads.en.uptodown.com/android"
+apkmirror-dlurl = "https://www.apkmirror.com/apk/goodreads/goodreads"
+
+
+
+[Goodreads-Hoodles-Experimental]
+patches-source = "hoo-dles/morphe-patches"
+enabled = true
+app-name = "Goodreads"
 sub-variant = "Experimental"
 version = "latest"
 patcher-args = "-f --continue-on-error"
 skip-patch-app-check = true
-arch = "all arm64-v8a armeabi-v7a"
-pkg-name = "videoeditor.videorecorder.screenrecorder"
-uptodown-dlurl = "https://videoeditor-videorecorder-screenrecorder.en.uptodown.com/android"
-apkmirror-dlurl = "https://www.apkmirror.com/apk/inshot-inc-2/screen-recorder-video-recorder-xrecorder"
+pkg-name = "com.goodreads"
+uptodown-dlurl = "https://goodreads.en.uptodown.com/android"
+apkmirror-dlurl = "https://www.apkmirror.com/apk/goodreads/goodreads"
 
 
 
-
-[SmartLauncher6-Hoodles-Experimental]
+[AdobeLightroom-Hoodles]
 patches-source = "hoo-dles/morphe-patches"
 enabled = true
-app-name = "Smart Launcher 6"
+app-name = "Adobe Lightroom"
+arch = "arm64-v8a"
+pkg-name = "com.adobe.lrmobile"
+uptodown-dlurl = "https://adobe-lightroom-mobile.en.uptodown.com/android"
+apkmirror-dlurl = "https://www.apkmirror.com/apk/adobe/adobe-lightroom/"
+
+
+
+[AdobeLightroom-Hoodles-Experimental]
+patches-source = "hoo-dles/morphe-patches"
+enabled = true
+app-name = "Adobe Lightroom"
 sub-variant = "Experimental"
 version = "latest"
 patcher-args = "-f --continue-on-error"
 skip-patch-app-check = true
-pkg-name = "ginlemon.flowerfree"
-uptodown-dlurl = "https://smart-launcher.en.uptodown.com/android"
-apkmirror-dlurl = "https://www.apkmirror.com/apk/smart-launcher-team/smart-launcher"
+arch = "arm64-v8a"
+pkg-name = "com.adobe.lrmobile"
+uptodown-dlurl = "https://adobe-lightroom-mobile.en.uptodown.com/android"
+apkmirror-dlurl = "https://www.apkmirror.com/apk/adobe/adobe-lightroom/"
 
 
 
-[NovaLauncher-Hoodles-Experimental]
+[Xodo-Hoodles]
 patches-source = "hoo-dles/morphe-patches"
 enabled = true
-app-name = "Nova Launcher"
-sub-variant = "Experimental"
-version = "latest"
-patcher-args = "-f --continue-on-error"
-skip-patch-app-check = true
-arch = "all arm64-v8a armeabi-v7a"
-pkg-name = "com.teslacoilsw.launcher"
-uptodown-dlurl = "https://nova-launcher.en.uptodown.com/android"
-apkmirror-dlurl = "https://www.apkmirror.com/apk/instabridge-sweden-ab/nova-launcher"
+app-name = "Xodo PDF"
+arch = "arm64-v8a x86_64 armeabi-v7a x86"
+pkg-name = "com.xodo.pdf.reader"
+uptodown-dlurl = "https://xodo-pdf-reader-editor.en.uptodown.com/android"
+apkmirror-dlurl = "https://www.apkmirror.com/apk/xodo-technologies-inc/xodo-pdf-reader-editor"
 
 
 
@@ -979,101 +1175,29 @@ apkmirror-dlurl = "https://www.apkmirror.com/apk/xodo-technologies-inc/xodo-pdf-
 
 
 
-[SolidExplorer-Hoodles-Experimental]
+[GitHub-Hoodles-Stylus]
 patches-source = "hoo-dles/morphe-patches"
 enabled = true
-app-name = "Solid Explorer"
+app-name = "GitHub"
+pkg-name = "com.github.android"
+included-patches = "'AMOLED dark theme' | 'Force system font (including monospace) (GitHub)'"
+apkmirror-dlurl = "https://www.apkmirror.com/apk/github/github-2"
+apkmirror-example-url = "https://www.apkmirror.com/apk/github/github-2/github-1-202-0-release/"
+
+
+
+[GitHub-Hoodles-Stylus-Experimental]
+patches-source = "hoo-dles/morphe-patches"
+enabled = true
+app-name = "GitHub"
 sub-variant = "Experimental"
 version = "latest"
 patcher-args = "-f --continue-on-error"
 skip-patch-app-check = true
-pkg-name = "pl.solidexplorer2"
-uptodown-dlurl = "https://solid-explorer-file-manager.en.uptodown.com/android"
-apkmirror-dlurl = "https://www.apkmirror.com/apk/lmicp/solid-explorer-file-manager"
-
-
-
-[Wallcraft-Hoodles-Experimental]
-patches-source = "hoo-dles/morphe-patches"
-enabled = true
-app-name = "Wallcraft"
-sub-variant = "Experimental"
-version = "latest"
-patcher-args = "-f --continue-on-error"
-skip-patch-app-check = true
-pkg-name = "com.wallpaperscraft.wallpaper"
-uptodown-dlurl = "https://wallpaperscraft.en.uptodown.com/android"
-apkmirror-dlurl = "https://www.apkmirror.com/apk/nebuchadnezzar-doo/wallpapers-hd-4k-backgrounds"
-
-
-
-[PodcastAddict-Hoodles-Experimental]
-patches-source = "hoo-dles/morphe-patches"
-enabled = true
-app-name = "Podcast Addict"
-sub-variant = "Experimental"
-version = "latest"
-patcher-args = "-f --continue-on-error"
-skip-patch-app-check = true
-pkg-name = "com.bambuna.podcastaddict"
-uptodown-dlurl = "https://podcast-addict.en.uptodown.com/android"
-apkmirror-dlurl = "https://www.apkmirror.com/apk/xavier-guillemane/podcast-addict"
-
-
-
-[Ventusky-Hoodles-Experimental]
-patches-source = "hoo-dles/morphe-patches"
-enabled = true
-app-name = "Ventusky"
-sub-variant = "Experimental"
-version = "latest"
-patcher-args = "-f --continue-on-error"
-skip-patch-app-check = true
-pkg-name = "cz.ackee.ventusky"
-uptodown-dlurl = "https://ventusky-weather-maps-and-radar.en.uptodown.com/android"
-apkmirror-dlurl = "https://www.apkmirror.com/apk/ventusky/ventusky-weather-maps-radar"
-
-
-
-[NiagaraLauncher-Hoodles-Experimental]
-patches-source = "hoo-dles/morphe-patches"
-enabled = true
-app-name = "Niagara Launcher"
-sub-variant = "Experimental"
-version = "latest"
-patcher-args = "-f --continue-on-error"
-skip-patch-app-check = true
-pkg-name = "bitpit.launcher"
-uptodown-dlurl = "https://niagara-launcher.en.uptodown.com/android"
-apkmirror-dlurl = "https://www.apkmirror.com/apk/mellowdrop-studio/niagara-launcher-%f0%9f%94%b9-fresh-clean"
-
-
-
-[MyFitnessPal-Hoodles-Experimental]
-patches-source = "hoo-dles/morphe-patches"
-enabled = true
-app-name = "MyFitnessPal"
-sub-variant = "Experimental"
-version = "latest"
-patcher-args = "-f --continue-on-error"
-skip-patch-app-check = true
-pkg-name = "com.myfitnesspal.android"
-uptodown-dlurl = "https://calorie-counter-myfitnesspal.en.uptodown.com/android"
-apkmirror-dlurl = "https://www.apkmirror.com/apk/myfitnesspal-inc/calorie-counter-myfitnesspal"
-
-
-
-[Goodreads-Hoodles-Experimental]
-patches-source = "hoo-dles/morphe-patches"
-enabled = true
-app-name = "Goodreads"
-sub-variant = "Experimental"
-version = "latest"
-patcher-args = "-f --continue-on-error"
-skip-patch-app-check = true
-pkg-name = "com.goodreads"
-uptodown-dlurl = "https://goodreads.en.uptodown.com/android"
-apkmirror-dlurl = "https://www.apkmirror.com/apk/goodreads/goodreads"
+pkg-name = "com.github.android"
+included-patches = "'AMOLED dark theme' | 'Force system font (including monospace) (GitHub)'"
+apkmirror-dlurl = "https://www.apkmirror.com/apk/github/github-2"
+apkmirror-example-url = "https://www.apkmirror.com/apk/github/github-2/github-1-202-0-release/"
 
 
 [Rumble-hooman]
