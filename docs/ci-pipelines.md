@@ -144,13 +144,11 @@ Step order, with the reason each is where it is:
 2. `cleanup-archive-assets.py` prunes each archive to the **2 newest versions per
    app + architecture** (grouping by `<app>-<arch>.<ext>`, newest by `created_at`).
 3. `cleanup_update_branch.sh` drops update pointers and changelogs whose release is
-   gone; `cleanup_website_branch.sh` drops `manifests/<tag>.json` for deleted
+   gone; `cleanup_website_branch.sh` drops `manifests/<tag>.json` on `gh-pages` for deleted
    releases.
-4. A `catalog-updated` `repository_dispatch` to `vars.WEBSITE_REPO`
-   (default `sharath-5br2r-apps/sharath-5br2r-apps.github.io`), authenticated with
-   `WEBSITE_DISPATCH_TOKEN` falling back to `APKS_REPO_TOKEN`. `continue-on-error`,
-   because the site also rebuilds on its own schedule — a lost dispatch delays the
-   catalogue, it does not break it.
+4. An in-repo workflow trigger runs `rebuild-catalog.yml` (`gh workflow run rebuild-catalog.yml`),
+   rebuilding `data.json` and `data.json.gz` on `gh-pages` without requiring external repository
+   dispatches.
 
 ## Required secrets and variables
 
@@ -158,10 +156,9 @@ Step order, with the reason each is where it is:
 |---|---|---|---|
 | secret | `GITHUB_TOKEN` (auto) | all | `contents: write` on the jobs that push branches |
 | secret | `KEYSTORE_BASE64`, `KEYSTORE_FILE`, `KEYSTORE_PASSWORD`, `KEYSTORE_KEY_PASSWORD`, `KEYSTORE_ALIAS` | build | signing identity (universal single-keystore configuration) |
-| secret | `APKS_REPO_TOKEN` | build, cleanup | cross-repo write to `sharath-5br2r-apps/apks-dump`, doubles as dispatch token |
+| secret | `APKS_REPO_TOKEN` | build, cleanup | cross-repo write to APK cache repository |
 | secret | `CODEBERG_TOKEN` | watcher | raises Codeberg/Forgejo rate limits |
-| secret | `WEBSITE_DISPATCH_TOKEN` (optional) | cleanup | token for dispatching catalog updates |
-| var | `APKS_REPO`, `WEBSITE_REPO` | build, cleanup | alternate cache/site repos for forks |
+| var | `APKS_REPO` | build, cleanup | alternate APK cache repo for forks |
 | var | `RELEASE_NOTES_DONATE_LINK`, `RELEASE_NOTES_WEBSITE_LINK` | build | footer links in the generated release body |
 | var | `RVB_MORPHE_PASSTHROUGH` | build | bundle handling escape hatch |
 

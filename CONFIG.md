@@ -520,7 +520,6 @@ committed to TOML, JSON, workflow files, or build logs.
 |---|---|---|---|
 | `APKS_REPO` | Variable | `build.yml` | Repository used for APK cache uploads. |
 | `APKS_REPO_URL` | Variable | `build.yml`, download helpers | Cache repository URL; falls back to `APKS_REPO`. |
-| `WEBSITE_REPO` | Variable | `build.yml`, `cleanup.yml`, `update-website.yml` | Website/catalog repository. |
 | `RVB_MORPHE_PASSTHROUGH` | Variable | `build.yml`, `utils.sh` | Enables Morphe bundle passthrough; defaults to `true`. |
 | `UPLOAD_CONCURRENCY` | Variable | `build.yml` | Upload worker count; defaults to `4`. |
 | `KEYSTORE_ALIAS` | Variable | `ci.yml`, `build.yml` | Signing key alias; defaults to `jhc`. |
@@ -540,8 +539,6 @@ committed to TOML, JSON, workflow files, or build logs.
 | `KEYSTORE_KEY_PASSWORD` | Secret | `ci.yml`, `build.yml` | Private-key password; falls back to `KEYSTORE_PASSWORD`. |
 | `APKS_REPO_TOKEN` | Secret | `build.yml` | Token for cache repository releases/uploads. |
 | `PERSONAL_ACCESS_TOKEN` | Secret | build and release workflows | GitHub API/release token fallback. |
-| `WEBSITE_TOKEN` / `WEBSITE_DISPATCH_TOKEN` | Secret | website dispatch workflows | Token for dispatching catalog updates. |
-| `WEBSITE_REPO_TOKEN` | Secret | website dispatch workflows | Alternate website repository token. |
 | `GH_TOKEN` / `GITHUB_TOKEN` | Secret / GitHub-provided | GitHub CLI/API actions | GitHub API authentication; `GITHUB_TOKEN` is provided by Actions. |
 
 `GITHUB_OUTPUT`, `GITHUB_REPOSITORY`, `GITHUB_SERVER_URL`, `GITHUB_ACTIONS`,
@@ -579,8 +576,8 @@ GitHub Actions automates compilation, testing, and distribution:
 
 ## Website Catalog & Metrics Synchronization
 
-The builder triggers catalog updates for the website repository (consumed by web catalogs and Obtainium):
+The builder maintains the web catalog published to GitHub Pages directly from the `gh-pages` branch:
 
-- **Target Website Repository:** Configured via the `WEBSITE_REPO` variable/environment (e.g. `your-username/your-username.github.io` or `sharath-5br2r-apps/sharath-5br2r-apps.github.io`) using `WEBSITE_DISPATCH_TOKEN` (falling back to `WEBSITE_REPO_TOKEN`, `PERSONAL_ACCESS_TOKEN`, then `GH_TOKEN` / `GITHUB_TOKEN`).
-- **Dispatch-based Architecture:** Direct commits and clones from builder workflows to the website tree are disabled. Instead, `update-website.yml` and `cleanup.yml` send a `repository_dispatch` event (`update-catalog-cache`) to the website repository, triggering its autonomous catalog generator/updater (`merge_build_meta.py` in the catalog repo).
+- **Branch-Hosted Website & Manifests:** Release manifests are committed directly to `gh-pages:manifests/<tag>.json` and cumulative archive manifests to `gh-pages:manifests/archive/{stable,beta}.json`.
+- **In-Repo Catalog Rebuilds:** External webhook dispatches and external website repositories have been eliminated. `.github/workflows/rebuild-catalog.yml` runs directly against the local tree on `gh-pages` and updates `data.json` and `data.json.gz`.
 - **APKs Cache Repository (`$APKS_REPO`):** Dedicated assets repository configured via `APKS_REPO` using `APKS_REPO_TOKEN` (falling back to `PERSONAL_ACCESS_TOKEN`, then `GH_TOKEN` / `GITHUB_TOKEN`).

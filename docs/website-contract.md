@@ -1,36 +1,30 @@
 # Website contract
 
-Two repositories, one product: the builder publishes, the site renders. This file
-documents only the **seam** — the formats and ordering rules that cross the
-boundary. The site's internals (UI, `script.js` configuration, categories,
-notices, search engine, Obtainium flow) are documented by its own guide:
-[`sharath-5br2r-apps.github.io/CONFIG.md`](https://github.com/sharath-5br2r-apps/sharath-5br2r-apps.github.io/blob/main/CONFIG.md).
+In this downstream fork, the catalog website and release manifests are unified within this repository:
+the builder publishes manifests to `gh-pages`, and GitHub Pages serves the web frontend from `gh-pages`
+(`https://sharath-5br2r.github.io/apps`).
+Detailed architectural decisions are recorded in
+[`docs/decisions/fork/2-Website-Files-Live-In-Branch.md`](decisions/fork/2-Website-Files-Live-In-Branch.md).
 
 ## What crosses the boundary
 
 | Channel | Direction | Format | Stability |
 |---|---|---|---|
-| `website` branch of rvb | rvb → site | `manifests/<tag>.json`, `archive/{stable,beta}.json`, schema v1 | **the contract**; the site clones this branch shallowly |
+| `gh-pages` manifests | builder → `gh-pages` | `manifests/<tag>.json`, `manifests/archive/{stable,beta}.json`, schema v1 | **the contract**; written by `merge_archive_branch.sh` |
 | GitHub Releases API | site → GitHub | asset existence, size, `downloadCount`, browser download URLs | queried live, never cached in git |
-| `catalog-updated` dispatch | rvb → site | `repository_dispatch` event type | name only; a lost dispatch is recovered by schedule |
+| `rebuild-catalog.yml` trigger | builder → workflow | workflow call / `gh workflow run` | native Actions workflow trigger on `gh-pages` |
 | `update` branch pointers | phone → rvb | `module.prop` `updateJson` URL + JSON | baked into installed modules |
 | Numbered/archive release URLs | site → rvb | `releases/download/<tag>/<file>` | filename grammar is the contract |
-| `.github/scripts/naming.py` on `main` | site → rvb | Python module, imported by a sparse clone | one-way; a missing path fails the rebuild loudly |
-
-**rvb never writes into the site repository,** and the site never writes into rvb.
-The only file either side edits in the other's name is `data.json`, which the site
-regenerates from rvb's branch.
+| `.github/scripts/naming.py` | shared | Python module | maintained locally in the repo |
 
 ## The pipeline across the seam
 
 ```
 rvb: merge_build_info → build.json → build_make_manifest.py → temp/manifest/build.json
                                                             ↓ (after archive upload)
-rvb:  website branch  manifests/<tag>.json  +  archive/<channel>.json
-                                                            ↓ git clone --branch website
-site: rebuild-catalog.yml → rebuild_catalog.py → data.json (schema v2) → deploy-pages.yml
-                                                            ↑
-site: also on cron "23 */6 * * *"  (convergence for lost dispatches)
+rvb: gh-pages branch  manifests/<tag>.json  +  manifests/archive/<channel>.json
+                                                            ↓ workflow_call / gh workflow run
+gh-pages: rebuild-catalog.yml → rebuild_catalog.py → data.json (schema v2) & data.json.gz
 ```
 
 The catalog is **derived from scratch** every run — fold numbered manifests, fold
@@ -38,10 +32,6 @@ archive manifests against live assets, then query the releases API for mutables.
 release or asset that no longer exists simply does not appear; nothing edits
 `data.json` in place. That is why a corrupted branch entry is repairable by the
 next build rather than permanent.
-
-`deploy-pages.yml` deliberately ignores pushes that cannot change the deployed
-site (`data.json`, `.github/**`, docs), which is why a catalog rebuild dispatches
-the Pages deployment explicitly after a successful push.
 
 ## From schema v1 to schema v2
 
@@ -140,7 +130,7 @@ expressed — the full account is
 3. **Bump `schema`** in the manifest envelope for a breaking change, and make the
    consumer reject an unknown major version loudly instead of half-reading it.
 4. **Verify both ends before pushing.** Locally:
-   `python3 .github/scripts/rebuild_catalog.py --repo sharath-5br2r-apps/rvb --manifest-dir <clone-of-website-branch> --out /tmp/data.json.new --existing data.json`
+   `python3 .github/scripts/rebuild_catalog.py --repos sharath-5br2r/apps --manifest-dir . --out /tmp/data.json.new --existing data.json`
    then diff `/tmp/data.json.new` against `data.json` ignoring `updated_at` —
    exactly what the workflow's report step does. On GitHub: run
    `rebuild-catalog.yml` with `dry_run: true`.

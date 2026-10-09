@@ -10,7 +10,7 @@ single-writer lives on another branch, so `main`'s history stays human.
 |---|---|---|---|
 | `main` | engine, workflows, scripts, `module/`, `bin/`, `docs/`, `CONFIG.md` | maintainer, via PRs | every CI job (checked out first) |
 | `data` | `configs/` (human TOMLs + generated pool JSON), `state/` (watcher JSONs) | `commit_data_branch.sh` (CI, `*.json`), `push_data_configs.sh` (maintainer, `*.toml`) | watcher + build jobs through `fetch_data_branch.sh` |
-| `website` | `manifests/<tag>.json`, `archive/{stable,beta}.json` | `merge_archive_branch.sh`; pruned by `cleanup_website_branch.sh` | the site's `rebuild_catalog.py` |
+| `gh-pages` | web frontend, `manifests/<tag>.json`, `manifests/archive/{stable,beta}.json`, `data.json` | `merge_archive_branch.sh`, `cleanup_website_branch.sh`, `rebuild_catalog.py` | GitHub Pages & web catalog visitors |
 | `update` | `changelogs/<code>.md`, `<channel>/<module-id>.json` | `build_update_changelog.sh`; pruned by `cleanup_update_branch.sh` | KernelSU / Magisk module updaters on phones |
 | `notify-queue` | `queue.jsonl` (pending debounced issue/PR alerts) | `notify_enqueue.sh` (append) + `notify_drain.sh` (prune), both via `notify_queue.sh` | the drain job only |
 
@@ -59,13 +59,13 @@ state/
 - `git switch data` for an occasional hand-edit is legitimate, but the ignored
   local copies get clobbered on switch — re-run `fetch_data_branch.sh` afterwards.
 
-## `website`
+## `gh-pages`
 
-Per-build manifests plus two cumulative archives. This branch replaced release
-assets as the manifest store on **2026-09-25**: numbered releases no longer carry
-a `build.json`, so branch history is the only metadata history. The move and the
-failure it eliminated are recorded in
-[decisions/0002](decisions/0002-manifests-live-on-a-branch.md).
+Per-build manifests plus two cumulative archives, alongside website HTML/JS/CSS assets.
+In this downstream fork, the legacy standalone `website` branch was retired in favor of `gh-pages`
+([decisions/fork/2-Website-Files-Live-In-Branch.md](decisions/fork/2-Website-Files-Live-In-Branch.md)):
+numbered manifests live under `manifests/<tag>.json` and cumulative archive manifests under
+`manifests/archive/{stable,beta}.json`.
 
 Schema v1 envelope (produced by `build_make_manifest.py`):
 
@@ -95,9 +95,9 @@ file ([decisions/0007](decisions/0007-requested-arch-is-a-hard-requirement.md)).
 An archive envelope restamps `meta` as `{build: <channel>, channel: <channel>,
 publishedAt: <merge time>}` while keeping the surviving file entries.
 
-Merge semantics for `archive/<channel>.json` (`merge_archive_branch.sh`):
+Merge semantics for `manifests/archive/<channel>.json` (`merge_archive_branch.sh`):
 
-1. Fetch and check out `website`; copy the current cumulative file. A fetch
+1. Fetch and check out `gh-pages`; copy the current cumulative file. A fetch
    failure **fails the job** — there is deliberately no "start from empty" path,
    which is what eliminated the 2026-09-24 collapse where a failed asset download
    silently restarted the cumulative manifest.
@@ -108,11 +108,6 @@ Merge semantics for `archive/<channel>.json` (`merge_archive_branch.sh`):
    result kept fewer entries than that.
 4. Push with retries, rebasing over concurrent updates (the `build` concurrency
    group is what makes "concurrent" rare).
-
-Recovery order for a damaged `archive/*.json`: **branch history first**
-(`git log -p archive/stable.json`, `git show <rev>:archive/stable.json`, force-push
-to undo), then `repair_archive_manifest.py` (dry-run by default), and only while
-legacy release assets still exist does `seed_website_branch.py` make sense.
 
 ## `update`
 
