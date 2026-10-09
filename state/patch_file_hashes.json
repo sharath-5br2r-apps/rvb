@@ -196,12 +196,7 @@
     }
   },
   "kveld9/kveld-morphe-patches": {
-    "beta": {
-      "com.brave.browser": "c3963ccd55fb3603d10c08af46a576c5",
-      "com.ss.android.ugc.trill": "5d96682772b78d48da24a7fa9cd363b3",
-      "com.zhiliaoapp.musically": "26886a9ddf13a7b6460a26acf8484b2c",
-      "shared": "68fbd75a2e8db970f4c4a083be10431e"
-    },
+    "beta": {},
     "stable": {
       "com.brave.browser": "853b07208ca5f3d1871e42f005e2da77",
       "com.ss.android.ugc.trill": "6dc1e1b6e67524094e3942afbf84f92b",
@@ -211,9 +206,9 @@
   },
   "morpheapp/morphe-patches": {
     "beta": {
-      "com.google.android.apps.youtube.music": "24845e92ca9f10553fdd1fa8f41cb79b",
-      "com.google.android.youtube": "a3fa1716cf80fa6fa5adf17c08a514ad",
-      "shared": "918d41db421b9405fe069971aa60d830"
+      "com.google.android.apps.youtube.music": "2399f887690a425f449a98dc45930944",
+      "com.google.android.youtube": "2400561dc04437e1c4cafd86f34a8274",
+      "shared": "ca5481fee1db48fafdb6d286211b2191"
     },
     "stable": {
       "com.google.android.apps.youtube.music": "3327ea672455ad2775caead711a576d1",
