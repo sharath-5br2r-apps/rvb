@@ -1,0 +1,73 @@
+{
+  "schema": 1,
+  "kind": "build",
+  "meta": {
+    "build": "2026.10.10-3",
+    "channel": "beta",
+    "publishedAt": "2026-10-10T11:58:01Z"
+  },
+  "files": {
+    "picsart-experimental-v30.9.5-all.apk": {
+      "name": "picsart-experimental",
+      "version": "30.9.5",
+      "appKey": "picsart",
+      "appName": "PicsArt",
+      "arch": "all",
+      "fileType": "APK",
+      "brandKey": "morphe",
+      "brandName": "Morphe",
+      "variant": null,
+      "subVariant": "Experimental",
+      "packageName": "com.picsart.studio",
+      "cli": "MorpheApp/morphe-desktop",
+      "patches": "rushiranpise/patches-1.23.0-dev.1.mpp",
+      "patchesSource": "rushiranpise/morphe-patches",
+      "engineBrand": null,
+      "patchBrand": null,
+      "densities": [
+        "120",
+        "160",
+        "213",
+        "240",
+        "320",
+        "480",
+        "640",
+        "65534",
+        "65535"
+      ],
+      "nativeLibraries": [
+        "arm64-v8a",
+        "armeabi-v7a"
+      ],
+      "minSdk": "23",
+      "versionCode": "993830905",
+      "patchSources": [
+        "rushiranpise/patches-1.23.0-dev.1.mpp"
+      ],
+      "changelogUrls": [
+        "https://github.com/rushiranpise/morphe-patches/releases/tag/v1.23.0-dev.1"
+      ],
+      "changelogs": [
+        "https://github.com/rushiranpise/morphe-patches/releases/tag/v1.23.0-dev.1"
+      ],
+      "appliedPatches": [
+        "Remove Watermark"
+      ],
+      "skippedPatches": [
+        "Disable PairIP license check (default)",
+        "Provide Original app certificate (default)",
+        "Spoof Widevine / DRM level (default)",
+        "Fix Firebase after re-signing (default)",
+        "GmsCore support (MicroG) (default)",
+        "Spoof install source (default)",
+        "Spoof app signature (default)"
+      ],
+      "failedPatches": [
+        "Remove Ads",
+        "Unlock Premium"
+      ],
+      "originBuild": "2026.10.10-3",
+      "publishedAt": "2026-10-10T11:58:01Z"
+    }
+  }
+}
