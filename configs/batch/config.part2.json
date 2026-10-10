@@ -313,7 +313,7 @@
     "variant": "Android TV",
     "patches-source": "ajstrick81/morphe-androidtv-patches",
     "brand": "ajstrick81",
-    "arch": "all arm64-v8a arm-v7a",
+    "arch": "all arm64-v8a armeabi-v7a",
     "patch-folder": "twitchatv",
     "apkmirror-dlurl": "https://www.apkmirror.com/apk/twitch-interactive-inc/twitch-android-tv/",
     "apkpure-dlurl": "https://apkpure.com/twitch-livestream-multiplayer-games-esports-app/tv.twitch.android.app",

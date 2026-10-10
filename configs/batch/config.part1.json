@@ -26,7 +26,7 @@
     "patches-source": "ajstrick81/morphe-androidtv-patches",
     "brand": "ajstrick81",
     "variant": "Android TV",
-    "arch": "arm-v7a",
+    "arch": "armeabi-v7a",
     "enabled": true,
     "pkg-name": "com.netflix.ninja",
     "app-name": "Netflix",

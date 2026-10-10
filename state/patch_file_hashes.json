@@ -1,4 +1,12 @@
 {
+  "ajstrick81/morphe-androidtv-patches": {
+    "beta": {},
+    "stable": {}
+  },
+  "akash-sriram/morphe-google-photos": {
+    "beta": {},
+    "stable": {}
+  },
   "anddea/revanced-patches": {
     "beta": {
       "com.google.android.apps.youtube.music": "7f1291038edaabc0b7e2c199f811b26e",
@@ -10,6 +18,10 @@
       "com.google.android.youtube": "d06afb843949a979631311fc60e15b59",
       "shared": "64cd23189407b4424baeb9406ad36646"
     }
+  },
+  "andrewliang25/morphe-patches": {
+    "beta": {},
+    "stable": {}
   },
   "arandomhooman/hoomans-morphe-patches": {
     "beta": {
@@ -33,6 +45,14 @@
       "tv.twitch.android.app": "ae990bd92ef0f6fb56cab8da0398e711"
     }
   },
+  "aunali321/revancedexperiments": {
+    "beta": {},
+    "stable": {}
+  },
+  "bearinmindcat/morphe-patches": {
+    "beta": {},
+    "stable": {}
+  },
   "bholeykabhakt/revanced-patches-xtra": {
     "beta": {
       "com.backdrops.wallpapers": "48b2a00436905191f8738ebb70bbfbeb",
@@ -51,11 +71,19 @@
     },
     "stable": {}
   },
+  "brosssh/morphe-patches": {
+    "beta": {},
+    "stable": {}
+  },
   "browzomje/browzomje-patches": {
     "beta": {
       "com.pinterest": "49690530eefb709b34ebc78ce50718d0",
       "shared": "3ec0b6dfa6908048d4590a111e65750e"
     },
+    "stable": {}
+  },
+  "bufferk/morphe-patches": {
+    "beta": {},
     "stable": {}
   },
   "byehi98/okish-morphe-patches": {
@@ -92,6 +120,10 @@
     },
     "stable": {}
   },
+  "debakarr/morphe-patches": {
+    "beta": {},
+    "stable": {}
+  },
   "dh6k/morphe-patches": {
     "beta": {
       "com.brave.browser_beta": "0e724b347ac068175a9eb03ca39ce617",
@@ -103,6 +135,34 @@
       "com.brave.browser_nightly": "3d2dfc1a69fefa9a5107989f38a0dc51",
       "shared": "e8e5b76bb4511041f43aa0f19ece4ab0"
     }
+  },
+  "dhrubonai/morphe-patches": {
+    "beta": {},
+    "stable": {}
+  },
+  "docbt/patched-up": {
+    "beta": {},
+    "stable": {}
+  },
+  "durgesh0505/chiggi_morphe_patches": {
+    "beta": {},
+    "stable": {}
+  },
+  "entree3k/morning-entree-patches": {
+    "beta": {},
+    "stable": {}
+  },
+  "franticg33k/morphe-patches": {
+    "beta": {},
+    "stable": {}
+  },
+  "fripe070/pixivpatches": {
+    "beta": {},
+    "stable": {}
+  },
+  "heval99/heval-morphe-patches": {
+    "beta": {},
+    "stable": {}
   },
   "hoo-dles/morphe-patches": {
     "beta": {
@@ -160,6 +220,10 @@
       "shared": "261a0b0cd5b11f65cbae870040a7ef37"
     }
   },
+  "hxreborn/morphe-patches": {
+    "beta": {},
+    "stable": {}
+  },
   "icysymmetra/tiktok-patches-for-morphe": {
     "beta": {
       "com.zhiliaoapp.musically": "4dbbc2c764e93c8131bfeba4742c852a",
@@ -169,6 +233,18 @@
       "com.zhiliaoapp.musically": "4dbbc2c764e93c8131bfeba4742c852a",
       "shared": "4c8e9750b338baa9b2956091fbe5841a"
     }
+  },
+  "imxeren/mix-patches": {
+    "beta": {},
+    "stable": {}
+  },
+  "instafel/pc-rel": {
+    "beta": {},
+    "stable": {}
+  },
+  "ispacecase/patchweaver": {
+    "beta": {},
+    "stable": {}
   },
   "jasonwu1994/gboard-patches": {
     "beta": {},
@@ -204,6 +280,10 @@
       "shared": "e80e2531b2c1c55d20235c56888f77d5"
     }
   },
+  "liongalahad/nuviotv-morphe-patches": {
+    "beta": {},
+    "stable": {}
+  },
   "morpheapp/morphe-patches": {
     "beta": {
       "com.google.android.apps.youtube.music": "2399f887690a425f449a98dc45930944",
@@ -215,6 +295,14 @@
       "com.google.android.youtube": "2d3ff66b8bf7183cf63f0977899f8e1c",
       "shared": "5397e96fe53e7d00e0531a9b25b6bd45"
     }
+  },
+  "mvaishak/letterboxd-morphe-patches": {
+    "beta": {},
+    "stable": {}
+  },
+  "newuser7171/telegram-morphe-patches-": {
+    "beta": {},
+    "stable": {}
   },
   "paresh-maheshwari/paresh-patches": {
     "beta": {
@@ -241,7 +329,27 @@
       "shared": "896486938b5de28e83d923a732d3ec47"
     }
   },
+  "quantavil/edge-morphe-patches": {
+    "beta": {},
+    "stable": {}
+  },
+  "quantro100/morphe-patches": {
+    "beta": {},
+    "stable": {}
+  },
+  "raincord/rainxposed": {
+    "beta": {},
+    "stable": {}
+  },
   "revenge-mod/revenge-xposed": {
+    "beta": {},
+    "stable": {}
+  },
+  "riky-dev/morphe-patches": {
+    "beta": {},
+    "stable": {}
+  },
+  "rookieenough/de-vanced": {
     "beta": {},
     "stable": {}
   },
@@ -265,11 +373,43 @@
     },
     "stable": {}
   },
+  "sapitosucio/froggomorphepatches": {
+    "beta": {},
+    "stable": {}
+  },
+  "satanmerde/d-moniakpatches": {
+    "beta": {},
+    "stable": {}
+  },
+  "shaun-the-sheep-patches/morphe-patches": {
+    "beta": {},
+    "stable": {}
+  },
+  "sysadmindoc/hushfacebook": {
+    "beta": {},
+    "stable": {}
+  },
   "sysadmindoc/hushfeed": {
     "beta": {},
     "stable": {
       "com.zhiliaoapp.musically": "fcf315d84de4624eaefbb0b0780c7434",
       "shared": "46d8882e3e2552c9319178d27875fbae"
     }
+  },
+  "sysadmindoc/hushgram": {
+    "beta": {},
+    "stable": {}
+  },
+  "sysadmindoc/hushmessenger": {
+    "beta": {},
+    "stable": {}
+  },
+  "sysadmindoc/hushtelegram": {
+    "beta": {},
+    "stable": {}
+  },
+  "sysadmindoc/hushthreads": {
+    "beta": {},
+    "stable": {}
   }
 }
