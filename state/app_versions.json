@@ -8,18 +8,23 @@
   },
   "Prime Video": {
     "keys": [
-      "PrimeVideo-ajstrick81-AndroidTV-Experimental",
-      "PrimeVideo-ajstrick81-AndroidTV-Clone-Experimental",
       "PrimeVideo-Hoodles-Experimental",
       "PrimeVideo-Hoodles-Shared-Experimental"
     ],
-    "version": "6.24.8+v16.0.0.361-allAbis"
+    "version": "3.0.475"
+  },
+  "Prime Video Android TV": {
+    "keys": [
+      "PrimeVideo-ajstrick81-AndroidTV-Experimental",
+      "PrimeVideo-ajstrick81-AndroidTV-Clone-Experimental"
+    ],
+    "version": "latest"
   },
   "Amazon Alexa": {
     "keys": [
       "AmazonAlexa-APKSigner-Signed"
     ],
-    "version": "2.2.718227.0"
+    "version": "2.2.716377.0"
   },
   "Adobe Acrobat": {
     "keys": [
@@ -83,7 +88,7 @@
     "keys": [
       "GitHub-Morphe-Hoodles-Stylus-Experimental"
     ],
-    "version": "1.280.0"
+    "version": "1.279.0"
   },
   "Fing": {
     "keys": [
@@ -95,13 +100,13 @@
     "keys": [
       "Jiohotstar-Paresh-Experimental"
     ],
-    "version": "26.09.28.2"
+    "version": "26.09.14.1"
   },
   "Nova Launcher": {
     "keys": [
       "NovaLauncher-Hoodles-Experimental"
     ],
-    "version": "8.9.4)"
+    "version": "8.9.3)"
   },
   "Battery Guru": {
     "keys": [
@@ -119,7 +124,7 @@
     "keys": [
       "Xodo-Hoodles-Experimental"
     ],
-    "version": "11.3.1"
+    "version": "11.3.0"
   },
   "Beta Maniac": {
     "keys": [
@@ -131,7 +136,7 @@
     "keys": [
       "HillClimbRacing-Byehi98-Experimental"
     ],
-    "version": "1.72.2"
+    "version": "1.71.1"
   },
   "Jetpack Joyride": {
     "keys": [
@@ -200,7 +205,7 @@
       "Pinterest-Browzomje-Experimental",
       "Pinterest-binarymend-Experimental"
     ],
-    "version": "14.39.0"
+    "version": "14.38.0"
   },
   "Inshorts": {
     "keys": [
@@ -271,200 +276,200 @@
     ],
     "version": "2.76.0 Build 0"
   },
-  "AT4K Launcher": {
+  "AT4K Launcher Android TV": {
     "keys": [
       "AT4KLauncher-hooman-AndroidTV-Experimental"
     ],
-    "version": "1.2"
+    "version": "latest"
   },
   "AccuWeather": {
     "keys": [
       "AccuWeather-rushiranpise-Experimental"
     ],
-    "version": "21.1.17-1-rc"
+    "version": "latest"
   },
   "Adobe Lightroom": {
     "keys": [
       "AdobeLightroom-Hoodles-Experimental"
     ],
-    "version": "11.6.01"
+    "version": "latest"
   },
   "Adobe Scan": {
     "keys": [
       "AdobeScan-rushiranpise-Experimental"
     ],
-    "version": "26.09.25"
+    "version": "latest"
   },
   "Advanced Download Manager": {
     "keys": [
       "AdvancedDownloadManager-Hooman-Experimental"
     ],
-    "version": "14.0.39"
+    "version": "latest"
   },
   "AliExpress": {
     "keys": [
       "AliExpress-Quantro100-Experimental"
     ],
-    "version": "8.177.5"
+    "version": "latest"
   },
   "AppSales": {
     "keys": [
       "AppSales-Entree3k-Experimental"
     ],
-    "version": "12.3"
+    "version": "latest"
   },
   "Automate": {
     "keys": [
       "Automate-BholeyKaBhakt-Experimental"
     ],
-    "version": "1.51.1"
+    "version": "latest"
   },
   "Autosync": {
     "keys": [
       "Autosync-BholeyKaBhakt-Experimental"
     ],
-    "version": "7.7.13"
+    "version": "latest"
   },
   "Backdrops": {
     "keys": [
       "Backdrops-BholeyKaBhakt-Experimental"
     ],
-    "version": "6.5"
+    "version": "latest"
   },
   "Bluetooth Keyboard & Mouse": {
     "keys": [
       "BluetoothKeyboardAndMouse-Rushiranpise-Experimental"
     ],
-    "version": "6.25.1"
+    "version": "latest"
   },
   "Brave Browser": {
     "keys": [
       "BraveBrowser-Kveld9-Experimental"
     ],
-    "version": "1.97.56"
+    "version": "latest"
   },
   "ByAir": {
     "keys": [
       "ByAir-franticg33k-Experimental"
     ],
-    "version": "2.40.2"
+    "version": "latest"
   },
   "CalcNote": {
     "keys": [
       "CalcNote-binarymend-Experimental",
       "CalcNote-Binarymend-Experimental"
     ],
-    "version": "2.25.111"
+    "version": "latest"
   },
   "Calm": {
     "keys": [
       "Calm-rushiranpise-Experimental"
     ],
-    "version": "7.2.2"
+    "version": "latest"
   },
   "Calorie Counter": {
     "keys": [
       "CalorieCounter-kondratjev-Experimental"
     ],
-    "version": "11.8.1.1"
+    "version": "latest"
   },
   "CamScanner": {
     "keys": [
       "CamScanner-Hoodles-Experimental"
     ],
-    "version": "7.26.5.2609160000"
+    "version": "latest"
   },
   "CapCut": {
     "keys": [
       "CapCut-riky-Experimental"
     ],
-    "version": "19.7.0"
+    "version": "latest"
   },
   "Chess.com": {
     "keys": [
       "ChessDotCom-Prathxm-Experimental",
       "ChessDotCom-Prathxm-Clone-Experimental"
     ],
-    "version": "4.10.20-googleplay"
+    "version": "latest"
   },
   "Citymapper": {
     "keys": [
       "Citymapper-rushiranpise-Experimental"
     ],
-    "version": "11.59.3"
+    "version": "latest"
   },
-  "Disney+": {
+  "Disney+ Android TV": {
     "keys": [
       "DisneyPlus-ajstrick81-AndroidTV-Experimental"
     ],
-    "version": "26.16.0+rc2-2026.09.08"
+    "version": "latest"
   },
   "Drofus": {
     "keys": [
       "Drofus-Lain-Experimental"
     ],
-    "version": "12.3.3"
+    "version": "latest"
   },
   "Duolingo": {
     "keys": [
       "Duolingo-Hoodles-Experimental"
     ],
-    "version": "6.100.3"
+    "version": "latest"
   },
   "Eyecon": {
     "keys": [
       "Eyecon-Paresh-Experimental"
     ],
-    "version": "4.2026.09.16.1233"
+    "version": "latest"
   },
   "F-Droid": {
     "keys": [
       "Fdroid-patchweaver-Experimental"
     ],
-    "version": "2.0.0"
+    "version": "latest"
   },
   "FairEmail": {
     "keys": [
       "FairEmail-heval99-Experimental"
     ],
-    "version": "1.2337"
+    "version": "latest"
   },
   "Flipkart": {
     "keys": [
       "Flipkart-debakarr-Experimental"
     ],
-    "version": "9.16"
+    "version": "latest"
   },
   "FolderSync": {
     "keys": [
       "FolderSync-hooman-Experimental"
     ],
-    "version": "4.13.0"
+    "version": "latest"
   },
   "Gboard": {
     "keys": [
       "Gboard-Jasonwu1994-Adobo-Experimental",
       "Gboard-Jasonwu1994-Adobo-Clone-Experimental"
     ],
-    "version": "18.4.1.985164140"
+    "version": "latest"
   },
   "Google Maps": {
     "keys": [
       "GoogleMaps-bearinmindcat-Experimental"
     ],
-    "version": "26.40.01.989295350"
+    "version": "latest"
   },
   "Google News": {
     "keys": [
       "GoogleNews-docbt-Experimental"
     ],
-    "version": "5.168.0.982359681"
+    "version": "latest"
   },
   "Google Phone": {
     "keys": [
       "GooglePhone-hooman-Experimental"
     ],
-    "version": "241.0.991235506-go"
+    "version": "latest"
   },
   "Google Photos": {
     "keys": [
@@ -472,43 +477,43 @@
       "GooglePhotos-rushiranpise-Experimental",
       "GooglePhotos-AkashSriram-Experimental"
     ],
-    "version": "7.96.0.996044120"
+    "version": "latest"
   },
   "Google Recorder": {
     "keys": [
       "GoogleRecorder-DeVanced-Experimental"
     ],
-    "version": "4.2.20260823.992025916"
+    "version": "latest"
   },
-  "HBO Max": {
+  "HBO Max Android TV": {
     "keys": [
       "HBOMax-ajstrick81-AndroidTV-Experimental"
     ],
-    "version": "7.13.1.2"
+    "version": "latest"
   },
   "HelloChinese": {
     "keys": [
       "HelloChinese-Hoodles-Experimental"
     ],
-    "version": "7.11.9"
+    "version": "latest"
   },
   "Hermit": {
     "keys": [
       "Hermit-Lain-Experimental"
     ],
-    "version": "31.8.0"
+    "version": "latest"
   },
   "Hola VPN": {
     "keys": [
       "HolaVPN-rushiranpise-Experimental"
     ],
-    "version": "TV_1.248.400"
+    "version": "latest"
   },
   "IMDb": {
     "keys": [
       "IMDb-adobo-Experimental"
     ],
-    "version": "9.3.6"
+    "version": "latest"
   },
   "Icon Packer": {
     "keys": [
@@ -520,166 +525,166 @@
     "keys": [
       "InShot-hooman-Experimental"
     ],
-    "version": "2.243.1555"
+    "version": "latest"
   },
   "KineStop": {
     "keys": [
       "KineStop-ShaunTheSheep-Experimental"
     ],
-    "version": "5.6"
+    "version": "latest"
   },
   "Komoot": {
     "keys": [
       "komoot-brosssh-Experimental"
     ],
-    "version": "2026.40.4"
+    "version": "latest"
   },
   "Letterboxd": {
     "keys": [
       "Letterboxd-mvaishak-Experimental",
       "Letterboxd-mvaishak-MaterialYou-Experimental"
     ],
-    "version": "3.5.8"
+    "version": "latest"
   },
   "Lumina Wallpapers": {
     "keys": [
       "LuminaWallpapers-Paresh-Experimental"
     ],
-    "version": "1.0.2.6"
+    "version": "latest"
   },
   "Medium": {
     "keys": [
       "Medium-bufferk-Experimental"
     ],
-    "version": "4.5.1223215"
+    "version": "latest"
   },
   "Meesho": {
     "keys": [
       "Meesho-debakarr-Experimental"
     ],
-    "version": "29.6"
+    "version": "latest"
   },
   "Merriam-Webster Dictionary": {
     "keys": [
       "MerriamWebsterDictionary-Hoodles-Experimental"
     ],
-    "version": "5.6.3"
+    "version": "latest"
   },
   "Microsoft Edge": {
     "keys": [
       "MicrosoftEdge-quantavil-Experimental"
     ],
-    "version": "154.0.4258.38"
+    "version": "latest"
   },
   "Microsoft Excel": {
     "keys": [
       "MicrosoftExcel-Rushiranpise-Experimental"
     ],
-    "version": "16.0.20527.20034"
+    "version": "latest"
   },
   "Microsoft Lens": {
     "keys": [
       "MicrosoftLens-DeVanced-Experimental"
     ],
-    "version": "16.0.19628.20008"
+    "version": "latest"
   },
   "Microsoft SwiftKey": {
     "keys": [
       "MicrosoftSwiftKey-Hooman-Experimental"
     ],
-    "version": "9.13.17.6"
+    "version": "latest"
   },
   "Microsoft Word": {
     "keys": [
       "MicrosoftWord-Rushiranpise-Experimental"
     ],
-    "version": "16.0.20527.20034"
+    "version": "latest"
   },
   "Money Manager": {
     "keys": [
       "MoneyManager-hooman-Experimental"
     ],
-    "version": "4.12.14 GF"
+    "version": "latest"
   },
   "Moon+ Reader": {
     "keys": [
       "MoonPlusReader-binarymend-Experimental"
     ],
-    "version": "10.5"
+    "version": "latest"
   },
-  "Netflix": {
+  "Netflix Android TV": {
     "keys": [
       "Netflix-ajstrick81-AndroidTV-Experimental"
     ],
-    "version": "13.2.1 build 27207"
+    "version": "latest"
   },
   "Ninja VPN": {
     "keys": [
       "NinjaVPN-rushiranpise-Experimental"
     ],
-    "version": "8.6"
+    "version": "latest"
   },
-  "Nuvio": {
+  "Nuvio Android TV": {
     "keys": [
       "Nuvio-liongalahad-AndroidTV-Experimental",
       "Nuvio-liongalahad-AndroidTV-Clone-Experimental"
     ],
-    "version": "1.0.0"
+    "version": "latest"
   },
   "Pandora": {
     "keys": [
       "Pandora-Hoodles-Experimental"
     ],
-    "version": "2610.1"
+    "version": "latest"
   },
-  "Peacock": {
+  "Peacock Android TV": {
     "keys": [
       "Peacock-ajstrick81-AndroidTV-Experimental"
     ],
-    "version": "7.10.200"
+    "version": "latest"
   },
   "Photomath": {
     "keys": [
       "Photomath-DeVanced-Experimental"
     ],
-    "version": "8.48.0"
+    "version": "latest"
   },
   "PicsArt": {
     "keys": [
       "PicsArt-rushiranpise-Experimental"
     ],
-    "version": "30.9.5"
+    "version": "latest"
   },
   "Plus Messenger": {
     "keys": [
       "PlusMessenger-Paresh-Experimental",
       "PlusMessenger-newuser7171-Experimental"
     ],
-    "version": "12.10.1.1"
+    "version": "latest"
   },
-  "PlutoTV": {
+  "PlutoTV Android TV": {
     "keys": [
       "PlutoTV-ajstrick81-AndroidTV-Experimental"
     ],
-    "version": "17.1.1"
+    "version": "latest"
   },
   "Pocket Casts": {
     "keys": [
       "PocketCasts-rushiranpise-Experimental"
     ],
-    "version": "8.21"
+    "version": "latest"
   },
   "Pocket Whip": {
     "keys": [
       "PocketWhip-hxreborn-Experimental"
     ],
-    "version": "2.3"
+    "version": "latest"
   },
-  "Projectivy Launcher": {
+  "Projectivy Launcher Android TV": {
     "keys": [
       "ProjectivyLauncher-hooman-AndroidTV-Experimental"
     ],
-    "version": "4.71"
+    "version": "latest"
   },
   "Proton Mail": {
     "keys": [
@@ -688,50 +693,50 @@
       "ProtonMail-dhrubonai-Experimental",
       "ProtonMail-rushiranpise-Experimental"
     ],
-    "version": "7.11.6"
+    "version": "latest"
   },
   "RAR": {
     "keys": [
       "RAR-rushiranpise-Experimental"
     ],
-    "version": "5.10 build 2"
+    "version": "latest"
   },
   "Reddit": {
     "keys": [
       "Reddit-adobo-Experimental"
     ],
-    "version": "2026.41.0"
+    "version": "latest"
   },
   "Rumble": {
     "keys": [
       "Rumble-hooman-Experimental"
     ],
-    "version": "3.21.0"
+    "version": "latest"
   },
   "Send Files to TV": {
     "keys": [
       "SendFilesToTV-rushiranpise-Experimental"
     ],
-    "version": "1.09"
+    "version": "latest"
   },
   "Showly": {
     "keys": [
       "Showly-hxreborn-Experimental"
     ],
-    "version": "3.72.0"
+    "version": "latest"
   },
   "Smash Hit": {
     "keys": [
       "SmashHit-Byehi98-Experimental"
     ],
-    "version": "1.5.14"
+    "version": "latest"
   },
   "SoundCloud": {
     "keys": [
       "SoundCloud-hoodles-Experimental",
       "SoundCloud-kondratjev-Experimental"
     ],
-    "version": "2026.09.30-release"
+    "version": "latest"
   },
   "Strava": {
     "keys": [
@@ -743,14 +748,14 @@
     "keys": [
       "SwiftBackup-byehi98-Experimental"
     ],
-    "version": "5.1.0"
+    "version": "latest"
   },
   "Symfonium": {
     "keys": [
       "Symfonium-binarymend-Experimental",
       "Symfonium-Hooman-Experimental"
     ],
-    "version": "15.1.0"
+    "version": "latest"
   },
   "Telegram": {
     "keys": [
@@ -762,144 +767,149 @@
       "Telegram-newuser7171-FOSS-Experimental",
       "Telegram-HushTelegram-FOSS-Experimental"
     ],
-    "version": "13.0.0"
+    "version": "latest"
   },
   "TeraBox": {
     "keys": [
       "Terabox-hxreborn-Experimental"
     ],
-    "version": "4.26.5"
+    "version": "latest"
   },
   "Termius": {
     "keys": [
       "Termius-rushiranpise-Experimental"
     ],
-    "version": "7.11.1"
+    "version": "latest"
   },
   "The Weather Channel": {
     "keys": [
       "TheWeatherChannel-rushiranpise-Experimental"
     ],
-    "version": "16.24.1"
+    "version": "latest"
   },
   "TickTick": {
     "keys": [
       "TickTick-Paresh-Experimental"
     ],
-    "version": "8.2.2.0"
+    "version": "latest"
   },
   "Titanium Browser": {
     "keys": [
       "TitaniumBrowser-dh6k"
     ],
-    "version": "155.0.8059.39"
+    "version": "latest"
   },
   "Todoist": {
     "keys": [
       "Todoist-hooman-Experimental"
     ],
-    "version": "v11474"
+    "version": "latest"
   },
   "Truecaller": {
     "keys": [
       "Truecaller-Paresh-Experimental",
       "Truecaller-bufferk-Experimental"
     ],
-    "version": "26.37.5"
+    "version": "latest"
   },
-  "Tubi": {
+  "Tubi Android TV": {
     "keys": [
       "Tubi-ajstrick81-AndroidTV-Experimental"
     ],
-    "version": "10.39.5000"
+    "version": "latest"
   },
   "Tumblr": {
     "keys": [
       "Tumblr-hooman-Experimental"
     ],
-    "version": "46.5.0.109"
+    "version": "latest"
   },
   "Twitch": {
     "keys": [
-      "Twitch-hooman-Experimental",
+      "Twitch-hooman-Experimental"
+    ],
+    "version": "latest"
+  },
+  "Twitch Android TV": {
+    "keys": [
       "Twitch-ajstrick81-AndroidTV-Experimental"
     ],
-    "version": "31.5.2"
+    "version": "latest"
   },
   "VPNify": {
     "keys": [
       "VPNify-BholeyKaBhakt-Experimental"
     ],
-    "version": "2.3.0"
+    "version": "latest"
   },
   "Vector": {
     "keys": [
       "Vector-Byehi98-Experimental"
     ],
-    "version": "2.10.2"
+    "version": "latest"
   },
-  "ViX": {
+  "ViX Android TV": {
     "keys": [
       "ViX-ajstrick81-AndroidTV-Experimental"
     ],
-    "version": "4.50.1_tv"
+    "version": "latest"
   },
   "Viber": {
     "keys": [
       "Viber-DeVanced-Experimental"
     ],
-    "version": "28.11.0.0"
+    "version": "latest"
   },
   "WPS Office": {
     "keys": [
       "WPSOffice-Hoodles-Experimental"
     ],
-    "version": "26.9.1"
+    "version": "latest"
   },
   "X": {
     "keys": [
       "X-Piko-Experimental",
       "X-Piko-MaterialYou-Experimental"
     ],
-    "version": "12.33.0-prod.01"
+    "version": "12.31.0-prod.01"
   },
   "YouTube": {
     "keys": [
       "YouTube-Anddea-Experimental",
       "YouTube-Anddea-AMOLED-Experimental"
     ],
-    "version": "21.40.165"
+    "version": "latest"
   },
   "YouTube Music": {
     "keys": [
       "YouTubeMusic-Anddea-Experimental",
       "YouTubeMusic-Anddea-AMOLED-Experimental"
     ],
-    "version": "9.40.51"
+    "version": "latest"
   },
   "aCalendar": {
     "keys": [
       "aCalendar-binarymend-Experimental"
     ],
-    "version": "2.9.6"
+    "version": "latest"
   },
   "atvTools": {
     "keys": [
       "AtvTools-hxreborn-Experimental"
     ],
-    "version": "1.3.2"
+    "version": "latest"
   },
   "pixiv": {
     "keys": [
       "pixiv-DeVanced-Experimental",
       "pixiv-Fripe070-Experimental"
     ],
-    "version": "6.199.0"
+    "version": "latest"
   },
   "trakt.TV": {
     "keys": [
       "TraktTV-IMXEren-Experimental"
     ],
-    "version": "3.23.0"
+    "version": "latest"
   }
 }
