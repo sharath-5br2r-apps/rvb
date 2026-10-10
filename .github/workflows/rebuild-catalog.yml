@@ -115,10 +115,3 @@ jobs:
           gh workflow run deploy-pages.yml --ref gh-pages
           echo "Dispatched deploy-pages workflow."
 
-  trigger_notify_failure:
-    needs: [rebuild]
-    if: failure()
-    uses: ./.github/workflows/notify.yml
-    with:
-      workflow_name: "Rebuild Catalog"
-    secrets: inherit
