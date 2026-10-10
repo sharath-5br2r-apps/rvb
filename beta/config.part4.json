@@ -1,0 +1,60 @@
+{
+  "patches-version": "beta",
+  "enable-module-update": true,
+  "SmashHit-Byehi98": {
+    "enabled": true,
+    "app-name": "Smash Hit",
+    "pkg-name": "com.mediocre.smashhit",
+    "uptodown-dlurl": "https://smash-hit.en.uptodown.com/android",
+    "apkmirror-dlurl": "https://www.apkmirror.com/apk/mediocre/smash-hit/"
+  },
+  "SmashHit-Byehi98-Experimental": {
+    "enabled": true,
+    "app-name": "Smash Hit",
+    "sub-variant": "Experimental",
+    "version": "latest",
+    "patcher-args": "-f --continue-on-error",
+    "skip-patch-app-check": true,
+    "pkg-name": "com.mediocre.smashhit",
+    "apkmirror-dlurl": "https://www.apkmirror.com/apk/mediocre/smash-hit/",
+    "uptodown-dlurl": "https://smash-hit.en.uptodown.com/android"
+  },
+  "Pinterest-Browzomje": {
+    "enabled": true,
+    "app-name": "Pinterest",
+    "pkg-name": "com.pinterest",
+    "uptodown-dlurl": "https://pinterest.en.uptodown.com/android",
+    "apkmirror-dlurl": "https://www.apkmirror.com/apk/pinterest/pinterest-one-destination-for-a-world-of-inspiration"
+  },
+  "Reddit-adobo-Experimental": {
+    "enabled": true,
+    "app-name": "Reddit",
+    "sub-variant": "Experimental",
+    "version": "latest",
+    "patcher-args": "-f --continue-on-error",
+    "skip-patch-app-check": true,
+    "pkg-name": "com.reddit.frontpage",
+    "patches-source": "jkennethcarino/adobo",
+    "brand": "adobo",
+    "apkmirror-dlurl": "https://apkmirror.com/apk/redditinc/reddit",
+    "uptodown-dlurl": "https://reddit-official-app.en.uptodown.com/android",
+    "apkpure-dlurl": "https://apkpure.com/reddit-app/com.reddit.frontpage",
+    "apkcombo-dlurl": "https://apkcombo.com/reddit/com.reddit.frontpage",
+    "archive-dlurl": "https://archive.org/download/geologically/apks/com.reddit.frontpage"
+  },
+  "YouTube-Morphe-AMOLED": {
+    "enabled": true,
+    "pkg-name": "com.google.android.youtube",
+    "app-name": "YouTube",
+    "patches-source": "MorpheApp/morphe-patches",
+    "brand": "Morphe",
+    "variant": "AMOLED",
+    "build-mode": "both",
+    "included-patches": "'Theme'",
+    "patcher-args": "-OdarkThemeBackgroundColor=#000000 -OlightThemeBackgroundColor=#FFFFFF",
+    "uptodown-dlurl": "https://youtube.en.uptodown.com/android",
+    "apkmirror-dlurl": "https://apkmirror.com/apk/google-inc/youtube",
+    "apkpure-dlurl": "https://apkpure.com/youtube-app/com.google.android.youtube",
+    "apkcombo-dlurl": "https://apkcombo.com/youtube/com.google.android.youtube"
+  }
+}
